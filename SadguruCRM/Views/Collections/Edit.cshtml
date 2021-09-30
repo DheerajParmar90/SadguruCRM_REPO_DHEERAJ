@@ -1,0 +1,628 @@
+﻿@model SadguruCRM.Models.Collection_Entry
+
+@{
+    if (ViewBag.ViewType == "")
+    {
+        ViewBag.Title = "Edit Collection Entry";
+    }
+    else if (ViewBag.ViewType == "details")
+    {
+        ViewBag.Title = "Deails - Collection Entry";
+    }
+    else if (ViewBag.ViewType == "delete")
+    {
+        ViewBag.Title = "Delete - Collection Entry";
+    }
+
+
+}
+@if (ViewBag.ViewType == "details" || ViewBag.ViewType == "delete")
+{
+
+    <style>
+        input, select, textarea {
+            max-width: 100%;
+            overflow: hidden;
+        }
+
+        label {
+            font-weight: 800;
+            border-bottom: 1px black solid;
+            margin-bottom: 10px;
+            margin-top: 12px;
+        }
+
+        input:disabled {
+            background-color: black;
+            border-color: rgb(247 247 252);
+        }
+
+        .form-control:disabled, .form-control[readonly], textarea, .bootstrap-select > .dropdown-toggle, .form-group .bootstrap-select, .form-horizontal .bootstrap-select, .form-inline .bootstrap-select {
+            background-color: #f7f7fc;
+            opacity: 1;
+            border-color: rgb(247 247 252);
+        }
+
+        .form-control {
+            padding: 0;
+            margin-top: -10px;
+        }
+
+        .bootstrap-select > .dropdown-toggle {
+            padding: 0;
+        }
+
+        .bootstrap-select > .dropdown-toggle {
+            word-wrap: break-word !important;
+            white-space: normal !important;
+        }
+
+            .dropdown-toggle::after, .bootstrap-select > .dropdown-toggle:after {
+                display: none;
+            }
+    </style>
+    <script>
+        $(document).ready(function () {
+            $("input").attr("disabled", true);
+            $("select").attr("disabled", true);
+            $("input[type='submit']").removeAttr("disabled");
+        });
+    </script>
+}
+@using (Html.BeginForm("Edit", "Collections", FormMethod.Post, new { id = "CollectionCreate", enctype = "multipart/form-data", autocomplete = "off" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        @if (ViewBag.ViewType == "")
+        {
+            if (ViewBag.CollectionType == "Advance")
+            {
+                <h4>Edit Advance Entry</h4>
+            }
+            else
+            {
+                <h4>Edit Collection Entry</h4>
+            }
+
+        }
+        else if (ViewBag.ViewType == "details")
+        {
+
+            if (ViewBag.CollectionType == "Advance")
+            {
+                <h4>Details Advance Entry</h4>
+            }
+            else
+            {
+                <h4>Details Collection Entry</h4>
+            }
+        }
+        else if (ViewBag.ViewType == "delete")
+        {
+            if (ViewBag.CollectionType == "Advance")
+            {
+                <h4>Delete Advance Entry</h4>
+            }
+            else
+            {
+                <h4>Delete Collection Entry</h4>
+            }
+        }
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Collection_Entry_ID)
+        @Html.HiddenFor(model => model.CreatedBy)
+        @Html.HiddenFor(model => model.CreatedOn)
+        <div style="display:none;">
+            <input type="hidden" name="WithGST" id="WithGST" value="@ViewBag.WithGST" />
+            @if (ViewBag.CollectionType == "Advance")
+            {
+                @Html.CheckBox("isAdvanceEntry", new { @checked = "checked" })
+            }
+            else
+            {
+                @Html.CheckBox("isAdvanceEntry")
+            }
+        </div>
+        <div class="form-group row" id="divWithOrWithoutGST">
+            <div class="col" style="display:none;">
+                @*By Default With GST is kept selected and Dropdown is hidden because for "Without GST" No Create New will be there, as discussed*@
+                @Html.Label("Bill With GST / Without GST", htmlAttributes: new { @class = "control-label required" })
+                @Html.DropDownList("WithOrWithoutGST", new List<SelectListItem>(){
+                                                   new SelectListItem() { Text = "With GST", Value = "With GST" , Selected=true},
+                                                   new SelectListItem() { Text = "Without GST", Value = "Without GST"}
+                                                }, "-- SELECT --", new { @class = "form-control", @required = "required" })
+                @Html.ValidationMessage("WithOrWithoutGST", "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div id="formCollection">
+            <div class="form-group row">
+
+                <div class="col-3" id="divInvoiceID">
+                    @Html.LabelFor(model => model.InvoiceID, "Invoice", htmlAttributes: new { @class = "control-label" })
+                    @Html.DropDownList("InvoiceID", (SelectList)ViewBag.Invoices, "--SELECT--", htmlAttributes: new { @class = "form-control", @readonly= "readonly" })
+                    @Html.ValidationMessageFor(model => model.InvoiceID, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-3" id="divLeadID">
+                    @Html.LabelFor(model => model.LeadID, "Lead", htmlAttributes: new { @class = "control-label" })
+                    @Html.DropDownList("LeadID", (SelectList)ViewBag.Leads, "--SELECT--", htmlAttributes: new { @class = "form-control", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(model => model.LeadID, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-3" id="divLeadID">
+                    @Html.LabelFor(model => model.CustomerID, "Customer", htmlAttributes: new { @class = "control-label" })
+                    @Html.DropDownList("CustomerID", (SelectList)ViewBag.Customers, "--SELECT--", htmlAttributes: new { @class = "form-control", @readonly = "readonly" })
+                    @Html.ValidationMessageFor(model => model.CustomerID, "", new { @class = "text-danger" })
+                </div>
+
+                @*<div class="col-3" id="divLeadDate">
+                        @Html.Label("Lead Date", htmlAttributes: new { @class = "control-label" })
+                        @Html.Editor("Lead Date", new { htmlAttributes = new { @class = "form-control" } })
+
+                    </div>*@
+
+                @*<div class="col-3" id="divInvoiceDate">
+                        @Html.Label("Invoice Date", htmlAttributes: new { @class = "control-label" })
+                        @Html.Editor("InvoiceDate", new { htmlAttributes = new { @class = "form-control" } })
+
+                    </div>*@
+
+                @*<div class="col-6"  id="divCustName">
+                        @Html.Label("Customer Name", htmlAttributes: new { @class = "control-label" })
+                        @Html.Editor("CustomerName", new { htmlAttributes = new { @class = "form-control" } })
+
+                    </div>*@
+            </div>
+
+
+            <div class="form-group row">
+                <div class="col-3" id="divTotalAmount">
+                    @Html.Label("Total Amount", htmlAttributes: new { @class = "control-label required" })
+                    @Html.Editor("TotalAmount", new
+                    {
+                        htmlAttributes = new
+                        {
+                            @class = "form-control"@*, @disabled = "disabled"*@,
+                            @required = "required",
+                            @readonly = "readonly"
+                        }
+               })
+                    @Html.Hidden("TotalAmountToUseOnlyForCustomer")
+                </div>
+                <div class="col-3" id="divAlreadyPaid" style="display:none;">
+                    @Html.Label("Already Paid", htmlAttributes: new { @class = "control-label" })
+                    @Html.Editor("AlreadyPaid", new
+                    {
+                        htmlAttributes = new
+                        {
+                            @class = "form-control"@*, @disabled = "disabled"*@}
+})
+
+                </div>
+                @*<div class="col" id="divPaidByCust">
+                        @Html.Label("Paid By Customer", htmlAttributes: new { @class = "control-label" })
+                        @Html.Editor("PaiByCustomer", new { htmlAttributes = new { @class = "form-control" } })
+                    </div>*@
+
+                <div class="col-3" id="divPaidByCust">
+                    @Html.LabelFor(model => model.Amount, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.Amount, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Amount, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-3" id="divBalanceAmount">
+                    @Html.Label("Balance Amount", htmlAttributes: new { @class = "control-label" })
+                    @Html.Editor("BalanceAmount", new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                    @Html.Hidden("BalanceUseOnlyForCustomer")
+                </div>
+            </div>
+
+
+            <div class="form-group row">
+                <div class="col" id="divReceivedOn">
+                    @Html.LabelFor(model => model.ReceivedOn, "Received On", htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.ReceivedOn, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.ReceivedOn, "", new { @class = "text-danger" })
+                </div>
+                <div class="col" id="divTDSapplicable">
+                    @Html.LabelFor(model => model.TDSapplicable, "TDS applicable", htmlAttributes: new { @class = "control-label" })
+                    <div class="checkbox">
+                        @Html.EditorFor(model => model.TDSapplicable)
+                        @Html.ValidationMessageFor(model => model.TDSapplicable, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col" id="divTDSAmount">
+                    @Html.LabelFor(model => model.TDSAmount, "TDS Amount", htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.TDSAmount, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                    @Html.ValidationMessageFor(model => model.TDSAmount, "", new { @class = "text-danger" })
+                </div>
+                <div class="col" id="divBadDebtsAmount">
+                    @Html.LabelFor(model => model.BadDebtsAmount, "Bad Debts Amount", htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.BadDebtsAmount, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.BadDebtsAmount, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-2">
+                    @Html.LabelFor(model => model.PaymentModeID, "Payment Mode", htmlAttributes: new { @class = "control-label" })
+                    @Html.DropDownList("PaymentModeID", (SelectList)ViewBag.PaymentModes, "--SELECT--", htmlAttributes: new { @class = "form-control", @required = "required" })
+                    @Html.ValidationMessageFor(model => model.PaymentModeID, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-2" style="display:none;" id="divChequeNo">
+                    @Html.Label("Cheque No", "Cheque No", htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.ChequeNo, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.ChequeNo, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-2" style="display:none;" id="divChequeDate">
+                    @Html.Label("Cheq ue Date", "Cheque Date", htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.ChequeDate, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.ChequeDate, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-2" style="display:none;" id="divChequeName">
+                    @Html.Label("Cheque", "Cheque / Drawee Name", htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.ChequeName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.ChequeName, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-2" style="display:none;" id="divBankID">
+                    @Html.LabelFor(model => model.BankID, "Bank", htmlAttributes: new { @class = "control-label" })
+                    @Html.DropDownList("BankID", null, "SELECT", htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.BankID, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-2" style="display:none;" id="divDraweeName">
+                    @Html.LabelFor(model => model.DraweeName, "Drawee Name", htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.DraweeName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.DraweeName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            @if (ViewBag.ViewType == "")
+            {
+                <div class="form-group">
+                    <div class="col">
+                        <input type="submit" value="Save" class="btn btn-secondary" style="float:right;" id="createCollection" />
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+}
+@if (ViewBag.ViewType == "delete")
+{
+
+    using (Html.BeginForm("DeleteConfirmed", "Collections",new { id = Model.Collection_Entry_ID, withgst = ViewBag.WithGST }, FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-actions">
+            <input type="hidden" value="@Model.Collection_Entry_ID" id="id"/>
+            <input type="submit" value="Delete" class="btn btn-outline-secondary pull-right" />
+            @*@Html.ActionLink("Back to List", "Index")*@
+        </div>
+    }
+}
+<div>
+    @if (ViewBag.WithGST == "true")
+    {
+        @Html.ActionLink("Back to List", "WithGSTCollections", "Collections", new { @class = "btn btn-secondary" })
+    }else
+    {
+        @Html.ActionLink("Back to List", "WithoutGSTCollections", "Collections", new { @class = "btn btn-secondary" })
+    }
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+<script>
+    var formValid = true;
+    $("#ReceivedOn").datetimepicker({
+        format: 'DD/MM/YYYY',
+        useCurrent: false
+    });
+    $("#ChequeDate").datetimepicker({
+        format: 'DD/MM/YYYY',
+        useCurrent: false
+    });
+    $.validator.addMethod(
+        "australianDate",
+        function (value, element) {
+            // put your own logic here, this is just a (crappy) example
+            return value.match(/^\d\d?\/\d\d?\/\d\d\d\d$/);
+        },
+        "Please enter a date in the format dd/mm/yyyy."
+    );
+    $('#CollectionCreate')
+        .validate({
+            rules: {
+                ReceivedOn: {
+                    australianDate: true
+                },
+                Amount: {
+                    required: true,
+                    max: function (element) { return getMaxAmountAllowed($("#TotalAmount").val(), $("#AlreadyPaid").val()); }
+                },
+                ReceivedOn: "required",
+                TDSAmount: {
+                    required: '#TDSapplicable:checked'
+                },
+                BankID: {
+                    required: function (element) {
+                        //return $("#PaymentModeID option:selected").text() == "NEFT" || $("#PaymentModeID option:selected").text() == "UPI" || $("#PaymentModeID option:selected").text() == "CHEQUE";
+                    }
+                },
+                DraweeName: {
+                    required: function (element) {
+                        //return $("#PaymentModeID option:selected").text() == "NEFT" || $("#PaymentModeID option:selected").text() == "UPI";
+                    }
+                },
+                ChequeNo: {
+                    required: function (element) {
+                        return $("#PaymentModeID option:selected").text() == "CHEQUE";
+                    }
+                },
+                ChequeName: {
+                    required: function (element) {
+                        return $("#PaymentModeID option:selected").text() == "CHEQUE";
+                    }
+                },
+                ChequeDate: {
+                    required: function (element) {
+                        return $("#PaymentModeID option:selected").text() == "CHEQUE";
+                    }
+                },
+            }
+        });
+    function getMaxAmountAllowed(total, paid) {
+        //alert(total);al()
+        return total - paid;
+    }
+    $("#Amount").change(function () {
+            if ($("#Amount").val() <= ($("#TotalAmount").val() - $("#AlreadyPaid").val())) {
+                $("#BalanceAmount").val($("#TotalAmount").val() - $("#AlreadyPaid").val() - $("#Amount").val());
+                $("#TotalAmountToUseOnlyForCustomer").val($("#TotalAmount").val());
+                $("#BalanceUseOnlyForCustomer").val($("#BalanceAmount").val());
+            }
+        });
+    $(document).ready(function () {
+        debugger;
+
+        @*var collectionType = '@ViewBag.CollectionType'
+        if (collectionType == 'WithoutGST') {
+            $("#divWithOrWithoutGST").hide();
+            $("#divInvoiceID").hide();
+            $("#divInvoiceDate").hide();
+            $("#LeadID").prop('required', true);
+            $("#InvoiceID").prop('required', false);
+
+        } else {
+            $("#LeadID").prop('required', false);
+        }*@
+
+        $("#PaymentModeID").change();
+        $("#TotalAmount").val($("#TotalAmountToUseOnlyForCustomer").val());
+        if ($("#InvoiceID").val() != '') { $("#InvoiceID").change(); }
+        if ($("#LeadID").val() != '') { $("#LeadID").change();}
+        if ($("#CustomerID").val() != '') { $("#CustomerID").change();};
+    });
+    $("#PaymentModeID").change(function () {
+        var selected = $("#PaymentModeID option:selected").html();
+        if (selected == "NEFT") {
+            $("#divChequeNo").hide();
+            //$("#ChequeNo").val("");
+            $("#divChequeDate").hide();
+            //$("#ChequeDate").val("");
+            $("#divChequeName").hide();
+            //$("#ChequeName").val("");
+            $("#divBankID").show();
+            //$("#BankID").val("");
+            $("#divDraweeName").show();
+            //$("#DraweeName").val("");
+        } else if (selected == "UPI") {
+
+            $("#divChequeNo").hide();
+           // $("#ChequeNo").val("");
+            $("#divChequeDate").hide();
+            //$("#ChequeDate").val("");
+            $("#divChequeName").hide();
+            //$("#ChequeName").val("");
+            $("#divBankID").show();
+            //$("#BankID").val("");
+            $("#divDraweeName").show();
+            //$("#DraweeName").val("");
+        } else if (selected == "CASH" || $("#PaymentModeID").val() == "") {
+            $("#divChequeNo").hide();
+            //$("#ChequeNo").val("");
+            $("#divChequeDate").hide();
+            //$("#ChequeDate").val("");
+            $("#divChequeName").hide();
+            //$("#ChequeName").val("");
+            $("#divBankID").hide();
+            //$("#BankID").val("");
+            $("#divDraweeName").hide();
+            //$("#DraweeName").val("");
+        } else if (selected == "CHEQUE") {
+            $("#divChequeNo").show();
+            //$("#ChequeNo").val("");
+            $("#divChequeDate").show();
+            //$("#ChequeDate").val("");
+            $("#divChequeName").show();
+            //$("#ChequeName").val("");
+            $("#divBankID").show();
+            //$("#BankID").val("");
+            $("#divDraweeName").hide();
+            //$("#DraweeName").val("");
+        }
+    });
+    $("#TDSapplicable").click(function () {
+            if ($(this).prop("checked") == true) {
+                $("#TDSAmount").val("0");
+                $("#TDSAmount").prop("disabled", false);
+            } else {
+                $("#TDSAmount").prop("disabled", true);
+            }
+        })
+    $("#InvoiceID").change(function () {
+        debugger;
+        $("#LeadID").val("");
+        $("#CustomerID").val("");
+        if ($(this).val() == '') {
+
+        } else {
+            debugger;
+            $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("GetInvoicesDataForCreateCollection", "Collections")',
+                    data: { InvoiceID: $(this).val() },
+                    datatype: "json",
+                    //async: false,
+                    traditional: true,
+                success: function (data) {
+                    debugger;
+                    if (data == "No Services Found") {
+                        alert("No Services Found");
+                    } else if (data == "Wrong Invoice ID") {
+                        alert("Wrong Invoice ID");
+                    } else {
+                        //console.log("success");
+                        $("#TotalAmount").val(data.TotalAmount);
+                        //$("#AlreadyPaid").val(data.AlreadyPaid);
+                        $("#BalanceAmount").val(data.TotalAmount);
+                    }
+
+                        //var services = "<select id='ServiceID' name = 'ServiceID' required='required'>";
+                        //services = services + '<option value="">--SELECT--</option>';
+                        //for (var i = 0; i < data.length; i++) {
+                        //    services = services + '<option value=' + data[i].Value + '>' + data[i].Text + '</option>';
+                        //}
+                        //services = services + '</select>';
+                        //$(obj).parent().closest('.SingleService').find('#ServiceID').html(services);
+                        //$(obj).closest('#ServiceID').html(services);
+                },
+                error: (error) => {
+                     console.log(JSON.stringify(error));
+                    }
+            });
+
+        }
+
+    });
+    $("#LeadID").change(function () {
+        debugger;
+
+        $("#InvoiceID").val("");
+        $("#CustomerID").val("");
+        if ($(this).val() == '') {
+
+        } else {
+            debugger;
+            $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("GetLeadsDataForCreateCollection", "Collections")',
+                    data: { LeadID: $(this).val() },
+                    datatype: "json",
+                    //async: false,
+                    traditional: true,
+                success: function (data) {
+                    debugger;
+                    if (data == "No Services Found") {
+                        alert("No Services Found");
+                    } else if (data == "Wrong Lead ID") {
+                        alert("Wrong Lead ID");
+                    } else {
+                        //console.log("success");
+                        $("#TotalAmount").val(data.TotalAmount);
+                        $("#AlreadyPaid").val(data.AlreadyPaid);
+                        $("#BalanceAmount").val(data.BalanceAmount);
+                    }
+
+                        //var services = "<select id='ServiceID' name = 'ServiceID' required='required'>";
+                        //services = services + '<option value="">--SELECT--</option>';
+                        //for (var i = 0; i < data.length; i++) {
+                        //    services = services + '<option value=' + data[i].Value + '>' + data[i].Text + '</option>';
+                        //}
+                        //services = services + '</select>';
+                        //$(obj).parent().closest('.SingleService').find('#ServiceID').html(services);
+                        //$(obj).closest('#ServiceID').html(services);
+                },
+                error: (error) => {
+                     console.log(JSON.stringify(error));
+                    }
+            });
+
+        }
+
+    });
+    $("#CustomerID").change(function () {
+        debugger;
+
+        $("#LeadID").val("");
+        $("#InvoiceID").val("");
+        $("#TotalAmount").val("");
+        $("#BalanceAmount").val("");
+        @*if ($(this).val() == '') {
+
+        }
+        else {
+            debugger;
+            $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("GetCustomersDataForCreateCollection", "Collections")',
+                    data: { LeadID: $(this).val() },
+                    datatype: "json",
+                    //async: false,
+                    traditional: true,
+                success: function (data) {
+                    debugger;
+                    if (data == "No Services Found") {
+                        alert("No Services Found");
+                    } else if (data == "Wrong Lead ID") {
+                        alert("Wrong Lead ID");
+                    } else {
+                        //console.log("success");
+                        $("#TotalAmount").val(data.TotalAmount);
+                        $("#AlreadyPaid").val(data.AlreadyPaid);
+                        $("#BalanceAmount").val(data.BalanceAmount);
+                    }
+
+                },
+                error: (error) => {
+                     console.log(JSON.stringify(error));
+                    }
+            });
+
+        }*@
+
+    });
+
+    $("#CollectionCreate").submit(function () {
+        debugger;
+        //alert("#CollectionCreate");
+        //formValid = $(this).valid();
+        //alert(formValid);
+        if ($("#InvoiceID").val() == "" && $("#LeadID").val() && $("#CustomerID").val()) {
+            alert("Select Invoice / Lead/ Customer");
+            return false;
+        }
+    });
+    //$("#createCollection").click(function () {
+    //    alert("#createCollection");
+    //    $("#CollectionCreate").submit();
+    //});
+</script>
+<script>
+    $("#WithOrWithoutGST").change(function () {
+        alert();
+        if ($(this).val() == "With GST") {
+            $("#formCollection").slideDown();
+            $("#divInvoiceID").show();
+            $("#divInvoiceDate").show();
+            $("#divLeadID").hide();
+            $("#divLeadDate").hide();
+        }
+        else if ($(this).val() == "Without GST") {
+
+            $("#divInvoiceID").hide();
+            $("#divInvoiceDate").hide();
+            $("#divLeadID").show();
+            $("#divLeadDate").show();
+        } else {
+
+        }
+    });
+</script>

@@ -1,0 +1,49 @@
+﻿@{
+    ViewBag.Title = "Transfer Leads";
+}
+<h2>Lead</h2>
+<h4>Trasnfer Leads</h4>
+@using (Html.BeginForm("TransferLeads", "Leads", FormMethod.Post, new { id = "LeadsEdit", enctype = "multipart/form-data", autocomplete = "off" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        <div class="form-group row">
+
+            <div class="col">
+                Enter the Range of Lead Nmbers to Transfer
+            </div>
+        </div>
+        <div class="form-group row">
+
+            <div class="col-1 text-right">
+                @Html.Label("From", htmlAttributes: new { @class = "control-label required" })
+            </div>
+
+            <div class="col-3">
+                @Html.Editor("FromLeadNumber", new { htmlAttributes = new { @class = "form-control", @required = "required", @type = "number" } })
+            </div>
+            <div class="col-1 text-right">
+
+                @Html.Label("To", htmlAttributes: new { @class = "control-label required" })
+            </div>
+            <div class="col-3">
+                @Html.Editor("ToLeadNumber", new { htmlAttributes = new { @class = "form-control", @required = "required", @type = "number" } })
+            </div>
+
+        </div>
+        <div class="form-group row">
+            <div class="col-1 text-right">
+                @Html.Label("Tele-Caller", "Tele Caller", htmlAttributes: new { @class = "control-label required" })
+            </div>
+            <div class="col-3">
+                @Html.DropDownList("TeleCallerID", (SelectList)ViewBag.TeleCallerID, "-- SELECT --", htmlAttributes: new { @class = "form-control selectpicker", @required = "required", @data_live_search = "true" })
+            </div>
+        </div>
+        <div class="form-group row float-right">
+            <div class="col">
+                <input type="submit" value="Transfer" class="btn btn-outline-secondary" style="float:right;" />
+            </div>
+        </div>
+
+    </div>
+}

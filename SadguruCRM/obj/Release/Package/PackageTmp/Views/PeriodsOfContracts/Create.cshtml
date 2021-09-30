@@ -1,0 +1,68 @@
+﻿@model SadguruCRM.Models.PeriodsOfContract
+
+@{
+    ViewBag.Title = "Period Of Contract";
+}
+
+    <h2>Period Of Contract</h2>
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+    <h4>Create</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        <div class="col-md-10">
+            @Html.LabelFor(model => model.PeriodsOfContract1,"Periods Of Contract", htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.PeriodsOfContract1, "Periods Of Contract", new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.PeriodsOfContract1, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-10">
+            @Html.LabelFor(model => model.Years, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.Years, "Years", new { htmlAttributes = new { @class = "form-control", @type="number" } })
+            @Html.ValidationMessageFor(model => model.Years, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-10">
+            @Html.LabelFor(model => model.Months, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.Months, "Months", new { htmlAttributes = new { @class = "form-control", @type="number"  } })
+            @Html.ValidationMessageFor(model => model.Months, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-10">
+            @Html.LabelFor(model => model.Days, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.Days, "Days", new { htmlAttributes = new { @class = "form-control", @type="number"  } })
+            @Html.ValidationMessageFor(model => model.Days, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-10">
+            @Html.LabelFor(model => model.Order, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.Order, new { htmlAttributes = new { @class = "form-control", @type = "number" } })
+            @Html.ValidationMessageFor(model => model.Order, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col">
+            <input type="submit" value="Create" class="btn btn-secondary"  style="float: right;"/>
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@*@section Scripts {
+    
+}*@

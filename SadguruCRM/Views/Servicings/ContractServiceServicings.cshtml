@@ -1,0 +1,168 @@
+﻿@model IEnumerable<SadguruCRM.Models.Servicing>
+
+@{
+    ViewBag.Title = "Contract Servicings";
+}
+
+
+
+@*<p>
+        @Html.ActionLink("Create New", "Create")
+    </p>*@
+<table class="table display cell-border">
+    <thead>
+        <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayName("Service Number")
+            </th>
+            <th>
+                @Html.DisplayName("Service Frequency Number")
+            </th>
+            <th>
+                @Html.DisplayName("System Service Datetime")
+            </th>
+            <th>
+                @Html.DisplayName("Service Datetime")
+            </th>
+            <th>
+                @Html.DisplayName("Actual Service Datetime")
+            </th>
+            <th>
+                @Html.DisplayName("Services Instructions")
+            </th>
+            <th>
+                @Html.DisplayName("Customer Name")
+            </th>
+            <th>
+                @Html.DisplayName("Frequency Of Service")
+            </th>
+            <th>
+                @Html.DisplayName("Service Group")
+            </th>
+            <th>
+                @Html.DisplayName("Service")
+            </th>
+            <th>
+                @Html.DisplayName("Created By")
+            </th>
+            <th>
+                @Html.DisplayName("Vendor")
+            </th>
+            <th style="min-width:70px;">Actions</th>
+        </tr>
+    </thead>
+    
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ServicingNo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Servicing_Frequency_Number)
+                </td>
+                <td>
+                    @Html.ValueFor(modelItem => item.System_Servicing_Datetime, "{0:dd/MM/yyyy HH:mm}")
+                </td>
+                <td>
+                    @Html.ValueFor(modelItem => item.Servicing_Datetime, "{0:dd/MM/yyyy HH:mm}")
+                </td>
+                <td>
+                    @Html.ValueFor(modelItem => item.Actual_Servicing_Datetime, "{0:dd/MM/yyyy HH:mm}")
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ServicingInstructions)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Customer.CustomerName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FrequencyOfService.FrequencyOfService1)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ServiceGroup.ServiceGroup1)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Service.ServiceName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserLogin.UserName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Vendor.VendorName)
+                </td>
+                <td>
+                    @Html.ActionLink(" ", "Edit", new { id = item.ServicingID }, new { @class = "fa fa-edit", @title = "EDIT" }) | 
+                    @Html.ActionLink(" ", "Details", new { id = item.ServicingID }, new { @class = "fa fa-info", @title = "DETAILS" }) | 
+                    @Html.ActionLink(" ", "Delete", new { id = item.ServicingID }, new { @class = "fa fa-trash", @title = "DELETE" })
+                </td>
+            </tr>
+        }
+    </tbody>
+    
+
+</table>
+
+<script>
+    var table;
+    $(document).ready(function () {
+
+        table = $('.table').DataTable({
+            fixedHeader: true,
+            order: [[1, 'asc']]
+        });
+        var colindex = 1;
+        $('.table thead tr:first th').each(function () {
+            if (colindex < 13) {
+                //var title = $('#leads thead th').eq($(this).index()).text();
+                $(this).html('<input type="text" placeholder="" class="column_search"/>');
+            } else if (colindex == 13) {
+                $(this).html('<input type="button" value="RESET" class="btn btn-sm btn-outline-secondary" id="reset" onclick="clearSearchBoxes();"/>');
+            }
+            colindex++;
+        } );
+        //table.columns().every(function () {
+        //    var column = this;
+
+        //    $('input', this.header()).on('keyup change', function () {
+        //        column
+        //            .search(this.value)
+        //            .draw();
+        //    });
+        //});
+        $('.table thead tr:first th').on( 'keyup', ".column_search",function () {
+            table
+                .column( $(this).parent().index() )
+                .search( this.value )
+                .draw();
+        });
+        $(".dataTables_filter").css("display", "none");
+
+
+    } );
+        //table.columns( '.Status' ).search( 'Important' ).draw();
+    function clearSearchBoxes() {
+        var searchBoxes = $(".column_search");
+        for (var i = 0; i < searchBoxes.length; i++) {
+            $(searchBoxes[i]).val("");
+        }
+        table.search('').columns().search('').draw();
+    };
+
+</script>

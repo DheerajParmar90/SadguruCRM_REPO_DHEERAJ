@@ -1,0 +1,158 @@
+﻿@model SadguruCRM.Models.Products_Master
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <h4>Product</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group row">
+        <div class="col">
+            @Html.LabelFor(model => model.Product, htmlAttributes: new { @class = "control-label required" })
+            @Html.EditorFor(model => model.Product, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+            @Html.ValidationMessageFor(model => model.Product, "", new { @class = "text-danger" })
+        </div>
+        <div class="col">
+            @Html.LabelFor(model => model.Product_Category_ID, "Product Category", htmlAttributes: new { @class = "control-label required" })
+            @Html.DropDownList("Product_Category_ID", null, "--SELECT--", htmlAttributes: new { @class = "form-control", @required = "required" })
+            @Html.ValidationMessageFor(model => model.Product_Category_ID, "", new { @class = "text-danger" })
+        </div>
+        <div class="col">
+            @Html.LabelFor(model => model.Product_SubCategory_ID, "Product Sub-Category", htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("Product_SubCategory_ID", null, "--SELECT--", htmlAttributes: new { @class = "form-control", @disabled= "disabled" })
+            @Html.ValidationMessageFor(model => model.Product_SubCategory_ID, "", new { @class = "text-danger" })
+        </div>
+        @*<div class="col-md-10">
+                @Html.LabelFor(model => model.Order, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.Order, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Order, "", new { @class = "text-danger" })
+            </div>*@
+    </div>
+    <div class="form-group row">
+        <div class="col">
+            @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label required" })
+            @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+            @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+        </div>
+        <div class="col">
+            @Html.LabelFor(model => model.VendorID, "Vendor", htmlAttributes: new { @class = "control-label required" })
+            @Html.DropDownList("VendorID", null, "--SELECT--", htmlAttributes: new { @class = "form-control", @required = "required" })
+            @Html.ValidationMessageFor(model => model.VendorID, "", new { @class = "text-danger" })
+        </div>
+        <div class="col">
+            @Html.LabelFor(model => model.UOM, "UOM", htmlAttributes: new { @class = "control-label required" })
+            @Html.DropDownListFor(model => model.UOM, new List<SelectListItem>(){
+                                               new SelectListItem() { Text = "BAG - BAGS", Value = "BAG" },
+                                               new SelectListItem() { Text = "BAL - BALE", Value = "BAL"},
+                                               new SelectListItem() { Text = "BDL - BUNDLES", Value = "BDL"},
+                                               new SelectListItem() { Text = "BKL - BUCKLES", Value = "BKL"},
+                                               new SelectListItem() { Text = "BOU - BILLION OF UNITS", Value = "BOU"},
+                                               new SelectListItem() { Text = "BOX - BOX", Value = "BOX"},
+                                               new SelectListItem() { Text = "BTL - BOTTLES", Value = "BTL"},
+                                               new SelectListItem() { Text = "BUN - BUNCHES", Value = "BUN"},
+                                               new SelectListItem() { Text = "CAN - CANS", Value = "CAN"},
+                                               new SelectListItem() { Text = "CBM - CUBIC METERS", Value = "CBM"},
+                                               new SelectListItem() { Text = "CCM - CUBIC CENTIMETERS", Value = "CCM"},
+                                               new SelectListItem() { Text = "CMS - CENTIMETERS", Value = "CMS"},
+                                               new SelectListItem() { Text = "CTN - CARTONS", Value = "CTN"},
+                                               new SelectListItem() { Text = "DOZ - DOZENS", Value = "DOZ"},
+                                               new SelectListItem() { Text = "DRM - DRUMS", Value = "DRM"},
+                                               new SelectListItem() { Text = "GGK - GREAT GROSS", Value = "GGK"},
+                                               new SelectListItem() { Text = "GMS - GRAMMES", Value = "GMS"},
+                                               new SelectListItem() { Text = "GRS - GROSS", Value = "GRS"},
+                                               new SelectListItem() { Text = "GYD - GROSS YARDS", Value = "GYD"},
+                                               new SelectListItem() { Text = "KGS - KILOGRAMS", Value = "KGS"},
+                                               new SelectListItem() { Text = "KLR - KILOLITRE", Value = "KLR"},
+                                               new SelectListItem() { Text = "KME - KILOMETRE", Value = "KME"},
+                                               new SelectListItem() { Text = "MLT - MILILITRE", Value = "MLT"},
+                                               new SelectListItem() { Text = "MTR - METERS", Value = "MTR"},
+                                               new SelectListItem() { Text = "MTS - METRIC TON", Value = "MTS"},
+                                               new SelectListItem() { Text = "NOS - NUMBERS", Value = "NOS"},
+                                               new SelectListItem() { Text = "PAC - PACKS", Value = "PAC"},
+                                               new SelectListItem() { Text = "PCS - PIECES", Value = "PCS"},
+                                               new SelectListItem() { Text = "PRS - PAIRS", Value = "PRS"},
+                                               new SelectListItem() { Text = "QTL - QUINTAL", Value = "QTL"},
+                                               new SelectListItem() { Text = "ROL - ROLLS", Value = "ROL"},
+                                               new SelectListItem() { Text = "SET - SETS", Value = "SET"},
+                                               new SelectListItem() { Text = "SQF - SQUARE FEET", Value = "SQF"},
+                                               new SelectListItem() { Text = "SQM - SQUARE METERS", Value = "SQM"},
+                                               new SelectListItem() { Text = "SQY - SQUARE YARDS", Value = "SQY"},
+                                               new SelectListItem() { Text = "TBS - TABLETS", Value = "TBS"},
+                                               new SelectListItem() { Text = "TGM - TEN GROSS", Value = "TGM"},
+                                               new SelectListItem() { Text = "THD - THOUSANDS", Value = "THD"},
+                                               new SelectListItem() { Text = "TON - TONNES", Value = "TON"},
+                                               new SelectListItem() { Text = "TUB - TUBES", Value = "TUB"},
+                                               new SelectListItem() { Text = "UGS - US GALLONS", Value = "UGS"},
+                                               new SelectListItem() { Text = "UNT - UNITS", Value = "UNT"},
+                                               new SelectListItem() { Text = "YDS - YARDS", Value = "YDS"},
+                                               new SelectListItem() { Text = "OTH - OTHERS", Value = "OTH"}
+                                            }, "-- SELECT --", new { @class = "form-control", @required = "required" })
+            @Html.ValidationMessageFor(model => model.UOM, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col">
+            @Html.LabelFor(model => model.TaxApplicable, "Tax Applicable", htmlAttributes: new { @class = "control-label required" })
+            @Html.DropDownListFor(model => model.TaxApplicable, new List<SelectListItem>(){
+                                               new SelectListItem() { Text = "YES", Value = "true" },
+                                               new SelectListItem() { Text = "NO", Value = "false"}
+                                            }, "-- SELECT --", new { @class = "form-control", @required = "required" })
+            @Html.ValidationMessageFor(model => model.TaxApplicable, "", new { @class = "text-danger" })
+        </div>
+        <div class="col">
+            @Html.LabelFor(model => model.TaxInPercentage,"Tax (%)", htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.TaxInPercentage, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.TaxInPercentage, "", new { @class = "text-danger" })
+        </div>
+        <div class="col">
+            @Html.LabelFor(model => model.Description, "Description", htmlAttributes: new { @class = "control-label" })
+            @Html.TextAreaFor(model => model.Description, 5, 100, new { @class = "form-control", @maxlength = "200" })
+            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="ol-md-12">
+            <input type="submit" value="Create" class="btn btn-secondary" style="float:right;margin-left:5px;" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @*@Html.Hidden("SubCategories", ViewBag.SubCategories)*@
+    @Html.ActionLink("Back to List", "Index", null, new { @type = "button", @class = "btn btn-outline-secondary" })
+</div>
+<script>
+    var SubCategories = new Array();
+    $(document).ready(function () {
+        var array = @Html.Raw(Json.Encode(@ViewBag.SubCategories));
+        for(var i =0; i<array.length;i++){
+            SubCategories[i] = array[i];
+        }
+    });
+    $("#Product_Category_ID").change(function () {
+        $("#Product_SubCategory_ID").empty()
+            .append('<option value="">--SELECT--</option>');
+        
+        if ($(this).val() == '') {
+            $("#Product_SubCategory_ID").prop("disabled", true);
+        }
+        else {
+            $("#Product_SubCategory_ID").prop("disabled", false);
+            for (var i = 0; i < SubCategories.length; i++) {
+                if (SubCategories[i].Parent == $(this).val())
+                    $("#Product_SubCategory_ID").append('<option value="' + SubCategories[i].Value + '">' + SubCategories[i].Text+'</option>');
+            }
+        }
+        
+    });
+</script>

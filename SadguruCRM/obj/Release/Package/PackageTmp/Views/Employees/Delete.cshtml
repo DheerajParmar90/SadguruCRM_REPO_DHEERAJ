@@ -1,0 +1,480 @@
+﻿@model SadguruCRM.Models.Employee
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Employee</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EnrolmentDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EnrolmentDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EmployeePhotoPath)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmployeePhotoPath)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DOB)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DOB)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CellNos)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CellNos)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EmailID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmailID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EmployeeStatus)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmployeeStatus)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Remarks)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Remarks)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ContactNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ContactNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastUpdatedDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastUpdatedDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LoginID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LoginID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Password)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Password)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EmployeeCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmployeeCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CurrentAddressAddressLine1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CurrentAddressAddressLine1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CurrentAddressAddressLine2)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CurrentAddressAddressLine2)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CurrentAddressAddressLine3)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CurrentAddressAddressLine3)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CurrentAddressPincode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CurrentAddressPincode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PermAddressAddressLine1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PermAddressAddressLine1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PermAddressAddressLine2)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PermAddressAddressLine2)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PermAddressAddressLine3)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PermAddressAddressLine3)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PermAddressPincode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PermAddressPincode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Gender_Enum)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Gender_Enum)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Marital_Status_Enum)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Marital_Status_Enum)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Blood_Group_Enum)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Blood_Group_Enum)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Qualification)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Qualification)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PrimaryCellNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PrimaryCellNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SecondaryCellNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SecondaryCellNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PersonalEmailID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PersonalEmailID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CompanyEmailID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CompanyEmailID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BasicSalary)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BasicSalary)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateOfJoining)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateOfJoining)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateOfProbation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateOfProbation)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateOfJConfirmation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateOfJConfirmation)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateOfLeaving)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateOfLeaving)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Pan_Number)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Pan_Number)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AADHAR_Number)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AADHAR_Number)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ESIC_Number)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ESIC_Number)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Other)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Other)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Work_Experience)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Work_Experience)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Bank_Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Bank_Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Accounty_Holder_Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Accounty_Holder_Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Account_Number)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Account_Number)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IFSC_Code)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IFSC_Code)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Bank_Branch)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Bank_Branch)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Branch.BranchName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Branch.BranchName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.City.CityName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.City.CityName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.City1.CityName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.City1.CityName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EmployeeDesignation.Designation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmployeeDesignation.Designation)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserLogin.UserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserLogin.UserName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Employees_Status_Master.EmployeeStatus)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Employees_Status_Master.EmployeeStatus)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Location.LocationName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Location.LocationName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Location1.LocationName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Location1.LocationName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.State.State1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.State.State1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Employee1.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Employee1.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.State1.State1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.State1.State1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserLogin1.UserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserLogin1.UserName)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

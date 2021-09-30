@@ -1,0 +1,82 @@
+﻿@model SadguruCRM.Models.FrequencyOfInvoice
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>FrequencyOfInvoice</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.FrequencyOfInvoice1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FrequencyOfInvoice1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastUpdatedDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastUpdatedDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Order)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Order)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Duration_Between_2_Invoices_Year)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Duration_Between_2_Invoices_Year)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Duration_Between_2_Invoices_Month)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Duration_Between_2_Invoices_Month)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Duration_Between_2_Invoices_Day)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Duration_Between_2_Invoices_Day)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserLogin.UserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserLogin.UserName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.FrequencyOfInvoiceID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

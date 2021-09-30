@@ -1,0 +1,50 @@
+﻿@model SadguruCRM.Models.Short_Service_Scope_Master
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Short_Service_Scope_Master</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Short_Service_Scope)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Short_Service_Scope)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastUpdateddate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastUpdateddate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Order)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Order)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Short_Service_Scope_ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,106 @@
+﻿@model IEnumerable<SadguruCRM.Models.ServiceGroup>
+
+@{
+    ViewBag.Title = "Service Groups";
+}
+
+    <h2>Service Groups</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+             
+            </th>
+            <th>
+             
+            </th>
+            <th>
+             
+            </th>
+            <th>
+             
+            </th>
+            <th></th>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Order)
+            </th>
+            <th>
+                @Html.DisplayName("Service Group")
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastUpdatedDate)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Order)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ServiceGroup1)
+                </td>
+                <td>
+                    @Html.Display("Created On")
+                </td>
+                <td>
+                    @Html.Display("Last Updated On")
+                </td>
+                <td>
+                    @Html.ActionLink(" ", "Edit", new { id = item.ServiceGroupID }, new { @class = "fa fa-edit" }) |
+                    @Html.ActionLink(" ", "Details", new { id = item.ServiceGroupID }, new { @class = "fa fa-info" }) |
+                    @Html.ActionLink(" ", "Delete", new { id = item.ServiceGroupID }, new { @class = "fa fa-trash" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<script>
+    $(document).ready(function () {
+        //debugger;
+        //$('#leads thead tr:eq(0) th').each(function () {
+
+        //    var title = $(this).text();
+        //    $(this).html( '<input type="text" class="column_search" />' );
+        //});
+        var table = $('.table').DataTable({
+            "bPaginate": false,
+            fixedHeader: true,
+        });
+
+        $('.table thead tr:first th').each( function () {
+            var title = $('.table thead th').eq( $(this).index() ).text();
+            $(this).html( '<input type="text" placeholder="Search '+title+'" class="column_search"/>' );
+        } );
+        //table.columns().every(function () {
+        //    var column = this;
+
+        //    $('input', this.header()).on('keyup change', function () {
+        //        column
+        //            .search(this.value)
+        //            .draw();
+        //    });
+        //});
+        $('.table thead tr:first th').on( 'keyup', ".column_search",function () {
+            table
+                .column( $(this).parent().index() )
+                .search( this.value )
+                .draw();
+        });
+        $(".dataTables_filter").css("display", "none");
+    } );
+        //table.columns( '.Status' ).search( 'Important' ).draw();
+</script>

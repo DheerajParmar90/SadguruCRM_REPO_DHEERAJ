@@ -1,0 +1,339 @@
+﻿@model IEnumerable<SadguruCRM.Models.Leads_History>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.LeadID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LeadDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CustomerName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TelNo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CellNo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Pincode)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EmailID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VisitDateTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VisitReport)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.RATE)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TAX)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FinalRate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CustomerPriority)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NextFollowUpDateTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SpecialInstructions)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FollowUpDetails)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreatedDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LastUpdatedDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AddressLine1)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AddressLine2)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AddressLine3)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LastName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NoOfWings)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NoOfFloors)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LeasdClosedDateTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LastUpdatedBy)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ConsultPerson)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ConsultPersonDesignation)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Industry)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PremisesArea)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PremisesAppSqFtArea)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StatusReason)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ServiceDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ServiceTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VisitTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NextFollowUpTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NoOfFlats)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.History_Created_On)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Branch.BranchName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.City.CityName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Employee.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UserLogin.UserName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LeadStatus.Status)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Location.LocationName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Premises_Area_Master.Premises_Area)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Source.Source1)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.State.State1)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Source1.Source1)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.UserLogin1.UserName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PremisesType.PremisesType1)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.LeadID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LeadDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CustomerName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TelNo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CellNo)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Pincode)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EmailID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.VisitDateTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.VisitReport)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.RATE)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TAX)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FinalRate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CustomerPriority)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NextFollowUpDateTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SpecialInstructions)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FollowUpDetails)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreatedDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LastUpdatedDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AddressLine1)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AddressLine2)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AddressLine3)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.FirstName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LastName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NoOfWings)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NoOfFloors)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LeasdClosedDateTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LastUpdatedBy)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ConsultPerson)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ConsultPersonDesignation)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Industry)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PremisesArea)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PremisesAppSqFtArea)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StatusReason)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ServiceDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ServiceTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.VisitTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NextFollowUpTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NoOfFlats)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.History_Created_On)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Branch.BranchName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.City.CityName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Employee.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserLogin.UserName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LeadStatus.Status)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Location.LocationName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Premises_Area_Master.Premises_Area)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Source.Source1)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.State.State1)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Source1.Source1)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.UserLogin1.UserName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PremisesType.PremisesType1)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Leads_History_ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Leads_History_ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Leads_History_ID })
+        </td>
+    </tr>
+}
+
+</table>

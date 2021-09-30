@@ -1,0 +1,190 @@
+﻿@model SadguruCRM.Models.Service_Estimate_Templates
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Service Estimate Template</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Create or Update</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group row">
+        <div class="col">
+            @Html.Label("Service", "Service", htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("ServiceGroupID", null, "-- SELECT --", htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.ServiceID, "", new { @class = "text-danger" })
+        </div>
+        <div class="col">
+            @Html.Label("Sub-Service", "Sub-Service", htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("ServiceID", null, "-- SELECT --", htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.ServiceID, "", new { @class = "text-danger" })
+        </div>
+        <div class="col">
+            @Html.LabelFor(model => model.Subject, htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.Subject, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Subject, "", new { @class = "text-danger" })
+        </div>
+        <div class="col">
+
+        </div>
+        <div class="col">
+
+        </div>
+    </div>
+
+    <div class="form-group">
+
+        <div class="col">
+            @Html.Label("General Instruction", htmlAttributes: new { @class = "control-label" })
+            @Html.TextAreaFor(model => model.General_Instruction, 5, 100, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.General_Instruction, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+
+        <div class="col">
+            @Html.Label("General Disinfestation", htmlAttributes: new { @class = "control-label" })
+            @Html.TextAreaFor(model => model.General_Disinfestation, 5, 100, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.General_Disinfestation, "", new { @class = "text-danger" })
+        </div>
+
+    </div>
+
+        <div class="form-group">
+            
+            <div class="col-md-4">
+                @Html.Label("Frequency Of Services", htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.Frequency_Of_Services, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Frequency_Of_Services, "", new { @class = "text-danger" })
+            </div>
+            
+            <div class="col-md-4">
+                @Html.Label("Charges Per Annum", htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.Charges_Per_Annum, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Charges_Per_Annum, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            
+            <div class="col-md-4">
+                @Html.Label("Terms Of Payment", htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.Terms_Of_Payment, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Terms_Of_Payment, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+
+            <div class="col-md-12">
+                <input type="submit" value="Save" class="btn btn-primary" style="float:right;" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+
+<style>
+    input, select, textarea {
+        max-width: 90% !important;
+    }
+</style>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        //Empty Services Dropdown
+        var services = "<select id='ServiceID' name = 'ServiceID'>";
+                    services = services + '<option value>--SELECT--</option>';
+                    services = services + '</select>';
+                    $('#ServiceID').html(services);
+
+
+        $('#ServiceGroupID').change(function () {
+            if ($('#ServiceGroupID').val() == "") {
+                    var services = "<select id='ServiceID' name = 'ServiceID'>";
+                    services = services + '<option value>--SELECT--</option>';
+                    services = services + '</select>';
+                    $('#ServiceID').html(services);
+            } else {
+                $.ajax({
+                type: "post",
+                url: "/ServiceEstimateTemplates/GetServices",
+                data: { ServiceGroupID: $('#ServiceGroupID').val() },
+                datatype: "json",
+                traditional: true,
+                success: function (data) {
+                    var services = "<select id='ServiceID' name = 'ServiceID'>";
+                    services = services + '<option value="">--SELECT--</option>';
+                    for (var i = 0; i < data.length; i++)
+                    {
+                        services = services + '<option value=' + data[i].Value + '>' + data[i].Text + '</option>';
+                    }
+                    services = services + '</select>';
+                    $('#ServiceID').html(services);
+                }
+            });
+            }
+           
+            
+        });
+
+        $('#ServiceID').change(function () {
+            //alert();
+            //return false;
+            if ($('#ServiceID').val() == "") {
+                    //var services = "<select id='ServiceID' name = 'ServiceID'>";
+                    //services = services + '<option value>--SELECT--</option>';
+                    //services = services + '</select>';
+                    //$('#ServiceID').html(services);
+                $(".text-box").val("");
+                $("textarea").val("");
+            } else {
+                $.ajax({
+                type: "post",
+                url: "/ServiceEstimateTemplates/CheckExistingServiceTemplate",
+                data: { ServiceID: $('#ServiceID').val() },
+                datatype: "json",
+                traditional: true,
+                success: function (data) {
+                    //var services = "<select id='ServiceID' name = 'ServiceID'>";
+                    //services = services + '<option value="">--SELECT--</option>';
+                    //for (var i = 0; i < data.length; i++)
+                    //{
+                    //    services = services + '<option value=' + data[i].Value + '>' + data[i].Text + '</option>';
+                    //}
+                    //services = services + '</select>';
+                    //$('#ServiceID').html(services);
+                        
+                            $(".text-box").val("");
+                            $("textarea").val("");
+                        if (data == "AlreadyExists") {
+                            alert('Estimate Template Already Exoists for this Service!');
+                            $("#ServiceID").val("");
+                            $(".btn").attr("disabled", true);
+                        }
+                        else {
+                            $(".btn").attr("disabled", false);
+                        }
+                    },
+                error: function (xhr, textStatus, errorThrown) { 
+                      console.error(textStatus + "\n" + errorThrown); 
+                }
+            });
+            }
+           
+            
+        });
+    });
+    
+</script> 

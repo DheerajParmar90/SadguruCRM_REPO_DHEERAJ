@@ -1,0 +1,145 @@
+﻿@model SadguruCRM.Models.Servicing
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    @*<meta name="description" content="Responsive Web UI Kit &amp; Dashboard Template based on Bootstrap">
+        <meta name="author" content="AdminKit">
+        <meta name="keywords" content="adminkit, bootstrap, web ui kit, dashboard template, admin template">*@
+    <title>PDF View - Service - Sadguru CRM</title>
+
+    @*<link rel="shortcut icon" href="~/img/icons/icon-48x48.png" />
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+
+        <link href="~/Content/adminkit/app.css" rel="stylesheet" />
+        <link href="~/Content/jquery-ui.css" rel="stylesheet" />*@
+
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+
+</head>
+<body>
+    <div class="container">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th class="text-center" colspan="7">
+                        SERVICE CARD <span style="float:right;">ORIGINAL</span
+                    </th>
+                </tr>
+
+            </thead>
+            <tbody>
+                <tr style="font-size:14px;">
+                    <td class="w-50" colspan="3">
+                        <img src="~/Content/Images/Facility_Name_Black.png" class="w-100" />
+                        <b>Unit: Sadguru Pest Control</b>
+                        <table class="table table-borderless">
+                            <tbody>
+                                <tr>
+                                    <td class="w-25">
+                                        <img src="~/Content/Images/Facility_Logo.png" class="w-100" />
+                                    </td>
+                                    <td class="w-75">
+                                        <b>Corp. Add.:</b> Shop No. 1, Madhu Jeevan Jyoti Co. Hsg. Soc. Ltd., Kasturba Cross Road No. 1, Borivali (E), Mumbai - 400066.<br />
+                                        <b>CIN: </b>U74999MH2016PTC287747<br />
+                                        <b>Email: </b>accounts@sadgurufacility.com<br />
+                                        <b>Website: </b>www.sadgurufacility.com<br />
+                                        <b>Contact No.: </b>72080 91124 / 022 2870 9412 / 82919 60605
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                    <td class="w-50" colspan="4">
+                        @if (Model.Contract.Customer != null)
+                        {
+                            <text><b>Customer ID: </b></text>@Model.Contract.Customer.CustomerNo
+                        }
+                        @if (Model.Contract != null)
+                        {
+                            string contractno = "", contractdate = "";
+
+                            contractno = Model.Contract.ContractNo;
+                            if (Model.Contract.ContractDate != null && Model.Contract.ContractDate.ToString() != "")
+                            {
+                                contractdate = ((DateTime)Model.Contract.ContractDate).ToString("dd/MM/yyyy");
+                            }
+                            <text><b>Contract ID: </b></text> @contractno
+                            <text><b>Contract Date: </b></text>@contractdate <br /><br />
+                        }
+                        @if (Model.Contract.Customer != null)
+                        {
+                            string name = Model.Contract.Customer.Title + " " + Model.Contract.Customer.FirstName + " " + Model.Contract.Customer.LastName + " " + Model.Contract.Customer.CustomerName;
+                            string address = Model.Contract.Customer.Customers_Billing_Address_Mapping.First().AddressLine1 + " "
+                                + Model.Contract.Customer.Customers_Billing_Address_Mapping.First().AddressLine2 + " "
+                                + Model.Contract.Customer.Customers_Billing_Address_Mapping.First().AddressLine3 + " "
+                                + Model.Contract.Customer.Customers_Billing_Address_Mapping.First().Location.LocationName + " "
+                                + Model.Contract.Customer.Customers_Billing_Address_Mapping.First().City.CityName;
+                            <text><b>Customer Name: </b></text>@name<br />
+                            <text><b>Address: </b></text>@address<br />
+                            <text><b>Contact Person: </b></text> @Model.Contract.Customer.ConsultPerson <br />
+                            <text><b>Contact No.: </b></text>@Model.Contract.Customer.TelNumber<br />
+
+
+
+
+                        }
+
+                        <text><b>Period Of Contract: </b></text>@Html.ValueFor(modelItem => Model.Contract.Contract_Services_Mapping.First().POCStartDate, "{0:dd/MM/yyyy}")<text> to </text>@Html.ValueFor(modelItem => Model.Contract.Contract_Services_Mapping.First().POCEndDate, "{0:dd/MM/yyyy}")<br /><br />
+
+
+
+                        <text><b>Type Of Premises: </b></text>@Html.ValueFor(modelItem => Model.Contract.PremisesType.PremisesType1)<br />
+                        <text><b>Premises Area: </b></text>@Html.ValueFor(modelItem => Model.Contract.Premises_Area_Master.Premises_Area)
+                        <text style="float:right;"><b>Approx. Sq. Ft.: </b></text>@Html.ValueFor(modelItem => Model.Contract.AppSqFtArea)
+
+                    </td>
+                </tr>
+            </tbody>
+            <thead  style="font-size:13px;">
+                <tr>
+                    <th>Service ID</th>
+                    <th>Date Of Service</th>
+                    <th>Service Name</th>
+                    <th>Frequency Of Service</th>
+                    <th>Operator Name</th>
+                    <th>Service Duration</th>
+                    <th>Client Signature</th>
+                </tr>
+            </thead>
+
+            <tbody style="font-size:13px;">
+                @if (Model.Contract.Servicings.Count() > 0)
+                {
+                    for (int i = 0; i < Model.Contract.Servicings.Count(); i++)
+                    {
+                <tr>
+                    <td>@Model.Contract.Servicings.ElementAt(i).ServicingNo</td>
+                    <td>@Model.Contract.Servicings.ElementAt(i).Actual_Servicing_Datetime</td>
+                    <td>@Model.Contract.Servicings.ElementAt(i).Contract_Services_Mapping.Service.ServiceName</td>
+                    <td>@Model.Contract.Servicings.ElementAt(i).Contract_Services_Mapping.FrequencyOfService.FrequencyOfService1</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                    }
+                }
+                
+
+            </tbody>
+
+        </table>
+        
+    </div>
+
+</body>
+</html>

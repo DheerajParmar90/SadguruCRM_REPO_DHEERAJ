@@ -1,0 +1,1184 @@
+﻿@model SadguruCRM.Models.Estimate
+
+@{
+    ViewBag.Title = "Create Estimate";
+}
+
+<h2>New Estimate</h2>
+@using (Html.BeginForm("Create", "Estimates", FormMethod.Post, new { id = "EstimatesCreate", enctype = "multipart/form-data", autocomplete = "off", onkeypress = "return CancelReturnKey();" }))
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <h4></h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+<div class="form-group row">
+    <div class="col-12">
+        @Html.RadioButtonFor(model => model.NewCustomer, true, new { @class = "newCust isNewCust", @required = "required" })New Customer
+        @Html.RadioButtonFor(model => model.NewCustomer, false, new { @class = "newCust isExistingCust", @required = "required" })Existing Customer
+    </div>
+    <div class="col-12">
+        @Html.ValidationMessageFor(model => model.NewCustomer, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+    @*<div class="form-group">
+            @Html.LabelFor(model => model.ExistingCustomer, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.ExistingCustomer)
+                    @Html.ValidationMessageFor(model => model.ExistingCustomer, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>*@
+
+    <div class="form-group row" id="custSelectnGSTDate" style="display:none;">
+        <div class="col" id="divLeadID" style="display:none;">
+            @Html.Label("Lead ID", "Lead ID", htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("LeadID", null, "-- SELECT --", htmlAttributes: new { @class = "form-control selectpicker", @data_live_search = "true" })
+            @Html.ValidationMessageFor(model => model.LeadID, "", new { @class = "text-danger" })
+        </div>
+        <div class="col" id="divCustID" style="display:none;">
+            @Html.Label("Customer", "Customer", htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("CustomerID", null, "-- SELECT --", htmlAttributes: new { @class = "form-control selectpicker", @data_live_search = "true" })
+            @Html.ValidationMessageFor(model => model.CustomerID, "", new { @class = "text-danger" })
+        </div>
+        @*<div class="col">
+                @Html.Label("GST Date", "GST Date", htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.GSTinDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.GSTinDate, "", new { @class = "text-danger" })
+            </div>*@
+        <div class="col">
+        </div>
+        <div class="col">
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-md-10">
+            @Html.RadioButtonFor(model => model.isNewEstimate, true, new { @class = "newEstimate isNewEstimate", @required = "required" })New Estimate
+            @Html.RadioButtonFor(model => model.isNewEstimate, false, new { @class = "newEstimate isRevisedEstimate", @required = "required" })Revised Estimate
+            @Html.ValidationMessageFor(model => model.isNewEstimate, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group row" id="divExistingEstimates" style="display:none;">
+        <div class="col-4">
+            @Html.Label("Existing Estimates", "Existing Estimates", htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownListFor(model => model.OriginalEstimateID, null, "-- SELECT --", htmlAttributes: new { @class = "form-control selectpicker", @data_live_search = "true", @style = "width:100%" })
+            @Html.ValidationMessageFor(model => model.OriginalEstimateID, "", new { @class = "text-danger" })
+        </div>
+        <div class="col">
+
+        </div>
+        <div class="col">
+        </div>
+        <div class="col">
+        </div>
+    </div>
+    <hr />
+    <div class="form-group row">
+
+        <div class="col">
+            @Html.Label("Reference No.", "Reference No.", htmlAttributes: new { @class = "control-label required" })
+            @Html.EditorFor(model => model.ReferenceNo, new { htmlAttributes = new { @class = "form-control ReferenceNo", @required = "required" } })
+        </div>
+        <div class="col">
+            @Html.Label("Date", "Date", htmlAttributes: new { @class = "control-label required" })
+            @Html.EditorFor(model => model.EstimateDate, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+        </div>
+
+        <div class="col">
+            @Html.Label("ConsultPerson", "Consult Person", htmlAttributes: new { @class = "control-label" })
+            @Html.Editor("ConsultPerson", new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+        </div>
+        <div class="col">
+            @Html.Label("Designation", "Designation", htmlAttributes: new { @class = "control-label" })
+            @Html.Editor("Designation", new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+        </div>
+        <div class="col">
+            @Html.Label("Branch", "Branch", htmlAttributes: new { @class = "control-label" })
+            @Html.Editor("Branch", new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+        </div>
+    </div>
+    <div id="divBillingAddress">
+        @*<h5>Billing Address</h5>*@
+        <div class="form-group row">
+            @Html.Hidden("Customers_Billing_Address_Mapping_ID")
+            <div class="col">
+                @Html.Label("AddressLine1", "Address Line 1", htmlAttributes: new { @class = "control-label" })
+                @Html.Editor("BillingAddressLine1", new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+            </div>
+            <div class="col">
+                @Html.Label("AddressLine2", "Address Line 2", htmlAttributes: new { @class = "control-label" })
+                @Html.Editor("BillingAddressLine2", new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+            </div>
+            <div class="col">
+                @Html.Label("AddressLine3", "Address Line 3", htmlAttributes: new { @class = "control-label" })
+                @Html.Editor("BillingAddressLine3", new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+            </div>
+            <div class="col">
+                @Html.Label("LocationID", "Location", htmlAttributes: new { @class = "control-label" })
+                @Html.Editor("BillingLocation", new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+            </div>
+            <div class="col">
+                @Html.Label("CityId", "City", htmlAttributes: new { @class = "control-label" })
+                @Html.Editor("BillingCity", new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col">
+                @Html.Label("Pincode", "Pincode", htmlAttributes: new { @class = "control-label" })
+                @Html.Editor("BillingPincode", new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+            </div>
+            <div class="col">
+                @Html.Label("State", "State", htmlAttributes: new { @class = "control-label" })
+                @Html.Editor("BillingState", new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+            </div>
+            <div class="col">
+                @Html.Label("Tel No", "Tel No", htmlAttributes: new { @class = "control-label" })
+                @Html.Editor("BillingTelNo", new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+            </div>
+            <div class="col">
+                @Html.Label("Cell No", "Cell No", htmlAttributes: new { @class = "control-label" })
+                @Html.Editor("BillingCellNo", new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+            </div>
+            <div class="col">
+                @Html.Label("Email", "Email", htmlAttributes: new { @class = "control-label" })
+                @Html.Editor("BillingEmail", new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+            </div>
+        </div>
+    </div>
+    <hr />
+    <div id="estimateData">
+        <h5>Services required</h5>
+        <div class="form-group SingleService row" id="SingleService">
+
+            <div class="col-2">
+
+                @Html.Hidden("Lead_Services_Mapping_ID", 0)
+                @Html.Hidden("Estimate_Services_Mapping_ID", 0)
+                @Html.Label("Service Group", "Service Group", htmlAttributes: new { @class = "control-label required" })
+                @Html.DropDownList("ServiceGroupID", null, "-- SELECT --", htmlAttributes: new { @class = "form-control restrict-dropdown-widths selectpicker ServiceGroupID", @onchange = "populateServices(this);", required = "required", @data_live_search = "true" })
+            </div>
+
+            <div class="col-2">
+                @Html.Label("Service", "Service", htmlAttributes: new { @class = "control-label required" })
+                @Html.DropDownList("ServiceID", null, "-- SELECT --", htmlAttributes: new { @class = "form-control restrict-dropdown-widths selectpicker ServiceID", required = "required",@onchange = "addToServicesForSubject(this);setServiceScope(this);calculateTax(this);", @data_live_search = "true" })
+            </div>
+
+            <div class="col-2">
+                @Html.Label("Frequency Of Service", "Frequency Of Service", htmlAttributes: new { @class = "control-label required" })
+                @Html.DropDownList("FrequencyOfServiceID", null, "-- SELECT --", htmlAttributes: new { @class = "form-control restrict-dropdown-widths selectpicker FrequencyOfServiceID", required = "required", @data_live_search = "true" })
+            </div>
+            @*<div class="row">
+
+                </div>*@
+
+            <div class="col-md-1">
+                @Html.Label("Qty", "Qty", htmlAttributes: new { @class = "control-label" })
+                @Html.Editor("Qty", new { htmlAttributes = new { @class = "form-control", @type = "number", @onchange = "calculateTax(this);", @data_live_search = "true" } })
+            </div>
+            <div class="col-md-1">
+                @Html.Label("Rate", "Rate", htmlAttributes: new { @class = "control-label" })
+                @Html.Editor("Rate", new
+                {
+                    htmlAttributes = new
+                    {
+                        @class = "form-control singleServiceRate",
+                        @type = "number",
+                        @onchange = "calculateTax(this);",
+                        required = "required"@*@onchange = "addServiceTotal();"*@}
+})
+            </div>
+            <div class="col-md-1">
+                @Html.Label("GST", "GST", htmlAttributes: new { @class = "control-label" })
+                @Html.DropDownList("GST", new List<SelectListItem>(){
+                                                   new SelectListItem() { Text = "Yes", Value = "True" },
+                                                   new SelectListItem() { Text = "No", Value = "False"}
+                                                }, "--", new { @class = "form-control", @onchange = "calculateTax(this);" })
+            </div>
+            <div class="col-md-1">
+                @Html.Label("Tax", "Tax", htmlAttributes: new { @class = "control-label" })
+                @Html.Editor("Tax", new { htmlAttributes = new { @class = "form-control", @type = "number", @onchange = "addServiceTotal();", @readonly = "readonly" } })
+            </div>
+            <div class="col-md-1">
+                @Html.Label("Final Rate", "Final Rate", htmlAttributes: new { @class = "control-label" })
+                @Html.Editor("FinalRatePerService", new { htmlAttributes = new { @class = "form-control singleServiceFinalRate", @type = "number", @onchange = "addFinalServiceTotal();", @readonly = "readonly" } })
+            </div>
+            <div class="col-md-1">
+                @Html.Label("Delete", "Delete", htmlAttributes: new { @class = "control-label" })
+                <i class="fa fa-trash form-control" style="color:red; border:none; box-shadow:none;" onclick="deleteService(this);"></i>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-10">
+                @Html.Label("Total", "Total", new { @style = "float:right;" })
+            </div>
+            <div class="col-md-2">
+                <input class="form-control text-box single-line" id="FinalRate" name="FinalRate" type="text" readonly style="float:right;">
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-12">
+                <input type="submit" value="Add More Service" class="btn btn-outline-secondary" style="float:right;" id="AddMoreServices" />
+            </div>
+        </div>
+        <hr />
+        <div class="form-group" style="display:none">
+            @Html.LabelFor(model => model.FinalEstimateRate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.FinalEstimateRate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.FinalEstimateRate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group row">
+            @*<div class="col-md-6">
+                    @Html.Label("Kind Attention", "Kind Attention", htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.KindAttention, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.KindAttention, "", new { @class = "text-danger" })
+                </div>*@
+            <div class="col">
+                @Html.Label("Subject", "Subject", htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.Subject, new { htmlAttributes = new { @class = "form-control Subject" } })
+                @Html.ValidationMessageFor(model => model.Subject, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col">
+                @Html.Label("Welcome Sentence", "Welcome Sentence", htmlAttributes: new { @class = "control-label" })
+                @Html.TextAreaFor(model => model.WelcomeSentence, 4, 200, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.WelcomeSentence, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col">
+                @Html.Label("Service Scope", "Service Scope", htmlAttributes: new { @class = "control-label" })
+                @Html.TextAreaFor(model => model.ServiceScope, 10, 200, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ServiceScope, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col">
+                @Html.Label("Footer", "Footer", htmlAttributes: new { @class = "control-label" })
+                @Html.TextAreaFor(model => model.Footer, 10, 200, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Footer, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-12">
+                @*<input type="submit" value="Save & Create New Lead" class="btn btn-primary" style="float:right;" />*@
+                <input type="submit" name="submit" value="Save" class="btn btn-secondary" style="float:right;" />
+                <input type="submit" name="submit" value="Save & Create New Estimate"  class="btn btn-secondary" style="float:right;" />
+            </div>
+        </div>
+    </div>
+
+</div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index",null, new { @type = "button", @class = "btn btn-outline-secondary" })
+</div>
+@*@section Scripts {
+
+    }*@
+<style>
+    #isNewEstimate-error, #NewCustomer-error {
+        float: left;
+        color: red;
+        vertical-align: bottom;
+        display: block;
+    }
+</style>
+<script src="~/Themes/ckeditor4.15.0/ckeditor.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+@*For Multiselect - Bootstrap Select*@
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
+
+<!-- (Optional) Latest compiled and minified JavaScript translation files -->
+@*<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/i18n/defaults-*.min.js"></script>*@
+<script>
+     $("#EstimateDate").datetimepicker({
+         format: 'DD/MM/YYYY',
+         useCurrent: false
+         //,defaultDate: new Date()
+    });
+    $("#GSTinDate").datetimepicker({
+        format: 'DD/MM/YYYY',
+        defaultDate: new Date()
+    });
+    $.validator.addMethod(
+        "australianDate",
+        function (value, element) {
+            // put your own logic here, this is just a (crappy) example
+            return value.match(/^\d\d?\/\d\d?\/\d\d\d\d$/);
+        },
+        "Please enter a date in the format dd/mm/yyyy."
+    );
+    $('#EstimatesCreate')
+        .validate({
+            rules: {
+                GSTinDate: {
+                    australianDate: true
+                },
+                EstimateDate: {
+                    australianDate: true
+                }
+            }
+        });
+    //$("form").submit(function () {
+    //    $('.FrequencyOfServiceID').each(function () {
+    //        debugger;
+    //        if ($(this).val() == "") {
+    //            alert("Please select Frequency of Service");
+    //            return false;
+    //        }
+    //    });
+    //});
+    $("form").bind('submit', function (event) {
+
+
+        $('select.ServiceGroupID').each(function () {
+            debugger;
+            if ($(this).val() == "") {
+                alert("Please select Service Group");
+                $(this).focus()
+                event.preventDefault();
+            }
+        });
+        $('select.ServiceID').each(function () {
+            debugger;
+            if ($(this).val() == "") {
+                alert("Please select Service");
+                $(this).focus()
+                event.preventDefault();
+            }
+        });
+        $('select.FrequencyOfServiceID').each(function () {
+            debugger;
+            if ($(this).val() == "") {
+                alert("Please select Frequency of Service");
+                $(this).focus()
+                event.preventDefault();
+            }
+        });
+    });
+    $(".newCust").change(function () {
+        if ($(this).val() == 'True') {
+            debugger;
+            $("#divLeadID").css('display', 'block');
+            $("#divCustID").css('display', 'none');
+        } else {
+            $("#divLeadID").css('display', 'none');
+            $("#divCustID").css('display', 'block');
+        }
+        $("#LeadID").val("");
+        $("#LeadID").trigger("change");
+        $("#CustomerID").val("");
+        $("#CustomerID").trigger("change");
+        $("#custSelectnGSTDate").slideDown();
+        $(".isNewEstimate").prop("checked", false);
+        $(".isRevisedEstimate").prop("checked", false);
+        $(".OriginalEstimateID option").each(function () {
+            $(this).remove();
+        });
+        CKEDITOR.instances.WelcomeSentence.setData("", function () {
+            this.checkDirty();  // true
+        });
+        CKEDITOR.instances.ServiceScope.setData("", function () {
+            this.checkDirty();  // true
+        });
+
+        //$("#divExistingEstimates").css('display', 'none');
+    });
+    function resetServicesSection() {
+        var firstSevicesSections = $(".SingleService:first");
+        firstSevicesSections.find('#Lead_Services_Mapping_ID').val(0);
+        firstSevicesSections.find('#Estimate_Services_Mapping_ID').val(0);
+        firstSevicesSections.find('#ServiceGroupID').val('');
+        firstSevicesSections.find('#ServiceGroupID').selectpicker("refresh");
+        firstSevicesSections.find("#ServiceID option").each(function () {
+            $(this).remove();
+        });
+
+        firstSevicesSections.find('#ServiceID').selectpicker("refresh");
+        firstSevicesSections.find('#FrequencyOfServiceID').val('');
+
+        firstSevicesSections.find('#FrequencyOfServiceID').selectpicker("refresh");
+        firstSevicesSections.find('#Qty').val('');
+        firstSevicesSections.find('#Rate').val('');
+        firstSevicesSections.find('#GST').val('');
+        firstSevicesSections.find('#Tax').val('');
+        firstSevicesSections.find('#FinalRatePerService').val('');
+
+        //$(".text-box").val("");
+        //$("textarea").val("");
+        var TotalSevicesSections = $(".SingleService");
+
+        for (var i = 1; i < TotalSevicesSections.length; i++) {
+            TotalSevicesSections[i].remove();
+        }
+    }
+    $("#LeadID").change(function () {
+        resetInputs();
+        debugger;
+        //clear previous service sections , first make default
+        resetServicesSection();
+
+
+        if ($(this).val() == '') {
+
+        } else {
+            debugger;
+            $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("GetServiceMapped", "Leads")',
+                    data: { LeadID: $(this).val() },
+                    datatype: "json",
+                    //async: false,
+                    traditional: true,
+                success: function (data) {
+                    debugger;
+                    if (data == "No Services Found") {
+                        alert("No Services Found");
+                    } else if (data == "Wrong Lead ID") {
+                        alert("Wrong Lead ID");
+                    } else {
+                        //console.log("success");
+                        $("#estimateData").slideDown();
+                        //create new Service Sections total - 1
+                        for (var i = 1; i < data.length; i++) {
+                            var newel = $('.SingleService:last').clone();
+                            newel.find('.bootstrap-select').replaceWith(function () { return $('select', this); })
+                            newel.find('.selectpicker').selectpicker('render');
+                            $(newel).insertAfter(".SingleService:last");
+                        }
+                        var SevicesSections = $(".SingleService");
+                        for (var i = 0; i < data.length; i++) {
+                            debugger;
+                            var SingleService = $('.SingleService:eq(' + i + ')');
+
+                            //SingleService.find('.bootstrap-select').replaceWith(function () { return $('select', this); })
+                            //SingleService.find('.selectpicker').selectpicker('render');
+
+                            SingleService.find('#Lead_Services_Mapping_ID').val(data[i].Lead_Services_Mapping_ID);
+                            SingleService.find('#Estimate_Services_Mapping_ID').val(0);
+
+                            SingleService.find('#ServiceGroupID').val(data[i].ServiceGroupID);
+
+                            SingleService.find('#ServiceGroupID').selectpicker("render");
+                            populateServices(SingleService.find('#ServiceGroupID'));
+                            SingleService.find('#ServiceID').val(data[i].ServiceID);
+                            SingleService.find('#ServiceID').selectpicker("refresh");
+
+                            addToServicesForSubject(SingleService.find('#ServiceID'));
+                            setServiceScope(SingleService.find('#ServiceID'));
+
+                            SingleService.find('#FrequencyOfServiceID').val(data[i].FrequencyOfServiceID);
+
+                            SingleService.find('#FrequencyOfServiceID').selectpicker("refresh");
+
+                            SingleService.find('#Qty').val(data[i].Qty);
+                            SingleService.find('#Rate').val(data[i].Rate);
+                            if (data[i].GST) {
+                                SingleService.find('#GST').val("True");
+                            } else {
+                                SingleService.find('#GST').val("False");
+                            }
+
+                            SingleService.find('#Tax').val(data[i].Tax);
+                            SingleService.find('#FinalRatePerService').val(data[i].FinalRatePerService);
+                            //SingleService.find('.bootstrap-select').replaceWith(function () { return $('select', this); })
+                            //SingleService.find('.selectpicker').selectpicker('render');
+
+                        }
+                        //resetFormValidator("#EstimatesCreate");
+                        addFinalServiceTotal();
+
+
+                    }
+
+                        //var services = "<select id='ServiceID' name = 'ServiceID' required='required'>";
+                        //services = services + '<option value="">--SELECT--</option>';
+                        //for (var i = 0; i < data.length; i++) {
+                        //    services = services + '<option value=' + data[i].Value + '>' + data[i].Text + '</option>';
+                        //}
+                        //services = services + '</select>';
+                        //$(obj).parent().closest('.SingleService').find('#ServiceID').html(services);
+                        //$(obj).closest('#ServiceID').html(services);
+                },
+                error: (error) => {
+                     console.log(JSON.stringify(error));
+                    }
+            });
+            getLeadsData($(this).val());
+        }
+
+    });
+    function getLeadsData(LeadID) {
+
+            debugger;
+        $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("GetLeadDataForEstimates", "Leads")',
+                    data: { LeadID: LeadID },
+                    datatype: "json",
+                    //async: false,
+                    traditional: true,
+                success: function (data) {
+                    //$.LoadingOverlay("show");
+                    debugger;
+                    $("#ConsultPerson").val(data.lead.ConsultPerson);
+                    $("#Designation").val(data.lead.ConsultPersonDesignation);
+                    $("#BillingAddressLine1").val(data.lead.AddressLine1);
+                    $("#BillingAddressLine2").val(data.lead.AddressLine2);
+                    $("#BillingAddressLine3").val(data.lead.AddressLine3);
+                    $("#Branch").val(data.lead.BranchName);
+                    $("#BillingLocation").val(data.lead.LocationName);
+                    $("#BillingCity").val(data.lead.CityName);
+                    $("#BillingPincode").val(data.lead.BillingPincode);
+                    $("#BillingState").val(data.lead.State1);
+                    $("#BillingTelNo").val(data.lead.TelNo);
+                    $("#BillingCellNo").val(data.lead.CellNo);
+                    $("#BillingEmail").val(data.lead.EmailID);
+                    addressForSubject = data.lead.AddressLine1;
+                    if (data.lead.AddressLine2 != null) {
+                        addressForSubject = addressForSubject + data.lead.AddressLine2;
+                    }
+                    if (data.lead.AddressLine3 != null) {
+                        addressForSubject = addressForSubject + data.lead.AddressLine3;
+                    }
+                    premiseForSubject = data.lead.Premise;
+                    setSubject();
+
+                    if (data.lead.ConsultPerson != null) {
+                        consultPerson = data.lead.ConsultPerson;
+                    } else {
+                        consultPerson = "_________________________";
+                    }
+                    if (data.lead.VisitAllocated != null) {
+                        visitAllocatedPerson = data.lead.VisitAllocated ;
+                    } else {
+                        visitAllocatedPerson = "_________________________";
+                    }
+                    if (data.lead.VisitAllocatedDesignation != null) {
+                        visitAllocatedPersonDesignation = data.lead.VisitAllocatedDesignation ;
+                    } else {
+                        visitAllocatedPersonDesignation = "_________________________";
+                    }
+                    if (data.lead.VisitAllocatedCellNumber != null) {
+                        visitAllocatedPersonCellNo = data.lead.VisitAllocatedCellNumber ;
+                    } else {
+                        visitAllocatedPersonCellNo = "_________________________";
+                    }
+                    if (data.lead.TeleCaller != null) {
+                        telecallerForFooter = data.lead.TeleCaller;
+                    } else {
+                        telecallerForFooter = "_________________________";
+                    }
+                    setWelcomeSentence();
+                    setEstimateDate();
+                    setFooter();
+                },
+                    error: (error) => {
+                        console.log(JSON.stringify(error));
+
+                        }
+                    });
+    }
+    $("#CustomerID").change(function () {
+        resetInputs();
+        if ($(this).val() == '') {
+
+        } else {
+            $("#estimateData").slideDown();
+            $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("GetCustomerDataForEstimates", "Estimates")',
+                    data: { custID: $(this).val() },
+                    datatype: "json",
+                    //async: false,
+                    traditional: true,
+                success: function (data) {
+                    //$.LoadingOverlay("show");
+                    debugger;
+                    if (data == "No Billing Address Found") {
+                        alert("No Billing Address Found");
+
+                    }  else {
+                        $("#ConsultPerson").val(data.cust.ConsultPerson);
+                        $("#Designation").val(data.cust.ConsultPersonDesignation);
+                        debugger;
+                        $("#Customers_Billing_Address_Mapping_ID").val(data.bill.Customers_Billing_Address_Mapping_ID);
+                        $("#BillingAddressLine1").val(data.bill.AddressLine1);
+                        $("#BillingAddressLine2").val(data.bill.AddressLine2);
+                        $("#BillingAddressLine3").val(data.bill.AddressLine3);
+                        $("#BillingLocation").val(data.LocationName);
+                        $("#BillingCity").val(data.CityName);
+                        $("#BillingPincode").val(data.bill.BillingPincode);
+                        $("#BillingState").val(data.State1);
+                        $("#Branch").val(data.cust.BranchName);
+
+
+                        $("#BillingTelNo").val(data.strBillingTelNos);
+
+                        $("#BillingCellNo").val(data.strBillingCellNos);
+
+                        $("#BillingEmail").val(data.strBillingEmails);
+
+
+
+                        if (data.cust.ConsultPerson != null) {
+                            consultPerson = data.cust.ConsultPerson;
+                        } else {
+                            consultPerson = "_________________________";
+                        }
+
+                        //if (data.cust.VisitAllocated != null) {
+                        //    visitAllocatedPerson = data.cust.VisitAllocated + " (" + data.cust.VisitAllocatedDesignation + " )" + data.cust.VisitAllocatedContactNumber;
+                        //} else {
+                        //    visitAllocatedPerson = "`<b>ENTER VISIT ALLOCATED PERSON HERE</b>`";
+                        //}
+
+                        if (data.cust.VisitAllocated != null) {
+                            visitAllocatedPerson = data.cust.VisitAllocated;
+                        } else {
+                            visitAllocatedPerson = "_________________________";
+                        }
+                        if (data.cust.VisitAllocatedDesignation != null) {
+                            visitAllocatedPersonDesignation = data.cust.VisitAllocatedDesignation;
+                        } else {
+                            visitAllocatedPersonDesignation = "_________________________";
+                        }
+                        if (data.cust.VisitAllocatedCellNumber != null) {
+                            visitAllocatedPersonCellNo = data.cust.VisitAllocatedCellNumber;
+                        } else {
+                            visitAllocatedPersonCellNo = "_________________________";
+                        }
+                        if (data.cust.TeleCaller != null) {
+                            telecallerForFooter = data.cust.TeleCaller;
+                        } else {
+                            telecallerForFooter = "`_________________________`";
+                        }
+                        setEstimateDate();
+
+                        setWelcomeSentence();
+                        setFooter();
+                        //create new Service Address Sections total - 1
+                        //for (var i = 1; i < data.servicesAddressList.length; i++) {
+                        //    var newel = $('.SingleServiceAddress:last').clone();
+                        //    $(newel).insertAfter(".SingleServiceAddress:last");
+                        //}
+                        //for (var i = 0; i < data.servicesAddressList.length; i++) {
+                        //    debugger;
+                        //    var SingleServiceAddress = $('.SingleServiceAddress:eq(' + i + ')');
+                        //    SingleServiceAddress.find('#Customers_Service_Address_Mapping_ID').val(data.servicesAddressList[i].Customers_Service_Address_Mapping_ID);
+                        //    SingleServiceAddress.find('#ServiceAddressLine1').val(data.servicesAddressList[i].AddressLine1);
+                        //    SingleServiceAddress.find('#ServiceAddressLine2').val(data.servicesAddressList[i].AddressLine2);
+                        //    SingleServiceAddress.find('#ServiceAddressLine3').val(data.servicesAddressList[i].AddressLine3);
+                        //    SingleServiceAddress.find('#ServiceLocationID').val(data.servicesAddressList[i].ServiceLocationID);
+                        //    SingleServiceAddress.find('#ServiceCityID').val(data.servicesAddressList[i].ServiceCityID);
+                        //    SingleServiceAddress.find('#ServicePincode').val(data.servicesAddressList[i].ServicePincode);
+                        //    SingleServiceAddress.find('#ServiceStateID').val(data.servicesAddressList[i].ServiceStateID);
+                        //    SingleServiceAddress.find('#ServiceConsultPerson').val(data.servicesAddressList[i].ServiceAddressConsultPerson);
+                        //    //if (data[i].GST) {
+                        //    //    SingleService.find('#GST').val("True");
+                        //    //} else {
+                        //    //    SingleService.find('#GST').val("False");
+                        //    //}
+
+
+                        //}
+                    }
+
+                },
+                    error: (error) => {
+                        console.log(JSON.stringify(error));
+                        $.LoadingOverlay("hide");
+                        }
+                    });
+                //$.LoadingOverlay("hide");
+                }
+        }
+
+    );
+    $("#OriginalEstimateID").change(function () {
+        resetServicesSection();
+        //alert($("#OriginalEstimateID option:selected").text());
+        if ($(this).val() == '') {
+
+        } else {
+            debugger;
+            $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("GetServiceMappedForEstimate", "Estimates")',
+                    data: { EstimateRefNo: $("#OriginalEstimateID option:selected").text() },
+                    datatype: "json",
+                    //async: false,
+                    traditional: true,
+                success: function (data) {
+                    debugger;
+                    if (data == "No Services Found") {
+                        alert("No Services Found");
+                    } else if (data == "Wrong Estimate Reference Number") {
+                        alert("Wrong Estimate Reference Number");
+                    } else {
+                        //console.log("success");
+                        $("#estimateData").slideDown();
+                        //create new Service Sections total - 1
+                        for (var i = 1; i < data.length; i++) {
+                            var newel = $('.SingleService:last').clone();
+                            newel.find('.bootstrap-select').replaceWith(function () { return $('select', this); })
+                            newel.find('.selectpicker').selectpicker('render');
+                            $(newel).insertAfter(".SingleService:last");
+                        }
+                        var SevicesSections = $(".SingleService");
+                        for (var i = 0; i < data.length; i++) {
+                            debugger;
+                            var SingleService = $('.SingleService:eq(' + i + ')');
+
+                            //SingleService.find('.bootstrap-select').replaceWith(function () { return $('select', this); })
+                            //SingleService.find('.selectpicker').selectpicker('render');
+
+                            SingleService.find('#Lead_Services_Mapping_ID').val(0);
+                            SingleService.find('#Estimate_Services_Mapping_ID').val(data[i].Estimate_Services_Mapping_ID);
+
+                            SingleService.find('#ServiceGroupID').val(data[i].ServiceGroupID);
+
+                            SingleService.find('#ServiceGroupID').selectpicker("render");
+                            populateServices(SingleService.find('#ServiceGroupID'));
+                            SingleService.find('#ServiceID').val(data[i].ServiceID);
+                            SingleService.find('#ServiceID').selectpicker("refresh");
+
+                            addToServicesForSubject(SingleService.find('#ServiceID'));
+                            setServiceScope(SingleService.find('#ServiceID'));
+
+                            SingleService.find('#FrequencyOfServiceID').val(data[i].FrequencyOfServiceID);
+
+                            SingleService.find('#FrequencyOfServiceID').selectpicker("refresh");
+
+                            SingleService.find('#Qty').val(data[i].Qty);
+                            SingleService.find('#Rate').val(data[i].Rate);
+                            if (data[i].GST) {
+                                SingleService.find('#GST').val("True");
+                            } else {
+                                SingleService.find('#GST').val("False");
+                            }
+
+                            SingleService.find('#Tax').val(data[i].Tax);
+                            SingleService.find('#FinalRatePerService').val(data[i].FinalRatePerService);
+                            //SingleService.find('.bootstrap-select').replaceWith(function () { return $('select', this); })
+                            //SingleService.find('.selectpicker').selectpicker('render');
+
+                        }
+                        //resetFormValidator("#EstimatesCreate");
+                        addFinalServiceTotal();
+
+
+                    }
+
+                        //var services = "<select id='ServiceID' name = 'ServiceID' required='required'>";
+                        //services = services + '<option value="">--SELECT--</option>';
+                        //for (var i = 0; i < data.length; i++) {
+                        //    services = services + '<option value=' + data[i].Value + '>' + data[i].Text + '</option>';
+                        //}
+                        //services = services + '</select>';
+                        //$(obj).parent().closest('.SingleService').find('#ServiceID').html(services);
+                        //$(obj).closest('#ServiceID').html(services);
+                },
+                error: (error) => {
+                     console.log(JSON.stringify(error));
+                    }
+            });
+        }
+    });
+    $(".newEstimate").change(function () {
+        if (!($(".isNewCust").is(':checked')) && !($(".isExistingCust").is(':checked'))) {
+            alert("Please select New or Existingt Customer");
+            $(this).prop("checked", false);
+            return false;
+        }
+        if ($(".isNewCust").is(':checked')) {
+            if ($("#LeadID").val() == "") {
+                $(this).prop("checked", false);
+                alert("Please select Lead");
+                return false;
+            }
+        }
+        if ($(".isExistingCust").is(':checked')) {
+            if ($("#CustomerID").val() == "") {
+                $(this).prop("checked", false);
+                alert("Please select Customer");
+                return false;
+            }
+        }
+        $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("GetEstimateReferenceNumber", "Estimates")',
+                data: { IsNewCust: $(".isNewCust").is(':checked'), IsExistingCust: $(".isExistingCust").is(':checked'), LeadID: $("#LeadID").val(), CustID: $("#CustomerID").val() },
+                    datatype: "json",
+                    //async: false,
+                    traditional: true,
+                success: function (data) {
+                    //$.LoadingOverlay("show");
+                    debugger;
+                    $(".ReferenceNo").val(data);
+                },
+                error: (error) => {
+                    console.log(JSON.stringify(error));
+                }
+            });
+        if ($(this).val() == 'True') {
+            debugger;
+            $("#divExistingEstimates").css('display', 'none');
+
+        } else {
+            $("#divExistingEstimates").css('display', 'block');
+            $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("GetExistingEstimates", "Estimates")',
+                data: { IsNewCust: $(".isNewCust").is(':checked'), IsExistingCust: $(".isExistingCust").is(':checked'), LeadID: $("#LeadID").val(), CustID: $("#CustomerID").val() },
+                    datatype: "json",
+                    //async: false,
+                    traditional: true,
+                success: function (data) {
+                    var existingEstimates = "<select class='form-control selectpicker' data-live-search='true' data-val='true' data-val-number='The field OriginalEstimateID must be a number.' id='OriginalEstimateID' name='OriginalEstimateID' style='width: 100 % ' tabindex=' - 98'>";
+                    existingEstimates = existingEstimates + '<option value="">--SELECT--</option>';
+                    for (var i = 0; i < data.length; i++) {
+                        existingEstimates = existingEstimates + '<option value=' + data[i].OriginalEstimateID + '>' + data[i].ReferenceNo + '</option>';
+                    }
+                    existingEstimates = existingEstimates + '</select>';
+                    $('#OriginalEstimateID').html(existingEstimates);
+                    $('#OriginalEstimateID').selectpicker('refresh');
+                    //$(obj).closest('#ServiceID').html(services);
+                },
+                    error: (error) => {
+                        console.log(JSON.stringify(error));
+
+                        }
+            });
+        }
+        //$("#LeadID").val("");
+        //$("#LeadID").trigger("change");
+        //$("#CustomerID").val("");
+        //$("#CustomerID").trigger("change");
+        //$("#custSelectnGSTDate").slideDown();
+    });
+
+    $('#AddMoreServices').click(function () {
+
+        // Create clone of <div class='input-form'>
+        var newel = $('.SingleService:last').clone();
+
+        newel.find('input[type=number]').each(function () {
+            debugger;
+            //alert(this.val());
+            $(this).val('');
+        });
+
+
+        newel.find('.bootstrap-select').replaceWith(function () { return $('select', this); })
+        newel.find('.selectpicker').selectpicker('render');
+        // Add after last <div class='input-form'>
+        $(newel).insertAfter(".SingleService:last");
+        return false;
+    });
+
+    function deleteService(obj) {
+        //alert();
+        if ($('.SingleService').length < 2) {
+            alert('At least one Service is Required');
+        }
+        else {
+            $(obj).parent().closest('.SingleService').remove();
+        }
+        addServiceTotal();
+    }
+    function addServiceTotal() {
+
+        //var sum = 0;
+        //$(".singleServiceRate").each(function () {
+        //    sum += +$(this).val();
+        //});
+        //$("#FinalRate").val(sum);
+    }
+    function addFinalServiceTotal() {
+
+        var sum = 0;
+        $(".singleServiceFinalRate").each(function () {
+            sum += +$(this).val();
+        });
+        $("#FinalRate").val(sum.toFixed(2));
+        $("#FinalEstimateRate").val(sum.toFixed(2));
+    }
+    function populateServices(obj) {
+
+        if ($(obj).val() == "") {
+            var services = "<select id='ServiceID' name = 'ServiceID' required='required'>";
+            services = services + '<option value>--SELECT--</option>';
+            services = services + '</select>';
+            $(obj).parent().closest('.SingleService').find('#ServiceID').html(services);
+            //$(obj).closest("#ServiceID").html(services);
+        } else {
+            $.ajax({
+                type: "post",
+                url: "/Leads/GetServices",
+                data: { ServiceGroupID: $(obj).val() },
+                datatype: "json",
+                traditional: true,
+                async: false,
+                success: function (data) {
+                    var services = "<select id='ServiceID' class='form-control selectpicker' data_live_search='true' name = 'ServiceID' required='required'>";
+                    services = services + '<option value="">--SELECT--</option>';
+                    for (var i = 0; i < data.length; i++) {
+                        services = services + '<option value=' + data[i].Value + '>' + data[i].Text + '</option>';
+                    }
+                    services = services + '</select>';
+                    $(obj).parent().closest('.SingleService').find('#ServiceID').html(services);
+                    $(obj).parent().closest('.SingleService').find('#ServiceID').selectpicker('refresh');
+                    //$(obj).closest('#ServiceID').html(services);
+                }
+            });
+        }
+    }
+    function calculateTax(obj) {
+        debugger;
+        //alert($(obj).prev('#ServiceGroupID').val());
+        var serviceGroup = $(obj).parent().parent().find('#ServiceGroupID').val();
+        var service = $(obj).parent().parent().find('#ServiceID').val();
+        var freq = $(obj).parent().parent().find('#FrequencyOfServiceID').val();
+        var qty = $(obj).parent().parent().find('#Qty').val();
+        var rate = $(obj).parent().parent().find('#Rate').val();
+
+        var gst = $(obj).parent().parent().find('#GST').val();
+        if (serviceGroup == '') {
+            alert('Please select Service Group!');
+            $(obj).parent().parent().find('#ServiceGroupID').focus();
+            return false;
+        }
+        if (service == '') {
+            alert('Please select Service!');
+            $(obj).parent().parent().find('#ServiceID').focus();
+            return false;
+        }
+        if (freq == '') {
+            //alert('Please select Frequency of Service!');
+            //$(obj).parent().parent().find('#FrequencyOfServiceID').focus();
+            //return false;
+        }
+
+        if (qty == '') {
+            //alert('Please enter Quantity!');
+            //$(obj).parent().parent().find('#Qty').focus();
+            //return false;
+            qty = 1;
+        }
+        if (rate == '') {
+            alert('Please enter Rate!');
+            $(obj).parent().parent().find('#Rate').focus();
+            return false;
+        }
+        // All values OK then proceed
+        $.ajax({
+            type: "post",
+            url: "/Leads/GetSingleServiceTaxAfterGSTSelection",
+            data: { ServiceID: service, Rate: rate, Qty: qty, GSTapplicable: gst },
+            datatype: "json",
+            traditional: true,
+            success: function (data) {
+
+                //$(obj).parent().parent().find('#Tax').val(data);
+                //$(obj).parent().parent().find('#FinalRatePerService').val((rate * qty) + data);
+                //$(obj).parent().parent().find('#FinalRatePerService').change();
+                debugger;
+                if (gst == "True") {
+                    $(obj).parent().parent().find('#Tax').val(data);
+                    $(obj).parent().parent().find('#FinalRatePerService').val((rate * qty) + data);
+                } else {
+                    $(obj).parent().parent().find('#Tax').val("0");
+                    $(obj).parent().parent().find('#FinalRatePerService').val((rate * qty));
+                }
+
+                $(obj).parent().parent().find('#FinalRatePerService').change();
+            }
+        });
+
+    }
+    CKEDITOR.config.filebrowserUploadMethod = 'form';
+    CKEDITOR.config.extraPlugins = 'justify,image2,button,panel,floatpanel,listblock,richcombo,font';
+    CKEDITOR.replace("Footer", {
+        filebrowserBrowseUrl: '/Estimates/uploadPartial',
+        filebrowserImageBrowseUrl: '/Estimates/uploadPartial',
+        filebrowserUploadUrl: '/Estimates/uploadnow',
+        filebrowserImageSourceUrl: '/Estimates/uploadnow',
+        filebrowserImageUploadUrl: '/Estimates/uploadnow'
+    });
+    CKEDITOR.replace("ServiceScope", {
+        filebrowserBrowseUrl: '/Estimates/uploadPartial',
+        filebrowserImageBrowseUrl: '/Estimates/uploadPartial',
+        filebrowserUploadUrl: '/Estimates/uploadnow',
+        filebrowserImageSourceUrl: '/Estimates/uploadnow',
+        filebrowserImageUploadUrl: '/Estimates/uploadnow'
+    });
+    CKEDITOR.replace("WelcomeSentence", {
+        filebrowserBrowseUrl: '/Estimates/uploadPartial',
+        filebrowserImageBrowseUrl: '/Estimates/uploadPartial',
+        filebrowserUploadUrl: '/Estimates/uploadnow',
+        filebrowserImageSourceUrl: '/Estimates/uploadnow',
+        filebrowserImageUploadUrl: '/Estimates/uploadnow'
+    });
+    function updateValue(className, value) {
+        // this gets called from the popup window and updates the field with a new value
+        debugger;
+        var jqueryObjectByClass = $(".cke_dialog_ui_input_text")[1];
+        jqueryObjectByClass.value = value;
+    }
+    //$("#EstimatesCreate").submit(function (event) {
+    //    debugger;
+    //    var gastdate = $('#GSTinDate').val();
+    //    var newgastdate = gastdate.split("/").reverse().join("/");
+    //    $('#GSTinDate').val(newgastdate);
+    //});
+    function addToServicesForSubject(obj) {
+        //alert(($("option:selected", $(obj)).text()));
+        if (servicesForSubject == "") {
+            servicesForSubject = ($("option:selected", $(obj)).text());
+        } else {
+            if (!servicesForSubject.includes($("option:selected", $(obj)).text())) {
+                servicesForSubject = servicesForSubject + ", " + ($("option:selected", $(obj)).text());
+            }
+        }
+        //alert(servicesForSubject);
+        setSubject();
+    }
+    function setSubject() {
+        //if (servicesForSubject != "" && premiseForSubject != "" && addressForSubject != "") {
+            var subject = "Estimate for " + servicesForSubject + " for your " + premiseForSubject + " premises at above Address." /*+ addressForSubject + "."*/;
+            $(".Subject").val(subject);
+        //}
+    }
+
+
+    function setServiceScope(obj) {
+        //alert($(obj).val());
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("GetServiceScope", "Services")',
+            data: { ServiceID: $(obj).val() },
+            datatype: "json",
+                    //async: false,
+            traditional: true,
+            success: function (serviceScope) {
+                if (serviceScope == "NA") {
+                    alert("Service Scope For " + $("option:selected", $(obj)).text()+" Not Available.")
+                } else {
+                    //var existingScope = CKEDITOR.instances.ServiceScope.getData()
+                    CKEDITOR.instances.ServiceScope.setData(CKEDITOR.instances.ServiceScope.getData() + "\n" + serviceScope, function () {
+                        this.checkDirty();  // true
+                    });
+                    //alert(CKEDITOR.instances.ServiceScope.getData());
+                }
+
+            },
+            error: (error) => {
+                 alert(JSON.stringify(error));
+            }
+        });
+        if (servicesForSubject == "") {
+            servicesForSubject = ($("option:selected", $(obj)).text());
+        } else {
+            if (!servicesForSubject.includes($("option:selected", $(obj)).text())) {
+                servicesForSubject = servicesForSubject + ", " + ($("option:selected", $(obj)).text());
+            }
+        }
+        //alert(servicesForSubject);
+        //setSubject();
+    }
+    function setWelcomeSentence() {
+        //if (consultPerson != "" && visitAllocatedPerson != "") {
+            var welcomeSentence = "Dear " + consultPerson + ", <br/>" +
+                "We thank you for inviting our recommendation, subsequent to the inspection visit of our" + "<br/>" +
+                visitAllocatedPerson + " ( " + visitAllocatedPersonDesignation + " - " + visitAllocatedPersonCellNo + " ) "+"<br/>" +
+                "Sadguru Facility Services Pvt.Ltd.offers you quality and professional services backed by proven range of household pesticides and technical expertise.";
+            CKEDITOR.instances.WelcomeSentence.setData(welcomeSentence, function () {
+                this.checkDirty();  // true
+            });
+        //}
+    }
+    function setFooter(){
+        footer = "<b><u>Validity:</b></u> This quotation is valid for 30 days from date of submission.<br/>" +
+            "<b><u>Terms of Payment:</b></u> Our service charges are payable in Advance.<br/><br/>" +
+
+            "<b>Company GSTIN: 27AAXCS7991Q1ZQ, Pan No. : AAXCS7991Q<br/>" +
+            "Cheque Should be in favour of ‘Sadguru Facility Services Pvt.Ltd.<br/>" +
+            "Bank Name & Branch Add.: HDFC BANK Ltd, Jogeshwari(E)<br/>" +
+            "Account No.: CA – 50200024285470, IFSC Code: HDFC0001019</b><br/><br/>" +
+            "We await your acceptance of this quotation.Should you require further information on the above, please call " + telecallerForFooter +" on Mob. 9820899502 and we would gladly assist you.<br/><br/>" +
+
+            "Thanking you,<br/><br/>" +
+
+            "Yours Sincerely,<br/>" +
+            "For <b>SADGURU FACILITY SERVICES PVT.LTD.<br/><br/>" +
+
+            "SHAMAL GAIKWAD(BRANCH MANAGER)<br/>" +
+            "7208091124 / 022 - 28709412 / 28390280<br/>" +
+            "sales@sadgurufacility.com / www.sadgurufacility.com</b><br/>";
+        CKEDITOR.instances.Footer.setData(footer, function () {
+            this.checkDirty();  // true
+        });
+
+    }
+    var servicesForSubject = "", premiseForSubject = "", addressForSubject = "", consultPerson = "", visitAllocatedPerson = "", visitAllocatedPersonDesignation = "", visitAllocatedPersonCellNo = "", telecallerForFooter ="";
+    function setEstimateDate() {
+        var today = new Date();
+        var dd = today.getDate();
+
+        var mm = today.getMonth() + 1;
+        var yyyy = today.getFullYear();
+        if (dd < 10) {
+            dd = '0' + dd;
+        }
+
+        if (mm < 10) {
+            mm = '0' + mm;
+        }
+        today = dd + '/' + mm + '/' + yyyy;
+        $("#EstimateDate").val(today);
+    }
+    function resetInputs() {
+
+        $(".isNewEstimate").prop("checked", false);
+        $(".isRevisedEstimate").prop("checked", false);
+        $('#OriginalEstimateID').empty();
+        $('#OriginalEstimateID').selectpicker('refresh');
+        $("#divExistingEstimates").css('display', 'none');
+        servicesForSubject = ""; premiseForSubject = ""; addressForSubject = ""; consultPerson = ""; visitAllocatedPerson = ""; visitAllocatedPersonDesignation = ""; visitAllocatedPersonCellNo = "";telecallerForFooter = "";
+        $(".Subject").val("");
+        CKEDITOR.instances.WelcomeSentence.setData("", function () {
+            this.checkDirty();  // true
+        });
+        CKEDITOR.instances.ServiceScope.setData("", function () {
+            this.checkDirty();  // true
+        });
+        CKEDITOR.instances.Footer.setData("", function () {
+            this.checkDirty();  // true
+        });
+    }
+</script>
+<style>
+    input, select, textarea {
+        max-width: 100%;
+    }
+</style>

@@ -1,0 +1,59 @@
+﻿@model SadguruCRM.Models.Source
+
+@{
+    ViewBag.Title = "Edit Sub-Source";
+}
+
+    <h2>Edit Sub-Source</h2>
+
+
+@using (Html.BeginForm())
+
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+    <h4>Sub-Source</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.SourceID)
+    @Html.HiddenFor(model => model.CreatedDate)
+
+    <div class="form-group row">
+        <div class="col-md-3">
+            @Html.Label("Sub-Source Name", htmlAttributes: new { @class = "control-label required" })
+            @Html.EditorFor(model => model.Source1, new { htmlAttributes = new { @class = "form-control", @required = "required", @maxlength="50" } })
+            @Html.ValidationMessageFor(model => model.Source1, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-md-3">
+            @Html.Label("Parent Source", htmlAttributes: new { @class = "control-label required" })
+            @Html.DropDownListFor(model => model.ParentSourceID, (SelectList)ViewBag.ParentSource, "-- NONE --", htmlAttributes: new { @class = "form-control", @required = "required" })
+            @Html.ValidationMessageFor(model => model.ParentSourceID, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col-md-3">
+            @Html.LabelFor(model => model.Order, htmlAttributes: new { @class = "control-label required" })
+            @Html.EditorFor(model => model.Order, new { htmlAttributes = new { @class = "form-control", @type = "number", @required = "required" } })
+            @Html.ValidationMessageFor(model => model.Order, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <div class="col-md-12">
+            <input type="submit" value="Save" class="btn btn-outline-secondary" style="float:right;" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@*@section Scripts {
+    
+}*@

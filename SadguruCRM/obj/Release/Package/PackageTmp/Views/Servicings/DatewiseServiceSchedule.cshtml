@@ -1,0 +1,412 @@
+﻿@model IEnumerable<SadguruCRM.Models.Servicing>
+@{
+    ViewBag.Title = "Datewise Service Schedule";
+}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<h2>Datewise Service Schedule</h2>
+
+@using (Html.BeginForm())
+{
+    <div class="form-horizontal">
+        <div class="row" style="padding-bottom:10px;">
+            <div class="col">
+                @Html.Label("FromDate", "From Date", htmlAttributes: new { @class = "control-label" })
+                @Html.Editor("FromDate", new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+            </div>
+            <div class="col">
+                @Html.Label("ToDate", "To Date", htmlAttributes: new { @class = "control-label" })
+                @Html.Editor("ToDate", new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+            </div>
+            <div class="col">
+                @Html.Label("Month", "Month", htmlAttributes: new { @class = "control-label" })
+                <select class="form-control" id="Month" name="Month">
+                    <option value="0">--Select--</option>
+                    <option value="1">Jan</option>
+                    <option value="2">Feb</option>
+                    <option value="3">Mar</option>
+                    <option value="4">Apr</option>
+                    <option value="5">May</option>
+                    <option value="6">Jun</option>
+                    <option value="7">Jul</option>
+                    <option value="8">Aug</option>
+                    <option value="9">Sep</option>
+                    <option value="10">Oct</option>
+                    <option value="11">Nov</option>
+                    <option value="12">Dec</option>
+                </select>
+            </div>
+            <div class="col">
+                @Html.Label("Year", "Year", htmlAttributes: new { @class = "control-label" })
+                <select class="form-control" id="Year" name="Year">
+                    <option value="0">--Select--</option>
+                    <option value="2015">2015</option>
+                    <option value="2016">2016</option>
+                    <option value="2017">2017</option>
+                    <option value="2018">2018</option>
+                    <option value="2019">2019</option>
+                    <option value="2020">2020</option>
+                    <option value="2021">2021</option>
+                    <option value="2022">2022</option>
+                    <option value="2023">2023</option>
+                    <option value="2024">2024</option>
+                    <option value="2025">2025</option>
+                    <option value="2026">2026</option>
+                </select>
+
+            </div>
+            <div class="col">
+                @Html.Label("Branch", "Branch", htmlAttributes: new { @class = "control-label" })
+
+                @Html.DropDownList("BranchID", (IEnumerable<SelectListItem>)ViewBag.BranchID, "-- SELECT --", new { @class = "form-control" })
+            </div>
+
+            <div class="col">
+                @Html.Label("Service", "Service", htmlAttributes: new { @class = "control-label" })
+                @Html.DropDownList("ServiceGroupID", null, "-- SELECT --", htmlAttributes: new { @class = "form-control", @onchange = "populateServices(this);" })
+            </div>
+            <div class="col">
+                @Html.Label("Sub-Service", "Sub-Service", htmlAttributes: new { @class = "control-label" })
+                @Html.DropDownList("ServiceID", null, "-- SELECT --", htmlAttributes: new { @class = "form-control" })
+            </div>
+
+            <div class="col">
+                @Html.Label("Duration", "Duration", htmlAttributes: new { @class = "control-label" })
+                <select class="form-control" id="Duration" name="Duration">
+                    <option value="">--Select--</option>
+                    <option value="WeekBefore">Week Before</option>
+                    <option value="ThreeDaysBefore">Three Days Before</option>
+                    <option value="TwoDaysBefore">Two Days Before</option>
+                    <option value="Yesterday">Yesterday</option>
+                    <option value="Today">Today</option>
+                </select>
+
+            </div>
+            <div class="row" style="padding-bottom:10px;">
+                <div class="col">
+                    <input type="submit" value="Search" class="btn btn-secondary" style="float: left;margin-top:10px;" />
+                </div>
+            </div>
+            @*<div class="col">
+                    <input type="submit" value="Search" class="btn btn-secondary" style="float: left;margin-top:10px;" />
+                </div>*@
+        </div>
+        <div class="row" style="padding-bottom:10px;">
+            @*<div class="col">
+                    <input type="submit" value="Search" class="btn btn-secondary" style="float: left;margin-top:10px;" />
+                </div>*@
+        </div>
+    </div>
+}
+<table class="table display cell-border" id="servicings">
+    <thead>
+        <tr>
+            <th>
+            </th>
+            <th>
+            </th>
+            <th>
+            </th>
+            <th>
+            </th>
+            <th>
+            </th>
+            <th>
+            </th>
+            <th>
+            </th>
+            <th>
+            </th>
+            <th>
+            </th>
+            <th>
+            </th>
+            <th>
+            </th>
+            <th>
+            </th>
+            <th>
+            </th>
+
+            <th></th>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayName("Lead ID")
+            </th>
+            <th>
+                @Html.DisplayName("Contract ID")
+            </th>
+            <th>
+                @Html.DisplayName("Service ID")
+            </th>
+            <th>
+                @Html.DisplayName("System Date")
+            </th>
+            <th>
+                @Html.DisplayName("Date Of Service")
+            </th>
+            <th>
+                @Html.DisplayName("Customer Name")
+            </th>
+            <th>
+                @Html.DisplayName("Address")
+            </th>
+            <th>
+                @Html.DisplayName("Location")
+            </th>
+            <th>
+                @Html.DisplayName("Required Services")
+            </th>
+            <th>
+                @Html.DisplayName("Telephone")
+            </th>
+            <th>
+                @Html.DisplayName("Cell")
+            </th>
+            <th>
+                @Html.DisplayName("Frequency Of Service")
+            </th>
+            <th>
+                @Html.DisplayName("Frequency of Services Number")
+            </th>
+
+            <th style="width:120px;">Action</th>
+        </tr>
+    </thead>
+
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.LeadID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ContractID)
+            </td>
+            <td style="max-width:151px;">
+                @Html.DisplayFor(modelItem => item.ServicingNo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.System_Servicing_Datetime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Servicing_Datetime)
+            </td>
+            <td>
+                @{
+                    if (item.Lead != null)
+                    {
+                        if (item.Lead.Customers.Count > 0)
+                        {
+                            var name = item.Lead.Customers.First().Title + " " + item.Lead.Customers.First().FirstName + " " + item.Lead.Customers.First().LastName + " " + item.Lead.Customers.First().CustomerName;
+                            //@Html.Display(name);
+                            @Html.DisplayFor(modelItem => name)
+
+                        }
+                        else
+                        {
+                            var name = item.Lead.Title + " " + item.Lead.FirstName + " " + item.Lead.LastName + " " + item.Lead.CustomerName;
+                            //@Html.Display(name);
+                            @Html.DisplayFor(modelItem => name)
+                        }
+                    }
+                }
+
+            </td>
+            <td>
+                @{
+                    if (item.Lead != null)
+                    {
+                        if (item.Lead.Customers.Count > 0)
+                        {
+                            @Html.DisplayFor(modelItem => item.Lead.Customers.First().Customers_Billing_Address_Mapping.First().AddressLine1)
+
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(modelItem => item.Lead.AddressLine1)
+                        }
+                    }
+                }
+            </td>
+            <td>
+                @{
+                    if (item.Lead != null)
+                    {
+                        if (item.Lead.Customers.Count > 0)
+                        {
+                            @Html.DisplayFor(modelItem => item.Lead.Customers.First().Customers_Billing_Address_Mapping.First().Location.LocationName)
+
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(modelItem => item.Lead.Location.LocationName)
+                        }
+                    }
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Lead_Services_Mapping.Service.ServiceName)
+            </td>
+            <td>
+                @{
+                    if (item.Lead != null)
+                    {
+                        if (item.Lead.Customers.Count > 0)
+                        {
+                            @Html.DisplayFor(modelItem => item.Lead.Customers.First().TelNumber)
+
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(modelItem => item.Lead.TelNo)
+                        }
+                    }
+                }
+            </td>
+            <td>
+                @{
+                    if (item.Lead != null)
+                    {
+                        if (item.Lead.Customers.Count > 0)
+                        {
+                            @Html.DisplayFor(modelItem => item.Lead.Customers.First().CellNumber)
+
+                        }
+                        else
+                        {
+                            @Html.DisplayFor(modelItem => item.Lead.CellNo)
+                        }
+                    }
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Lead_Services_Mapping.FrequencyOfService.FrequencyOfService1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Servicing_Frequency_Number)
+            </td>
+
+            <td>
+                @{
+                    if (item.Lead != null)
+                    {
+                        if (item.Lead.Customers.Count > 0)
+                        {
+                            @Html.ActionLink(" |   ", "Edit", new { id = item.ServicingID }, new { @class = "fa fa-edit" })
+                            @Html.ActionLink(" | ", "Details", new { id = item.ServicingID }, new { @class = "fa fa-info" })
+
+                            @Html.ActionLink(" | ", "Delete", new { id = item.ServicingID }, new { @class = "fa fa-trash" })
+                            @Html.ActionLink(" | ", "SMS", new { id = item.ServicingID }, new { @class = "fas fa-sms" })
+                            @Html.ActionLink(" | ", "EMAIL", new { id = item.ServicingID }, new { @class = "fa fa-envelope" })
+                            @Html.ActionLink(" ", "WHATSAPP", new { id = item.ServicingID }, new { @class = "fa fa-whatsapp" })
+
+                        }
+                        else
+                        {
+
+                            <text>Customer Not Created!</text>
+
+                        }
+                    }
+                }
+
+
+            </td>
+        </tr>
+    }
+
+</table>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+<script>
+
+    function populateServices(obj) {
+        debugger;
+        if ($(obj).val() == "") {
+            var services = "<select id='ServiceID' name = 'ServiceID' required='required'>";
+            services = services + '<option value>--SELECT--</option>';
+            services = services + '</select>';
+            $('#ServiceID').html(services);
+            //$(obj).closest("#ServiceID").html(services);
+        } else {
+            $.ajax({
+                type: "post",
+                url: "/Leads/GetServices",
+                data: { ServiceGroupID: $(obj).val() },
+                datatype: "json",
+                traditional: true,
+                success: function (data) {
+                    var services = "<select id='ServiceID' name = 'ServiceID' required='required'>";
+                    services = services + '<option value="">--SELECT--</option>';
+                    for (var i = 0; i < data.length; i++) {
+                        services = services + '<option value=' + data[i].Value + '>' + data[i].Text + '</option>';
+                    }
+                    services = services + '</select>';
+                    $('#ServiceID').html(services);
+                    //$(obj).closest('#ServiceID').html(services);
+                }
+            });
+        }
+    }
+    $("#FromDate").datetimepicker({
+        format: 'DD/MM/YYYY',
+        useCurrent: false
+    });
+    $("#ToDate").datetimepicker({
+        format: 'DD/MM/YYYY',
+        useCurrent: false
+    });
+    var table;
+    $(document).ready(function () {
+        table = $('#servicings').DataTable({
+            fixedHeader: true,
+            order: [[4, 'asc']],
+            "pageLength": 25,
+
+            "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                if (aData[2].indexOf("-") != -1) {
+                    $('td', nRow).css('color', 'Red');
+                }
+
+            }
+        });
+        var colindex = 1;
+        $('#servicings thead tr:first th').each(function () {
+            if (colindex < 14) {
+                //var title = $('#servicings thead th').eq( $(this).index() ).text();
+                $(this).html('<input type="text"  class="column_search"/>');
+            } else if (colindex == 14) {
+                $(this).html('<input type="button" value="RESET" class="btn btn-sm btn-outline-secondary" id="reset" onclick="clearSearchBoxes();"/>');
+            }
+            colindex++;
+        });
+        //table.columns().every(function () {
+        //    var column = this;
+
+        //    $('input', this.header()).on('keyup change', function () {
+        //        column
+        //            .search(this.value)
+        //            .draw();
+        //    });
+        //});
+        $('#servicings thead tr:first th').on('keyup', ".column_search", function () {
+            table
+                .column($(this).parent().index())
+                .search(this.value)
+                .draw();
+        });
+        $(".dataTables_filter").css("display", "none");
+    });
+    function clearSearchBoxes() {
+        var searchBoxes = $(".column_search");
+        for (var i = 0; i < searchBoxes.length; i++) {
+            $(searchBoxes[i]).val("");
+        }
+        table.search('').columns().search('').draw();
+    };
+</script>

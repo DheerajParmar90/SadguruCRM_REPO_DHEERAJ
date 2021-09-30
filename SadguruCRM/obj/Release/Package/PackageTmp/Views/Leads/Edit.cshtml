@@ -1,0 +1,1270 @@
+﻿@model SadguruCRM.ViewModels.LeadViewModel
+
+@{
+    ViewBag.Title = "Edit Lead";
+}
+
+<h2>Lead</h2>
+<h4>Edit</h4>
+
+
+
+@using (Html.BeginForm("Edit", "Leads", FormMethod.Post, new { id = "LeadsEdit", enctype = "multipart/form-data", autocomplete = "off" }))
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <div class="container-fluid">
+        <div class="alert alert-danger" style="padding: 20px; display:none;">
+            <strong>WARNING!</strong> &nbsp;&nbsp;Record with the same name and Cell Number Already Exists!
+        </div>
+    </div>
+
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.lead.LeadID)
+    @Html.HiddenFor(model => model.lead.CreatedBy)
+    @Html.HiddenFor(model => model.lead.CreatedDate)
+    @Html.HiddenFor(model => model.lead.LeadNumber)
+
+    <div class="form-group row">
+        <div class="col-1">
+            @Html.Label("Title", htmlAttributes: new { @class = "control-label required" })
+            @Html.DropDownListFor(model => model.lead.Title, (SelectList)ViewBag.LeadTitle, "-- SELECT --", htmlAttributes: new { @class = "form-control selectpicker", @required = "required", @data_live_search = "true", autofocus = "true" })
+            @Html.ValidationMessageFor(model => model.lead.Title, "", new { @class = "text-danger" })
+        </div>
+        <div class="col" id="DivCommercialName" style="display:none">
+            @Html.Label("Name", htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.lead.CustomerName, new { htmlAttributes = new { @class = "form-control", @style = "max-width:100%", @onchange = "checkDuplicateLead();", @maxlength = "50" } })
+            @Html.ValidationMessageFor(model => model.lead.CustomerName, "", new { @class = "text-danger" })
+        </div>
+        <div class="col" id="DivFirstName">
+            @Html.Label("First Name", htmlAttributes: new { @class = "control-label required" })
+            @Html.EditorFor(model => model.lead.FirstName, new { htmlAttributes = new { @class = "form-control", @required = "required", @onchange = "checkDuplicateLead();", @maxlength = "50" } })
+            @Html.ValidationMessageFor(model => model.lead.FirstName, "", new { @class = "text-danger" })
+        </div>
+        <div class="col" id="DivLastName">
+            @Html.Label("Last Name", htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.lead.LastName, new { htmlAttributes = new { @class = "form-control", @onchange = "checkDuplicateLead();", @maxlength = "50" } })
+            @Html.ValidationMessageFor(model => model.lead.LastName, "", new { @class = "text-danger" })
+        </div>
+        <div class="col">
+            @Html.Label("Date", htmlAttributes: new { @class = "control-label required" })
+            @Html.EditorFor(model => model.lead.LeadDate, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+            @Html.ValidationMessageFor(model => model.lead.LeadDate, "", new { @class = "text-danger" })
+        </div>
+        <div class="col">
+            @Html.Label("Consult Person", htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.lead.ConsultPerson, new { htmlAttributes = new { @class = "form-control", @maxlength = "50" } })
+            @Html.ValidationMessageFor(model => model.lead.ConsultPerson, "", new { @class = "text-danger" })
+        </div>
+        <div class="col">
+            @Html.Label("Designation", htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.lead.ConsultPersonDesignation, new { htmlAttributes = new { @class = "form-control", @maxlength = "50" } })
+            @Html.ValidationMessageFor(model => model.lead.ConsultPersonDesignation, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col">
+            @Html.Label("Address Line 1", htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.lead.AddressLine1, new { htmlAttributes = new { @class = "form-control", @maxlength = "50" } })
+            @Html.ValidationMessageFor(model => model.lead.AddressLine1, "", new { @class = "text-danger" })
+        </div>
+        <div class="col">
+            @Html.Label("Address Line 2", htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.lead.AddressLine2, new { htmlAttributes = new { @class = "form-control", @maxlength = "50" } })
+            @Html.ValidationMessageFor(model => model.lead.AddressLine2, "", new { @class = "text-danger" })
+        </div>
+        <div class="col">
+            @Html.Label("Address Line 3", htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.lead.AddressLine3, new { htmlAttributes = new { @class = "form-control", @maxlength = "50" } })
+            @Html.ValidationMessageFor(model => model.lead.AddressLine3, "", new { @class = "text-danger" })
+        </div>
+        <div class="col">
+            @Html.Label("Location", "Location", htmlAttributes: new { @class = "control-label required" })
+            @Html.DropDownListFor(model => model.lead.LocationID, (SelectList)ViewBag.LocationID, "-- SELECT --", htmlAttributes: new { @class = "form-control selectpicker Location", @required = "required", @data_live_search = "true" })
+            @Html.ValidationMessageFor(model => model.lead.LocationID, "", new { @class = "text-danger" })
+            @foreach (var location in ViewBag.LocationsIDBranchesIDPairs)
+            {
+                <input type="hidden" id="LocationID@(location.Key)" value="@(location.Value)">
+            }
+        </div>
+        <div class="col">
+            @Html.Label("City", "City", htmlAttributes: new { @class = "control-label required" })
+            @Html.DropDownListFor(model => model.lead.CityID, (SelectList)ViewBag.CityID, "-- SELECT --", htmlAttributes: new { @class = "form-control selectpicker", @required = "required", @data_live_search = "true" })
+            @Html.ValidationMessageFor(model => model.lead.CityID, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col">
+            @Html.Label("Pincode", htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.lead.Pincode, new { htmlAttributes = new { @class = "form-control", @minlength = "6", @maxlength = "6", @type = "number" } })
+            @Html.ValidationMessageFor(model => model.lead.Pincode, "", new { @class = "text-danger" })
+        </div>
+        <div class="col">
+            @Html.Label("State", "State", htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownListFor(model => model.lead.StateID, (SelectList)ViewBag.StateID, "-- SELECT --", htmlAttributes: new { @class = "form-control selectpicker", @data_live_search = "true" })
+            @Html.ValidationMessageFor(model => model.lead.StateID, "", new { @class = "text-danger" })
+        </div>
+        <div class="col">
+            @Html.Label("Tel No", htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.lead.TelNo, new { htmlAttributes = new { @class = "form-control CustTelNo", @maxlength = "50" } })
+            @Html.ValidationMessageFor(model => model.lead.TelNo, "", new { @class = "text-danger" })
+            @{ for (int i = 0; i < Model.leadTelNos.Count; i++)
+                {
+                    @Html.HiddenFor(model => Model.leadTelNos[i].Lead_Tel_No_Mapping_ID)
+                    @Html.EditorFor(model => Model.leadTelNos[i].Lead_Tel_No, new { htmlAttributes = new { @class = "form-control CustTelNo", @Value = Model.leadTelNos[i].Lead_Tel_No, @maxlength = "50" } })
+                    @*<input type="button" class="btn-danger deleteTextboxButton" value="-" onclick="deleteTextbox(this);">*@
+                    <i class="fa fa-minus btn btn-danger deleteTextboxButton" onclick="deleteTextbox(this);"></i>
+                }
+
+            }
+            @*@{ for (int i = 0; i < Model.lead.Lead_Tel_No_Mapping.Count; i++)
+                    {
+                        @Html.HiddenFor(model => model.lead.Lead_Tel_No_Mapping.ElementAt(i).Lead_Tel_No_Mapping_ID)
+                        @Html.EditorFor(model => Model.lead.Lead_Tel_No_Mapping.ElementAt(i).Lead_Tel_No, new { htmlAttributes = new { @class = "form-control CustTelNo" } })
+                        <input type="button" class="btn-danger deleteTextboxButton" value="-" onclick="deleteTextbox(this);">
+                    }
+
+                }*@
+            @*<i class="fa fa-plus btn btn-primary" style="float:right;padding: 0px 4px;font-size: 10px;" onclick="AddCustTelNo(this);"></i>*@
+            <i class="fa fa-plus btn btn-primary addTextboxButton" onclick="AddCustTelNo(this);"></i>
+        </div>
+        <div class="col">
+            @Html.Label("Cell No", htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.lead.CellNo, new
+            {
+                htmlAttributes = new
+                {
+                    @class = "form-control CustCellNo",
+                    @onchange = "checkDuplicateLead();",
+                    @type = "number",
+                    @minlength = "10",
+                    @maxlength = "10"
+                }
+            })
+            @Html.ValidationMessageFor(model => model.lead.CellNo, "", new { @class = "text-danger" })
+            @{ for (int i = 0; i < Model.leadCellNos.Count; i++)
+                {
+                    @Html.HiddenFor(model => Model.leadCellNos[i].Lead_Cell_No_Mapping_ID)
+                    @Html.EditorFor(model => Model.leadCellNos[i].Lead_Cell_No, new
+                    {
+                        htmlAttributes = new
+                        {
+                            @class = "form-control CustCellNo",
+                            @Value = Model.leadCellNos[i].Lead_Cell_No,
+                            @onchange = "checkDuplicateLead();",
+                    @type = "number",
+                    @minlength = "10",
+                    @maxlength = "10"
+                        }
+                    })
+                    @*<input type="button" class="btn-danger deleteTextboxButton notAllowedToDelete" value="-" onclick="deleteTextbox(this);">*@
+                    <i class="fa fa-minus btn btn-danger deleteTextboxButton" onclick="deleteTextbox(this);"></i>
+                }
+
+            }
+            @*<i class="fa fa-plus btn btn-primary" style="float:right;padding: 0px 4px;font-size: 10px;" onclick="AddCustCellNo(this);"></i>*@
+            <i class="fa fa-plus btn btn-primary addTextboxButton" onclick="AddCustCellNo(this);"></i>
+        </div>
+        <div class="col">
+            @Html.Label("Email", htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.lead.EmailID, new { htmlAttributes = new { @class = "form-control CustEmail", @maxlength = "30" } })
+            @Html.ValidationMessageFor(model => model.lead.EmailID, "", new { @class = "text-danger" })
+            @{ for (int i = 0; i < Model.leadEmails.Count; i++)
+                {
+                    @Html.HiddenFor(model => Model.leadEmails[i].Lead_Email_Mapping_ID)
+                    @Html.EditorFor(model => Model.leadEmails[i].Lead_Email, new { htmlAttributes = new { @class = "form-control CustCellNo", @Value = Model.leadEmails[i].Lead_Email, @maxlength = "30" } })
+                    @*<input type="button" class="btn-danger deleteTextboxButton notAllowedToDelete" value="-" onclick="deleteTextbox(this);">*@
+                    <i class="fa fa-minus btn btn-danger deleteTextboxButton" onclick="deleteTextbox(this);"></i>
+                }
+
+            }
+            @*<i class="fa fa-plus btn btn-primary" style="float:right;padding: 0px 4px;font-size: 10px;" onclick="AddCustEmail(this);"></i>*@
+            <i class="fa fa-plus btn btn-primary addTextboxButton" onclick="AddCustEmail(this);"></i>
+        </div>
+    </div>
+    <hr />
+    <h5>Consult Person</h5>
+    <div class="form-group ConsultPerson row" id="ConsultPerson" style="display:none;">
+        <div class="col-md-3">
+            @Html.Hidden("Index")
+            @Html.Label("Name", "Name")
+            @Html.Editor("ConsultPersonName", new { htmlAttributes = new { @class = "form-control", @autocomplete = "off", @maxlength = "50" } })
+            @*@Html.Editor("Lead_Consult_Person.PersonName", new { htmlAttributes = new { @class = "form-control" } })*@
+
+        </div>
+
+        <div class="col-md-2">
+            @Html.Label("Designation", "Designation")
+            @Html.Editor("Designation", new { htmlAttributes = new { @class = "form-control", @maxlength = "20" } })
+        </div>
+
+        <div class="col-md-3 divConsultContactNumbers">
+            @Html.Label("Contact Number", "Contact Number")
+            @Html.Hidden("ConsultContactNumberHidden", "")
+            @Html.Editor("ConsultContactNumber", new { htmlAttributes = new { @class = "form-control ConsultContactNumber", @maxlength = "20" } })
+            <i class="fa fa-minus btn btn-danger deleteTextboxButton" onclick="deleteTextbox(this);"></i>
+            <i class="fa fa-plus btn btn-primary addTextboxButton" onclick="AddConsultContactNumber(this);"></i>
+        </div>
+
+        <div class="col-md-3 divConsultEmails">
+            @Html.Label("Email", "Email")
+            @Html.Hidden("ConsultEmailHidden", "")
+            @Html.Editor("ConsultEmail", new { htmlAttributes = new { @class = "form-control ConsultEmail", @maxlength = "50" } })
+            <i class="fa fa-minus btn btn-danger deleteTextboxButton" onclick="deleteTextbox(this);"></i>
+            <i class="fa fa-plus btn btn-primary addTextboxButton" onclick="AddConsultEmail(this);"></i>
+        </div>
+        <div class="col-md-1">
+            @Html.Label("Delete", "Delete")
+            <i class="fa fa-trash form-control" style="color:red; border:none; box-shadow:none;" onclick="deleteConsultPerson(this);"></i>
+        </div>
+    </div>
+    @*@{ for (int i = 0; i < Model.leadConsultPersons.Count; i++)
+            {
+                <div class="form-group ConsultPerson" id="ConsultPerson">
+                    <div class="col-md-3">
+                        @Html.HiddenFor(model => model.leadConsultPersons[i].Lead_Consult_Person_ID)
+                        @Html.Label("Name", "Name")
+                        @Html.EditorFor(model => model.leadConsultPersons[i].PersonaName, new { htmlAttributes = new { @class = "form-control", @Value = Model.leadConsultPersons[i].PersonaName } })
+
+
+                    </div>
+
+                    <div class="col-md-2">
+                        @Html.Label("Designation", "Designation")
+                        @Html.EditorFor(model => model.leadConsultPersons[i].Designation, new { htmlAttributes = new { @class = "form-control", @Value = Model.leadConsultPersons[i].Designation } })
+                    </div>
+
+                    <div class="col-md-3">
+                        @Html.Label("Contact Number", "Contact Number")
+                        @Html.Hidden("ConsultContactNumberHidden", "")
+
+                        @Html.Editor("ConsultContactNumber", new { htmlAttributes = new { @class = "form-control ConsultContactNumber", @Value = Model.leadConsultPersonContactNos.Where(x => x.Lead_Consult_Person_ID == Model.leadConsultPersons[i].Lead_Consult_Person_ID).ToList().Count > 0 ? Model.leadConsultPersonContactNos.Where(x => x.Lead_Consult_Person_ID == Model.leadConsultPersons[i].Lead_Consult_Person_ID).ToList()[0].Lead_Consult_Person_Contact_No : "" } })
+                        <input type="button" class="btn-danger deleteTextboxButton notAllowedToDelete" value="-" onclick="deleteTextbox(this);">
+                        @{ for (int j = 1; j < Model.leadConsultPersonContactNos.Where(x => x.Lead_Consult_Person_ID == Model.leadConsultPersons[i].Lead_Consult_Person_ID).ToList().Count; j++)
+                            {
+                                @Html.Editor("ConsultContactNumber", new { htmlAttributes = new { @class = "form-control ConsultContactNumber", @Value = Model.leadConsultPersonContactNos.Where(x => x.Lead_Consult_Person_ID == Model.leadConsultPersons[i].Lead_Consult_Person_ID).ToList()[j].Lead_Consult_Person_Contact_No } })
+                                <input type="button" class="btn-danger deleteTextboxButton" value="-" onclick="deleteTextbox(this);">
+                            }
+
+                        }
+                        <i class="fa fa-plus btn btn-outline-secondary" style="float:right;padding: 0px 4px;font-size: 10px;" onclick="AddConsultContactNumber(this);"></i>
+                    </div>
+
+                    <div class="col-md-3">
+                        @Html.Label("Email", "Email")
+                        @Html.Hidden("ConsultEmailHidden", "")
+                        @Html.Editor("ConsultEmail", new { htmlAttributes = new { @class = "form-control ConsultEmail", @Value = Model.leadConsultPersonEmails.Where(x => x.Lead_Consult_Person_ID == Model.leadConsultPersons[i].Lead_Consult_Person_ID).ToList().Count > 0 ? Model.leadConsultPersonEmails.Where(x => x.Lead_Consult_Person_ID == Model.leadConsultPersons[i].Lead_Consult_Person_ID).ToList()[0].Lead_Consult_Person_Email : "" } })
+                        <input type="button" class="btn-danger deleteTextboxButton notAllowedToDelete" value="-" onclick="deleteTextbox(this);">
+                        @{ for (int j = 1; j < Model.leadConsultPersonEmails.Where(x => x.Lead_Consult_Person_ID == Model.leadConsultPersons[i].Lead_Consult_Person_ID).ToList().Count; j++)
+                            {
+                                @Html.Editor("ConsultEmail", new { htmlAttributes = new { @class = "form-control ConsultEmail", @Value = Model.leadConsultPersonEmails.Where(x => x.Lead_Consult_Person_ID == Model.leadConsultPersons[i].Lead_Consult_Person_ID).ToList()[j].Lead_Consult_Person_Email } })
+                                <input type="button" class="btn-danger deleteTextboxButton" value="-" onclick="deleteTextbox(this);">
+                            }
+
+                        }
+                        <i class="fa fa-plus btn btn-outline-secondary" style="float:right;padding: 0px 4px;font-size: 10px;" onclick="AddConsultEmail(this);"></i>
+                    </div>
+                    <div class="col-md-1">
+                        @Html.Label("Delete", "Delete")
+                        <i class="fa fa-trash-o form-control" style="color:red; border:none; box-shadow:none;" onclick="deleteConsultPerson(this);"></i>
+                    </div>
+                </div>
+            }
+
+        }*@
+    @{ for (int i = 0; i < Model.leadConsultPersons.Count; i++)
+        {
+            <div class="form-group ConsultPerson row" id="ConsultPerson">
+                <div class="col">
+                    @Html.Hidden("Index", i)
+                    @Html.HiddenFor(model => model.leadConsultPersons[i].Lead_Consult_Person_ID)
+                    @Html.Label("Name", "Name")
+                    @Html.EditorFor(model => model.leadConsultPersons[i].PersonaName, new { htmlAttributes = new { @class = "form-control", @Autocomplete = "off", @maxlength = "50" } })
+                </div>
+
+                <div class="col">
+                    @Html.Label("Designation", "Designation")
+                    @Html.EditorFor(model => model.leadConsultPersons[i].Designation, new { htmlAttributes = new { @class = "form-control", @maxlength = "20" } })
+                </div>
+
+                <div class="col divConsultContactNumbers">
+                    @Html.Label("Contact Number", "Contact Number")
+                    @Html.Hidden("ConsultContactNumberHidden", "")
+
+                    @{for (int j = 0; j < Model.leadConsultPersons[i].Lead_Consult_Person_Contact_No_Mapping.Count; j++)
+                        {
+                            @*@Html.EditorFor(model => model.leadConsultPersons[i].Lead_Consult_Person_Contact_No_Mapping.ToList()[j].Lead_Consult_Person_Contact_No, new { htmlAttributes = new { @class = "form-control ConsultContactNumber"} })*@
+                            @Html.HiddenFor(model => model.leadConsultPersons[i].Lead_Consult_Person_Contact_No_Mapping.ElementAt(j).Lead_Consult_Person_Contact_No_Mapping_ID, new { @Name = "leadConsultPersons[" + i + "].Lead_Consult_Person_Contact_No_Mapping[" + j + "].Lead_Consult_Person_Contact_No_Mapping_ID" })
+                            @Html.HiddenFor(model => model.leadConsultPersons[i].Lead_Consult_Person_Contact_No_Mapping.ElementAt(j).Lead_Consult_Person_ID, new { @Name = "leadConsultPersons[" + i + "].Lead_Consult_Person_Contact_No_Mapping[" + j + "].Lead_Consult_Person_ID" })
+                            @Html.EditorFor(model => model.leadConsultPersons[i].Lead_Consult_Person_Contact_No_Mapping.ElementAt(j).Lead_Consult_Person_Contact_No, new { htmlAttributes = new { @class = "form-control ConsultContactNumber", @Name = "leadConsultPersons[" + i + "].Lead_Consult_Person_Contact_No_Mapping[" + j + "].Lead_Consult_Person_Contact_No", @id = "leadConsultPersons[" + i + "].Lead_Consult_Person_Contact_No_Mapping[" + j + "].Lead_Consult_Person_Contact_No", @maxlength = "20" } })
+                            if (j != 0)
+                            {
+                                <i class="fa fa-minus btn btn-danger deleteTextboxButton" onclick="deleteTextbox(this);"></i>
+                            }
+
+                        }
+
+                    }
+                    @*<i class="fa fa-plus btn btn-primary" style="float:right;padding: 0px 4px;font-size: 10px;" onclick="AddConsultContactNumber(this);"></i>*@
+                    <i class="fa fa-plus btn btn-primary addTextboxButton" onclick="AddConsultContactNumber(this);"></i>
+                </div>
+
+                <div class="col divConsultEmails">
+                    @Html.Label("Email", "Email")
+                    @Html.Hidden("ConsultEmailHidden", "")
+
+                    @*<input type="button" class="btn-danger deleteTextboxButton notAllowedToDelete" value="-" onclick="deleteTextbox(this);">*@
+                    @{ for (int j = 0; j < Model.leadConsultPersons[i].Lead_Consult_Person_Email_Mapping.Count; j++)
+                        {
+                            @Html.HiddenFor(model => model.leadConsultPersons[i].Lead_Consult_Person_Email_Mapping.ElementAt(j).Lead_Consult_Person_Email_Mapping_ID, new { @Name = "leadConsultPersons[" + i + "].Lead_Consult_Person_Email_Mapping[" + j + "].Lead_Consult_Person_Email_Mapping_ID" })
+                            @Html.HiddenFor(model => model.leadConsultPersons[i].Lead_Consult_Person_Email_Mapping.ElementAt(j).Lead_Consult_Person_ID, new { @Name = "leadConsultPersons[" + i + "].Lead_Consult_Person_Email_Mapping[" + j + "].Lead_Consult_Person_ID" })
+                            @Html.EditorFor(model => model.leadConsultPersons[i].Lead_Consult_Person_Email_Mapping.ElementAt(j).Lead_Consult_Person_Email, new { htmlAttributes = new { @class = "form-control ConsultEmail", @Name = "leadConsultPersons[" + i + "].Lead_Consult_Person_Email_Mapping[" + j + "].Lead_Consult_Person_Email", @id = "leadConsultPersons[" + i + "].Lead_Consult_Person_Email_Mapping[" + j + "].Lead_Consult_Person_Email", @maxlength = "50" } })
+                            if (j != 0)
+                            {
+                                @*<input type="button" class="btn-danger deleteTextboxButton" value="-" onclick="deleteTextbox(this);">*@
+                                <i class="fa fa-minus btn btn-danger deleteTextboxButton" onclick="deleteTextbox(this);"></i>
+                            }
+
+                        }
+
+                    }
+                    @*<i class="fa fa-plus btn btn-primary" style="float:right;padding: 0px 4px;font-size: 10px;" onclick="AddConsultEmail(this);"></i>*@
+                    <i class="fa fa-plus btn btn-primary addTextboxButton" onclick="AddConsultEmail(this);"></i>
+                </div>
+                <div class="col-md-1">
+                    @Html.Label("Delete", "Delete")
+                    <i class="fa fa-trash form-control" style="color:red; border:none; box-shadow:none;" onclick="deleteConsultPerson(this);"></i>
+                </div>
+            </div>
+        }
+
+    }
+    <div class="form-group row">
+        <div class="col">
+            @*<input type="submit" value="Add More" class="btn btn-outline-secondary" style="float:right;" id="AddMoreConsultPerson" />*@
+            <button type="button" class="btn btn-outline-secondary" style="float:right;" id="AddMoreConsultPerson">Add More</button>
+        </div>
+    </div>
+    <hr />
+    <h5>Services required</h5>
+    @for (int i = 0; i < Model.leadServices.Count; i++)
+    {
+        <div class="form-group SingleService row" id="SingleService">
+            @Html.Hidden("LeadServiceIndex", i)
+            @Html.Hidden("leadServices[" + i + "].Lead_Services_Mapping_ID", @Model.leadServices[i].Lead_Services_Mapping_ID)
+            <div class="col">
+                @Html.Label("Service Group", "Service Group", htmlAttributes: new { @class = "control-label" })
+                <span class="ServiceGroupIDValue" style="display:none;">@Model.leadServices[i].ServiceGroupID</span>
+                @*@Html.DropDownList("ServiceGroupID", (SelectList)ViewBag.ServiceGroups, "-- SELECT --", htmlAttributes: new { @class = "form-control", @onchange = "populateServices(this);" })*@
+                @Html.DropDownListFor(model => model.leadServices[i].ServiceGroupID, new SelectList(Model.ServiceGroups, "Value", "Text", Model.leadServices[i].ServiceGroupID), "-- SELECT --", htmlAttributes: new { @class = "form-control ServiceGroupID restrict-dropdown-widths selectpicker", @onchange = "populateServices(this,'');", @data_live_search = "true" })
+            </div>
+
+            <div class="col">
+                @Html.Label("Service", "Service", htmlAttributes: new { @class = "control-label" })
+                <span class="ServiceIDValue" style="display:none;">@Model.leadServices[i].ServiceID</span>
+                @*@Html.DropDownList("ServiceID", (SelectList)ViewBag.ServiceID, "-- SELECT --", htmlAttributes: new { @class = "form-control" })*@
+                @Html.DropDownListFor(model => model.leadServices[i].ServiceID, new SelectList(Model.Services, "Value", "Text", Model.leadServices[i].ServiceID), "-- SELECT --", htmlAttributes: new { @class = "form-control ServiceID restrict-dropdown-widths selectpicker", @data_live_search = "true" })
+            </div>
+
+            <div class="col" style="max-width:46 !important">
+                @Html.Label("Frequency Of Service", "Frequency Of Service", htmlAttributes: new { @class = "control-label" })
+                <span class="FrequencyOfServiceIDValue" style="display:none;">@Model.leadServices[i].FrequencyOfServiceID</span>
+                @*@Html.DropDownList("FrequencyOfServiceID", (SelectList)ViewBag.FrequencyOfServiceID, "-- SELECT --", htmlAttributes: new { @class = "form-control" })*@
+                @Html.DropDownListFor(model => model.leadServices[i].FrequencyOfServiceID, new SelectList(Model.FrequencyOfServices, "Value", "Text", Model.leadServices[i].FrequencyOfServiceID), "-- SELECT --", htmlAttributes: new { @class = "form-control FrequencyOfServiceID restrict-dropdown-widths selectpicker", @data_live_search = "true" })
+            </div>
+            @*<div class="row">
+
+                </div>*@
+
+            <div class="col-md-1">
+                @Html.Label("Qty", "Qty", htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.leadServices[i].Qty, new { htmlAttributes = new { @class = "form-control Qty", @type = "number", @onchange = "calculateTax(this);", @Value = Model.leadServices[i].Qty } })
+            </div>
+            <div class="col-md-1">
+                @Html.Label("Rate", "Rate", htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.leadServices[i].Rate, new { htmlAttributes = new { @class = "form-control singleServiceRate", @type = "number", @onchange = "calculateTax(this);", @Value = Model.leadServices[i].Rate } })
+            </div>
+            <div class="col-md-1">
+                @Html.Label("GST", "GST", htmlAttributes: new { @class = "control-label" })
+                @Html.DropDownListFor(model => model.leadServices[i].GST, new SelectList(new List<SelectListItem>(){
+                                                   new SelectListItem() { Text = "Yes", Value = "True" },
+                                                   new SelectListItem() { Text = "No", Value = "False"}
+                                                }, "Value", "Text", Model.leadServices[i].GST), "--", new { @class = "form-control GST", @onchange = "calculateTax(this);" })
+            </div>
+            <div class="col-md-1">
+                @Html.Label("Tax", "Tax", htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.leadServices[i].Tax, new { htmlAttributes = new { @class = "form-control Tax", @type = "number", @onchange = "addServiceTotal();", @readonly = "readonly", @Value = Model.leadServices[i].Tax } })
+            </div>
+            <div class="col-md-1">
+                @Html.Label("Final Rate", "Final Rate", htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.leadServices[i].FinalRatePerService, new { htmlAttributes = new { @class = "form-control singleServiceFinalRate", @type = "number", @onchange = "addFinalServiceTotal();", @readonly = "readonly", @Value = Model.leadServices[i].FinalRatePerService } })
+            </div>
+            <div class="col-md-1">
+                @Html.Label("Delete", "Delete", htmlAttributes: new { @class = "control-label" })
+                <i class="fa fa-trash form-control" style="color:red; border:none; box-shadow:none;" onclick="deleteService(this);"></i>
+            </div>
+        </div>
+    }
+
+    <div class="form-group row">
+        <div class="col-10 ">
+            @Html.Label("Total", "Total", new { @style = "float:right;" })
+        </div>
+        <div class="col-2">
+            <input class="form-control text-box single-line" id="lead_FinalRate" name="lead.FinalRate" Value="@Model.lead.FinalRate" type="text" readonly style="float:right;">
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col">
+            @*<input type="submit" value="Add More Service" class="btn btn-outline-secondary" style="float:right;" id="AddMoreServices" />*@
+            <button type="button" class="btn btn-outline-secondary" style="float:right;" id="AddMoreServices">Add More Service</button>
+        </div>
+    </div>
+    <hr />
+    <div class="form-group row">
+        <div class="col">
+            @Html.Label("Type Of Premises", "Type Of Premise", htmlAttributes: new { @class = "control-label required" })
+            @Html.DropDownListFor(model => model.lead.TypeOfPremisesID, (SelectList)ViewBag.TypeOfPremisesID, "-- SELECT --", htmlAttributes: new { @class = "form-control selectpicker", @required = "required", @data_live_search = "true" })
+            @Html.ValidationMessageFor(model => model.lead.TypeOfPremisesID, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-1" style="display:none" id="divNoOfWings">
+            @Html.Label("No. Wings", "No. Wings", htmlAttributes: new { @class = "control-label", @id = "labelNoOfWings", @style = "display:none" })
+            @Html.EditorFor(model => model.lead.NoOfWings, new { htmlAttributes = new { @class = "form-control", @type = "number" } })
+            @Html.ValidationMessageFor(model => model.lead.NoOfWings, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-1" style="display:none" id="divNoOfFloors">
+            @Html.Label("No. Floors", "Floors", htmlAttributes: new { @class = "control-label", @id = "labelNoOfFloors", @style = "display:none" })
+            @Html.EditorFor(model => model.lead.NoOfFloors, new { htmlAttributes = new { @class = "form-control", @type = "number" } })
+            @Html.ValidationMessageFor(model => model.lead.NoOfFloors, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="col-1" style="display:none" id="divNoOfFlats">
+            @Html.Label("No. Flats", "No. of Flats", htmlAttributes: new { @class = "control-label", @id = "labelNoOfFlats", @style = "display:none" })
+            @Html.EditorFor(model => model.lead.NoOfFlats, new { htmlAttributes = new { @class = "form-control", @type = "number" } })
+            @Html.ValidationMessageFor(model => model.lead.NoOfFlats, "", new { @class = "text-danger" })
+        </div>
+        <div class="col">
+            @Html.Label("Premises Area", "Premises Area", htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownListFor(model => model.lead.Premises_Area_ID, (SelectList)ViewBag.Premises_Area_ID, "-- SELECT --", htmlAttributes: new { @class = "form-control selectpicker", @data_live_search = "true" })
+            @*@Html.Editor("PremisesArea", new { htmlAttributes = new { @class = "form-control" } })*@
+            @Html.ValidationMessageFor(model => model.lead.Premises_Area_ID, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="col">
+            @Html.Label("Approx. Sq.Ft. Area", "Approx. Sq.Ft. Area", htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.lead.PremisesAppSqFtArea, new { htmlAttributes = new { @class = "form-control", @type = "number" } })
+            @Html.ValidationMessageFor(model => model.lead.NoOfFloors, "", new { @class = "text-danger" })
+        </div>
+        <div class="col">
+            @Html.Label("Other Details", htmlAttributes: new { @class = "control-label" })
+            @Html.TextAreaFor(model => model.lead.OtherDetails, 1, 100, new { @class = "form-control", @maxlength = "200" })
+            @Html.ValidationMessageFor(model => model.lead.OtherDetails, "", new { @class = "text-danger" })
+        </div>
+        <div class="col">
+            @Html.Label("Industry", htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownListFor(model => model.lead.IndustryID, (SelectList)ViewBag.IndustryID, "--SELECT--", htmlAttributes: new { @class = "form-control selectpicker", @data_live_search = "true" })
+            @Html.ValidationMessageFor(model => model.lead.Industry, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group row">
+
+
+        <div class="col">
+            @Html.Label("Visit Allocate", htmlAttributes: new { @class = "control-label", @id = "VisitAllocateLabel" })
+            @Html.DropDownListFor(model => model.lead.VisitAllocate, (SelectList)ViewBag.VisitAllocate, "-- SELECT --", htmlAttributes: new { @class = "form-control selectpicker", @data_live_search = "true" })
+            @*@Html.EditorFor(model => model.VisitAllocate, new { htmlAttributes = new { @class = "form-control" } })*@
+            @Html.ValidationMessageFor(model => model.lead.VisitAllocate, "", new { @class = "text-danger" })
+        </div>
+        <div class="col">
+            @Html.Label("Visit Date", htmlAttributes: new { @class = "control-label", @id = "VisitDateTimeLabel" })
+            @Html.EditorFor(model => model.lead.VisitDateTime, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.lead.VisitDateTime, "", new { @class = "text-danger" })
+        </div>
+        <div class="col">
+            @Html.Label("Visit Time", htmlAttributes: new { @class = "control-label", @id = "VisitTimeLabel" })
+            @Html.EditorFor(model => model.lead.VisitTime, new { htmlAttributes = new { @class = "form-control", @onkeydown = "return false" } })
+            @Html.ValidationMessageFor(model => model.lead.VisitTime, "", new { @class = "text-danger" })
+            @Html.Hidden("VisitTime")
+        </div>
+        <div class="col">
+            @Html.Label("Service Date", htmlAttributes: new { @class = "control-label", @id = "ServiceDateLabel" })
+            @Html.EditorFor(model => model.lead.ServiceDate, new { htmlAttributes = new { @class = "form-control", @onkeydown = "return false" } })
+            @Html.ValidationMessageFor(model => model.lead.ServiceDate, "", new { @class = "text-danger" })
+
+        </div>
+
+        <div class="col">
+            @Html.Label("Service Time", htmlAttributes: new { @class = "control-label", @id = "ServiceTimeLabel" })
+            @Html.EditorFor(model => model.lead.ServiceTime, new { htmlAttributes = new { @class = "form-control", @onkeydown = "return false" } })
+
+            @Html.Hidden("ServiceTime")
+            @Html.ValidationMessageFor(model => model.lead.ServiceTime, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-5">
+            @Html.Label("Visit Report", htmlAttributes: new { @class = "control-label" })
+            @Html.TextAreaFor(model => model.lead.VisitReport, 1, 100, new { @class = "form-control", @style = "max-width: 96% !important;", @maxlength = "200" })
+            @Html.ValidationMessageFor(model => model.lead.VisitReport, "", new { @class = "text-danger" })
+        </div>
+        <div class="row col-7">
+            <div class="col">
+                @Html.Label("Special Instructions", htmlAttributes: new { @class = "control-label" })
+                @Html.TextAreaFor(model => model.lead.SpecialInstructions, 1, 100, new { @class = "form-control selectpicker", @style = "max-width: 96% !important;", @maxlength = "200" })
+                @Html.ValidationMessageFor(model => model.lead.SpecialInstructions, "", new { @class = "text-danger" })
+            </div>
+            <div class="col">
+                @Html.Label("Source", "Source", htmlAttributes: new { @class = "control-label" })
+                @Html.DropDownListFor(model => model.lead.SourceID, (SelectList)ViewBag.SourceID, "-- SELECT --", htmlAttributes: new { @class = "form-control selectpicker", @required = "required", @data_live_search = "true" })
+                @Html.ValidationMessageFor(model => model.lead.SourceID, "", new { @class = "text-danger" })
+            </div>
+            <div class="col">
+                @Html.Label("SubSource", "Sub Source", htmlAttributes: new { @class = "control-label" })
+                @Html.DropDownListFor(model => model.lead.SubSourceID, (SelectList)ViewBag.SubSourceID, "-- SELECT --", htmlAttributes: new { @class = "form-control selectpicker", @required = "required", @data_live_search = "true", @data_size = "5" })
+                @Html.ValidationMessageFor(model => model.lead.SubSourceID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+    <div class="form-group row">
+
+        <div class="col-md-5">
+            @Html.Label("Follow-Up Details", htmlAttributes: new { @class = "control-label required", @id = "FollowUpDetailsLabel" })
+            @Html.TextAreaFor(model => model.lead.FollowUpDetails, 1, 100, new { @class = "form-control", @style = "max-width: 96% !important;", @required = "required", @maxlength = "200" })
+            @Html.ValidationMessageFor(model => model.lead.FollowUpDetails, "", new { @class = "text-danger" })
+        </div>
+        <div class="row col-7">
+            <div class="col">
+                @Html.Label("Next Follow-Up Date", htmlAttributes: new { @class = "control-label required", @id = "NextFollowUpDateTimeLabel" })
+                @Html.EditorFor(model => model.lead.NextFollowUpDateTime, new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+                @Html.ValidationMessageFor(model => model.lead.NextFollowUpDateTime, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="col">
+                @Html.Label("Next Follow-Up Time", htmlAttributes: new { @class = "control-label required", @id = "NextFollowUpTimeLabel" })
+                @Html.EditorFor(model => model.lead.NextFollowUpTime, new { htmlAttributes = new { @class = "form-control", @name = "NextFollowUpTime", @required = "required" } })
+                @Html.Hidden("NextFollowUpTime")
+                @Html.ValidationMessageFor(model => model.lead.NextFollowUpDateTime, "", new { @class = "text-danger" })
+            </div>
+            <div class="col">
+                @Html.Label("Customer Priority", htmlAttributes: new { @class = "control-label" })
+                @Html.DropDownListFor(model => model.lead.CustomerPriority, new List<SelectListItem>(){
+                                                   new SelectListItem() { Text = "Very High", Value = "Very High" },
+                                                   new SelectListItem() { Text = "High", Value = "High"},
+                                                   new SelectListItem() { Text = "Medium", Value = "Medium"},
+                                                   new SelectListItem() { Text = "Low", Value = "Low"}
+                                                }, "-- SELECT --", new { @class = "form-control selectpicker", @data_live_search = "true" })
+                @Html.ValidationMessageFor(model => model.lead.CustomerPriority, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+    </div>
+
+    <div class="form-group row">
+        <hr />
+        <div class="col-md-3">
+            @Html.Label("Lead Status", "Lead Status ", htmlAttributes: new { @class = "control-label required" })
+            @Html.DropDownListFor(model => model.lead.LeadStatusID, (SelectList)ViewBag.LeadStatusID, "-- SELECT --", htmlAttributes: new { @class = "form-control selectpicker dropup", @data_live_search = "true", @required = "required" })
+            @Html.ValidationMessageFor(model => model.lead.LeadStatusID, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-md-3">
+            @Html.Label("Status Reason", htmlAttributes: new { @class = "control-label", @disabled = "disabled" })
+            @Html.EditorFor(model => model.lead.StatusReason, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.lead.StatusReason, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-md-3">
+            @Html.Label("Branch", "Branch", htmlAttributes: new { @class = "control-label required" })
+            @Html.DropDownListFor(model => model.lead.BranchID, (SelectList)ViewBag.BranchID, "-- SELECT --", htmlAttributes: new { @class = "form-control selectpicker dropup Branch", @required = "required", @data_live_search = "true" })
+            @Html.ValidationMessageFor(model => model.lead.BranchID, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-md-3">
+            @Html.Label("Tele-Caller", "Tele Caller", htmlAttributes: new { @class = "control-label required" })
+            @Html.DropDownListFor(model => model.lead.TeleCallerID, (SelectList)ViewBag.TeleCallerID, "-- SELECT --", htmlAttributes: new { @class = "form-control selectpicker dropup", @required = "required", @data_live_search = "true" })
+        </div>
+    </div>
+    <div class="form-group row float-right">
+        <div class="col">
+            <input type="submit" value="Save" class="btn btn-secondary submit-button-before-redirect" style="float:right;" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index", null, new { @type = "button", @class = "btn btn-outline-secondary" })
+</div>
+
+@*@section Scripts {
+
+    }*@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>@*For Multiselect - Bootstrap Select*@
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
+
+<!-- (Optional) Latest compiled and minified JavaScript translation files -->
+@*<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/i18n/defaults-*.min.js"></script>*@
+<script>
+    //$("input").attr("required", true);
+    //$("select").attr("required", true);
+    var yesterday = new Date(Date.now() - 86400000);
+    $("#lead_LeadDate").datetimepicker({
+        format: 'DD/MM/YYYY',
+        useCurrent: false
+    });
+    $("#lead_NextFollowUpDateTime").datetimepicker({
+        format: 'DD/MM/YYYY',
+        //minDate: yesterday,
+        disabledDates: [yesterday],
+        useCurrent: false
+    })
+    //.on('dp.change', function (e) {
+    //    if ($(this).val() != "") {
+    //        $("#NextFollowUpTimeLabel").addClass("required");
+    //        $("#lead_NextFollowUpTime").prop('required', true);
+    //        $("#FollowUpDetailsLabel").addClass("required");
+    //        $("#lead_FollowUpDetails").prop('required', true);
+    //    }
+    //    else {
+    //    }
+    //});
+    $("#lead_VisitDateTime").datetimepicker({
+        format: 'DD/MM/YYYY',
+        //minDate: yesterday,
+        disabledDates: [yesterday],
+        useCurrent: false
+    });
+    $("#lead_VisitTime").datetimepicker({
+        format: 'hh:mm A',
+        useCurrent: false
+    });
+
+    $("#lead_ServiceDate").datetimepicker({
+        format: 'DD/MM/YYYY',
+        //minDate: yesterday,
+        disabledDates: [yesterday],
+        useCurrent: false
+    }).on('dp.change', function (e) {
+        ServiceDate_DateChanged();
+    });
+    function ServiceDate_DateChanged() {
+        var selectedTextLeadStatusID = $("#lead_LeadStatusID option:selected").html();
+        if ($("#lead_ServiceDate").val() == "") {
+            if (selectedTextLeadStatusID != "Closed" && selectedTextLeadStatusID != "Rejected" && selectedTextLeadStatusID != "Done") {
+                $("#NextFollowUpDateTimeLabel").addClass("required");
+                $("#lead_NextFollowUpDateTime").prop('required', true);
+                $("#NextFollowUpTimeLabel").addClass("required");
+                $("#lead_NextFollowUpTime").prop('required', true);
+                $("#FollowUpDetailsLabel").addClass("required");
+                $("#lead_FollowUpDetails").prop('required', true);
+            } else {
+                $("#NextFollowUpDateTimeLabel").removeClass("required");
+                $("#lead_NextFollowUpDateTime").prop('required', false);
+                $("#NextFollowUpTimeLabel").removeClass("required");
+                $("#lead_NextFollowUpTime").prop('required', false);
+                $("#FollowUpDetailsLabel").removeClass("required");
+                $("#lead_FollowUpDetails").prop('required', false);
+            }        
+        }
+        else {
+
+            if (selectedTextLeadStatusID != "Process" && selectedTextLeadStatusID != "Visit Allocate"){
+                $("#NextFollowUpDateTimeLabel").removeClass("required");
+                $("#lead_NextFollowUpDateTime").prop('required', false);
+                $("#NextFollowUpTimeLabel").removeClass("required");
+                $("#lead_NextFollowUpTime").prop('required', false);
+                $("#FollowUpDetailsLabel").removeClass("required");
+                $("#lead_FollowUpDetails").prop('required', false);
+            }
+        }
+    }
+    $("#lead_ServiceTime").datetimepicker({
+        format: 'hh:mm A',
+        useCurrent: false
+    });
+    $("#lead_NextFollowUpTime").datetimepicker({
+        format: 'hh:mm A',
+        useCurrent: false
+    });
+    $.validator.addMethod(
+        "australianDate",
+        function (value, element) {
+
+            //return value.match(/^\d\d?\/\d\d?\/\d\d\d\d$/);
+            return value.match(/(0[1-9]|[1-2][0-9]|3[0-1])\/(0[1-9]|1[0-2])\/[0-9]{4} (2[0-3]|[01][0-9]):[0-5][0-9]$/);
+        },
+        "Please enter a date in the format dd/mm/yyyy HH:mm."
+    );
+    $.validator.addMethod(
+        "dateOnly",
+        function (value, element) {
+            debugger;
+            //alert($(element));
+            if (element.id == "NextFollowUpDateTime") {
+                if ($("#LeadStatusID").val() == "2") {
+                    return value.match(/^\d\d?\/\d\d?\/\d\d\d\d$/);
+                } else {
+                    if (value) {
+                        return value.match(/^\d\d?\/\d\d?\/\d\d\d\d$/);
+                    } else {
+                        return true;
+                    }
+                }
+            } else {
+                return value.match(/^\d\d?\/\d\d?\/\d\d\d\d$/);
+            }
+            // put your own logic here, this is just a (crappy) example
+
+        },
+        "Please enter a date in the format dd/mm/yyyy."
+    );
+    $.validator.addMethod(
+        "dateOnlyOrBlank",
+        function (value, element) {
+            // put your own logic here, this is just a (crappy) example
+            if (value) {
+                return value.match(/^\d\d?\/\d\d?\/\d\d\d\d$/);
+            } else {
+                return true;
+            }
+        },
+        "Please enter a date in the format dd/mm/yyyy."
+    );
+    $('#LeadsEdit')
+        .validate({
+            rules: {
+                lead_LeadDate: {
+                    dateOnly: true
+                }, lead_NextFollowUpDateTime: {
+                    dateOnlyOrBlank: true
+                }, lead_VisitDateTime: {
+                    dateOnlyOrBlank: true
+                }, lead_ServiceDate: {
+                    dateOnlyOrBlank: true
+                }
+            }
+            ,
+            errorPlacement: function (error, element) {
+                if (element.hasClass("selectpicker"))
+                    error.insertAfter(element.next(".btn"));
+                else if (element.hasClass("CustCellNo"))
+                    error.insertAfter(element.next(".deleteTextboxButton"));
+                else
+                     error.insertAfter(element);
+                    
+
+            }
+        });
+
+</script>
+<script>
+
+    $(document).ready(function () {
+        debugger;
+        @*$("#lead.Title option").filter(function() {
+            return $(this).text() =='@Model.lead.Title';
+        }).prop("selected", true);*@
+        $("#lead_Title").trigger('change');
+        $("#lead_LeadStatusID").trigger('change');
+        $("#lead_TypeOfPremisesID").trigger('change');
+
+        $.each($(".SingleService"), function( index, element ){
+            $(element).find("select.ServiceGroupID").val($(element).find(".ServiceGroupIDValue").html());
+            //$(element).find("select.ServiceGroupID").trigger('change');
+            populateServices($(element).find("select.ServiceGroupID"), $(element).find(".ServiceIDValue").html());
+            //$(element).find("select.ServiceID").val($(element).find(".ServiceIDValue").html());
+            //$(element).find("select.ServiceID").selectpicker("refresh");
+            $(element).find("select.FrequencyOfServiceID").val($(element).find(".FrequencyOfServiceIDValue").html());
+            $(element).find("select.FrequencyOfServiceID").selectpicker("refresh");
+        });
+
+        ServiceDate_DateChanged();
+
+    });
+    $("#lead_Title").change(function () {
+        debugger;
+        var title = $("#lead_Title").val();
+        if (title == "Mr." || title == "Mrs." || title == "Ms.") {
+            $("#DivCommercialName").css('display', 'none');
+            $("#lead_CustomerName").removeAttr('required');
+            $("#DivFirstName").css('display', 'block');
+            $("#lead_FirstName").prop('required', true);
+            $("#DivLastName").css('display', 'block');
+            $("#lead_LastName").prop('required', true);
+        }
+        else if (title == "M/S." || title == "") {
+            $("#DivCommercialName").css('display', 'block').prop('required', true);
+            $("#lead_CustomerName").prop('required', true);
+            $("#DivFirstName").css('display', 'none').removeAttr('required');
+            $("#lead_FirstName").removeAttr('required');
+            $("#DivLastName").css('display', 'none').removeAttr('required');
+            $("#lead_LastName").removeAttr('required');
+        }
+    });
+    $('#AddMoreServices').click(function () {
+
+        //OG start
+        //var newel = $('.SingleService:last').clone();
+        //newel.find('input[type=number]').each(function () {
+        //    $(this).val('');
+        //});
+        //$(newel).insertAfter(".SingleService:last");
+        //return false;
+        //OG End
+        debugger;
+        var index;
+
+        if ($('.SingleService').length < 1) {
+            index = 0;
+        } else {
+            index = parseInt($('.SingleService:last').find("#LeadServiceIndex").val()) + 1;
+        }
+        var newel = $('.SingleService:first').clone();
+        $(newel).insertAfter(".SingleService:last");
+        $(newel).find("#LeadServiceIndex").val(index);
+        $(newel).find("select").val("");
+        $(newel).find("input").val("");
+         $(newel).find(".ServiceGroupID").attr('name', 'leadServices[' + index + '].ServiceGroupID');
+        $(newel).find(".ServiceGroupID").attr('id', 'leadServices_' + index + '__ServiceGroupID');
+         $(newel).find(".ServiceID").attr('name', 'leadServices[' + index + '].ServiceID');
+        $(newel).find(".ServiceID").attr('id', 'leadServices_' + index + '__ServiceID');
+         $(newel).find(".FrequencyOfServiceID").attr('name', 'leadServices[' + index + '].FrequencyOfServiceID');
+        $(newel).find(".FrequencyOfServiceID").attr('id', 'leadServices_' + index + '__FrequencyOfServiceID');
+         $(newel).find(".Qty").attr('name', 'leadServices[' + index + '].Qty');
+        $(newel).find(".Qty").attr('id', 'leadServices_' + index + '__Qty');
+         $(newel).find(".singleServiceRate").attr('name', 'leadServices[' + index + '].Rate');
+        $(newel).find(".singleServiceRate").attr('id', 'leadServices_' + index + '__Rate');
+         $(newel).find(".GST").attr('name', 'leadServices[' + index + '].GST');
+        $(newel).find(".GST").attr('id', 'leadServices_' + index + '__GST');
+         $(newel).find(".Tax").attr('name', 'leadServices[' + index + '].Tax');
+        $(newel).find(".Tax").attr('id', 'leadServices_' + index + '__Tax');
+         $(newel).find(".singleServiceFinalRate").attr('name', 'leadServices[' + index + '].FinalRatePerService');
+        $(newel).find(".singleServiceFinalRate").attr('id', 'leadServices_' + index + '__FinalRatePerService');
+        $(newel).find(".deleteTextboxButton").removeClass('notAllowedToDelete');
+
+        newel.find('.bootstrap-select').replaceWith(function () { return $('select', this); }) 
+        newel.find('.selectpicker').selectpicker('render'); 
+
+        return false;
+    });
+    $('#AddMoreConsultPerson').click(function () {
+
+        var index;
+
+        if ($('.ConsultPerson').length < 2) {
+            index = 0;
+        } else {
+            index = parseInt($('.ConsultPerson:last').find("#Index").val()) + 1;
+        }
+        var newel = $('.ConsultPerson:first').clone().removeAttr('style');
+        $(newel).insertAfter(".ConsultPerson:last");
+        $(newel).find("#Index").val(index);
+        $(newel).find("#ConsultPersonName").attr('name', 'leadConsultPersons[' + index + '].PersonaName');
+        $(newel).find("#ConsultPersonName").attr('id', 'leadConsultPersons_' + index + '__PersonaName');
+        $(newel).find("#Designation").attr('name', 'leadConsultPersons[' + index + '].Designation');
+        $(newel).find("#Designation").attr('id', 'leadConsultPersons_' + index + '__Designation');
+        $(newel).find("#ConsultContactNumber").attr('name', 'leadConsultPersons[' + index + '].Lead_Consult_Person_Contact_No_Mapping[0].Lead_Consult_Person_Contact_No');
+        $(newel).find("#ConsultContactNumber").attr('id', 'leadConsultPersons[' + index + '].Lead_Consult_Person_Contact_No_Mapping[0].Lead_Consult_Person_Contact_No');
+        $(newel).find("#ConsultEmail").attr('name', 'leadConsultPersons[' + index + '].Lead_Consult_Person_Email_Mapping[0].Lead_Consult_Person_Email');
+        $(newel).find("#ConsultEmail").attr('id', 'leadConsultPersons[' + index + '].Lead_Consult_Person_Email_Mapping[0].Lead_Consult_Person_Email');
+        $(newel).find(".deleteTextboxButton").removeClass('notAllowedToDelete');
+
+        return false;
+    });
+    function AddConsultContactNumber(obj) {
+        //alert();
+        debugger;
+
+        var totalContactsPresent = $(obj).closest(".divConsultContactNumbers").find(".ConsultContactNumber").length;
+        var index = $(obj).closest(".divConsultContactNumbers").find(".ConsultContactNumber").length;
+        var newel = $('#ConsultContactNumber:first').clone().val('');
+
+        $(newel).insertBefore(obj);
+        //alert(totalContactsPresent);
+        $(newel).attr('name', 'leadConsultPersons[' + totalContactsPresent + '].Lead_Consult_Person_Contact_No_Mapping[' + totalContactsPresent + '].Lead_Consult_Person_Contact_No');
+        $(newel).attr('id', 'leadConsultPersons[' + totalContactsPresent + '].Lead_Consult_Person_Contact_No_Mapping[' + totalContactsPresent + '].Lead_Consult_Person_Contact_No');
+        newel = $('.deleteTextboxButton:first').clone();
+        $(newel).removeClass('notAllowedToDelete');
+        $(newel).insertBefore(obj);
+        return false;
+    }
+    function AddConsultEmail(obj) {
+        //alert();
+        var newel = $('#ConsultEmail:first').clone().val('');
+        $(newel).insertBefore(obj);
+        newel = $('.deleteTextboxButton:first').clone();
+        $(newel).insertBefore(obj);
+        return false;
+    }
+    $("#LeadsEdit").submit(function (event) {
+        //var leaddate = $('#LeadDate').val();
+        //var newleaddate = leaddate.split("/").reverse().join("/");
+        //$('#LeadDate').val(newleaddate);
+        //var followupdate = $('#NextFollowUpDateTime').val();
+        //var newfollowupdate = followupdate.split("/").reverse().join("/");
+        //$('#NextFollowUpDateTime').val(newfollowupdate);
+
+        //for consult contact no.
+
+
+        $("#NextFollowUpTime").val($("#lead_NextFollowUpTime").val());
+        $("#VisitTime").val($("#lead_VisitTime").val());
+        $("#ServiceTime").val($("#lead_ServiceTime").val());
+
+
+        debugger;
+        var consultpersons = $('div[id="ConsultPerson"]');
+        for (i = 1; i < consultpersons.length; i++) {
+            var consultContactNumberHidden = $(consultpersons[i]).find("#ConsultContactNumberHidden");
+            var consultEmailHidden = $(consultpersons[i]).find("#ConsultEmailHidden");
+            $(consultContactNumberHidden).val("");
+            $(consultEmailHidden).val("");
+            var consultpersoncontact = $(consultpersons[i]).find(".ConsultContactNumber")
+            for (j = 0; j < consultpersoncontact.length; j++) {
+                $(consultContactNumberHidden).val($(consultContactNumberHidden).val() + $(consultpersoncontact[j]).val() + "|");
+            }
+            var consultpersonemail = $(consultpersons[i]).find(".ConsultEmail")
+            for (j = 0; j < consultpersonemail.length; j++) {
+                $(consultEmailHidden).val($(consultEmailHidden).val() + $(consultpersonemail[j]).val() + "|");
+            }
+            $(consultContactNumberHidden).val($(consultContactNumberHidden).val().slice(0, -1));
+            $(consultEmailHidden).val($(consultEmailHidden).val().slice(0, -1));
+
+        }
+        //return false;
+    });
+    function AddCustTelNo(obj) {
+        var idToAdd = $('.CustTelNo').length - 1;
+        //alert(idToAdd);
+        var newel = $('.CustTelNo:last').clone().val('');
+        $(newel).insertBefore(obj);
+        $(newel).attr('id', 'leadTelNos_' + idToAdd + '__Lead_Tel_No');
+        $(newel).attr('name', 'leadTelNos[' + idToAdd + '].Lead_Tel_No');
+        newel = $('.deleteTextboxButton:first').clone();
+        $(newel).removeClass('notAllowedToDelete');
+        $(newel).insertBefore(obj);
+        return false;
+    }
+    function AddCustCellNo(obj) {
+        debugger;
+        var idToAdd = $('.CustCellNo').length - 1;
+        var newel = $('.CustCellNo:last').clone().val('');
+        $(newel).insertBefore(obj);
+        $(newel).attr('id', 'leadCellNos_' + idToAdd + '__Lead_Cell_No');
+        $(newel).attr('name', 'leadCellNos[' + idToAdd + '].Lead_Cell_No');
+        newel = $('.deleteTextboxButton:first').clone();
+        $(newel).removeClass('notAllowedToDelete');
+        $(newel).insertBefore(obj);
+        return false;
+    }
+
+    function AddCustEmail(obj) {
+        var idToAdd = $('.CustEmail').length - 1;
+        var newel = $('.CustEmail:last').clone().val('');
+        $(newel).insertBefore(obj);
+        $(newel).attr('id', 'leadEmailos_' + idToAdd + '__Lead_Email');
+        $(newel).attr('name', 'leadEmails[' + idToAdd + '].Lead_Email');
+        newel = $('.deleteTextboxButton:first').clone();
+        $(newel).removeClass('notAllowedToDelete');
+        $(newel).insertBefore(obj);
+        return false;
+    }
+
+    function deleteService(obj) {
+        //alert();
+        if ($('.SingleService').length < 2) {
+            alert('At least one Service is Required');
+        }
+        else {
+            $(obj).parent().closest('.SingleService').remove();
+        }
+        addFinalServiceTotal();
+    }
+    function deleteConsultPerson(obj) {
+        //alert();
+        //if ($('.SingleService').length < 2) {
+        //    alert('At least one Service is Required');
+        //}
+        //else {
+        $(obj).parent().closest('.ConsultPerson').remove();
+        //}
+        }
+    $("#lead_LeadStatusID").change(function () {
+        var selectedText = $("#lead_LeadStatusID option:selected").html();
+        if (selectedText == "Closed" || selectedText == "Rejected") {
+            $("#lead_StatusReason").prop('disabled', false);
+            $("#lead_StatusReason").prop('required',true);
+        }
+        else{
+            $("#lead_StatusReason").prop('disabled', true);
+            $('#lead_StatusReason').removeAttr('required');
+            //resetInputs();
+        }
+        if (selectedText == "Process" || selectedText == "Visit Allocate") {
+            $("#NextFollowUpDateTimeLabel").addClass("required");
+            $("#lead_NextFollowUpDateTime").prop('required', true);
+            $("#NextFollowUpTimeLabel").addClass("required");
+            $("#lead_NextFollowUpTime").prop('required', true);
+            $("#FollowUpDetailsLabel").addClass("required");
+            $("#lead_FollowUpDetails").prop('required', true);
+        }
+        else if (selectedText == "Closed" || selectedText == "Rejected" || selectedText == "Done") {
+
+            $("#NextFollowUpDateTimeLabel").removeClass("required");
+            $("#lead_NextFollowUpDateTime").prop('required', false);
+            $("#NextFollowUpTimeLabel").removeClass("required");
+            $("#lead_NextFollowUpTime").prop('required', false);
+            $("#FollowUpDetailsLabel").removeClass("required");
+            $("#lead_FollowUpDetails").prop('required', false);
+
+        }
+        else {
+            if ($("#lead_ServiceDate").val() != "") {
+                $("#NextFollowUpDateTimeLabel").removeClass("required");
+                $("#lead_NextFollowUpDateTime").prop('required', false);
+                $("#NextFollowUpTimeLabel").removeClass("required");
+                $("#lead_NextFollowUpTime").prop('required', false);
+                $("#FollowUpDetailsLabel").removeClass("required");
+                $("#lead_FollowUpDetails").prop('required', false);
+            }
+        }
+        if (selectedText == "Visit Allocate") {
+            $("#VisitDateTimeLabel").addClass("required");
+            $("#lead_VisitDateTime").prop('required', true);
+            $("#VisitTimeLabel").addClass("required");
+            $("#lead_VisitTime").prop('required', true);
+            $("#VisitAllocateLabel").addClass("required");
+            $("#lead_VisitAllocate").prop('required', true);
+        } else {
+            $("#VisitDateTimeLabel").removeClass("required");
+            $("#lead_VisitDateTime").prop('required', false);
+            $("#VisitTimeLabel").removeClass("required");
+            $("#lead_VisitTime").prop('required', false);
+            $("#VisitAllocateLabel").removeClass("required");
+            $("#lead_VisitAllocate").prop('required', false);
+        }
+
+        if (selectedText == "Done") {
+            $("#ServiceDateLabel").addClass("required");
+            $("#lead_ServiceDate").prop('required', true);
+            $("#ServiceTimeLabel").addClass("required");
+            $("#lead_ServiceTime").prop('required', true);
+        } else {
+            $("#ServiceDateLabel").removeClass("required");
+            $("#lead_ServiceDate").prop('required', false);
+            $("#ServiceTimeLabel").removeClass("required");
+            $("#lead_ServiceTime").prop('required', false);
+        }
+    });
+
+    function addServiceTotal() {
+
+        //var sum = 0;
+        //$(".singleServiceRate").each(function () {
+        //    sum += +$(this).val();
+        //});
+        //$("#FinalRate").val(sum);
+    }
+    function addFinalServiceTotal() {
+
+        var sum = 0;
+        $(".singleServiceFinalRate").each(function () {
+            sum += +$(this).val();
+        });
+        $("#lead_FinalRate").val(sum);
+    }
+    $("#lead_TypeOfPremisesID").change(function () {
+
+        if ($("#lead_TypeOfPremisesID").val() == "3") {
+            $("#labelNoOfWings").css('display', "block");
+            $("#divNoOfWings").css("display", "block");
+            $("#labelNoOfFloors").css("display", "block");
+            $("#divNoOfFloors").css("display", "block");
+            $("#labelNoOfFlats").css("display", "block");
+            $("#divNoOfFlats").css("display", "block");
+        } else {
+            $("#labelNoOfWings").css("display", "none");
+            $("#divNoOfWings").css("display", "none");
+            $("#labelNoOfFloors").css("display", "none");
+            $("#divNoOfFloors").css("display", "none");
+            $("#labelNoOfFlats").css("display", "none");
+            $("#divNoOfFlats").css("display", "none");
+        }
+    });
+    function populateServices(obj, valueToSet) {
+        debugger;
+        var currentServiceIDElement = $(obj).parent().closest('.SingleService').find('select.ServiceID');
+        var id = $(currentServiceIDElement).attr("id");
+        var name  = $(currentServiceIDElement).attr("name");
+
+        if ($(obj).val() == "") {
+                var services = "<select class = 'form-control ServiceID restrict-dropdown-widths selectpicker' id='"+id+"' name='"+name+"'  onchange='calculateTax(this);'>";
+                services = services + '<option value>--SELECT--</option>';
+                services = services + '</select>';
+            $(obj).parent().closest('.SingleService').find('select.ServiceID').html(services);            
+            $(obj).parent().closest('.SingleService').find('select.ServiceID').selectpicker('refresh');
+                //$(obj).closest("#ServiceID").html(services);
+            } else {
+                $.ajax({
+                    type: "post",
+                    url: "/Leads/GetServices",
+                    data: { ServiceGroupID: $(obj).val() },
+                    datatype: "json",
+                    traditional: true,
+                    async: false,
+                    success: function (data) {
+                        var services = "<select  class = 'form-control ServiceID restrict-dropdown-widths selectpicker' data_live_search='true' id='"+id+"' name = '"+name+"'  onchange='calculateTax(this);'>";
+                        //var services = "<select  required='required' id='"+id+"' name='"+name+"' >";
+                        services = services + '<option value="">--SELECT--</option>';
+                        for (var i = 0; i < data.length; i++) {
+                            services = services + '<option value=' + data[i].Value + '>' + data[i].Text + '</option>';
+                        }
+                        services = services + '</select>';
+                        $(obj).parent().closest('.SingleService').find('select.ServiceID').html(services);
+                        if (valueToSet != '') {
+                            $(obj).parent().closest('.SingleService').find('select.ServiceID').val(valueToSet);
+                        }
+                        $(obj).parent().closest('.SingleService').find('select.ServiceID').selectpicker('refresh');
+                        $(obj).parent().closest('.SingleService').find('select.ServiceID').selectpicker('refresh');
+                        //$(obj).closest('#ServiceID').html(services);
+                    }
+                });
+            }
+        }
+    function calculateTax(obj) {
+        debugger;
+        //alert($(obj).prev('#ServiceGroupID').val());
+        var gst = $(obj).parent().parent().find('.GST').val();
+        //if (gst == "") {
+        //    alert("Please select GST applicable or not!");
+        //    return false;
+        //}
+        //var serviceGroup = $(obj).parent().parent().find('.ServiceGroupID').val();
+        var serviceGroup = $(obj).closest('.SingleService').find('select.ServiceGroupID').val();
+        var service = $(obj).closest('.SingleService').find('select.ServiceID').val();
+        var freq = $(obj).closest('.SingleService').find('select.FrequencyOfServiceID').val();
+        var qty = $(obj).closest('.SingleService').find('.Qty').val();
+        var rate = $(obj).closest('.SingleService').find('.singleServiceRate').val();
+
+
+        if (serviceGroup == '') {
+            alert('Please select Service Group!');
+             $(obj).closest('.SingleService').find('select.ServiceGroupID').focus();
+            return false;
+        }
+        else if (service == '') {
+            alert('Please select Service!');
+            $(obj).closest('.SingleService').find('select.ServiceID').focus();
+            return false;
+        }
+        else if (freq == '') {
+            //alert('Please select Frequency of Service!');
+            //$(obj).parent().parent().find('.FrequencyOfServiceID').focus();
+            //return false;
+        }
+        else if (qty == '') {
+            //alert('Please enter Quantity!');
+            //$(obj).parent().parent().find('#Qty').focus();
+            //return false;
+            qty = 1;
+        }
+        else if (rate == '') {
+            alert('Please enter Rate!');
+            $(obj).closest('.SingleService').find('.singleServiceRate').focus();
+            return false;
+        }
+        // All values OK then proceed
+                $.ajax({
+                    type: "post",
+                    url: "/Leads/GetSingleServiceTaxAfterGSTSelection",
+                    data: { ServiceID: service, Rate: rate, Qty: qty, GSTapplicable: gst },
+                    datatype: "json",
+                    traditional: true,
+                    success: function (data) {
+                        //alert(data);
+                        //var services = "<select id='ServiceID' name = 'ServiceID' required='required'>";
+                        //services = services + '<option value="">--SELECT--</option>';
+                        //for (var i = 0; i < data.length; i++) {
+                        //    services = services + '<option value=' + data[i].Value + '>' + data[i].Text + '</option>';
+                        //}
+                        //services = services + '</select>';
+                        //$(obj).parent().closest('.SingleService').find('#ServiceID').html(services);
+                        //$(obj).closest('#ServiceID').html(services);
+                        if (gst == "True") {
+                            $(obj).parent().parent().find('.Tax').val(data);
+                            $(obj).parent().parent().find('.singleServiceFinalRate').val((rate * qty) + data);
+                        } else {
+                            $(obj).parent().parent().find('.Tax').val("0");
+                            $(obj).parent().parent().find('.singleServiceFinalRate').val((rate * qty));
+                        }
+
+                        $(obj).parent().parent().find('.singleServiceFinalRate').change();
+                    }
+                });
+
+        }
+
+    function deleteTextbox(obj) {
+        if ($(obj).hasClass("notAllowedToDelete")) {
+            alert("This Entry not allowed to Delete!");
+        } else {
+            debugger;
+            if ($(obj).parent().find('.deleteTextboxButton').length == 1) {
+                alert('At least one is Required!')
+            } else {
+                $(obj).prev().remove();
+                $(obj).remove();
+            }
+        }
+    }
+    $(".Location").change(function () {
+
+        if ($(this).val() == "") {
+            $(".Branch").val("");
+        } else {
+            //alert($(this).val());
+            //alert($("#LocationID" + $(this).val()).val());
+            $(".Branch").val($("#LocationID" + $(this).val()).val());
+
+        }
+        $(".Branch").selectpicker('refresh');
+    });
+    function resetInputs() {
+        debugger;
+        var validator = $("#LeadsEdit").validate();
+        validator.resetForm();
+        }
+    function checkDuplicateLead() {
+        var cellNos = [];
+        $.each($(".CustCellNo"), function (index, obj) {
+            if ($(obj).val().length == 10) {
+                cellNos.push($(obj).val());
+            }
+        });
+        if ($("#lead_Title").val() != "" && cellNos.length > 0) {
+            //alert();
+            $.ajax({
+                type: "post",
+                url: "/Leads/CheckDupliateLeads",
+                data: { title: $("#lead_Title").val(), FirstName: $("#lead_FirstName").val(), LastName: $("#lead_LastName").val(), CustomerName: $("#lead_CustomerName").val(), CellNo: cellNos },
+                datatype: "json",
+                traditional: true,
+                success: function (data) {
+                    if (data == "1") {
+                        $(".duplicate").show();
+                    } else {
+                        $(".duplicate").hide();
+                    }
+                }
+            });
+        }
+
+    }
+</script>

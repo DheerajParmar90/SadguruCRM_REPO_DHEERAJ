@@ -1,0 +1,1549 @@
+﻿@model SadguruCRM.Models.Invoice
+
+@{
+    ViewBag.Title = "Invoice - Delete";
+}
+
+<style>
+    input, select, textarea {
+        max-width: 100%;
+        overflow: hidden;
+    }
+
+    label {
+        font-weight: 800;
+        border-bottom: 1px black solid;
+        margin-bottom: 10px;
+        margin-top: 12px;
+    }
+
+    input:disabled {
+        background-color: black;
+        border-color: rgb(247 247 252);
+    }
+
+    form-control, .form-control:disabled, .form-control[readonly], textarea, .bootstrap-select > .dropdown-toggle, .form-group .bootstrap-select, .form-horizontal .bootstrap-select, .form-inline .bootstrap-select {
+        background-color: #f7f7fc;
+        opacity: 1;
+        border-color: rgb(247 247 252);
+    }
+
+    .form-control {
+        padding: 0;
+        margin-top: -10px;
+    }
+
+    .bootstrap-select > .dropdown-toggle {
+        padding: 0;
+    }
+
+    .bootstrap-select > .dropdown-toggle {
+        word-wrap: break-word !important;
+        white-space: normal !important;
+    }
+
+        .dropdown-toggle::after, .bootstrap-select > .dropdown-toggle:after {
+            display: none;
+        }
+</style>
+<h2>@ViewBag.InvoiceTypeName</h2>
+@using (Html.BeginForm("Edit", "Invoices", FormMethod.Post, new { id = "InvoiceCreate", enctype = "multipart/form-data", autocomplete = "off" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Delete</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.Hidden("Tax_Invoice_Type_Enum", (byte)@ViewBag.InvoiceType)
+        @Html.HiddenFor(model => model.InvoiceID)
+        <div class="form-group row">
+            <div class="col">
+                @Html.LabelFor(model => model.CustomerID, "Select Customer", htmlAttributes: new { @class = "control-label required" })
+                @Html.DropDownList("CustomerID", (SelectList)ViewBag.CustomerID, htmlAttributes: new { @class = "form-control", @data_live_search = "true", required = "required" })
+                @Html.ValidationMessageFor(model => model.CustomerID, "", new { @class = "text-danger" })
+            </div>
+            <div class="col">
+                @Html.LabelFor(model => model.ContractID, "Select Contract", htmlAttributes: new { @class = "control-label required" })
+                @Html.DropDownList("ContractID", (IEnumerable<SelectListItem>)ViewBag.ContractID, htmlAttributes: new { @class = "form-control", required = "required" })
+            </div>
+
+            <div class="col">
+                @if (@ViewBag.InvoiceTypeName == "New Tax Invoice")
+                {
+                    @Html.LabelFor(model => model.InvoiceNo, "Tax Invoice No", htmlAttributes: new { @class = "control-label required" })
+                }
+                else if (@ViewBag.InvoiceTypeName == "Proforma Invoice")
+                {
+                    @Html.LabelFor(model => model.InvoiceNo, "Proforma Invoice No", htmlAttributes: new { @class = "control-label required" })
+                }
+                else
+                {
+                    @Html.LabelFor(model => model.InvoiceNo, "Invoice No", htmlAttributes: new { @class = "control-label required" })
+                }
+
+                @Html.EditorFor(model => model.InvoiceNo, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                @Html.ValidationMessageFor(model => model.InvoiceNo, "", new { @class = "text-danger" })
+            </div>
+            <div class="col">
+                @if (@ViewBag.InvoiceTypeName == "New Tax Invoice")
+                {
+                    @Html.LabelFor(model => model.InvoiceDate, "Tax Invoice Date", htmlAttributes: new { @class = "control-label required" })
+                }
+                else if (@ViewBag.InvoiceTypeName == "Proforma Invoice")
+                {
+                    @Html.LabelFor(model => model.InvoiceNo, "Proforma Invoice Date", htmlAttributes: new { @class = "control-label required" })
+                }
+                else
+                {
+                    @Html.LabelFor(model => model.InvoiceNo, "Invoice Date", htmlAttributes: new { @class = "control-label required" })
+                }
+
+                @Html.EditorFor(model => model.InvoiceDate, new { htmlAttributes = new { @class = "form-control", required = "required" } })
+                @Html.ValidationMessageFor(model => model.InvoiceDate, "", new { @class = "text-danger" })
+            </div>
+            <div class="col">
+
+                @Html.CheckBoxFor(model => model.SendDetailsMessage)
+                @Html.LabelFor(model => model.SendDetailsMessage, "Send Details Message", htmlAttributes: new { @class = "control-label" })
+                @Html.ValidationMessageFor(model => model.SendDetailsMessage, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div id="divBillingAddress">
+            <hr />
+            <h6><b>Billing Address</b></h6>
+            <div class="form-group row">
+                @Html.Hidden("Customers_Billing_Address_Mapping_ID")
+
+                <div class="col">
+                    @Html.Label("Contract Date", htmlAttributes: new { @class = "control-label" })
+                    @Html.Editor("ContractDate", new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                </div>
+                <div class="col">
+                    @Html.Label("Consult Person", htmlAttributes: new { @class = "control-label" })
+                    @Html.Editor("ConsultPerson", new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                </div>
+                <div class="col">
+                    @Html.Label("Designation", htmlAttributes: new { @class = "control-label" })
+                    @Html.Editor("ConsultPersonDesignation", new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                </div>
+                <div class="col">
+                    @Html.Label("AddressLine1", "Address Line 1", htmlAttributes: new { @class = "control-label" })
+                    @Html.Editor("BillingAddressLine1", new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                </div>
+                <div class="col">
+                    @Html.Label("AddressLine2", "Address Line 2", htmlAttributes: new { @class = "control-label" })
+                    @Html.Editor("BillingAddressLine2", new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col">
+                    @Html.Label("AddressLine3", "Address Line 3", htmlAttributes: new { @class = "control-label" })
+                    @Html.Editor("BillingAddressLine3", new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                </div>
+                <div class="col">
+                    @Html.Label("LocationID", "Location", htmlAttributes: new { @class = "control-label" })
+                    @Html.DropDownList("BillingLocationID", (IEnumerable<SelectListItem>)ViewBag.LocationID, "-- SELECT --", new { @class = "form-control", @disabled = "disabled" })
+                </div>
+                <div class="col">
+                    @Html.Label("CityId", "City", htmlAttributes: new { @class = "control-label" })
+                    @Html.DropDownList("BillingCityID", (IEnumerable<SelectListItem>)ViewBag.CityID, "-- SELECT --", new { @class = "form-control", @disabled = "disabled" })
+                    @*@Html.DropDownList("CityID", null, "-- SELECT --", htmlAttributes: new { @class = "form-control" , @onchange = "populateCity(this);" })*@
+                </div>
+                <div class="col">
+                    @Html.Label("Pincode", "Pincode", htmlAttributes: new { @class = "control-label" })
+                    @Html.Editor("BillingPincode", new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                </div>
+                <div class="col">
+                    @Html.Label("State", "State", htmlAttributes: new { @class = "control-label" })
+                    @Html.DropDownList("BillingStateID", (IEnumerable<SelectListItem>)ViewBag.StateID, "-- SELECT --", new { @class = "form-control", @disabled = "disabled" })
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col">
+                    @Html.Label("Cell No", htmlAttributes: new { @class = "control-label" })
+                    @Html.Editor("BillingCellNumber", new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                </div>
+                <div class="col">
+                    @Html.Label("Email", htmlAttributes: new { @class = "control-label" })
+                    @Html.Editor("BillingEmail", new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                </div>
+                <div class="col">
+                    @Html.Label("Tel No", htmlAttributes: new { @class = "control-label" })
+                    @Html.Editor("BillingTelNo", new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                </div>
+                <div class="col">
+                    @Html.Label("GSTNo", "GST No", htmlAttributes: new { @class = "control-label" })
+                    @Html.Editor("BillingGSTNo", new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                </div>
+                <div class="col">
+                    @Html.Label("GST Type", htmlAttributes: new { @class = "control-label" })
+                    @*@Html.DropDownListFor(model => model.GSTType, new List<SelectListItem>(){
+                           new SelectListItem() { Text = "CGST/SGST", Value = "CGST/SGST" },
+                           new SelectListItem() { Text = "IGST", Value = "IGST"}
+                        }, "--SELECT--", new { @class = "form-control" })*@
+                    @Html.DropDownList("GST_Type_Enum", (IEnumerable<SelectListItem>)ViewBag.GSTTypes, "--SELECT--", new { @class = "form-control", @data_live_search = "true", @disabled = "disabled" })
+                    @Html.ValidationMessage("GST_Type_Enum", "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col">
+                    @Html.LabelFor(model => model.PurchaseOrderNo, "Purchase Order No", htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.PurchaseOrderNo, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.PurchaseOrderNo, "", new { @class = "text-danger" })
+                </div>
+                <div class="col">
+                    @Html.LabelFor(model => model.PurchaseOrderDate, "Purchase Order Date", htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.PurchaseOrderDate, new { htmlAttributes = new { @class = "form-control", @autocomplete = "off" } })
+                    @Html.ValidationMessageFor(model => model.PurchaseOrderDate, "", new { @class = "text-danger" })
+                </div>
+                <div class="col">
+                    @Html.LabelFor(model => model.ExecutiveName, "Executive Name", htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.ExecutiveName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.ExecutiveName, "", new { @class = "text-danger" })
+                </div>
+                <div class="col">
+
+                </div>
+                <div class="col">
+
+                </div>
+            </div>
+
+
+        </div>
+        <div id="divServiceAddreses">
+            <hr />
+            <h6><b>SERVICE ADDRESS</b></h6>
+            <div class="SingleServiceAddress" id="SingleServiceAddress">
+
+                <div class="form-group row">
+                    @Html.Hidden("Customers_Service_Address_Mapping_ID")
+                    <div class="col">
+                        @Html.Label("AddressLine1", "Address Line 1", htmlAttributes: new { @class = "control-label" })
+                        @Html.Editor("ServiceAddressLine1", new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                    </div>
+                    <div class="col">
+                        @Html.Label("AddressLine2", "Address Line 2", htmlAttributes: new { @class = "control-label" })
+                        @Html.Editor("ServiceAddressLine2", new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                    </div>
+                    <div class="col">
+                        @Html.Label("AddressLine3", "Address Line 3", htmlAttributes: new { @class = "control-label" })
+                        @Html.Editor("ServiceAddressLine3", new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                    </div>
+                    <div class="col">
+                        @Html.Label("LocationID", "Location", htmlAttributes: new { @class = "control-label" })
+                        @Html.DropDownList("ServiceLocationID", (IEnumerable<SelectListItem>)ViewBag.LocationID, "-- SELECT --", new { @class = "form-control", @disabled = "disabled" })
+                    </div>
+
+                    <div class="col">
+                        @Html.Label("CityId", "City", htmlAttributes: new { @class = "control-label" })
+                        @Html.DropDownList("ServiceCityID", (IEnumerable<SelectListItem>)ViewBag.CityID, "-- SELECT --", new { @class = "form-control", @disabled = "disabled" })
+                        @*@Html.DropDownList("CityID", null, "-- SELECT --", htmlAttributes: new { @class = "form-control" , @onchange = "populateCity(this);" })*@
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col">
+                        @Html.Label("Pincode", "Pincode", htmlAttributes: new { @class = "control-label" })
+                        @Html.Editor("ServicePincode", new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                        @Html.ValidationMessage("Pincode", "", new { @class = "text-danger" })
+                    </div>
+                    @*<div class="col-md-2">
+                            @Html.Label("StateId", "State", htmlAttributes: new { @class = "control-label" })
+                            @Html.DropDownList("ServiceStateID", (IEnumerable<SelectListItem>)ViewBag.StateID, "-- SELECT --", new { @class = "form-control", @disabled = "disabled" })
+                        </div>*@
+                    <div class="col">
+                        @Html.Label("ServiceConsultPerson", "Consult Person", htmlAttributes: new { @class = "control-label" })
+                        @Html.Editor("ServiceConsultPerson", new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                    </div>
+                    <div class="col">
+                        @Html.Label("ServiceTelNos", "Tel No", htmlAttributes: new { @class = "control-label" })
+                        @Html.Editor("ServiceTelNos", new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                    </div>
+                    <div class="col">
+                        @Html.Label("ServiceCellNos", "Cell No", htmlAttributes: new { @class = "control-label" })
+                        @Html.Editor("ServiceCellNos", new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                    </div>
+                    <div class="col">
+                        @Html.Label("ServiceEmails", "Email", htmlAttributes: new { @class = "control-label" })
+                        @Html.Editor("ServiceEmails", new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
+                    </div>
+                    @*<div class="col-md-1">
+                            @Html.Label("Delete", "Delete", htmlAttributes: new { @class = "control-label" })
+                            <i class="fa fa-trash form-control" style="color:red; border:none; box-shadow:none;" onclick="deleteServiceAddress(this);"></i>
+                        </div>*@
+
+                </div>
+            </div>
+
+        </div>
+        <hr />
+        <div id="divServicesRequired">
+            <h6>INVOICE SERVICES DETAILS</h6>
+            <div class="SingleService" id="SingleService">
+                <div class="form-group row">
+                    @*<div class="sixty row" style="padding-right: 0px;">
+                        </div>*@
+                    <div class="col">
+                        @Html.Label("Service Group", "Service", htmlAttributes: new { @class = "control-label required" })
+                        @Html.DropDownList("ServiceGroupID", null, "-- SELECT --", htmlAttributes: new { @class = "ServiceGroupID form-control", @data_live_search = "true", @onchange = "populateServices(this,'');", @required = "required" })
+                    </div>
+                    <div class="col">
+                        @Html.Label("Service", "Sub-Service", htmlAttributes: new { @class = "control-label required" })
+                        @Html.DropDownList("ServiceID", null, "-- SELECT --", htmlAttributes: new { @class = "ServiceID form-control", @data_live_search = "true", @onchange = "populateSACandSSC(this,'');", @required = "required" })
+                    </div>
+                    <div class="col">
+                        @Html.Label("Short Service Scope", "Short Service Scope", htmlAttributes: new { @class = "control-label" })
+                        @Html.DropDownList("ShortServiceScope", null, "-- SELECT --", htmlAttributes: new { @class = "ShortServiceScope form-control", @data_live_search = "true", @style = "max-width: 100%;" })
+
+                    </div>
+                    <div class="col">
+                        @Html.Label("Frequency Of Service", "Frequency Of Service", htmlAttributes: new { @class = "control-label required" })
+                        @Html.DropDownList("FrequencyOfServiceID", null, "-- SELECT --", htmlAttributes: new { @class = "form-control frequencyOfService", @data_live_search = "true", @required = "required" })
+
+                    </div>
+
+                </div>
+                <div class="form-group row">
+                    <div class="col">
+                        @Html.Label("Period Of Contract", htmlAttributes: new { @class = "control-label" })
+                        @Html.DropDownList("PeriodsOfContractID", (SelectList)ViewBag.PeriodsOfContract, "--SELECT--", htmlAttributes: new { @class = "form-control periodOfContract", @data_live_search = "true" })
+                    </div>
+                    <div class="col">
+                        @Html.Label("Service Start Date", htmlAttributes: new { @class = "control-label" })
+                        @Html.Editor("ServiceStartDate", new { htmlAttributes = new { @class = "form-control serviceStartDate" } })
+                    </div>
+                    <div class="col">
+                        @Html.Label("Period of Contract (Start)", htmlAttributes: new { @class = "control-label" })
+                        @Html.Editor("PeriodOfContractStartDate", new { htmlAttributes = new { @class = "form-control date-only pocStartDate" } })
+                    </div>
+                    <div class="col">
+                        @Html.Label("Period Of Contract (End)", htmlAttributes: new { @class = "control-label" })
+                        @Html.Editor("PeriodOfContractEndDate", new { htmlAttributes = new { @class = "form-control date-only pocEndDate", @readonly = "readonly" } })
+                    </div>
+                    <div class="col" style="display:none">
+                        @Html.Label("Frequency Of Invoice", htmlAttributes: new { @class = "control-label" })
+                        @Html.DropDownList("FrequencyOfInvoiceID", (SelectList)ViewBag.FrequencyInvoice, "--SELECT--", htmlAttributes: new { @class = "FrequencyOfInvoiceID form-control", @data_live_search = "true" })
+                    </div>
+                    <div class="col">
+                        @Html.Label("Period of Invoice (Start)", htmlAttributes: new { @class = "control-label" })
+                        @Html.Editor("PeriodOfInvoiceStartDate", new { htmlAttributes = new { @class = "form-control date-only poiStartDate" } })
+                    </div>
+                    <div class="col">
+                        @Html.Label("Period Of Invoice (End)", htmlAttributes: new { @class = "control-label" })
+                        @Html.Editor("PeriodOfInvoiceEndDate", new { htmlAttributes = new { @class = "form-control date-only poiEndDate" } })
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col">
+                        @Html.Label("SAC Code", "SAC Code", htmlAttributes: new { @class = "control-label" })
+                        @Html.Editor("SACCode", new { htmlAttributes = new { @class = "SACCode form-control", @readonly = "readonly" } })
+                    </div>
+                    <div class="col">
+                        @Html.Label("Qty", "Qty", htmlAttributes: new { @class = "control-label" })
+                        @Html.Editor("Qty", new
+                        {
+                            htmlAttributes = new
+                            {
+                                @class = "Qty form-control",
+                                @type = "number"@*, @onchange = "calculateTax(this);"*@}
+})
+                    </div>
+                    <div class="col">
+                        @Html.Label("Rate", "Rate", htmlAttributes: new { @class = "control-label required" })
+                        @Html.Editor("Rate", new { htmlAttributes = new { @required = "required", @class = "Rate form-control singleServiceRate", @type = "number", @onchange = "calculateTax(this);" } })
+                    </div>
+                    <div class="col">
+                        @Html.Label("GST", "GST", htmlAttributes: new { @class = "control-label required" })
+                        @Html.DropDownList("GST", new List<SelectListItem>(){
+                                                           new SelectListItem() { Text = "Yes", Value = "True" },
+                                                           new SelectListItem() { Text = "No", Value = "False"}
+                                                        }, "--", new { @class = "GST form-control", @data_live_search = "true", @onchange = "calculateTax(this);", @required = "required" })
+                    </div>
+                    <div class="col">
+                        @Html.Label("CGST", "CGST", htmlAttributes: new { @class = "control-label" })
+                        @Html.Editor("CGST", new { htmlAttributes = new { @class = "CGST form-control", @type = "number", @onchange = "addServiceTotal();", @readonly = "readonly" } })
+                    </div>
+                    <div class="col">
+                        @Html.Label("SGST", "SGST", htmlAttributes: new { @class = "control-label" })
+                        @Html.Editor("SGST", new { htmlAttributes = new { @class = "SGST form-control", @type = "number", @onchange = "addServiceTotal();", @readonly = "readonly" } })
+                    </div>
+                    <div class="col">
+                        @Html.Label("IGST", "IGST", htmlAttributes: new { @class = "control-label" })
+                        @Html.Editor("IGST", new { htmlAttributes = new { @class = "IGST form-control", @type = "number", @onchange = "addServiceTotal();", @readonly = "readonly" } })
+                    </div>
+                    <div class="col">
+                        @Html.Label("Final Rate", "Final Rate", htmlAttributes: new { @class = "control-label" })
+                        @Html.Editor("FinalRatePerService", new { htmlAttributes = new { @class = "FinalRatePerService form-control singleServiceFinalRate", @type = "number", @onchange = "addFinalServiceTotal();", @readonly = "readonly" } })
+                    </div>
+                    @*<div class="col-md-1">
+                            @Html.Label("Delete", "Delete", htmlAttributes: new { @class = "control-label" })
+                            <i class="fa fa-trash form-control" style="color:red; border:none; box-shadow:none;" onclick="deleteService(this);"></i>
+                        </div>*@
+                </div>
+
+                <hr />
+            </div>
+
+            <div class="form-group row">
+                <div class="col-md-10">
+                    @Html.Label("Total", "Total", new { @style = "float:right;" })
+                </div>
+                <div class="col-md-2">
+                    <input class="FinalRate form-control text-box single-line" id="FinalRate" name="FinalRate" type="text" readonly style="float:right;">
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-12">
+                    @*<button type="button" class="btn btn-outline-secondary" style="float:right;" id="AddMoreServices">Add More Services</button>*@
+                    @*<input type="submit" value="Add More Service" class="btn btn-outline-secondary" style="float:right;" id="AddMoreServices" />*@
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div id="divOtherInfo">
+            <h6><b>Other Onformation</b></h6>
+
+            <div class="form-group row">
+
+                <div class="col">
+                    @Html.Label("Type Of Premise", htmlAttributes: new { @class = "control-label required" })
+                    @Html.DropDownList("PremisesTypeID", (SelectList)ViewBag.TypeOfPremises, "--SELECT--", htmlAttributes: new { @class = "PremisesTypeID form-control", @data_live_search = "true", @required = "required" })
+                    @Html.ValidationMessageFor(model => model.PremisesTypeID, "", new { @class = "text-danger" })
+                </div>
+                <div class="col">
+                    @Html.Label("Premises Area", htmlAttributes: new { @class = "lblPremises_Area_ID control-label" })
+                    @Html.DropDownListFor(model => model.Premises_Area_ID, (IEnumerable<SelectListItem>)ViewBag.PremisesArea, "--SELECT--", htmlAttributes: new { @class = "Premises_Area_ID form-control", @data_live_search = "true" })
+                    @Html.ValidationMessageFor(model => model.Premises_Area_ID, "", new { @class = "text-danger" })
+                </div>
+                <div class="col">
+                    @Html.Label("Appox Sq Ft Area", htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.AppSqFtArea, new { htmlAttributes = new { @class = "AppSqFtArea form-control" } })
+                    @Html.ValidationMessageFor(model => model.PaidByCustomer, "", new { @class = "text-danger" })
+                </div>
+                <div class="col">
+                    @Html.Label("Terms Of Payment", htmlAttributes: new { @class = "control-label" })
+                    @Html.DropDownList("PaymentTermID", (IEnumerable<SelectListItem>)ViewBag.PaymentTerms, "--SELECT--", htmlAttributes: new { @class = "PaymentTermID form-control", @data_live_search = "true" })
+                    @Html.ValidationMessageFor(model => model.PaymentTermID, "", new { @class = "text-danger" })
+                </div>
+                <div class="col">
+                    @Html.Label("Payment Mode", htmlAttributes: new { @class = "control-label" })
+                    @Html.DropDownList("PaymentModeID", (IEnumerable<SelectListItem>)ViewBag.PaymentModes, "--SELECT--", htmlAttributes: new { @class = "PaymentModeID form-control", @data_live_search = "true" })
+                    @Html.ValidationMessageFor(model => model.PaymentModeID, "", new { @class = "text-danger" })
+                </div>
+                <div class="col">
+                    @Html.Label("Paid By Customer", htmlAttributes: new { @class = "control-label" })
+                    @Html.Editor("PaidByCustomer", new { htmlAttributes = new { @class = "PaidByCustomer form-control", @type = "number" } })
+                </div>
+                <div class="col">
+                    @Html.Label("Balance Amount", htmlAttributes: new { @class = "lblBalanceAmount control-label required" })
+                    @Html.EditorFor(model => model.BalanceAmount, new { htmlAttributes = new { @class = "BalanceAmount form-control", @required = "required" } })
+                    @Html.ValidationMessageFor(model => model.BalanceAmount, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            @*<div class="form-group row">
+                    <div class="col-md-3">
+                            @Html.Label("Executive Contact No", htmlAttributes: new { @class = "control-label" })
+                            @Html.EditorFor(model => model.ExecutveContactNo, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.ExecutveContactNo, "", new { @class = "text-danger" })
+                        </div>
+                </div>*@
+
+            <div class="form-group row onlyForTaxInvoice">
+                @*<div class="col">
+                        @Html.LabelFor(model => model.PaidByCustomer, "Paid By Customer", htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.PaidByCustomer, new { htmlAttributes = new { @class = "form-control", @type = "number" } })
+                        @Html.ValidationMessageFor(model => model.PaidByCustomer, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col">
+                        @Html.LabelFor(model => model.BalanceAmount, "Balance Amount", htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.BalanceAmount, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled", @type = "number" } })
+                        @Html.ValidationMessageFor(model => model.BalanceAmount, "", new { @class = "text-danger" })
+                    </div>*@
+                <div class="col" id="divReceivedOn">
+                    @Html.Label("Payment Received On", htmlAttributes: new { @class = "control-label" })
+                    @Html.Editor("PaymentReceivedOn", new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessage("PaymentReceivedOn", "", new { @class = "text-danger" })
+                </div>
+                <div class="col" id="divTDSapplicable">
+                    @Html.Label("TDS Applicable", htmlAttributes: new { @class = "control-label" })
+                    <div class="checkbox">
+                        @Html.CheckBox("TDSapplicable")
+                        @Html.ValidationMessage("TDSapplicable", "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="col" id="divTDSAmount">
+                    @Html.Label("TDS Amount", htmlAttributes: new { @class = "control-label" })
+                    @Html.Editor("TDSAmount", new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessage("TDSAmount", "", new { @class = "text-danger" })
+                </div>
+                <div class="col" id="divBadDebtsAmount">
+                    @Html.Label("Bad Debts Amount", htmlAttributes: new { @class = "control-label" })
+                    @Html.Editor("BadDebtsAmount", new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessage("BadDebtsAmount", "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col">
+                    @Html.Label("Remark", htmlAttributes: new { @class = "control-label" })
+                    @Html.TextAreaFor(model => model.Remarks, 5, 100, new { @class = "Remark form-control" })
+                    @Html.ValidationMessageFor(model => model.Remarks, "", new { @class = "text-danger" })
+                </div>
+
+                @*<div class="col-md-3">
+                        @Html.Label("Branch", htmlAttributes: new { @class = "control-label" })
+                        @Html.DropDownList("BranchID", (IEnumerable<SelectListItem>)ViewBag.BranchID, "--SELECT--", htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.PaymentTermID, "", new { @class = "text-danger" })
+                    </div>*@
+            </div>
+
+            @*<div class="form-group row">
+                    <div class="col-2">
+                        @Html.LabelFor(model => model.PaymentModeID, "Payment Mode", htmlAttributes: new { @class = "control-label" })
+                        @Html.DropDownList("PaymentModeID", (IEnumerable<SelectListItem>)ViewBag.PaymentModes, "--SELECT--", htmlAttributes: new { @class = "form-control selectpicker", required = "required", @data_live_search = "true" })
+                        @Html.ValidationMessageFor(model => model.PaymentModeID, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-2" style="display:none;" id="divChequeNo">
+                        @Html.Label("ChequeNo", htmlAttributes: new { @class = "control-label" })
+                        @Html.Editor("ChequeNo", new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessage("ChequeNo", "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-2" style="display:none;" id="divChequeDate">
+                        @Html.Label("ChequeDate", htmlAttributes: new { @class = "control-label" })
+                        @Html.Editor("ChequeDate", new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessage("ChequeDate", "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-2" style="display:none;" id="divChequeName">
+                        @Html.Label("ChequeName", htmlAttributes: new { @class = "control-label" })
+                        @Html.Editor("ChequeName", new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessage("ChequeName", "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-2" style="display:none;" id="divBankID">
+                        @Html.Label("BankID", "BankID", htmlAttributes: new { @class = "control-label" })
+                        @Html.DropDownList("BankID", null, "--SELECT--", htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessage("BankID", "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-2" style="display:none;" id="divDraweeName">
+                        @Html.Label("DraweeName", htmlAttributes: new { @class = "control-label" })
+                        @Html.Editor("DraweeName", new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessage("DraweeName", "", new { @class = "text-danger" })
+                    </div>
+                </div>*@
+
+        </div>
+        <div class="form-group" style="display:none">
+            @Html.LabelFor(model => model.CreatedDate, htmlAttributes: new { @class = "control-label" })
+            <div class="col-md-2">
+                @Html.EditorFor(model => model.CreatedDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.CreatedDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group" style="display:none">
+            @Html.LabelFor(model => model.LastUpdatedDate, htmlAttributes: new { @class = "control-label" })
+            <div class="col-md-2">
+                @Html.EditorFor(model => model.LastUpdatedDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.LastUpdatedDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group" style="display:none">
+            @Html.LabelFor(model => model.CreatedBy, "CreatedBy", htmlAttributes: new { @class = "control-label" })
+            <div class="col-md-2">
+                @Html.DropDownList("CreatedBy", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.CreatedBy, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group" style="display:none">
+            @Html.LabelFor(model => model.LastUpdatedBy, "LastUpdatedBy", htmlAttributes: new { @class = "control-label" })
+            <div class="col-md-2">
+                @Html.DropDownList("LastUpdatedBy", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.LastUpdatedBy, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+
+    </div>
+}
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-actions no-color">
+    @Html.ActionLink("Back to List", "Index", new { type = (byte)@ViewBag.InvoiceType }, new { @type = "button", @class = "btn btn-outline-secondary" })
+    <input type="submit" value="Delete" class="btn btn-outline-secondary" style="float:right;" />
+</div>
+}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+@*For Multiselect - Bootstrap Select*@
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
+
+<!-- (Optional) Latest compiled and minified JavaScript translation files -->
+@*<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/i18n/defaults-*.min.js"></script>*@
+<script>
+    $(document).ready(function () {
+        $("input").prop("disabled", true);
+        $("select").prop("disabled", true);
+        $("textarea").prop("disabled", true);
+
+        $("input[type='submit']").prop("disabled", false);
+        //alert('@ViewBag.InvoiceTypeName');
+        if ('@ViewBag.InvoiceTypeName' == 'New Tax Invoice') {
+            $('.onlyForTaxInvoice').show();
+        } else {
+            $('.onlyForTaxInvoice').hide();
+        }
+        //$("#CustomerID").val('@Model.CustomerID');
+        //$("#ContractID").change();
+        $("#CustomerID").change();
+        getInvoiceServicesMapped($("#InvoiceID").val());
+        //$(".selectpicker").selectpicker("refresh");
+    });
+
+    $("#PaidByCustomer").change(function () {
+        //$("#BalanceAmount").val($("#FinalInvoiceRate").val() - $("#PaidByCustomer").val());
+        if ($(this).val() != '') {
+            //$(".lblBalanceAmount").addClass("required");
+            //$(".BalanceAmount").prop('required', true);
+            if ($.isNumeric($(".FinalInvoiceRate").val()) && $.isNumeric($(this).val())) {
+                $(".BalanceAmount").val(Math.round($(".FinalInvoiceRate").val() - $(this).val()));
+            }
+        } else {
+            //$(".lblBalanceAmount").removeClass("required");
+            //$(".BalanceAmount").prop('required', false);
+
+            $(".BalanceAmount").val(Math.round($(".FinalInvoiceRate").val()));
+        }
+    });
+    $("#PaymentModeID").change(function () {
+        var selected = $("#PaymentModeID option:selected").html();
+        if (selected == "NEFT") {
+            $("#divChequeNo").hide();
+            $("#ChequeNo").val("");
+            $("#divChequeDate").hide();
+            $("#ChequeDate").val("");
+            $("#divChequeName").hide();
+            $("#ChequeName").val("");
+            $("#divBankID").show();
+            $("#BankID").val("");
+            $("#divDraweeName").show();
+            $("#DraweeName").val("");
+        } else if (selected == "UPI") {
+
+            $("#divChequeNo").hide();
+            $("#ChequeNo").val("");
+            $("#divChequeDate").hide();
+            $("#ChequeDate").val("");
+            $("#divChequeName").hide();
+            $("#ChequeName").val("");
+            $("#divBankID").show();
+            $("#BankID").val("");
+            $("#divDraweeName").show();
+            $("#DraweeName").val("");
+        } else if (selected == "CASH" || $("#PaymentModeID").val() == "") {
+            $("#divChequeNo").hide();
+            $("#ChequeNo").val("");
+            $("#divChequeDate").hide();
+            $("#ChequeDate").val("");
+            $("#divChequeName").hide();
+            $("#ChequeName").val("");
+            $("#divBankID").hide();
+            $("#BankID").val("");
+            $("#divDraweeName").hide();
+            $("#DraweeName").val("");
+        } else if (selected == "CHEQUE") {
+            $("#divChequeNo").show();
+            $("#ChequeNo").val("");
+            $("#divChequeDate").show();
+            $("#ChequeDate").val("");
+            $("#divChequeName").show();
+            $("#ChequeName").val("");
+            $("#divBankID").show();
+            $("#BankID").val("");
+            $("#divDraweeName").hide();
+            $("#DraweeName").val("");
+        }
+    });
+    function populateSAC(obj) {
+
+        if ($(obj).val() == "") {
+
+            $(obj).parent().closest('.SingleService').find('#SACCode').val('');
+            //$(obj).closest("#ServiceID").html(services);
+        } else {
+            $.ajax({
+                type: "post",
+                url: "/Leads/GetServiceSAC",
+                data: { ServiceID: $(obj).val() },
+                datatype: "json",
+                traditional: true,
+                success: function (data) {
+                    //alert(data);
+                    $(obj).parent().closest('.SingleService').find('#SACCode').val(data);
+                }
+            });
+        }
+    }
+</script>
+<script>
+
+    $.validator.addMethod(
+        "dateOnlyOrBlank",
+        function (value, element) {
+            // put your own logic here, this is just a (crappy) example
+            if (value) {
+                return value.match(/^\d\d?\/\d\d?\/\d\d\d\d$/);
+            } else {
+                return true;
+            }
+        },
+        "Please enter a date in the format dd/mm/yyyy."
+    );
+    $("#InvoiceCreate").submit(function (event) {
+        //var indate = $('#InvoiceDate').val();
+        //var newindate = indate.split("/").reverse().join("/");
+        //$('#InvoiceDate').val(newindate);
+        //var purdate = $('#PurchaseOrderDate').val();
+        //var newpurdate = purdate.split("/").reverse().join("/");
+        //$('#PurchaseOrderDate').val(newpurdate);
+        //var pcstart = $('#Period_Of_Contract_Start_Date').val();
+        //var newpcstart = pcstart.split("/").reverse().join("/");
+        //$('#Period_Of_Contract_Start_Date').val(newpcstart);
+        //var pcend = $('#Period_Of_Contract_End_Date').val();
+        //var newpcend = pcend.split("/").reverse().join("/");
+        //$('#Period_Of_Contract_End_Date').val(newpcend);
+        //var pistart = $('#Period_Of_Invoice_Start_Date').val();
+        //var newpistart = pistart.split("/").reverse().join("/");
+        //$('#Period_Of_Invoice_Start_Date').val(newpistart);
+        //var piend = $('#Period_Of_Invoice_End_Date').val();
+        //var newpiend = piend.split("/").reverse().join("/");
+        //$('#Period_Of_Invoice_End_Date').val(newpiend);
+    });
+    $("#InvoiceDate").datetimepicker({
+        format: 'DD/MM/YYYY',
+        useCurrent: false,
+        defaultDate: new Date()
+    });
+    $("#PurchaseOrderDate").datetimepicker({
+        format: 'DD/MM/YYYY',
+        useCurrent: false
+    });
+    $("#Period_Of_Contract_Start_Date").datetimepicker({
+        format: 'DD/MM/YYYY',
+        useCurrent: false
+    });
+    $("#Period_Of_Contract_End_Date").datetimepicker({
+        format: 'DD/MM/YYYY',
+        useCurrent: false
+    });
+    $("#Period_Of_Invoice_Start_Date").datetimepicker({
+        format: 'DD/MM/YYYY',
+        useCurrent: false
+    });
+    $("#Period_Of_Invoice_End_Date").datetimepicker({
+        format: 'DD/MM/YYYY',
+        useCurrent: false
+    });
+    $("#PaymentReceivedOn").datetimepicker({
+        format: 'DD/MM/YYYY',
+        useCurrent: false
+    });
+    $("#ChequeDate").datetimepicker({
+        format: 'DD/MM/YYYY',
+        useCurrent: false
+    });
+    //$("#serviceStartDate").datetimepicker({
+    //    format: 'DD/MM/YYYY',
+    //    useCurrent: false
+    //});
+
+    //$("#pocStartDate").datetimepicker({
+    //    format: 'DD/MM/YYYY',
+    //    useCurrent: false
+    //});
+
+    $(".poiStartDate").datetimepicker({
+        format: 'DD/MM/YYYY',
+        useCurrent: false
+    });
+
+    $(".poiEndDate").datetimepicker({
+        format: 'DD/MM/YYYY',
+        useCurrent: false
+    });
+     $.validator.addMethod(
+        "australianDate",
+        function (value, element) {
+            // put your own logic here, this is just a (crappy) example
+            return value.match(/^\d\d?\/\d\d?\/\d\d\d\d$/);
+        },
+        "Please enter a date in the format dd/mm/yyyy."
+    );
+        $('#InvoiceCreate')
+        .validate({
+            rules: {
+                InvoiceDate: {
+                    australianDate: true
+                },PurchaseOrderDate: {
+                    dateOnlyOrBlank: true
+                },Period_Of_Contract_Start_Date: {
+                    australianDate: true
+                },
+                Period_Of_Contract_End_Date: {
+                    australianDate: true
+                },
+                Period_Of_Invoice_Start_Date: {
+                    australianDate: true
+                },
+                Period_Of_Invoice_End_Date: {
+                    australianDate: true
+                },
+                PaymentReceivedOn: {
+                    dateOnlyOrBlank: true
+                },
+                ChequeDate: {
+                    dateOnlyOrBlank: true
+                }
+            }
+        });
+    $("#CustomerID").change(function () {
+        var cust = $(this).val();
+        if (cust == "") {
+            //$("#divBillingAddress").slideUp();
+            //$("#divServiceAddreses").slideUp();
+            //$("#divServicesRequired").slideUp();
+                            alert("Please select Customer");
+                            var contracts = "<select id='ContractID' name = 'ContractID' required='required'>";
+                            contracts = contracts + '<option value>--SELECT--</option>';
+                            contracts = contracts + '</select>';
+                            $('#ContractID').html(contracts);
+        }
+        else {
+            $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("GetCustomerContracts", "Invoices")',
+                    data: { custID: $(this).val() },
+                    datatype: "json",
+                    //async: false,
+                    traditional: true,
+                    success: function (data) {
+
+                            debugger;
+                            if (data.noOfContracts == "0") {
+                                alert("No Contracts Found");
+                                var contracts = "<select id='ContractID' name = 'ContractID' required='required'>";
+                                contracts = contracts + '<option value>--SELECT--</option>';
+                                contracts = contracts + '</select>';
+                                $('#ContractID').html(contracts);
+                                //$('#ContractID').prop("disabled", true);
+                            } else {
+                                $('#ContractID').removeAttr("disabled");
+                                var contracts = "<select id='ContractID' name = 'ContractID' required='required'>";
+                                contracts = contracts + '<option value="">--SELECT--</option>';
+                                for (var i = 0; i < data.contractsArray.length; i++) {
+                                    contracts = contracts + '<option value=' + data.contractsArray[i].ContractID + '>' + data.contractsArray[i].ContractNo + '</option>';
+                                }
+                                contracts = contracts + '</select>';
+                                $('#ContractID').html(contracts);
+                        }
+
+                        if (data == "No Business Address Found") {
+                            alert("No Business Address Found");
+                        }
+                        else if (data == "No Service Address Found") {
+                            alert("No Service Address Found");
+                        }
+                        else {
+                            debugger;
+                            //$("#ContractDate").val(data.ContractDate);
+                            $("#ConsultPerson").val(data.ConsultPerson);
+                            $("#ConsultPersonDesignation").val(data.ConsultPersonDesignation);
+
+
+                            $("#Customers_Billing_Address_Mapping_ID").val(data.bill.Customers_Billing_Address_Mapping_ID);
+                            $("#BillingAddressLine1").val(data.bill.AddressLine1);
+                            $("#BillingAddressLine2").val(data.bill.AddressLine2);
+                            $("#BillingAddressLine3").val(data.bill.AddressLine3);
+                            $("#BillingLocationID").val(data.bill.BillingLocationID);
+                            $("#BillingCityID").val(data.bill.BillingCityID);
+                            $("#BillingPincode").val(data.bill.BillingPincode);
+                            $("#BillingStateID").val(data.bill.BillingStateID);
+                            $("#BillingCellNumber").val(data.strBillingCellNos);
+                            $("#BillingEmail").val(data.strBillingEmails);
+                            $("#BillingTelNo").val(data.strBillingTelNos);
+                            $("#BillingGSTNo").val(data.bill.GSTNo);
+                            $("#GST_Type_Enum").val(data.GST_Type_Enum);
+                            $(".PremisesTypeID").val(data.TypeOfPremisesID);
+                            $(".PremisesTypeID").selectpicker("refresh");
+                            $(".Premises_Area_ID").val(data.PremisesAppSqFtArea);
+                            $(".Premises_Area_ID").selectpicker("refresh");
+                            $(".AppSqFtArea").val(data.GST_Type_Enum);
+
+                            //create new Service Address Sections total - 1
+                            for (var i = 1; i < data.servicesAddressList.length; i++) {
+                                var newel = $('.SingleServiceAddress:last').clone();
+                                $(newel).insertAfter(".SingleServiceAddress:last");
+                            }
+                            for (var i = 0; i < data.servicesAddressList.length; i++) {
+                                debugger;
+                                var SingleServiceAddress = $('.SingleServiceAddress:eq(' + i + ')');
+                                SingleServiceAddress.find('#Customers_Service_Address_Mapping_ID').val(data.servicesAddressList[i].Customers_Service_Address_Mapping_ID);
+                                SingleServiceAddress.find('#ServiceAddressLine1').val(data.servicesAddressList[i].AddressLine1);
+                                SingleServiceAddress.find('#ServiceAddressLine2').val(data.servicesAddressList[i].AddressLine2);
+                                SingleServiceAddress.find('#ServiceAddressLine3').val(data.servicesAddressList[i].AddressLine3);
+                                SingleServiceAddress.find('#ServiceLocationID').val(data.servicesAddressList[i].ServiceLocationID);
+                                SingleServiceAddress.find('#ServiceCityID').val(data.servicesAddressList[i].ServiceCityID);
+                                SingleServiceAddress.find('#ServicePincode').val(data.servicesAddressList[i].ServicePincode);
+                                SingleServiceAddress.find('#ServiceStateID').val(data.servicesAddressList[i].ServiceStateID);
+                                SingleServiceAddress.find('#ServiceConsultPerson').val(data.servicesAddressList[i].ServiceAddressConsultPerson);
+                                SingleServiceAddress.find('#ServiceTelNos').val(data.servicesAddressList[i].Customer_Service_Address_Tel_No_1);
+                                SingleServiceAddress.find('#ServiceCellNos').val(data.servicesAddressList[i].Customer_Service_Address_Cell_No_1);
+                                SingleServiceAddress.find('#ServiceEmails').val(data.servicesAddressList[i].Customer_Service_Address_Email_1);
+                                //if (data.servicesAddressList[i].GST) {
+                                //    SingleService.find('#GST').val("True");
+                                //} else {
+                                //    SingleService.find('#GST').val("False");
+                                //}
+                                $("#divBillingAddress").slideDown();
+                                $("#divServiceAddreses").slideDown();
+                                $("#divOtherInfo").slideDown();
+                                $("#divServicesRequired").slideDown();
+
+                            }
+                        }
+
+                        $("#btnSave").removeAttr("disabled");
+                        $.LoadingOverlay("hide");
+                        },
+                        error: (error) => {
+                             console.log(JSON.stringify(error));
+                            }
+            });
+
+
+            //No New invoice no for edit etc
+            //getNewInvoiceNo(cust);
+                }
+        });
+    $("#ContractID").change(function () {
+        debugger;
+        var contract = $(this).val();
+        if (contract == "") {
+            alert("Please select Contract");
+        }
+        else {
+            $.LoadingOverlay("show");
+            $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("GetContractDetails", "Invoices")',
+                    data: { contractID: $(this).val() },
+                    datatype: "json",
+                    //async: false,
+                    traditional: true,
+                success: function (data) {
+                     $.LoadingOverlay("show");
+                    if (data == "No Business Address Found") {
+                        alert("No Business Address Found");
+                    } else if (data == "No Service Address Found") {
+                        alert("No Service Address Found");
+                    } else {
+                        debugger;
+                        $("#ContractDate").val(data.ContractDate);
+                        $("#ConsultPerson").val(data.ConsultPerson);
+                        $("#ConsultPersonDesignation").val(data.ConsultPersonDesignation);
+
+
+                        $("#Customers_Billing_Address_Mapping_ID").val(data.bill.Customers_Billing_Address_Mapping_ID);
+                        $("#BillingAddressLine1").val(data.bill.AddressLine1);
+                        $("#BillingAddressLine2").val(data.bill.AddressLine2);
+                        $("#BillingAddressLine3").val(data.bill.AddressLine3);
+                        $("#BillingLocationID").val(data.bill.BillingLocationID);
+                        $("#BillingCityID").val(data.bill.BillingCityID);
+                        $("#BillingPincode").val(data.bill.BillingPincode);
+                        $("#BillingStateID").val(data.bill.BillingStateID);
+                        $("#BillingCellNumber").val(data.strBillingCellNos);
+                        $("#BillingEmail").val(data.strBillingEmails);
+                        $("#BillingTelNo").val(data.strBillingTelNos);
+                        $("#BillingGSTNo").val(data.bill.GSTNo);
+                        $("#GST_Type_Enum").val(data.GST_Type_Enum);
+                        $(".PremisesTypeID").val(data.TypeOfPremisesID);
+                        //$(".PremisesTypeID").selectpicker("refresh");
+                        $(".Premises_Area_ID").val(data.Premises_Area_ID);
+                        //$(".Premises_Area_ID").selectpicker("refresh");
+                        $(".AppSqFtArea").val(data.PremisesAppSqFtArea);
+
+                        //create new Service Address Sections total - 1
+                        for (var i = 1; i < data.servicesAddressList.length; i++) {
+                            var newel = $('.SingleServiceAddress:last').clone();
+                            $(newel).insertAfter(".SingleServiceAddress:last");
+                        }
+                        for (var i = 0; i < data.servicesAddressList.length; i++) {
+                            debugger;
+                            var SingleServiceAddress = $('.SingleServiceAddress:eq(' + i + ')');
+                            SingleServiceAddress.find('#Customers_Service_Address_Mapping_ID').val(data.servicesAddressList[i].Customers_Service_Address_Mapping_ID);
+                            SingleServiceAddress.find('#ServiceAddressLine1').val(data.servicesAddressList[i].AddressLine1);
+                            SingleServiceAddress.find('#ServiceAddressLine2').val(data.servicesAddressList[i].AddressLine2);
+                            SingleServiceAddress.find('#ServiceAddressLine3').val(data.servicesAddressList[i].AddressLine3);
+                            SingleServiceAddress.find('#ServiceLocationID').val(data.servicesAddressList[i].ServiceLocationID);
+                            SingleServiceAddress.find('#ServiceCityID').val(data.servicesAddressList[i].ServiceCityID);
+                            SingleServiceAddress.find('#ServicePincode').val(data.servicesAddressList[i].ServicePincode);
+                            SingleServiceAddress.find('#ServiceStateID').val(data.servicesAddressList[i].ServiceStateID);
+                            SingleServiceAddress.find('#ServiceConsultPerson').val(data.servicesAddressList[i].ServiceAddressConsultPerson);
+                            SingleServiceAddress.find('#ServiceTelNos').val(data.servicesAddressList[i].Customer_Service_Address_Tel_No_1);
+                            SingleServiceAddress.find('#ServiceCellNos').val(data.servicesAddressList[i].Customer_Service_Address_Cell_No_1);
+                            SingleServiceAddress.find('#ServiceEmails').val(data.servicesAddressList[i].Customer_Service_Address_Email_1);
+                            //if (data.servicesAddressList[i].GST) {
+                            //    SingleService.find('#GST').val("True");
+                            //} else {
+                            //    SingleService.find('#GST').val("False");
+                            //}
+                            $("#divBillingAddress").slideDown();
+                            $("#divServiceAddreses").slideDown();
+                            $("#divOtherInfo").slideDown();
+                            $("#divServicesRequired").slideDown();
+                            $("#btnSave").removeAttr("disabled");
+                            $.LoadingOverlay("hide");
+                        }
+                    }
+                },
+                    error: (error) => {
+                         console.log(JSON.stringify(error));
+                        }
+                    });
+            $.LoadingOverlay("hide");
+            getContractServicesMapped(contract);
+        }
+
+    });
+
+    $("#TypeOfPremisesID").change(function () {
+
+        if ($("#TypeOfPremisesID").val() == "3") {
+            $("#labelNoOfWings").css('display', "block");
+            $("#divNoOfWings").css("display", "block");
+            $("#labelNoOfFloors").css("display", "block");
+            $("#divNoOfFloors").css("display", "block");
+            $("#labelNoOfFlats").css("display", "block");
+            $("#divNoOfFlats").css("display", "block");
+        } else {
+            $("#labelNoOfWings").css("display", "none");
+            $("#divNoOfWings").css("display", "none");
+            $("#labelNoOfFloors").css("display", "none");
+            $("#divNoOfFloors").css("display", "none");
+            $("#labelNoOfFlats").css("display", "none");
+            $("#divNoOfFlats").css("display", "none");
+        }
+    });
+
+    $('#AddMoreServices').click(function () {
+
+        // Create clone of <div class='input-form'>
+        var newel = $('.SingleService:last').clone();
+
+        newel.find('.date-only').each(function () {
+            $(this).datetimepicker({
+                format: 'DD/MM/YYYY',
+                useCurrent: false
+            }).on('dp.change', function (e) {
+                calculateContractDates(this);
+            });
+            $(this).rules('add', {
+                'required': true
+            });
+        });
+
+        newel.find('.serviceStartDate').each(function () {
+            $(this).datetimepicker({
+                format: 'DD/MM/YYYY',
+                useCurrent: false
+            }).on('dp.change', function (e) {
+                calculateContractDates(this);
+            });
+        });
+        //newel.find('input[type=number]').each(function () {
+        newel.find('input').each(function () {
+            debugger;
+            //alert(this.val());
+            $(this).val('');
+        });
+
+        newel.find('.bootstrap-select').replaceWith(function () { return $('select', this); })
+        //newel.find('.selectpicker').selectpicker('render');
+        //$.validator.unobtrusive.parseElement($(newel));
+        // Add after last <div class='input-form'>
+        $(newel).insertAfter(".SingleService:last");
+        return false;
+    });
+    function deleteService(obj) {
+        //alert();
+        if ($('.SingleService').length < 2) {
+            alert('At least one Service is Required');
+        }
+        else {
+            $(obj).parent().closest('.SingleService').remove();
+        }
+        addFinalServiceTotal();
+        }
+    function addServiceTotal() {
+
+        //var sum = 0;
+        //$(".singleServiceRate").each(function () {
+        //    sum += +$(this).val();
+        //});
+        //$("#FinalRate").val(sum);
+    }
+    function addFinalServiceTotal() {
+        var sum = 0;
+        $(".singleServiceFinalRate").each(function () {
+            sum += +$(this).val();
+        });
+        $("#FinalRate").val(sum.toFixed(2));
+
+        $(".PaidByCustomer").change();
+    }
+    function populateServices(obj, valueToSet) {
+
+        if ($(obj).val() == "") {
+            var services = "<select id='ServiceID' name = 'ServiceID' required='required'>";
+            services = services + '<option value>--SELECT--</option>';
+            services = services + '</select>';
+            $(obj).parent().closest('.SingleService').find('#ServiceID').html(services);
+            //$(obj).closest("#ServiceID").html(services);
+        } else {
+            $.ajax({
+                type: "post",
+                url: "/Leads/GetServices",
+                data: { ServiceGroupID: $(obj).val() },
+                datatype: "json",
+                traditional: true,
+                async: false,
+                success: function (data) {
+                    var services = "<select id='ServiceID' name = 'ServiceID' required='required'>";
+                    services = services + '<option value="">--SELECT--</option>';
+                    for (var i = 0; i < data.length; i++) {
+                        services = services + '<option value=' + data[i].Value + '>' + data[i].Text + '</option>';
+                    }
+                    services = services + '</select>';
+                    $(obj).parent().closest('.SingleService').find('#ServiceID').html(services);
+                    if (valueToSet != '') {
+                        $(obj).parent().closest('.SingleService').find('#ServiceID').val(valueToSet);
+                    }
+                    //$(obj).parent().closest('.SingleService').find('#ServiceID').selectpicker('refresh');
+                    //$(obj).closest('#ServiceID').html(services);
+                }
+            });
+        }
+    }
+    function populateSACandSSC(obj,valueToSelect) {
+
+        if ($(obj).val() == "") {
+
+            $(obj).parent().closest('.SingleService').find('.SACCode').val('');
+            //$(obj).closest("#ServiceID").html(services);
+        } else {
+            $.ajax({
+                type: "post",
+                url: "/Leads/GetServiceSACAndShortServiceScope",
+                data: { ServiceID: $(obj).val() },
+                datatype: "json",
+                traditional: true,
+                success: function (data) {
+                    //alert(data);
+                    $(obj).parent().closest('.SingleService').find('.SACCode').val(data.SAC);
+                    if (data.SSSIDs.length == 0) {
+                        alert("Short Service Scope not Found");
+                        $(obj).parent().closest('.SingleService').find("select.ShortServiceScope").find('option').remove();
+                        $(obj).parent().closest('.SingleService').find('select.ShortServiceScope').append($('<option>').val("").text("--SELECT--"));
+
+                        //$(obj).parent().closest('.SingleService').find("select.ShortServiceScope").selectpicker("refresh");
+                    } else {
+
+                        //var ShortServiceScopeIDs = data.ShortServiceScopeIDs;
+                        $(obj).parent().closest('.SingleService').find("select.ShortServiceScope").find('option').remove();
+                        //$(".ShortServiceScope").append('<option value="">--SELECT--</option>');
+                        $(obj).parent().closest('.SingleService').find('select.ShortServiceScope').append($('<option>').val("").text("--SELECT--"));
+                        for (var i = 0, l = data.SSSIDs.length; i < l; i++) {
+                            $(obj).parent().closest('.SingleService').find("select.ShortServiceScope").append('<option value=' + data.SSSIDs[i] + '>' + data.SSSTexts[i] + '</option>');
+                        }
+                        if (data.SSSIDs.length == 1) {
+                            $(obj).parent().closest('.SingleService').find("select.ShortServiceScope").prop('selectedIndex', 1);
+                        }
+                        //$(obj).parent().closest('.SingleService').find("select.ShortServiceScope").selectpicker("refresh");
+                    }
+
+                    $(obj).parent().closest('.SingleService').find('select.ShortServiceScope').val(valueToSelect);
+                    $(obj).parent().closest('.SingleService').find('select.ShortServiceScope').selectpicker("refresh");
+                    //$(obj).parent().closest('.SingleService').find('.ShortServiceScope').val(data.ShortServiceScopeID);
+                }
+            });
+        }
+    }
+    function calculateTax(obj) {
+        debugger;
+        //alert($(obj).prev('#ServiceGroupID').val());
+        var gst = $(obj).parent().parent().find('#GST').val();
+        //if (gst == "") {
+        //    alert("Please select GST applicable or not!");
+        //    return false;
+        //}
+        var serviceGroup = $(obj).closest(".SingleService").find('#ServiceGroupID').val();
+        var service = $(obj).closest(".SingleService").find('#ServiceID').val();
+        var freq = $(obj).closest(".SingleService").find('#FrequencyOfServiceID').val();
+        var qty = $(obj).closest(".SingleService").find('#Qty').val();
+        var rate = $(obj).closest(".SingleService").find('#Rate').val();
+
+
+        if (serviceGroup == '') {
+            alert('Please select Service Group!');
+            $(obj).closest(".SingleService").find('#ServiceGroupID').focus();
+            return false;
+        }
+        else if (service == '') {
+            alert('Please select Service!');
+            $(obj).closest(".SingleService").find('#ServiceID').focus();
+            return false;
+        }
+        else if (freq == '') {
+            //alert('Please select Frequency of Service!');
+            //$(obj).closest(".SingleService").find('#FrequencyOfServiceID').focus();
+            //return false;
+        }
+        else if (qty == '') {
+            //alert('Please enter Quantity!');
+            //$(obj).parent().parent().find('#Qty').focus();
+            //return false;
+            qty = 1;
+        }
+        else if (rate == '') {
+            //alert('Please enter Rate!');
+            //$(obj).closest(".SingleService").find('#Rate').focus();
+            return false;
+        }
+        //else if (gst == "True" && $("#GST_Type_Enum").val() == "") {
+        //    alert('Please select GST Type!');
+        //    $("#GST_Type_Enum").focus();
+        //    return false;
+        //}
+        // All values OK then proceed
+        $.ajax({
+            type: "post",
+            url: "/Leads/GetSingleServiceTaxAfterGSTSelection",
+            data: { ServiceID: service, Rate: rate, Qty: qty, GSTapplicable: gst },
+            datatype: "json",
+            traditional: true,
+            success: function (data) {
+                //alert(data);
+                //var services = "<select id='ServiceID' name = 'ServiceID' required='required'>";
+                //services = services + '<option value="">--SELECT--</option>';
+                //for (var i = 0; i < data.length; i++) {
+                //    services = services + '<option value=' + data[i].Value + '>' + data[i].Text + '</option>';
+                //}
+                //services = services + '</select>';
+                //$(obj).parent().closest('.SingleService').find('#ServiceID').html(services);
+                //$(obj).closest('#ServiceID').html(services);
+
+                debugger;
+                if (gst == "True") {
+                    //$(obj).closest(".SingleService").find('#Tax').val(data);
+                    if ($("#GST_Type_Enum").val() == "2") {
+                        $(obj).closest(".SingleService").find('#IGST').val(data);
+                        $(obj).closest(".SingleService").find('#SGST').val("0");
+                        $(obj).closest(".SingleService").find('#CGST').val("0");
+                    } else {
+                        $(obj).closest(".SingleService").find('#IGST').val("0");
+                        $(obj).closest(".SingleService").find('#SGST').val(data / 2);
+                        $(obj).closest(".SingleService").find('#CGST').val(data / 2);
+                    }
+                    $(obj).closest(".SingleService").find('#FinalRatePerService').val((rate * qty) + data);
+                } else {
+                    $(obj).closest(".SingleService").find('#Tax').val("0");
+                    $(obj).closest(".SingleService").find('#IGST').val("0");
+                    $(obj).closest(".SingleService").find('#SGST').val("0");
+                    $(obj).closest(".SingleService").find('#CGST').val("0");
+                    $(obj).closest(".SingleService").find('#FinalRatePerService').val((rate * qty));
+                }
+
+                $(obj).closest(".SingleService").find('#FinalRatePerService').change();
+            }
+        });
+
+    }
+
+    function getNewInvoiceNo(CustID) {
+        $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("GetNewInvoiceNo", "Invoices")',
+                    data: { CustID: CustID },
+                    datatype: "json",
+                    //async: false,
+                    traditional: true,
+                success: function (data) {
+                    debugger;
+                    if (data == "No Customer Found") {
+                        alert("No Customer Found");
+                    } else if (data == "Wrong Lead ID") {
+                        alert("Wrong Lead ID");
+                    } else {
+                        debugger;
+                        //alert(data);ContractNo
+                        //(".CustomerID").val(data.CustomerID);
+                        //$('.CustomerID').selectpicker('refresh');
+
+                        $("#InvoiceNo").val(data.invoiceNo);
+
+                    }
+                },
+                error: (error) => {
+                     console.log(JSON.stringify(error));
+                    }
+            });
+    }
+
+    function getContractServicesMapped(ContractID) {
+        $.LoadingOverlay("show");
+        $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("GetContractServicesMapped", "Contracts")',
+                    data: { ContractID: ContractID },
+                    datatype: "json",
+                    //async: false,
+                    traditional: true,
+                    success: function (data) {
+                        debugger;
+                        if (data == "No Services Found") {
+                            alert("No Services Found");
+                        } else if (data == "Wrong Contract ID") {
+                            //alert("Wrong Contract ID");
+                        } else {
+                            //console.log("success");
+                            //$("#estimateData").slideDown();
+                            //create new Service Sections total - 1
+                            for (var i = 1; i < data.length; i++) {
+                                var newel = $('.SingleService:last').clone();
+                                newel.find('.bootstrap-select').replaceWith(function () { return $('select', this); })
+                                //newel.find('.selectpicker').selectpicker('render');
+                                $(newel).insertAfter(".SingleService:last");
+                            }
+                            var SevicesSections = $(".SingleService");
+                            for (var i = 0; i < data.length; i++) {
+                                debugger;
+                                var SingleService = $('.SingleService:eq(' + i + ')');
+
+
+                                SingleService.find('#ServiceGroupID').val(data[i].ServiceGroupID);
+
+                                //SingleService.find('#ServiceGroupID').selectpicker("render");
+                                populateServices(SingleService.find('#ServiceGroupID'), data[i].ServiceID);
+                                //SingleService.find('#ServiceID').val(data[i].ServiceID);
+                                //SingleService.find('#ServiceID').selectpicker("refresh");
+                                populateSACandSSC(SingleService.find('#ServiceID'), data[i].Short_Service_Scope_ID);
+
+                                //setServiceScope(SingleService.find('#ServiceID'));
+
+                                SingleService.find('#FrequencyOfServiceID').val(data[i].FrequencyOfServiceID);
+
+                                //SingleService.find('#FrequencyOfServiceID').selectpicker("refresh");
+                                //SingleService.find(".PeriodsOfContractID").rules('add', {
+                                //    'required': true
+                                //});
+                                SingleService.find(".periodOfContract").prop('required');
+                                SingleService.find('#Qty').val(data[i].Qty);
+                                SingleService.find('#Rate').val(data[i].Rate);
+                                //alert(data[i].GST);
+                                if (data[i].GST) {
+                                    SingleService.find('#GST').val("True");
+                                } else {
+                                    SingleService.find('#GST').val("False");
+                                }
+                                //SingleService.find('#GST').selectpicker("refresh");
+
+                                SingleService.find('#GST').change();
+                                SingleService.find('#Tax').val(data[i].Tax);
+                                SingleService.find('#FinalRatePerService').val(data[i].FinalRatePerService);
+
+
+                                SingleService.find('#ShortServiceScope').val(data[i].Short_Service_Scope_ID);
+                                SingleService.find('#ShortServiceScope').selectpicker("refresh");
+                                SingleService.find('#PeriodsOfContractID').val(data[i].PeriodsOfContractID);
+                                //SingleService.find('#PeriodsOfContractID').selectpicker("refresh");
+                                SingleService.find('#ServiceStartDate').val(data[i].ServiceStartDateInString);
+                                SingleService.find('#PeriodOfContractStartDate').val(data[i].POCStartDateInString);
+                                SingleService.find('#PeriodOfContractEndDate').val(data[i].POCEndDateInString);
+                                SingleService.find('#FrequencyOfInvoiceID').val(data[i].FrequencyOfInvoiceID);
+                                //SingleService.find('#FrequencyOfInvoiceID').selectpicker("refresh");
+
+                                //SingleService.find('.bootstrap-select').replaceWith(function () { return $('select', this); })
+                                //SingleService.find('.selectpicker').selectpicker('render');
+                                SingleService.find('.date-only').each(function () {
+                                    $(this).datetimepicker({
+                                        format: 'DD/MM/YYYY',
+                                        useCurrent: false
+                                    }).on('dp.change', function (e) {
+                                        calculateContractDates(this);
+                                    });
+                                });
+                                SingleService.find('.serviceStartDate').each(function () {
+                                    $(this).datetimepicker({
+                                        format: 'DD/MM/YYYY',
+                                        useCurrent: false
+                                    }).on('dp.change', function (e) {
+                                        calculateContractDates(this);
+                                    });
+                                });
+
+                                SingleService.find('.periodOfContract').each(function () {
+                                    $(this).on('change', function (e) {
+                                        calculateContractDates(this);
+                                    });
+                                });
+
+                            }
+                            addFinalServiceTotal();
+
+
+
+                        }
+                        $.LoadingOverlay("hide");
+                    },
+                    error: (error) => {
+                        console.log(JSON.stringify(error));
+                        $.LoadingOverlay("hide");
+
+                        }
+                    });
+    }
+
+    function getInvoiceServicesMapped(InvoiceID) {
+        //$.LoadingOverlay("show");
+        $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("GetInvoiceServicesMapped", "Invoices")',
+            data: { InvoiceID: InvoiceID },
+                    datatype: "json",
+                    //async: false,
+                    traditional: true,
+                    success: function (data) {
+                        debugger;
+                        if (data == "No Services Found") {
+                            alert("No Services Found");
+                        } else if (data == "Wrong Invoice ID") {
+                            //alert("Wrong Contract ID");
+                        } else {
+                            //console.log("success");
+                            //$("#estimateData").slideDown();
+                            //create new Service Sections total - 1
+                            for (var i = 1; i < data.length; i++) {
+                                var newel = $('.SingleService:last').clone();
+                                newel.find('.bootstrap-select').replaceWith(function () { return $('select', this); })
+                                newel.find('.selectpicker').selectpicker('render');
+                                $(newel).insertAfter(".SingleService:last");
+                            }
+                            var SevicesSections = $(".SingleService");
+                            for (var i = 0; i < data.length; i++) {
+                                debugger;
+                                var SingleService = $('.SingleService:eq(' + i + ')');
+
+
+                                SingleService.find('#ServiceGroupID').val(data[i].ServiceGroupID);
+
+                                SingleService.find('#ServiceGroupID').selectpicker("render");
+                                populateServices(SingleService.find('#ServiceGroupID'), data[i].ServiceID);
+                                //SingleService.find('#ServiceID').val(data[i].ServiceID);
+                                SingleService.find('#ServiceID').selectpicker("refresh");
+                                populateSACandSSC(SingleService.find('#ServiceID'), data[i].Short_Service_Scope_ID);
+
+                                //setServiceScope(SingleService.find('#ServiceID'));
+
+                                SingleService.find('#FrequencyOfServiceID').val(data[i].FrequencyOfServiceID);
+
+                                SingleService.find('#FrequencyOfServiceID').selectpicker("refresh");
+                                //SingleService.find(".PeriodsOfContractID").rules('add', {
+                                //    'required': true
+                                //});
+                                SingleService.find(".periodOfContract").prop('required');
+                                SingleService.find('#Qty').val(data[i].Qty);
+                                SingleService.find('#Rate').val(data[i].Rate);
+                                //alert(data[i].GST);
+                                if (data[i].GST) {
+                                    SingleService.find('#GST').val("True");
+                                } else {
+                                    SingleService.find('#GST').val("False");
+                                }
+                                SingleService.find('#GST').selectpicker("refresh");
+
+                                SingleService.find('#GST').change();
+                                SingleService.find('#Tax').val(data[i].Tax);
+                                SingleService.find('#FinalRatePerService').val(data[i].FinalRatePerService);
+
+
+                                SingleService.find('#ShortServiceScope').val(data[i].Short_Service_Scope_ID);
+                                SingleService.find('#PeriodsOfContractID').val(data[i].PeriodsOfContractID);
+                                SingleService.find('#PeriodsOfContractID').selectpicker("refresh");
+                                SingleService.find('#ServiceStartDate').val(data[i].ServiceStartDateInString);
+                                SingleService.find('#PeriodOfContractStartDate').val(data[i].POCStartDateInString);
+                                SingleService.find('#PeriodOfContractEndDate').val(data[i].POCEndDateInString);
+                                SingleService.find('#FrequencyOfInvoiceID').val(data[i].FrequencyOfInvoiceID);
+                                SingleService.find('#FrequencyOfInvoiceID').selectpicker("refresh");
+
+                                //SingleService.find('.bootstrap-select').replaceWith(function () { return $('select', this); })
+                                //SingleService.find('.selectpicker').selectpicker('render');
+                                SingleService.find('.date-only').each(function () {
+                                    $(this).datetimepicker({
+                                        format: 'DD/MM/YYYY',
+                                        useCurrent: false
+                                    }).on('dp.change', function (e) {
+                                        calculateContractDates(this);
+                                    });
+                                });
+                                SingleService.find('.serviceStartDate').each(function () {
+                                    $(this).datetimepicker({
+                                        format: 'DD/MM/YYYY',
+                                        useCurrent: false
+                                    }).on('dp.change', function (e) {
+                                        calculateContractDates(this);
+                                    });
+                                });
+
+                                SingleService.find('.periodOfContract').each(function () {
+                                    $(this).on('change', function (e) {
+                                        calculateContractDates(this);
+                                    });
+                                });
+
+                            }
+                            addFinalServiceTotal();
+
+
+
+                        }
+                        $.LoadingOverlay("hide");
+                    },
+                    error: (error) => {
+                        console.log(JSON.stringify(error));
+                        $.LoadingOverlay("hide");
+
+                        }
+                    });
+    }
+</script>
+<style>
+    .deleteTextboxButton {
+        float: right;
+        margin-top: -30px;
+        height: 30px;
+    }
+
+    textarea {
+        max-width: 100% !important;
+    }
+</style>

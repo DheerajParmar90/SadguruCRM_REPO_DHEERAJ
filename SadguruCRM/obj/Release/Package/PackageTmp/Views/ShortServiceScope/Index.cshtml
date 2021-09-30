@@ -1,0 +1,137 @@
+﻿@model IEnumerable<SadguruCRM.Models.Short_Service_Scope_Master>
+
+@{
+    ViewBag.Title = "Short Service Scope";
+}
+
+    <h2>Short Service Scopes</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table display cell-border">
+    <thead>
+
+        <tr>
+            <th>
+                
+            </th>
+            <th>
+               
+            </th>
+            <th>
+                
+            <th>
+                
+            </th>
+            <th>
+                
+            </th>
+            <th>
+               
+            </th>
+            <th></th>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayName("Service Group")
+            </th>
+            <th>
+                @Html.DisplayName("Service")
+            </th>
+            <th>
+                @Html.DisplayName("Short Service Scope")
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Order)
+            </th>
+            <th>
+                @Html.DisplayName("Created On")
+            </th>
+            <th>
+                @Html.DisplayName("Last Updated On")
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ServiceGroup.ServiceGroup1)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Service.ServiceName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Short_Service_Scope)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Order)
+                </td>
+                <td>
+                    @Html.ValueFor(modelItem => item.CreatedDate, "{0:dd/MM/yyyy hh:mm tt}")
+                </td>
+                <td>
+                    @Html.ValueFor(modelItem => item.LastUpdateddate, "{0:dd/MM/yyyy hh:mm tt}")
+                </td>
+                <td>
+                    @Html.ActionLink(" ", "Edit", new { id = item.Short_Service_Scope_ID }, new { @class = "fa fa-edit", @title = "EDIT" })
+                    @Html.ActionLink(" ", "Details", new { id = item.Short_Service_Scope_ID }, new { @class = "fa fa-info", @title = "VIEW" })
+                    @Html.ActionLink(" ", "Delete", new { id = item.Short_Service_Scope_ID }, new { @class = "fa fa-trash", @title = "DELETE" })
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+<script>
+    var table;
+    $(document).ready(function () {
+
+        table = $('.table').DataTable({
+            fixedHeader: true,
+            order: [[0, 'desc']],
+            "pageLength": 25
+        });
+        var colindex = 1;
+        $('.table thead tr:first th').each(function () {
+            if (colindex < 7) {
+                //var title = $('#leads thead th').eq($(this).index()).text();
+                $(this).html('<input type="text" placeholder="" class="column_search"/>');
+            } else if (colindex == 7) {
+                $(this).html('<input type="button" value="RESET" class="btn btn-sm btn-outline-secondary" id="reset" onclick="clearSearchBoxes();"/>');
+            }
+            colindex++;
+        });
+        //table.columns().every(function () {
+        //    var column = this;
+
+        //    $('input', this.header()).on('keyup change', function () {
+        //        column
+        //            .search(this.value)
+        //            .draw();
+        //    });
+        //});
+        $('.table thead tr:first th').on('keyup', ".column_search", function () {
+            table
+                .column($(this).parent().index())
+                .search(this.value)
+                .draw();
+        });
+        $(".dataTables_filter").css("display", "none");
+
+
+    });
+    //table.columns( '.Status' ).search( 'Important' ).draw();
+    function clearSearchBoxes() {
+        var searchBoxes = $(".column_search");
+        for (var i = 0; i < searchBoxes.length; i++) {
+            $(searchBoxes[i]).val("");
+        }
+        table.search('').columns().search('').draw();
+    };
+
+</script>

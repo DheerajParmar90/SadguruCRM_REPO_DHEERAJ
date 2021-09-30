@@ -1,0 +1,74 @@
+﻿@model SadguruCRM.Models.Documents_Templates
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Documents_Templates</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Document_Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Document_Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Document_Header)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Document_Header)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Document_Footer)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Document_Footer)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedOn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedOn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastUpdatedOn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastUpdatedOn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserLogin.UserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserLogin.UserName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserLogin1.UserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserLogin1.UserName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Document_Template_ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

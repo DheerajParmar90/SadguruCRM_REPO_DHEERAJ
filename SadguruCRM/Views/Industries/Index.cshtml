@@ -1,0 +1,110 @@
+﻿@model IEnumerable<SadguruCRM.Models.Industry>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Industries</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table display cell-border">
+    <thead>
+        <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Order)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IndustryName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CreatedDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastUpdatedDate)
+            </th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Order)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IndustryName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastUpdatedDate)
+            </td>
+            <td>
+                @Html.ActionLink(" ", "Edit", new { id = item.IndustryID }, new { @class = "fa fa-edit" }) |
+                @Html.ActionLink(" ", "Details", new { id = item.IndustryID }, new { @class = "fa fa-info" }) |
+                @Html.ActionLink(" ", "Delete", new { id = item.IndustryID }, new { @class = "fa fa-trash" })
+            </td>
+        </tr>
+        }
+    </tbody>
+
+</table>
+
+<script>
+    var table;
+    $(document).ready(function () {
+
+        table = $('.table').DataTable({
+            fixedHeader: true,
+            order: [[0, 'asc']]
+        });
+        var colindex = 1;
+        $('.table thead tr:first th').each(function () {
+            if (colindex < 5) {
+                //var title = $('#leads thead th').eq($(this).index()).text();
+                $(this).html('<input type="text" placeholder="" class="column_search"/>');
+            } else if (colindex == 5) {
+                $(this).html('<input type="button" value="RESET" class="btn btn-sm btn-outline-secondary" id="reset" onclick="clearSearchBoxes();"/>');
+            }
+            colindex++;
+        });
+        //table.columns().every(function () {
+        //    var column = this;
+
+        //    $('input', this.header()).on('keyup change', function () {
+        //        column
+        //            .search(this.value)
+        //            .draw();
+        //    });
+        //});
+        $('.table thead tr:first th').on('keyup', ".column_search", function () {
+            table
+                .column($(this).parent().index())
+                .search(this.value)
+                .draw();
+        });
+        $(".dataTables_filter").css("display", "none");
+
+
+    });
+    //table.columns( '.Status' ).search( 'Important' ).draw();
+    function clearSearchBoxes() {
+        var searchBoxes = $(".column_search");
+        for (var i = 0; i < searchBoxes.length; i++) {
+            $(searchBoxes[i]).val("");
+        }
+        table.search('').columns().search('').draw();
+    };
+</script>

@@ -1,0 +1,222 @@
+﻿@model SadguruCRM.Models.Invoice
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    @*<meta name="description" content="Responsive Web UI Kit &amp; Dashboard Template based on Bootstrap">
+        <meta name="author" content="AdminKit">
+        <meta name="keywords" content="adminkit, bootstrap, web ui kit, dashboard template, admin template">*@
+    <title>PDF View - Invoice - Sadguru CRM</title>
+
+    @*<link rel="shortcut icon" href="~/img/icons/icon-48x48.png" />
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+
+        <link href="~/Content/adminkit/app.css" rel="stylesheet" />
+        <link href="~/Content/jquery-ui.css" rel="stylesheet" />*@
+
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+
+</head>
+<body>
+    <div class="container">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th class="text-center" colspan="7">
+                        @ViewBag.InvoiceTypeName
+                    </th>
+                </tr>
+
+            </thead>
+            <tbody>
+                <tr style="font-size:14px;">
+                    <td class="w-50" colspan="3">
+                        <img src="~/Content/Images/Facility_Name_Black.png" class="w-100" />
+                        <table class="table table-borderless">
+                            <tbody>
+                                <tr>
+                                    <td class="w-25">
+                                        <img src="~/Content/Images/Facility_Logo.png" class="w-100" />
+                                    </td>
+                                    <td class="w-75">
+                                        <b>Corp. Add.:</b> Shop No. 1, Madhu Jeevan Jyoti Co. Hsg. Soc. Ltd., Kasturba Cross Road No. 1, Borivali (E), Mumbai - 400066.<br />
+                                        <b>CIN: </b>U74999MH2016PTC287747<br />
+                                        <b>Email: </b>accounts@sadgurufacility.com<br />
+                                        <b>Website: </b>www.sadgurufacility.com<br />
+                                        <b>Contact No.: </b>72080 91124 / 022 2870 9412 / 82919 60605
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                    <td class="w-50" colspan="4">
+                        @if (ViewBag.InvoiceTypeName == "New Tax Invoice")
+                        {
+                            <text><b>Invoice No.: </b></text>@Model.InvoiceNo <br /><br />
+                            <text><b>Invoice Date: </b></text>@Html.ValueFor(modelItem => Model.InvoiceDate, "{0:dd/MM/yyyy}")<br /><br />
+                        }
+                        else
+                        {
+                            <text><b>Proforma Invoice No.: </b></text>@Model.InvoiceNo<br /><br />
+                            <text><b>Proforma Invoice Date: </b></text>@Html.ValueFor(modelItem => Model.InvoiceDate, "{0:dd/MM/yyyy}")<br /><br />
+                        }
+
+                        <text><b>Period Of Contract: </b></text>@Html.ValueFor(modelItem => Model.Period_Of_Contract_Start_Date, "{0:dd/MM/yyyy}")<text> to </text>@Html.ValueFor(modelItem => Model.Period_Of_Contract_End_Date, "{0:dd/MM/yyyy}")<br /><br />
+
+                        <text><b>Period Of Invoice: </b></text>@Html.ValueFor(modelItem => Model.Period_Of_Invoice_Start_Date, "{0:dd/MM/yyyy}")<text> to </text>@Html.ValueFor(modelItem => Model.Period_Of_Invoice_End_Date, "{0:dd/MM/yyyy}")<br /><br />
+
+                        <text><b>Order Ref. No. & Date: </b></text><br /><br />
+
+                        <text><b>Terms Of Payment: </b></text>@Html.ValueFor(modelItem => Model.PaymentTerm.PaymentTermName)
+
+                    </td>
+                </tr>
+                <tr style="font-size:13px;" colspan="7">
+                    <td class="w-50" colspan="3">
+                        @if (Model.Customer != null)
+                        {
+                            string name = Model.Customer.Title + " " + Model.Customer.FirstName + " " + Model.Customer.LastName + " " + Model.Customer.CustomerName;
+                            string address = Model.Customer.Customers_Billing_Address_Mapping.First().AddressLine1 + " "
+                                + Model.Customer.Customers_Billing_Address_Mapping.First().AddressLine2 + " "
+                                + Model.Customer.Customers_Billing_Address_Mapping.First().AddressLine3 + " "
+                                + Model.Customer.Customers_Billing_Address_Mapping.First().Location.LocationName + " "
+                                + Model.Customer.Customers_Billing_Address_Mapping.First().City.CityName;
+                            <text><b>Customer Name: </b></text>@name<br />
+                            <text><b>Address: </b></text>@address<br />
+                            <text><b> Contact Person: </b></text> @Model.Customer.ConsultPerson <br />
+                            <text><b>Contact No.: </b></text>@Model.Customer.TelNumber <span style="float:right;"><text><b>Customer ID: </b>@Model.Customer.CustomerNo</text></span><br />
+                            <text><b>Email ID: </b></text>@Model.Customer.EmailId<br />
+                            
+                                string contractno = "", contractdate = "";
+                                if (Model.Contract != null)
+                                {
+                                    contractno = Model.Contract.ContractNo;
+                                    if (Model.Contract.ContractDate != null && Model.Contract.ContractDate.ToString() != "")
+                                    {
+                                        contractdate = ((DateTime)Model.Contract.ContractDate).ToString("dd/MM/yyyy");
+                                    }
+
+                                }
+                            
+                            <text><b>Contract No.: </b></text> @contractno <span style = "float:right;"><text><b>Contract Date: </b> @contractdate </text></span><br />
+                            <text><b>GSTIN: </b></text>@Model.Customer.GstinNo <span style="float:right;"><text><b>State: </b>@Model.Customer.Customers_Billing_Address_Mapping.First().State.State1 </text></span><br />
+                        }
+                        
+                    </td>
+                    <td class="w-50" colspan="4">
+                        @if (Model.Customer != null)
+                        {
+                            <text><b>Site Address: </b></text><br />
+                            <text><b>Contact Person Name : </b></text>@Model.Customer.ConsultPerson<br />
+                            <text><b>Contact No.: </b></text> @Model.Customer.CellNumber<br />
+                            <text><b>Email ID: </b></text>@Model.Customer.EmailId<br />
+
+                            <text><b>Type Of Premises: </b></text><br />
+                            <text><b>Premises Area: </b></text><span style="float:right;"><text><b>App. Sq. Ft.: </b></text></span><br />
+                        }
+
+                    </td>
+                </tr>
+            </tbody>
+            <thead  style="font-size:13px;">
+                <tr>
+                    <th>Sr. No.</th>
+                    <th>Type Of Service</th>
+                    <th>Frequency Of Service</th>
+                    <th>HSN/SAC</th>
+                    <th>Qty.</th>
+                    <th>Rate / Per</th>
+                    <th>Amount</th>
+                </tr>
+            </thead>
+
+            <tbody style="font-size:13px;">
+                @if (Model.Invoice_Services_Mapping.Count() > 0)
+                {
+                    for (int i = 0; i < Model.Invoice_Services_Mapping.Count(); i++)
+                    {
+                        <tr>
+                            <td>@(i + 1)</td>
+                            <td>@Model.Invoice_Services_Mapping.ElementAt(i).Service.ServiceName</td>
+                            <td>@Model.Invoice_Services_Mapping.ElementAt(i).FrequencyOfService.FrequencyOfService1</td>
+                            <td>@Model.Invoice_Services_Mapping.ElementAt(i).Service.SACCode</td>
+                            <td>@Model.Invoice_Services_Mapping.ElementAt(i).Qty</td>
+                            <td>@Model.Invoice_Services_Mapping.ElementAt(i).Rate</td>
+                            <td>@Model.Invoice_Services_Mapping.ElementAt(i).Rate</td>
+                        </tr>
+                    }
+                }
+                <tr>
+                    <td colspan="4" rowspan="6"><b>Remarks:</b></td>
+                    <td colspan="2"><b>Total:</b></td>
+                    <td>@Model.Invoice_Services_Mapping.Sum(s => s.Rate)</td>
+                </tr>
+                <tr>
+                    @*<td colspan="3" rowspan="5"><b>Remarks:</b></td>*@
+                    <td colspan="2"><b>SGST 9%:</b></td>
+                    <td>@(Model.Invoice_Services_Mapping.Sum(s => s.Rate) * 9 / 100)</td>
+                </tr>
+                <tr>
+                    @*<td colspan="3" rowspan="5"><b>Remarks:</b></td>*@
+                    <td colspan="2"><b>CGST 9%:</b></td>
+                    <td>@(Model.Invoice_Services_Mapping.Sum(s => s.Rate) * 9 / 100)</td>
+                </tr>
+                <tr>
+                    @*<td colspan="3" rowspan="5"><b>Remarks:</b></td>*@
+                    <td colspan="2"><b>IGST 18%:</b></td>
+                    <td>@(Model.Invoice_Services_Mapping.Sum(s => s.Rate) * 18 / 100)</td>
+                </tr>
+                <tr>
+                    @*<td colspan="3" rowspan="5"><b>Remarks:</b></td>*@
+                    <td colspan="2"><b>R/O (+/-):</b></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    @*<td colspan="3" rowspan="5"><b>Remarks:</b></td>*@
+                    <td colspan="2"><b>GRAND TOTAL:</b></td>
+                    <td>@(Model.Invoice_Services_Mapping.Sum(s => s.Rate) + (Model.Invoice_Services_Mapping.Sum(s => s.Rate) * 9 / 100)*2 )</td>
+                </tr>
+                <tr>
+                    @*<td colspan="3" rowspan="5"><b>Remarks:</b></td>*@
+                    <td colspan="7"><b>Grand Total Invoice Value (In Words):</b></td>
+                </tr>
+                <tr style="font-size:13px;">
+                    <td colspan="7">
+                        1. Pan Card No. :AAXCS7991Q<span style="float:right;">For <b>SADGURU FACILITY SERVICES PVT. LTD.</b></span><br />
+                        2. GSTIN No.: 27AAXCS7991Q1ZQ<br />
+                        3. Cheque should be in favour of 'Sadguru Facility Services Pvt. Ltd.'<br />
+                        4. Bank Name & Branch Add.: HDFC Bank Jogeshwari (E)<br />
+                        5. Account No.: CA-50200024285470<br />
+                        6. IFSC Code: HDFC0001019<br />
+                        7. Subject to Mumbai Jurisdiction.<br />
+                        8. Interest at the rate of 25% will be charged if the payment is not made within 15 days.<br />
+                        <span style="float:right;"><b>Receiver Signature & Stamp</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Authorized Signatory</span>
+                    </td>
+                </tr>
+
+            </tbody>
+
+        </table>
+        <div style="font-size:13px;" class="text-center">
+            @if (ViewBag.InvoiceTypeName == "New Tax Invoice")
+            {
+                <text><b>THIS IS A COMPUTER GENERATED TAX INVOICE</b></text>
+            }
+            else
+            {
+                <text><b>THIS IS A COMPUTER GENERATED PROFORMA INVOICE</b></text>
+            }
+        </div>
+    </div>
+
+</body>
+</html>

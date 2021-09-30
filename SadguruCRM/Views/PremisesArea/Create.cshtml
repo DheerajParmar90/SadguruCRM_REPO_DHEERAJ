@@ -1,0 +1,42 @@
+﻿@model SadguruCRM.Models.Premises_Area_Master
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+    <h4>Premises Area</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group row">
+
+        <div class="col">
+            @Html.LabelFor(model => model.Premises_Area, "Premises Area", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.EditorFor(model => model.Premises_Area, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Premises_Area, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col">
+            @Html.LabelFor(model => model.Order, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.EditorFor(model => model.Order, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Order, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group row">
+        <div class="col">
+            <input type="submit" value="Create" class="btn btn-secondary" style="float:right;" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

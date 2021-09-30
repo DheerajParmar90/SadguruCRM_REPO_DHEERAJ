@@ -1,0 +1,247 @@
+﻿@model IEnumerable<SadguruCRM.Models.Vendor>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+
+
+<div class="row">
+    <div class="col">
+        <h2>Vendors</h2>
+    </div>
+    <div class="pull-right">
+        @Html.ActionLink("New Vendor", "Create", null, new { @type = "button", @class = "btn btn-outline-secondary" })
+        @*@Html.ActionLink("Export", "Export", null, new { @type = "button", @class = "btn btn-outline-secondary" })*@
+        <button class="btn btn-outline-secondary"><i class="fa fa-pie-chart"></i></button>
+    </div>
+
+</div>
+<table class="table display cell-border">
+    <thead>
+
+        <tr>
+           
+            <th>
+                
+            </th>
+            <th>
+                
+            </th>
+            <th>
+                
+            </th>
+            <th>
+                
+            </th>
+            <th>
+                
+            </th>
+            <th>
+                
+            </th>
+            <th>
+                
+            </th>
+            <th>
+                
+            </th>
+            <th>
+                
+            </th>
+            <th>
+                
+            </th>
+            <th>
+                
+            </th>
+            <th>
+                
+            </th>
+            <th>
+                
+            </th>
+            <th>
+                
+            </th>
+            <th>
+                
+            </th>
+            <th>
+                
+            </th>
+            <th>
+                
+            </th>
+            <th>
+                
+            </th>
+            <th>
+                
+            </th>
+            <th style="min-width: 60px;"></th>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.VendorName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContactNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VendorNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VendorDate)
+            </th>
+            <th>
+                @Html.DisplayName("Address")
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.EmailID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ContactPerson)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CellNo1)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.GSTNo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AccountName1)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AccountNo1)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BankName1)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IFSCCode1)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AccountBranch1)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SupplierType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PaymentTerms)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.City.CityName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Location.LocationName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.State.State1)
+            </th>
+            <th style="min-width: 60px;"></th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.VendorName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ContactNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VendorNo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VendorDate)
+            </td>
+            <td>
+                @{
+                    var address = item.AddressLine1 + " " + item.AddressLine2 + " " + item.AddressLine3;
+                    <text>@address</text>
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmailID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ContactPerson)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CellNo1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GSTNo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AccountName1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AccountNo1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BankName1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IFSCCode1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AccountBranch1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SupplierType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PaymentTerms)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.City.CityName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Location.LocationName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.State.State1)
+            </td>
+            <td style="min-width: 60px;">
+                @Html.ActionLink(" ", "Edit", new { id = item.VendorID }, new { @class = "fa fa-edit" }) |
+                @Html.ActionLink(" ", "Details", new { id = item.VendorID }, new { @class = "fa fa-info" }) |
+                @Html.ActionLink(" ", "Delete", new { id = item.VendorID }, new { @class = "fa fa-trash" })
+            </td>
+</tr>
+        }
+    </tbody>
+
+</table>
+<script>
+    var table;
+    $(document).ready(function () {
+        table = $('.table').DataTable({
+            fixedHeader: true,
+            order: [[0, 'desc']],
+            "pageLength": 25,
+            "scrollX": true
+        });
+        var colindex = 1;
+        $('.table thead tr:first th').each(function () {
+            if (colindex < 20) {
+                $(this).html('<input type="text" class="column_search"/>');
+            } else if (colindex == 20) {
+                $(this).html('<input type="button" value="RESET" class="btn btn-sm btn-outline-secondary" id="reset" onclick="clearSearchBoxes();"/>');
+            }
+            colindex++;
+        });
+        $('.table thead tr:first th').on('keyup', ".column_search", function () {
+            table
+                .column($(this).parent().index())
+                .search(this.value)
+                .draw();
+        });
+        $(".dataTables_filter").css("display", "none");
+    });
+</script>

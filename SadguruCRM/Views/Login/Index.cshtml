@@ -1,0 +1,141 @@
+﻿
+@model SadguruCRM.Models.UserLogin
+
+@{
+    /**/
+
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title Login - Sadguru CRM</title>
+    @*@Styles.Render("~/Content/css")
+        @Scripts.Render("~/bundles/modernizr")*@
+
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/Site.css" rel="stylesheet" />
+    <link href="~/Content/jquery-ui.css" rel="stylesheet" />
+</head>
+
+
+
+@*@using (Html.BeginForm("Login", "Login"))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal container" style="text-align: center;">
+            <h2>Login</h2>
+
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group row">
+
+                <div class="col-md-7">
+                    @Html.Label("User Name", htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-md-7">
+                    @Html.Label("Password", htmlAttributes: new { @class = "control-label col-md-5" })
+                    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", @type = "password" } })
+                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-5 col-md-7">
+                    <input type="submit" value="Login" class="btn btn-default" style="float: left;width: 280px;background: black;color: white;" />
+                </div>
+            </div>
+        </div>*@
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 d-flex flex-column justify-content-center">
+            <div class="row">
+                <div class="col-lg-6 col-md-8 mx-auto">
+
+                    <!-- form card login -->
+                    <div class="card rounded shadow shadow-sm">
+                        <div class="card-header">
+                            <h3 class="mb-0">Login</h3>
+                        </div>
+                        <div class="card-body">
+                            <form class="form" role="form" autocomplete="off" id="formLogin" novalidate="" method="POST" action="@Url.Action("Login", "Login")">
+                                @Html.AntiForgeryToken()
+                                <div class="form-group">
+                                    <label for="uname1">Username</label>
+                                    @*<input type="text" class="form-control form-control-lg rounded-0" name="uname1" id="uname1" required="">*@
+                                    @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control form-control-lg rounded-0" } })
+                                    <div class="invalid-feedback">Oops, you missed this one.</div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Password</label>
+                                    @*<input type="password" class="form-control form-control-lg rounded-0" id="pwd1" required="" autocomplete="new-password">*@
+                                    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control form-control-lg rounded-", @type = "password" } })
+                                    <div class="invalid-feedback">Enter your password too!</div>
+                                </div>
+                                <div>
+                                    @*<label class="custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input">
+                                            <span class="custom-control-indicator"></span>
+                                            <span class="custom-control-description small text-dark">Remember me on this computer</span>
+                                        </label>*@
+                                </div>
+                                <button type="submit" class="btn btn-success btn-lg float-right" id="btnLogin">Login</button>
+                            </form>
+                        </div>
+
+                        <!--/card-block-->
+
+
+                    </div>
+                    <!-- /form card login -->
+                    <div id="errorDiv" class="alert alert-danger" role="alert" style="display:none;">
+                        error alert
+                    </div>
+                </div>
+
+
+            </div>
+            <!--/row-->
+
+        </div>
+        <!--/col-->
+    </div>
+    <!--/row-->
+</div>
+<!--/container-->
+@*}*@
+
+@*@Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")*@
+<style>
+</style>
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/Scripts/modernizr-2.8.3.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+@if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+{
+    <script type="text/javascript">
+        $("#errorDiv").show().html('@ViewBag.ErrorMessage');
+        //alert('@ViewBag.ErrorMessage');
+    </script>
+}
+else
+{
+    <script type="text/javascript">
+        $("#errorDiv").hide().html('');
+        //alert('@ViewBag.ErrorMessage');
+    </script>
+
+}

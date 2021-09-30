@@ -1,0 +1,231 @@
+﻿@model SadguruCRM.ViewModels.HomeViewModel
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<style>
+    .table-responsive {
+    font-size:10px;
+    font-weight:500;
+    }
+</style>
+
+<div class="row">
+    <div class="col-md-9">
+        <div class="card">
+            <div class="card-header container-fluid">
+                <div class="row">
+                    <h4 class="col-5">Lead Reminder</h4>
+                    <div class="col-7" style="text-align:right;">
+                        @Html.ActionLink("Export", "#", null, new { @type = "button", @class = "btn-sm btn-secondary" })
+                        @Html.ActionLink("Pending", "ImportLeads", null, new { @type = "button", @class = "btn-sm btn-secondary" })
+                        @Html.ActionLink("Today", "Create", null, new { @type = "button", @class = "btn-sm btn-secondary" })
+                        @Html.ActionLink("Upcoming", "TransferLeads", null, new { @type = "button", @class = "btn-sm btn-secondary" })
+                    </div>
+                </div>
+                    
+                </div>
+
+                <div class="card-body">
+
+
+                    <div class="row">
+                        <div class="col-md-12">
+
+                            <table class="table-responsive display cell-border" id="leadsReminder" style="width: 100%;">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th style="min-width:55px;"></th>
+                                        @*<th></th>
+                                <th></th>
+                                <th></th>*@
+                                    </tr>
+                                    <tr>
+                                        <th>
+                                            @Html.DisplayName("Lead Number")
+                                        </th>
+                                        <th>
+                                            @Html.DisplayName("Next Follow Up Date Time")
+                                        </th>
+                                        <th>
+                                            @Html.DisplayName("Customer Name")
+                                        </th>
+                                        <th>
+                                            Location
+                                        </th>
+                                        <th>
+                                            Required Services
+                                        </th>
+                                        <th>
+                                            @Html.DisplayName("Tel No")
+                                        </th>
+                                        <th>
+                                            @Html.DisplayName("Cell No")
+                                        </th>
+                                        <th>
+                                            @Html.DisplayName("Final Amount")
+                                        </th>
+                                        <th>
+                                            @Html.DisplayName("Created By")
+                                        </th>
+                                        <th>
+                                            @Html.DisplayName("Status")
+                                        </th>
+                                        <th style="min-width:55px;">Action</th>
+                                        @*<th></th>
+                                <th></th>
+                                <th></th>*@
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model.lead_reminder)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.LeadNumber)
+                                            </td>
+                                            <td>
+                                                @Html.ValueFor(modelItem => item.NextFollowUpDateTime, "{0:dd/MM/yyyy hh:mm tt}")
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.CustomerName)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Location.LocationName)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.AddressLine1)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.TelNo)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.CellNo)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.FinalRate)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.UserLogin.UserName)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.LeadStatus.Status)
+                                                @if (item.LeadStatus != null && item.LeadStatus.Status == "Done")
+                                                {
+                                                    <br />
+                                                    @Html.ActionLink("Services", "Index", "ConfirmedLeadServices", new { LeadID = item.LeadID }, null)
+                                                }
+                                            </td>
+                                            <td style="font-size: 10px;">
+                                                @Html.ActionLink(" ", "Edit","Leads", new { id = item.LeadID }, new { @class = "fa fa-edit", @title = "EDIT" })
+                                                @Html.ActionLink(" ", "Details", new { id = item.LeadID }, new { @class = "fa fa-info", @title = "VIEW" })
+                                                @Html.ActionLink(" ", "Delete", new { id = item.LeadID }, new { @class = "fa fa-trash", @title = "DELETE" })
+                                                @Html.ActionLink(" ", "History", "LeadsHistory", new { LeadID = item.LeadID }, new { @class = "fa fa-history", @title = "HISTORY" })
+                                            </td>
+                                            @*<td></td>
+                                    <td></td>
+                                    <td></td>*@
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <div class="card">
+            <div class="card-header container-fluid">
+                <div class="row">
+                    <h4 class="col-5">Pending Leads</h4>
+                    <div class="col-7" style="text-align:right;">
+                        @Html.ActionLink("Export", "Create", null, new { @type = "button", @class = "btn-sm btn-secondary" })
+                        @Html.ActionLink("Pending", "ImportLeads", null, new { @type = "button", @class = "btn-sm btn-secondary" })
+                        @Html.ActionLink("Today", "Create", null, new { @type = "button", @class = "btn-sm btn-secondary" })
+
+                    </div>
+                </div>
+                
+            </div>
+            <div class="card-body">
+                @*<h5 class="card-title">Special title treatment</h5>
+                <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                <a href="#" class="btn btn-primary">Go somewhere</a>*@
+                <div class="row">
+                    <div class="col-md-12">
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card">
+            <h4 class="card-header">To Do List</h4>
+            <div class="card-body">
+                @*<h5 class="card-title">Special title treatment</h5>
+            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+            <a href="#" class="btn btn-primary">Go somewhere</a>*@
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var table;
+    $(document).ready(function () {
+
+        table = $('.table-responsive').DataTable({
+            fixedHeader: true,
+            order: [[1, 'desc']],
+            "pageLength": 10
+        });
+        var colindex = 1;
+        $('.table-responsive thead tr:first th').each(function () {
+            if (colindex < 11) {
+                //var title = $('#leads thead th').eq($(this).index()).text();
+                $(this).html('<input type="text" placeholder="" class="column_search"/>');
+            } else if (colindex == 11) {
+                $(this).html('<input type="button" value="RESET" class="btn btn-sm btn-outline-secondary" id="reset" onclick="clearSearchBoxes();"/>');
+            }
+            colindex++;
+        });
+        //table.columns().every(function () {
+        //    var column = this;
+
+        //    $('input', this.header()).on('keyup change', function () {
+        //        column
+        //            .search(this.value)
+        //            .draw();
+        //    });
+        //});
+        $('.table-responsive thead tr:first th').on('keyup', ".column_search", function () {
+            table
+                .column($(this).parent().index())
+                .search(this.value)
+                .draw();
+        });
+        $(".dataTables_filter").css("display", "none");
+
+
+    });
+    //table.columns( '.Status' ).search( 'Important' ).draw();
+    function clearSearchBoxes() {
+        var searchBoxes = $(".column_search");
+        for (var i = 0; i < searchBoxes.length; i++) {
+            $(searchBoxes[i]).val("");
+        }
+        table.search('').columns().search('').draw();
+    };
+
+</script>

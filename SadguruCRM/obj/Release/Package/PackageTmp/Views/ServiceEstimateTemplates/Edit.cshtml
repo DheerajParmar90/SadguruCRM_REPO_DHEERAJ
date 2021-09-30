@@ -1,0 +1,99 @@
+﻿@model SadguruCRM.Models.Service_Estimate_Templates
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+    <h2>Service Estimate Templates</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+    <h4>Edit</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.Service_Estimate_Template_ID)
+    @Html.HiddenFor(model => model.CreatedByUserID)
+    @Html.HiddenFor(model => model.CreatedOn)
+
+    <div class="form-group">
+        @Html.Label("Service Group", "Service Group", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-4">
+            @Html.DropDownList("ServiceGroupID", null, htmlAttributes: new { @class = "form-control", @disabled = "disabled" })
+            @Html.ValidationMessageFor(model => model.ServiceGroupID, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.ServiceGroupID)
+        </div>
+        @Html.Label("Service", "Service", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-4">
+            @Html.DropDownList("ServiceID", null, htmlAttributes: new { @class = "form-control", @disabled = "disabled" })
+            @Html.ValidationMessageFor(model => model.ServiceID, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.ServiceID)
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Subject, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-4">
+            @Html.EditorFor(model => model.Subject, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Subject, "", new { @class = "text-danger" })
+        </div>
+
+    </div>
+
+    <div class="form-group">
+        @Html.Label("General Instruction", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-4">
+            @Html.TextAreaFor(model => model.General_Instruction, 5, 100, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.General_Instruction, "", new { @class = "text-danger" })
+        </div>
+        @Html.Label("General Disinfestation", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-4">
+            @Html.TextAreaFor(model => model.General_Disinfestation, 5, 100, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.General_Disinfestation, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.Label("Frequency Of Services", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-4">
+            @Html.EditorFor(model => model.Frequency_Of_Services, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Frequency_Of_Services, "", new { @class = "text-danger" })
+        </div>
+        @Html.Label("Charges Per Annum", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-4">
+            @Html.EditorFor(model => model.Charges_Per_Annum, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Charges_Per_Annum, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Terms_Of_Payment, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-4">
+            @Html.EditorFor(model => model.Terms_Of_Payment, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Terms_Of_Payment, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+
+    <div class="form-group">
+        <div class="col-md-12">
+            <input type="submit" value="Save" class="btn btn-primary" style="float:right;" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    
+}
+<style>
+    input, select, textarea {
+        max-width: 90% !important;
+    }
+</style>

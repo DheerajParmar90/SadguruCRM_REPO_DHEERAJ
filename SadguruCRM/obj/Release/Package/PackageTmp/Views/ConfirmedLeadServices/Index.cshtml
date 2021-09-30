@@ -1,0 +1,379 @@
+﻿@model SadguruCRM.ViewModels.ConfirmedLeadServicesViewModel
+
+@{
+    ViewBag.Title = "Lead Services";
+}
+
+<h2>Lead Services: </h2>
+<h5>Lead ID: @Model.LeadID</h5>
+@if (Model.CustomerID != null)
+{
+    <h5>Customer Created</h5>
+}
+else
+{
+    <h5>No Customer Created</h5>
+}
+<h5>Name: @Model.Name</h5>
+<h5>Location: @Model.Location</h5>
+<h5>Date @Model.Date</h5>
+<table class="table display cell-border" id="tblLeadServices">
+    <thead>
+        <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayName("Lead ID")
+            </th>
+            <th>
+                @Html.DisplayName("Contract ID")
+            </th>
+            <th>
+                @Html.DisplayName("Service Group")
+            </th>
+            <th>
+                @Html.DisplayName("Service")
+            </th>
+            <th>
+                @Html.DisplayName("Rate")
+            </th>
+            <th>
+                @Html.DisplayName("GST")
+            </th>
+            <th>
+                @Html.DisplayName("Qty")
+            </th>
+            <th>
+                @Html.DisplayName("Tax")
+            </th>
+            <th>
+                @Html.DisplayName("Final Rate")
+            </th>
+            <th>
+                @Html.DisplayName("Frequency Of Service")
+            </th>
+            <th>
+                @Html.DisplayName("Period Of Contract")
+            </th>
+            <th>
+                @Html.DisplayName("Service Start Date")
+            </th>
+            <th>
+                @Html.DisplayName("Contract Start Date")
+            </th>
+            <th>
+                @Html.DisplayName("Contract End Date")
+            </th>
+            <th>
+                @Html.DisplayName("Servicings")
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model.leadServices)
+        {
+            <tr>
+                <td>
+                    @Html.HiddenFor(modelItem => item.Lead_Services_Mapping_ID)
+                    @Html.DisplayFor(modelItem => item.Lead.LeadNumber)
+                </td>
+                <td>
+                    @if (item.Contract != null)
+
+                    {
+                        string contractno = item.Contract.ContractNo;
+                        Html.Display(contractno);
+                    }
+                    else
+                    {
+                        Html.Display("");
+                    }
+
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ServiceGroup.ServiceGroup1)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Service.ServiceName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Rate)
+                </td>
+                <td>
+                    @((item.GST == null ? "No" : ((bool)item.GST ? "Yes" : "No")))
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Qty)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Tax)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FinalRatePerService)
+                </td>
+                <td>
+                    <span>@item.FrequencyOfService.FrequencyOfService1</span>
+                    @Html.DropDownList("FrequencyOfServiceID", null, "-- SELECT --", htmlAttributes: new { @class = "form-control frequencyOfService", @style = "display:none" })
+                    @*@Html.ValidationMessageFor(modelItem => item.FrequencyOfServiceID, "", new { @class = "text-danger" })*@
+                </td>
+                <td>
+                    <span>@(item.PeriodsOfContract == null ? "" : item.PeriodsOfContract.PeriodsOfContract1)</span>
+                    @Html.DropDownList("PeriodsOfContractID", null, "-- SELECT --", htmlAttributes: new { @class = "form-control periodOfContract", @style = "display:none" })
+                    @*@Html.ValidationMessageFor(modelItem => item.PeriodsOfContractID, "", new { @class = "text-danger" })*@
+                </td>
+                <td>
+                    <span>@(item.ServiceStartDate == null ? "" : item.ServiceStartDate.Value.ToString("dd/MM/yyyy"))</span>
+                    <div style="position:relative"><input type="text" value="@(item.ServiceStartDate == null ? "" : item.ServiceStartDate.Value.ToString("dd/MM/yyyy"))" class="form-control date serviceStartDate" style="display:none" /></div>
+                    @*@Html.ValidationMessageFor(modelItem => item.ServiceStartDate, "", new { @class = "text-danger" })*@
+                </td>
+                <td>
+                    <span>@(item.POCStartDate == null ? "" : item.POCStartDate.Value.ToString("dd/MM/yyyy"))</span>
+                    <div style="position:relative"><input type="text" value="@(item.POCStartDate == null ? "" : item.POCStartDate.Value.ToString("dd/MM/yyyy"))" class="form-control date pocStartDate" style="display:none" /></div>
+                    @*@Html.ValidationMessageFor(modelItem => item.POCStartDate, "", new { @class = "text-danger" })*@
+                </td>
+                <td>
+                    <span>@(item.POCEndDate == null ? "" : item.POCEndDate.Value.ToString("dd/MM/yyyy"))</span>
+                    <div style="position:relative"><input type="text" value="@(item.POCEndDate == null ? "" : item.POCEndDate.Value.ToString("dd/MM/yyyy"))" class="form-control pocEndDate" style="display:none" disabled="disabled" /></div>
+                    @*@Html.ValidationMessageFor(modelItem => item.POCEndDate, "", new { @class = "text-danger" })*@
+                </td>
+                <td>
+                    @Html.ActionLink("Check", "LeadServiceServicings", "Servicings", new { id = item.Lead_Services_Mapping_ID }, null)
+                </td>
+                <td>
+                    @*@Html.ActionLink("Edit", "Edit", new { id=item.Lead_Services_Mapping_ID }) |
+                        @Html.ActionLink("Delete", "Delete", new { id=item.Lead_Services_Mapping_ID })*@
+                    <a class="Edit" href="javascript:;">Edit</a>
+                    <a class="Update" href="javascript:;" style="display:none">Update</a>
+                    <a class="Cancel" href="javascript:;" style="display:none">Cancel</a>
+                    <a class="Delete" href="javascript:;" style="display:none">Delete</a>
+                </td>
+            </tr>
+
+
+        }
+    </tbody>
+</table>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+
+<script>
+    var table;
+    $(document).ready(function () {
+
+        table = $('.table').DataTable({
+            fixedHeader: true,
+            order: [[1, 'asc']]
+        });
+        var colindex = 1;
+        $('.table thead tr:first th').each(function () {
+            if (colindex < 16) {
+                //var title = $('#leads thead th').eq($(this).index()).text();
+                $(this).html('<input type="text" placeholder="" class="column_search"/>');
+            } else if (colindex == 16) {
+                $(this).html('<input type="button" value="RESET" class="btn btn-sm btn-outline-secondary" id="reset" onclick="clearSearchBoxes();"/>');
+            }
+            colindex++;
+        });
+        //table.columns().every(function () {
+        //    var column = this;
+
+        //    $('input', this.header()).on('keyup change', function () {
+        //        column
+        //            .search(this.value)
+        //            .draw();
+        //    });
+        //});
+        $('.table thead tr:first th').on('keyup', ".column_search", function () {
+            table
+                .column($(this).parent().index())
+                .search(this.value)
+                .draw();
+        });
+        $(".dataTables_filter").css("display", "none");
+
+
+    });
+    //table.columns( '.Status' ).search( 'Important' ).draw();
+    function clearSearchBoxes() {
+        var searchBoxes = $(".column_search");
+        for (var i = 0; i < searchBoxes.length; i++) {
+            $(searchBoxes[i]).val("");
+        }
+        table.search('').columns().search('').draw();
+    };
+
+</script>
+<script>
+    $(".date").datetimepicker({
+        format: 'DD/MM/YYYY',
+        useCurrent: false
+    }).on('dp.change', function (e) {
+        //alert($(this).val());
+        //alert($(this).closest("tr").find(".periodOfContract").val());
+        calculateContractDates(this);
+    });
+    $(".frequencyOfService").change(function () {
+        calculateContractDates(this);
+    });
+    $(".periodOfContract").change(function () {
+        calculateContractDates(this);
+    });
+    $("body").on("click", "#tblLeadServices .Edit", function () {
+        var row = $(this).closest("tr");
+        $("td", row).each(function () {
+            if ($(this).find("input").length > 0) {
+                $(this).find("input").show();
+                $(this).find("span").hide();
+            }
+            if ($(this).find("select").length > 0) {
+                $(this).find("select").show();
+                $(this).find("span").hide();
+                var val = $(this).find("span").html();
+                debugger;
+                //$(this).find("select option").filter(function() {  return $(this).text() == val;}).attr('selected', 'selected');
+                var valToSelect = $(this).find('select option').map(function () {
+                    if ($(this).text() == val) return this;
+                }).val();
+                $(this).find("select").val(valToSelect);
+            }
+        });
+        row.find(".Update").show();
+        row.find(".Cancel").show();
+        row.find(".Delete").hide();
+        $(this).hide();
+    });
+    $("body").on("click", "#tblLeadServices .Cancel", function () {
+        var row = $(this).closest("tr");
+        $("td", row).each(function () {
+            if ($(this).find("input").length > 0) {
+                var span = $(this).find("span");
+                var input = $(this).find("input");
+                input.val(span.html());
+                span.show();
+                input.hide();
+            }
+            if ($(this).find("select").length > 0) {
+                var span = $(this).find("span");
+                var select = $(this).find("select");
+                debugger;
+                $(this).find("select").val("");
+                span.show();
+                select.hide();
+            }
+        });
+        row.find(".Edit").show();
+        row.find(".Delete").hide();
+        row.find(".Update").hide();
+        $(this).hide();
+    });
+    //Update event handler.
+    $("body").on("click", "#tblLeadServices .Update", function () {
+        var row = $(this).closest("tr");
+        $("td", row).each(function () {
+            if ($(this).find("input").length > 0) {
+                var span = $(this).find("span");
+                var input = $(this).find("input");
+                span.html(input.val());
+                span.show();
+                input.hide();
+            }
+            if ($(this).find("select").length > 0) {
+                var select = $(this).find("select");
+                var span = $(this).find("span");
+                span.html(select.find('option:selected').text());
+                span.show();
+                select.hide();
+            }
+        });
+        row.find(".Edit").show();
+        row.find(".Delete").hide();
+        row.find(".Cancel").hide();
+        row.find(".Update").hide();
+        //$(this).hide();
+        debugger;
+        var map = {};
+        map.Lead_Services_Mapping_ID = row.find("#item_Lead_Services_Mapping_ID").val();
+        //alert(map.Lead_Services_Mapping_ID);
+        map.FrequencyOfServiceID = row.find("#FrequencyOfServiceID").val();
+        map.PeriodsOfContractID = row.find("#PeriodsOfContractID").val();
+        map.ServiceStartDate = row.find(".serviceStartDate").val();
+        map.POCStartDate = row.find(".pocStartDate").val();
+        map.POCEndDate = row.find(".pocEndDate").val();
+        $.ajax({
+            type: "POST",
+            url: "/ConfirmedLeadServices/UpdateLeadService",
+            data: '{map:' + JSON.stringify(map) + '}',
+            contentType: "application/json; charset=utf-8",
+            dataType: "json"
+        });
+    });
+    function calculateContractDates(obj) {
+        debugger;
+        var FOS, POC, serviceStartDate, POCStartDate;
+        if ($(obj).hasClass('frequencyOfService')) {
+            //var FOS = $(obj).val();
+            //$(obj).closest("tr").find(".periodOfContract").val("");
+            //$(obj).closest("tr").find(".serviceStartDate").val("");
+            //$(obj).closest("tr").find(".pocStartDate").val("");
+            //$(obj).closest("tr").find(".pocEndDate").val("");
+            //return;
+        }
+        if ($(obj).hasClass('periodOfContract')) {
+            //var POC = $(obj).closest("tr").find(".periodOfContract").val();
+            //$(obj).closest("tr").find(".serviceStartDate").val("");
+            //$(obj).closest("tr").find(".pocStartDate").val("");
+            //$(obj).closest("tr").find(".pocEndDate").val("");
+            //return;
+            FOS = $(obj).closest("tr").find(".frequencyOfService").val();
+            POC = $(obj).closest("tr").find(".periodOfContract").val();
+            serviceStartDate = $(obj).closest("tr").find(".serviceStartDate").val();
+            POCStartDate = $(obj).closest("tr").find(".pocStartDate").val();;
+        }
+        if ($(obj).hasClass('serviceStartDate')) {
+            FOS = $(obj).closest("tr").find(".frequencyOfService").val();
+            POC = $(obj).closest("tr").find(".periodOfContract").val();
+            serviceStartDate = $(obj).val();
+            POCStartDate = "";
+        }
+        if ($(obj).hasClass('pocStartDate')) {
+            FOS = $(obj).closest("tr").find(".frequencyOfService").val();
+            POC = $(obj).closest("tr").find(".periodOfContract").val();
+            serviceStartDate = $(obj).closest("tr").find(".serviceStartDate").val();
+            POCStartDate = $(obj).val();
+        }
+
+        $.ajax({
+            type: "post",
+            url: "/ConfirmedLeadServices/CalculateContractDates",
+            data: { FOS: FOS, POC: POC, serviceStartDate: serviceStartDate, POCStartDate: POCStartDate },
+            datatype: "json",
+            traditional: true,
+            success: function (data) {
+                $(obj).closest("tr").find(".pocStartDate").val(data.POCStartDate);
+                $(obj).closest("tr").find(".pocEndDate").val(data.POCEndDate);
+            }
+        });
+    }
+    jQuery('.date').on('input', function () {
+        return false;
+    });
+</script>

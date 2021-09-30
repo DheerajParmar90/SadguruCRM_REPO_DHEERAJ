@@ -1,0 +1,87 @@
+﻿@model IEnumerable<SadguruCRM.Models.Service_Estimate_Templates>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table-bordered">
+    <tr>
+        <th>
+            @Html.DisplayName("Service Group")
+        </th>
+        <th>
+            @Html.DisplayName("Service")
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Subject)
+        </th>
+        <th>
+            @Html.DisplayName("General Instruction")
+        </th>
+        <th>
+            @Html.DisplayName("General Disinfestation")
+        </th>
+        <th>
+            @Html.DisplayName("Frequency Of Services")
+        </th>
+        <th>
+            @Html.DisplayName("Charges Per Annum")
+        </th>
+        <th>
+            @Html.DisplayName("Terms Of Payment")
+        </th>
+        <th>
+            @Html.DisplayName("Created On")
+        </th>
+        <th>
+            @Html.DisplayName("Created By")
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.ServiceGroup.ServiceGroup1)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Service.ServiceName)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Subject)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.General_Instruction)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.General_Disinfestation)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Frequency_Of_Services)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Charges_Per_Annum)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Terms_Of_Payment)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.CreatedOn)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.UserLogin.UserName)
+    </td>
+    <td>
+        @Html.ActionLink("Edit", "Edit", new { id = item.Service_Estimate_Template_ID }) |
+        @Html.ActionLink("Details", "Details", new { id = item.Service_Estimate_Template_ID }) |
+        @Html.ActionLink("Delete", "Delete", new { id = item.Service_Estimate_Template_ID })
+    </td>
+</tr>
+}
+
+</table>

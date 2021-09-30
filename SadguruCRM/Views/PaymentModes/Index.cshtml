@@ -1,0 +1,63 @@
+﻿@model IEnumerable<SadguruCRM.Models.PaymentMode>
+
+@{
+    ViewBag.Title = "Payment Modes";
+}
+
+    <h2>Payment Modes</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayName("Order")
+        </th>
+        <th>
+            @Html.DisplayName("Payment Mode")
+        </th>
+        <th>
+            @Html.DisplayName("Created On")
+        </th>
+        <th>
+            @Html.DisplayName("Latst Updated On")
+        </th>
+        <th>
+            @Html.DisplayName("Created By")
+        </th>
+        <th>
+            @Html.DisplayName("Last Updated By")
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.Order)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.PaymentModeName)
+    </td>
+    <td>
+        @Html.ValueFor(modelItem => item.CreatedDate, "{0:dd/MM/yyyy HH:mm}")
+    </td>
+    <td>
+        @Html.ValueFor(modelItem => item.LastUpdatedDate, "{0:dd/MM/yyyy HH:mm}")
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.UserLogin.UserName)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.UserLogin1.UserName)
+    </td>
+    <td>
+        @Html.ActionLink(" ", "Edit", new { id = item.PaymentModeID }, new { @class = "fa fa-edit" }) |
+        @Html.ActionLink(" ", "Details", new { id = item.PaymentModeID }, new { @class = "fa fa-info" }) |
+        @Html.ActionLink(" ", "Delete", new { id = item.PaymentModeID }, new { @class = "fa fa-trash" })
+    </td>
+</tr>
+}
+
+</table>

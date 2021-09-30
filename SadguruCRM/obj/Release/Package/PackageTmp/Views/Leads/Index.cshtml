@@ -1,0 +1,208 @@
+﻿@model IEnumerable<SadguruCRM.Models.Lead>
+
+@{
+    ViewBag.Title = "Leads";
+}
+
+
+    <div class="row">
+        <div class="col">
+            <h2>Leads</h2>
+        </div>
+        <div class="pull-right">
+            @Html.ActionLink("New Lead", "Create", null, new { @type = "button", @class = "btn btn-outline-secondary" })
+            @Html.ActionLink("Import", "ImportLeads", null, new { @type = "button", @class = "btn btn-outline-secondary" })
+            @Html.ActionLink("Export", "Create", null, new { @type = "button", @class = "btn btn-outline-secondary" })
+            @Html.ActionLink("Transfer Leads", "TransferLeads", null, new { @type = "button", @class = "btn btn-outline-secondary" })
+        </div>
+        
+    </div>
+<table class="table display cell-border" id="leads">
+    <thead>
+        <tr>
+            <th>Lead ID
+            <th>Lead Created On
+            <th>Customer Name</th>
+            <th>Location
+            <th>Required Services</th>
+            <th>
+                Tel No
+            </th>
+            <th>
+                Cell No
+            </th>
+            <th>
+                Final Rate
+            </th>
+            <th>
+                Next Follow-Up
+            </th>
+            <th>
+                Created By
+            </th>
+            <th>
+                Status
+            </th>
+            <th style="min-width:55px;"></th>
+            @*<th></th>
+                <th></th>
+                <th></th>*@
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayName("Lead Number")
+            </th>
+            <th>
+                @Html.DisplayName("Lead Created On")
+            </th>
+            <th>
+                @Html.DisplayName("Customer Name")
+            </th>
+            <th>
+                Location
+            </th>
+            <th>
+                Required Services
+            </th>
+            <th>
+                @Html.DisplayName("Tel No")
+            </th>
+            <th>
+                @Html.DisplayName("Cell No")
+            </th>
+            @*<th>
+                    @Html.DisplayNameFor(model => model.RATE)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TAX)
+                </th>*@
+            <th>
+                @Html.DisplayName("Final Rate")
+            </th>
+            <th>
+                @Html.DisplayName("Next Follow-Up")
+            </th>
+            <th>
+                @Html.DisplayName("Created By")
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LeadStatus.Status)
+            </th>
+            <th style="min-width:55px;">Action</th>
+            @*<th></th>
+                <th></th>
+                <th></th>*@
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+                    if (item.LeadID == 258) {
+                        int s = item.LeadID;
+                    }
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LeadNumber)
+                    </td>
+                    <td>
+                        @Html.ValueFor(modelItem => item.CreatedDate, "{0:dd/MM/yyyy hh:mm tt}")
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CustomerName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Location.LocationName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AddressLine1)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TelNo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CellNo)
+                    </td>
+                    @*<td>
+                        @Html.DisplayFor(modelItem => item.RATE)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TAX)
+                    </td>*@
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FinalRate)
+                    </td>
+                    <td>
+                        @Html.ValueFor(modelItem => item.NextFollowUpDateTime, "{0:dd/MM/yyyy hh:mm tt}")
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserLogin.UserName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LeadStatus.Status)
+                        @if (item.LeadStatus != null && item.LeadStatus.Status == "Done")
+                        {
+                            <br />
+                            @Html.ActionLink("Services", "Index", "ConfirmedLeadServices", new { LeadID = item.LeadID }, null)
+                        }
+                    </td>
+                    <td style="font-size: 10px;">
+                        @Html.ActionLink(" ", "Edit", new { id = item.LeadID }, new { @class = "fa fa-edit", @title = "EDIT" })
+                        @Html.ActionLink(" ", "Details", new { id = item.LeadID }, new { @class = "fa fa-info", @title = "VIEW" })
+                        @Html.ActionLink(" ", "Delete", new { id = item.LeadID }, new { @class = "fa fa-trash", @title = "DELETE" })
+                        @Html.ActionLink(" ", "History", "LeadsHistory", new { LeadID = item.LeadID }, new { @class = "fa fa-history", @title = "HISTORY" })
+                    </td>
+                    @*<td></td>
+                    <td></td>
+                    <td></td>*@
+                </tr>
+        }
+    </tbody>
+</table>
+<script>
+    var table;
+    $(document).ready(function () {
+
+        table = $('.table').DataTable({
+            fixedHeader: true,
+            order: [[0, 'desc']],
+            "pageLength": 25
+        });
+        var colindex = 1;
+        $('.table thead tr:first th').each(function () {
+            if (colindex < 12) {
+                //var title = $('#leads thead th').eq($(this).index()).text();
+                $(this).html('<input type="text" placeholder="" class="column_search"/>');
+            } else if (colindex == 12) {
+                $(this).html('<input type="button" value="RESET" class="btn btn-sm btn-outline-secondary" id="reset" onclick="clearSearchBoxes();"/>');
+            }
+            colindex++;
+        });
+        //table.columns().every(function () {
+        //    var column = this;
+
+        //    $('input', this.header()).on('keyup change', function () {
+        //        column
+        //            .search(this.value)
+        //            .draw();
+        //    });
+        //});
+        $('.table thead tr:first th').on('keyup', ".column_search", function () {
+            table
+                .column($(this).parent().index())
+                .search(this.value)
+                .draw();
+        });
+        $(".dataTables_filter").css("display", "none");
+
+
+    });
+    //table.columns( '.Status' ).search( 'Important' ).draw();
+    function clearSearchBoxes() {
+        var searchBoxes = $(".column_search");
+        for (var i = 0; i < searchBoxes.length; i++) {
+            $(searchBoxes[i]).val("");
+        }
+        table.search('').columns().search('').draw();
+    };
+
+</script>

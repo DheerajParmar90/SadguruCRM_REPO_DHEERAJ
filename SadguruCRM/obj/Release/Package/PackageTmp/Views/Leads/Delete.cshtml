@@ -1,0 +1,394 @@
+﻿@model SadguruCRM.ViewModels.LeadViewModel
+
+@{
+    ViewBag.Title = "Delete Lead";
+}
+<style>
+    label {
+        font-weight: 800;
+        border-bottom: 1px black solid;
+        margin-bottom:10px;
+        margin-top:12px;
+    }
+</style>
+<h2>Lead</h2>
+<h4>Delete Lead Confirm?</h4>
+
+
+
+@using (Html.BeginForm("Edit", "Leads", FormMethod.Post, new { id = "LeadsEdit", enctype = "multipart/form-data", autocomplete = "off" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <div class="container-fluid">
+            <div class="alert alert-danger" style="padding: 20px; display:none;">
+                <strong>WARNING!</strong> &nbsp;&nbsp;Record with the same name and Cell Number Already Exists!
+            </div>
+        </div>
+
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.lead.LeadID)
+        @Html.HiddenFor(model => model.lead.CreatedBy)
+        @Html.HiddenFor(model => model.lead.CreatedDate)
+
+    <div class="form-group row">
+        <div class="col-1">
+            @Html.Label("Title")<br />
+            @Html.DisplayFor(model => model.lead.Title)
+        </div>
+        @if (Model.lead.CustomerName != null)
+        {
+            <div class="col" id="DivCommercialName">
+                @Html.Label("Name")<br />
+                @Html.DisplayFor(model => model.lead.CustomerName)
+            </div>
+        }
+        else
+        {
+            <div class="col" id="DivFirstName">
+                @Html.Label("First Name")<br />
+                @Html.DisplayFor(model => model.lead.FirstName)
+            </div>
+            <div class="col" id="DivLastName">
+                @Html.Label("Last Name")<br />
+                @Html.DisplayFor(model => model.lead.LastName)
+            </div>
+        }
+        <div class="col">
+            @Html.Label("Date")<br />
+            @Html.ValueFor(model => model.lead.LeadDate,"{0: dd/MM/yyyy}")
+        </div>
+        <div class="col">
+            @Html.Label("Consult Person")<br />
+            @Html.DisplayFor(model => model.lead.ConsultPerson)
+        </div>
+        <div class="col">
+            @Html.Label("Designation")<br />
+            @Html.DisplayFor(model => model.lead.ConsultPersonDesignation)
+        </div>
+    </div>
+        <div class="form-group row">
+            <div class="col">
+                @Html.Label("Address Line 1")<br />
+                @Html.DisplayFor(model => model.lead.AddressLine1)
+            </div>
+            <div class="col">
+                @Html.Label("Address Line 2")<br />
+                @Html.DisplayFor(model => model.lead.AddressLine2)
+            </div>
+            <div class="col">
+                @Html.Label("Address Line 3")<br />
+                @Html.DisplayFor(model => model.lead.AddressLine3)
+            </div>
+            <div class="col">
+                @Html.Label("Location")<br />
+                @Html.DisplayFor(model => model.lead.Location.LocationName)
+                
+            </div>
+            <div class="col">
+                @Html.Label("City")<br />
+                @Html.DisplayFor(model => model.lead.City.CityName)
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col">
+                @Html.Label("Pincode")<br />
+                @Html.DisplayFor(model => model.lead.Pincode)
+            </div>
+            <div class="col">
+                @Html.Label("State")<br />
+                @Html.DisplayFor(model => model.lead.State.State1)
+            </div>
+            <div class="col">
+                @Html.Label("Tel No")<br />
+                @Html.DisplayFor(model => model.lead.TelNo)
+                @{ for (int i = 0; i < Model.leadTelNos.Count; i++)
+                    {
+                        <text>, </text>@Html.DisplayFor(model => Model.leadTelNos[i].Lead_Tel_No)
+                    }
+                }
+            </div>
+            <div class="col">
+                @Html.Label("Cell No")<br />
+                @Html.DisplayFor(model => model.lead.CellNo)
+
+                @{ for (int i = 0; i < Model.leadCellNos.Count; i++)
+                    {
+                        <text>, </text> @Html.DisplayFor(model => Model.leadCellNos[i].Lead_Cell_No)
+                    }
+                }
+            </div>
+            <div class="col">
+                @Html.Label("Email")<br />
+                @Html.DisplayFor(model => model.lead.EmailID)
+                @{ for (int i = 0; i < Model.leadEmails.Count; i++)
+                    {
+                        <text>, </text>@Html.DisplayFor(model => Model.leadEmails[i].Lead_Email)
+                    }
+                }
+            </div>
+        </div>
+        <hr />
+        <h5>Consult Person</h5>
+        @{ for (int i = 0; i < Model.leadConsultPersons.Count; i++)
+            {
+                <div class="form-group ConsultPerson row" id="ConsultPerson">
+                    <div class="col">
+                        @Html.Label("Name")<br />
+                        @Html.DisplayFor(model => model.leadConsultPersons[i].PersonaName)
+                    </div>
+                    <div class="col">
+                        @Html.Label("Designation")<br />
+                        @Html.DisplayFor(model => model.leadConsultPersons[i].Designation)
+                    </div>
+                    <div class="col divConsultContactNumbers">
+                        @Html.Label("Contact Number")<br />
+                        @{for (int j = 0; j < Model.leadConsultPersons[i].Lead_Consult_Person_Contact_No_Mapping.Count; j++)
+                            {
+                                @Html.DisplayFor(model => model.leadConsultPersons[i].Lead_Consult_Person_Contact_No_Mapping.ElementAt(j).Lead_Consult_Person_Contact_No)<text>, </text>
+                            }
+                        }
+                    </div>
+                    <div class="col divConsultEmails">
+                        @Html.Label("Email")<br />
+                        @{ for (int j = 0; j < Model.leadConsultPersons[i].Lead_Consult_Person_Email_Mapping.Count; j++)
+                            {
+                                @Html.DisplayFor(model => model.leadConsultPersons[i].Lead_Consult_Person_Email_Mapping.ElementAt(j).Lead_Consult_Person_Email)<text>, </text>
+                            }
+                        }
+
+                    </div>
+                    <div class="col-md-1">
+
+                    </div>
+                </div>
+            }
+
+        }
+        <hr />
+        <h5>Services </h5>
+        @for (int i = 0; i < Model.leadServices.Count; i++)
+        {
+            <div class="form-group SingleService row" id="SingleService">
+                <div class="col">
+                    @Html.Label("Service Group")<br />
+                   @Html.DisplayFor(model => model.leadServices[i].ServiceGroup.ServiceGroup1)
+                </div>
+                <div class="col">
+                    @Html.Label("Service")<br />
+                    @Html.DisplayFor(model => model.leadServices[i].Service.ServiceName)
+                </div>
+                <div class="col" style="max-width:46 !important">
+                    @Html.Label("Frequency Of Service")<br />
+                    @Html.DisplayFor(model => model.leadServices[i].FrequencyOfService.FrequencyOfService1)
+                </div>
+                <div class="col-md-1">
+                    @Html.Label("Qty")<br />
+                    @Html.DisplayFor(model => model.leadServices[i].Qty)
+                </div>
+                <div class="col-md-1">
+                    @Html.Label("Rate")<br />
+                    @Html.DisplayFor(model => model.leadServices[i].Rate)
+                </div>
+                <div class="col-md-1">
+                    @Html.Label("GST")<br />
+                    @if (Model.leadServices[i].GST != null && (bool)Model.leadServices[i].GST == true)
+                    {
+                        <text>Yes</text>
+                    }
+                    else
+                    {
+                        <text>No</text>
+                    }
+                </div>
+                <div class="col-md-1">
+                    @Html.Label("Tax")<br />
+                    @Html.DisplayFor(model => model.leadServices[i].Tax)
+                </div>
+                <div class="col-md-1">
+                    @Html.Label("Final Rate")<br />
+                    @Html.DisplayFor(model => model.leadServices[i].FinalRatePerService)
+                </div>
+                <div class="col-md-1">
+
+                </div>
+            </div>
+        }
+
+        <div class="form-group row">
+            <div class="col-10 text-right">
+                @Html.Label("Total")
+            </div>
+            <div class="col-2">
+                <text>@Model.lead.FinalRate</text>
+            </div>
+        </div>
+        <hr />
+        <div class="form-group row">
+            <div class="col">
+                @Html.Label("Type Of Premises")<br />
+                @Html.DisplayFor(model => model.lead.PremisesType.PremisesType1)
+                
+            </div>
+            <div class="col-1" id="divNoOfWings">
+                @Html.Label("No. Wings")<br />
+                @Html.DisplayFor(model => model.lead.NoOfWings)
+                
+            </div>
+            <div class="col-1" id="divNoOfFloors">
+                @Html.Label("No. Floors")<br />
+                @Html.DisplayFor(model => model.lead.NoOfFloors)
+                
+            </div>
+
+            <div class="col-1" id="divNoOfFlats">
+                @Html.Label("No. Flats")<br />
+                @Html.DisplayFor(model => model.lead.NoOfFlats)
+                
+            </div>
+            <div class="col">
+                @Html.Label("Premises Area")<br />
+                @Html.DisplayFor(model => model.lead.Premises_Area_Master.Premises_Area)
+                
+            </div>
+
+            <div class="col">
+                @Html.Label("Approx. Sq.Ft. Area")<br />
+                @Html.DisplayFor(model => model.lead.PremisesAppSqFtArea)
+                
+            </div>
+            <div class="col">
+                @Html.Label("Other Details")<br />
+                @Html.DisplayFor(model => model.lead.OtherDetails)
+                
+            </div>
+            <div class="col">
+                @Html.Label("Industry")<br />
+                @Html.DisplayFor(model => model.lead.Industry.IndustryName)
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col">
+                @Html.Label("Visit Allocate")<br />
+                @Html.DisplayFor(model => model.lead.Employee.Name)
+            </div>
+            <div class="col">
+                @Html.Label("Visit Date")<br />
+                @Html.ValueFor(model => model.lead.VisitDateTime,"{0:dd/MM/yyyy}")
+                
+            </div>
+            <div class="col">
+                @Html.Label("Visit Time")<br />
+                @Html.ValueFor(model => model.lead.VisitDateTime,"{0:hh:mm tt}")
+                
+            </div>
+            <div class="col">
+                @Html.Label("Service Date")<br />
+                @Html.ValueFor(model => model.lead.ServiceDate, "{0:dd/MM/yyyy}")
+            </div>
+
+            <div class="col">
+                @Html.Label("Service Time")<br />
+                @Html.ValueFor(model => model.lead.ServiceDate, "{0:hh:mm tt}")
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-5">
+                @Html.Label("Visit Report")<br />
+                @Html.DisplayFor(model => model.lead.VisitReport)
+            </div>
+            <div class="row col-7">
+                <div class="col">
+                    @Html.Label("Special Instructions")<br />
+                    @Html.DisplayFor(model => model.lead.SpecialInstructions)
+                </div>
+                <div class="col">
+                    @Html.Label("Source")<br />
+                    @Html.DisplayFor(model => model.lead.Source.Source1)
+                </div>
+                <div class="col">
+                    @Html.Label("SubSource")<br />
+                    @Html.DisplayFor(model => model.lead.Source1.Source1)
+                </div>
+            </div>
+        </div>
+        <div class="form-group row">
+
+            <div class="col-md-5">
+                @Html.Label("Follow-Up Details")<br />
+                @Html.DisplayFor(model => model.lead.FollowUpDetails)
+            </div>
+            <div class="row col-7">
+                <div class="col">
+                    @Html.Label("Next Follow-Up Date")<br />
+                    @Html.ValueFor(model => model.lead.NextFollowUpDateTime, "{0:dd/MM/yyyy}")
+                </div>
+                <div class="col">
+                    @Html.Label("Next Follow-Up Time")<br />
+                    @Html.ValueFor(model => model.lead.NextFollowUpDateTime, "{0:hh:mm tt}")
+                </div>
+                <div class="col">
+                    @Html.Label("Customer Priority")<br />
+                    @Html.DisplayFor(model => model.lead.CustomerPriority)
+                </div>
+            </div>
+
+        </div>
+
+        <div class="form-group row">
+            <hr />
+            <div class="col-md-3">
+                @Html.Label("Lead Status")<br />
+                @Html.DisplayFor(model => model.lead.LeadStatus.Status)
+               
+            </div>
+            <div class="col-md-3">
+                @Html.Label("Status Reason")<br />
+                @Html.DisplayFor(model => model.lead.StatusReason)
+                
+            </div>
+            <div class="col-md-3">
+                @Html.Label("Branch")<br />
+                @Html.DisplayFor(model => model.lead.Branch.BranchName)
+                
+            </div>
+            <div class="col-md-3">
+                @Html.Label("Tele-Caller")<br />
+                @Html.DisplayFor(model => model.lead.UserLogin1.UserName)
+            </div>
+        </div>
+    </div>
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-actions no-color">
+    @Html.ActionLink("Back to List", "Index", null, new { @type = "button", @class = "btn btn-outline-secondary" })
+    <input type="submit" value="Delete" class="btn btn-outline-secondary"  style="float:right;" />
+</div>
+}
+
+@*@section Scripts {
+
+    }*@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+@*For Multiselect - Bootstrap Select*@
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
+
+<!-- (Optional) Latest compiled and minified JavaScript translation files -->
+@*<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/i18n/defaults-*.min.js"></script>*@
+<script>
+    
+
+</script>

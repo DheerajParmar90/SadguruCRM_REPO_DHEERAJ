@@ -1,0 +1,625 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="SadguruCRMModelStoreContainer" CdmEntityContainer="SadguruCRMEntities">
+    <EntitySetMapping Name="Branches">
+      <EntityTypeMapping TypeName="SadguruCRMModel.Branch">
+        <MappingFragment StoreEntitySet="Branches">
+          <ScalarProperty Name="BranchID" ColumnName="BranchID" />
+          <ScalarProperty Name="BranchName" ColumnName="BranchName" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+          <ScalarProperty Name="CreatedByUserID" ColumnName="CreatedByUserID" />
+          <ScalarProperty Name="UpdatedByUserID" ColumnName="UpdatedByUserID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Cities">
+      <EntityTypeMapping TypeName="SadguruCRMModel.City">
+        <MappingFragment StoreEntitySet="Cities">
+          <ScalarProperty Name="CityID" ColumnName="CityID" />
+          <ScalarProperty Name="CityName" ColumnName="CityName" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+          <ScalarProperty Name="CreatedByUserID" ColumnName="CreatedByUserID" />
+          <ScalarProperty Name="UpdatedByUserID" ColumnName="UpdatedByUserID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Contract_Customer_Service_Address_Mapping">
+      <EntityTypeMapping TypeName="SadguruCRMModel.Contract_Customer_Service_Address_Mapping">
+        <MappingFragment StoreEntitySet="Contract_Customer_Service_Address_Mapping">
+          <ScalarProperty Name="Contract_Customer_Service_Address_Mapping_ID" ColumnName="Contract_Customer_Service_Address_Mapping_ID" />
+          <ScalarProperty Name="ContractID" ColumnName="ContractID" />
+          <ScalarProperty Name="Customers_Service_Address_Mapping_ID" ColumnName="Customers_Service_Address_Mapping_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Contract_Customer_Service_Mapping">
+      <EntityTypeMapping TypeName="SadguruCRMModel.Contract_Customer_Service_Mapping">
+        <MappingFragment StoreEntitySet="Contract_Customer_Service_Mapping">
+          <ScalarProperty Name="Contract_Customer_Service_Mapping_ID" ColumnName="Contract_Customer_Service_Mapping_ID" />
+          <ScalarProperty Name="ContractID" ColumnName="ContractID" />
+          <ScalarProperty Name="Customer_Services_Mapping_ID" ColumnName="Customer_Services_Mapping_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Contracts">
+      <EntityTypeMapping TypeName="SadguruCRMModel.Contract">
+        <MappingFragment StoreEntitySet="Contracts">
+          <ScalarProperty Name="ContractID" ColumnName="ContractID" />
+          <ScalarProperty Name="ContractNo" ColumnName="ContractNo" />
+          <ScalarProperty Name="ContractDate" ColumnName="ContractDate" />
+          <ScalarProperty Name="TypeOfContract" ColumnName="TypeOfContract" />
+          <ScalarProperty Name="PeriodOfContract" ColumnName="PeriodOfContract" />
+          <ScalarProperty Name="PurchaseOrderNo" ColumnName="PurchaseOrderNo" />
+          <ScalarProperty Name="PurchaseOtrderDate" ColumnName="PurchaseOtrderDate" />
+          <ScalarProperty Name="TermsOfPayment" ColumnName="TermsOfPayment" />
+          <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+          <ScalarProperty Name="SiteAddressSameAsBillingAddress" ColumnName="SiteAddressSameAsBillingAddress" />
+          <ScalarProperty Name="Remark" ColumnName="Remark" />
+          <ScalarProperty Name="PaidByCustomer" ColumnName="PaidByCustomer" />
+          <ScalarProperty Name="BalanceAmount" ColumnName="BalanceAmount" />
+          <ScalarProperty Name="ModeOfPayment" ColumnName="ModeOfPayment" />
+          <ScalarProperty Name="PAymentTerms" ColumnName="PAymentTerms" />
+          <ScalarProperty Name="BranchID" ColumnName="BranchID" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Customer_Services_Mapping">
+      <EntityTypeMapping TypeName="SadguruCRMModel.Customer_Services_Mapping">
+        <MappingFragment StoreEntitySet="Customer_Services_Mapping">
+          <ScalarProperty Name="Customer_Services_Mapping_ID" ColumnName="Customer_Services_Mapping_ID" />
+          <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+          <ScalarProperty Name="ServiceID" ColumnName="ServiceID" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+          <ScalarProperty Name="ServiceGroupID" ColumnName="ServiceGroupID" />
+          <ScalarProperty Name="FrequencyOfServiceID" ColumnName="FrequencyOfServiceID" />
+          <ScalarProperty Name="Rate" ColumnName="Rate" />
+          <ScalarProperty Name="GST" ColumnName="GST" />
+          <ScalarProperty Name="Qty" ColumnName="Qty" />
+          <ScalarProperty Name="Tax" ColumnName="Tax" />
+          <ScalarProperty Name="FinalRatePerService" ColumnName="FinalRatePerService" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Customers">
+      <EntityTypeMapping TypeName="SadguruCRMModel.Customer">
+        <MappingFragment StoreEntitySet="Customers">
+          <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+          <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+          <ScalarProperty Name="CustomerType" ColumnName="CustomerType" />
+          <ScalarProperty Name="StatusReason" ColumnName="StatusReason" />
+          <ScalarProperty Name="TelNumber" ColumnName="TelNumber" />
+          <ScalarProperty Name="CellNumber" ColumnName="CellNumber" />
+          <ScalarProperty Name="EmailId" ColumnName="EmailId" />
+          <ScalarProperty Name="GstinNo" ColumnName="GstinNo" />
+          <ScalarProperty Name="Industry" ColumnName="Industry" />
+          <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+          <ScalarProperty Name="BranchID" ColumnName="BranchID" />
+          <ScalarProperty Name="SourceID" ColumnName="SourceID" />
+          <ScalarProperty Name="SubSourceID" ColumnName="SubSourceID" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="LastupdatedOn" ColumnName="LastupdatedOn" />
+          <ScalarProperty Name="LastupdatedBy" ColumnName="LastupdatedBy" />
+          <ScalarProperty Name="CustomerStatusID" ColumnName="CustomerStatusID" />
+          <ScalarProperty Name="ConsultPerson" ColumnName="ConsultPerson" />
+          <ScalarProperty Name="ConsultPersonDesignation" ColumnName="ConsultPersonDesignation" />
+          <ScalarProperty Name="IsBillAddSame" ColumnName="IsBillAddSame" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="DOB" ColumnName="DOB" />
+          <ScalarProperty Name="FacebookLink" ColumnName="FacebookLink" />
+          <ScalarProperty Name="TwitterLink" ColumnName="TwitterLink" />
+          <ScalarProperty Name="LinkedInLink" ColumnName="LinkedInLink" />
+          <ScalarProperty Name="ReligionID" ColumnName="ReligionID" />
+          <ScalarProperty Name="LocationID" ColumnName="LocationID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Customers_Billing_Address_Cell_No_Mapping">
+      <EntityTypeMapping TypeName="SadguruCRMModel.Customers_Billing_Address_Cell_No_Mapping">
+        <MappingFragment StoreEntitySet="Customers_Billing_Address_Cell_No_Mapping">
+          <ScalarProperty Name="Customers_Billing_Address_Cell_No_Mapping_ID" ColumnName="Customers_Billing_Address_Cell_No_Mapping_ID" />
+          <ScalarProperty Name="Customers_Billing_Address_Mapping_ID" ColumnName="Customers_Billing_Address_Mapping_ID" />
+          <ScalarProperty Name="Customers_Billing_Address_Cell_No" ColumnName="Customers_Billing_Address_Cell_No" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Customers_Billing_Address_Email_Mapping">
+      <EntityTypeMapping TypeName="SadguruCRMModel.Customers_Billing_Address_Email_Mapping">
+        <MappingFragment StoreEntitySet="Customers_Billing_Address_Email_Mapping">
+          <ScalarProperty Name="Customers_Billing_Address_Email_Mapping_ID" ColumnName="Customers_Billing_Address_Email_Mapping_ID" />
+          <ScalarProperty Name="Customers_Billing_Address_Mapping_ID" ColumnName="Customers_Billing_Address_Mapping_ID" />
+          <ScalarProperty Name="Customers_Billing_Address_Email" ColumnName="Customers_Billing_Address_Email" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Customers_Billing_Address_Mapping">
+      <EntityTypeMapping TypeName="SadguruCRMModel.Customers_Billing_Address_Mapping">
+        <MappingFragment StoreEntitySet="Customers_Billing_Address_Mapping">
+          <ScalarProperty Name="Customers_Billing_Address_Mapping_ID" ColumnName="Customers_Billing_Address_Mapping_ID" />
+          <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+          <ScalarProperty Name="BillingLocationID" ColumnName="BillingLocationID" />
+          <ScalarProperty Name="CityID" ColumnName="CityID" />
+          <ScalarProperty Name="Pincode" ColumnName="Pincode" />
+          <ScalarProperty Name="StateID" ColumnName="StateID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Customers_Billing_Address_Tel_No_Mapping">
+      <EntityTypeMapping TypeName="SadguruCRMModel.Customers_Billing_Address_Tel_No_Mapping">
+        <MappingFragment StoreEntitySet="Customers_Billing_Address_Tel_No_Mapping">
+          <ScalarProperty Name="Customers_Billing_Address_Tel_No_Mapping_ID" ColumnName="Customers_Billing_Address_Tel_No_Mapping_ID" />
+          <ScalarProperty Name="Customers_Billing_Address_Mapping_ID" ColumnName="Customers_Billing_Address_Mapping_ID" />
+          <ScalarProperty Name="Customers_Billing_Address_Tel_No" ColumnName="Customers_Billing_Address_Tel_No" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Customers_Consult_Person_Cell_No_Mapping">
+      <EntityTypeMapping TypeName="SadguruCRMModel.Customers_Consult_Person_Cell_No_Mapping">
+        <MappingFragment StoreEntitySet="Customers_Consult_Person_Cell_No_Mapping">
+          <ScalarProperty Name="Customers_Consult_Person_Cell_No_Mapping_ID" ColumnName="Customers_Consult_Person_Cell_No_Mapping_ID" />
+          <ScalarProperty Name="Customers_Consult_Person_Mapping_ID" ColumnName="Customers_Consult_Person_Mapping_ID" />
+          <ScalarProperty Name="Consult_Person_Cell_No" ColumnName="Consult_Person_Cell_No" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Customers_Consult_Person_Email_Mapping">
+      <EntityTypeMapping TypeName="SadguruCRMModel.Customers_Consult_Person_Email_Mapping">
+        <MappingFragment StoreEntitySet="Customers_Consult_Person_Email_Mapping">
+          <ScalarProperty Name="Customers_Consult_Person_Email_Mapping_ID" ColumnName="Customers_Consult_Person_Email_Mapping_ID" />
+          <ScalarProperty Name="Customers_Consult_Person_Mapping_ID" ColumnName="Customers_Consult_Person_Mapping_ID" />
+          <ScalarProperty Name="Consult_Person_Email" ColumnName="Consult_Person_Email" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Customers_Consult_Person_Mapping">
+      <EntityTypeMapping TypeName="SadguruCRMModel.Customers_Consult_Person_Mapping">
+        <MappingFragment StoreEntitySet="Customers_Consult_Person_Mapping">
+          <ScalarProperty Name="Customers_Consult_Person_Mapping_ID" ColumnName="Customers_Consult_Person_Mapping_ID" />
+          <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+          <ScalarProperty Name="Consult_Person_Name" ColumnName="Consult_Person_Name" />
+          <ScalarProperty Name="Consult_Person_Designation" ColumnName="Consult_Person_Designation" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="LastupdatedOn" ColumnName="LastupdatedOn" />
+          <ScalarProperty Name="LastupdatedBy" ColumnName="LastupdatedBy" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Customers_Consult_Person_Tel_No_Mapping">
+      <EntityTypeMapping TypeName="SadguruCRMModel.Customers_Consult_Person_Tel_No_Mapping">
+        <MappingFragment StoreEntitySet="Customers_Consult_Person_Tel_No_Mapping">
+          <ScalarProperty Name="Customers_Consult_Person_Tel_No_Mapping_ID" ColumnName="Customers_Consult_Person_Tel_No_Mapping_ID" />
+          <ScalarProperty Name="Customers_Consult_Person_Mapping_ID" ColumnName="Customers_Consult_Person_Mapping_ID" />
+          <ScalarProperty Name="Consult_Person_Tel_No" ColumnName="Consult_Person_Tel_No" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Customers_Service_Address_Cell_No_Mapping">
+      <EntityTypeMapping TypeName="SadguruCRMModel.Customers_Service_Address_Cell_No_Mapping">
+        <MappingFragment StoreEntitySet="Customers_Service_Address_Cell_No_Mapping">
+          <ScalarProperty Name="Customers_Service_Address_Cell_No_Mapping_ID" ColumnName="Customers_Service_Address_Cell_No_Mapping_ID" />
+          <ScalarProperty Name="Customers_Service_Address_Mapping_ID" ColumnName="Customers_Service_Address_Mapping_ID" />
+          <ScalarProperty Name="Customers_Service_Address_Cell_No" ColumnName="Customers_Service_Address_Cell_No" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Customers_Service_Address_Email_Mapping">
+      <EntityTypeMapping TypeName="SadguruCRMModel.Customers_Service_Address_Email_Mapping">
+        <MappingFragment StoreEntitySet="Customers_Service_Address_Email_Mapping">
+          <ScalarProperty Name="Customers_Service_Address_Email_Mapping_ID" ColumnName="Customers_Service_Address_Email_Mapping_ID" />
+          <ScalarProperty Name="Customers_Service_Address_Mapping_ID" ColumnName="Customers_Service_Address_Mapping_ID" />
+          <ScalarProperty Name="Customers_Service_Address_Email" ColumnName="Customers_Service_Address_Email" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Customers_Service_Address_Mapping">
+      <EntityTypeMapping TypeName="SadguruCRMModel.Customers_Service_Address_Mapping">
+        <MappingFragment StoreEntitySet="Customers_Service_Address_Mapping">
+          <ScalarProperty Name="Customers_Service_Address_Mapping_ID" ColumnName="Customers_Service_Address_Mapping_ID" />
+          <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+          <ScalarProperty Name="ServiceLocationID" ColumnName="ServiceLocationID" />
+          <ScalarProperty Name="CityID" ColumnName="CityID" />
+          <ScalarProperty Name="Pincode" ColumnName="Pincode" />
+          <ScalarProperty Name="StateID" ColumnName="StateID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Customers_Service_Address_Tel_No_Mapping">
+      <EntityTypeMapping TypeName="SadguruCRMModel.Customers_Service_Address_Tel_No_Mapping">
+        <MappingFragment StoreEntitySet="Customers_Service_Address_Tel_No_Mapping">
+          <ScalarProperty Name="Customers_Service_Address_Tel_No_Mapping_ID" ColumnName="Customers_Service_Address_Tel_No_Mapping_ID" />
+          <ScalarProperty Name="Customers_Service_Address_Mapping_ID" ColumnName="Customers_Service_Address_Mapping_ID" />
+          <ScalarProperty Name="Customers_Service_Address_Tel_No" ColumnName="Customers_Service_Address_Tel_No" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CustomerStatus">
+      <EntityTypeMapping TypeName="SadguruCRMModel.CustomerStatu">
+        <MappingFragment StoreEntitySet="CustomerStatus">
+          <ScalarProperty Name="CustomerStatusID" ColumnName="CustomerStatusID" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Documents_Templates">
+      <EntityTypeMapping TypeName="SadguruCRMModel.Documents_Templates">
+        <MappingFragment StoreEntitySet="Documents_Templates">
+          <ScalarProperty Name="Document_Template_ID" ColumnName="Document_Template_ID" />
+          <ScalarProperty Name="Document_Name" ColumnName="Document_Name" />
+          <ScalarProperty Name="Document_Header" ColumnName="Document_Header" />
+          <ScalarProperty Name="Document_Footer" ColumnName="Document_Footer" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="CreatedByUserID" ColumnName="CreatedByUserID" />
+          <ScalarProperty Name="LastUpdatedOn" ColumnName="LastUpdatedOn" />
+          <ScalarProperty Name="LastUpdatedByUserID" ColumnName="LastUpdatedByUserID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EmployeeDesignations">
+      <EntityTypeMapping TypeName="SadguruCRMModel.EmployeeDesignation">
+        <MappingFragment StoreEntitySet="EmployeeDesignations">
+          <ScalarProperty Name="EmployeeDesignationID" ColumnName="EmployeeDesignationID" />
+          <ScalarProperty Name="Designation" ColumnName="Designation" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+          <ScalarProperty Name="CreatedByUserID" ColumnName="CreatedByUserID" />
+          <ScalarProperty Name="UpdatedByUserID" ColumnName="UpdatedByUserID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Employees">
+      <EntityTypeMapping TypeName="SadguruCRMModel.Employee">
+        <MappingFragment StoreEntitySet="Employees">
+          <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="DesignationID" ColumnName="DesignationID" />
+          <ScalarProperty Name="EnrolmentDate" ColumnName="EnrolmentDate" />
+          <ScalarProperty Name="EmployeePhotoPath" ColumnName="EmployeePhotoPath" />
+          <ScalarProperty Name="DOB" ColumnName="DOB" />
+          <ScalarProperty Name="PermanentAddress" ColumnName="PermanentAddress" />
+          <ScalarProperty Name="CorrespondenceAddress" ColumnName="CorrespondenceAddress" />
+          <ScalarProperty Name="CellNos" ColumnName="CellNos" />
+          <ScalarProperty Name="EmailID" ColumnName="EmailID" />
+          <ScalarProperty Name="MaritalStatus" ColumnName="MaritalStatus" />
+          <ScalarProperty Name="Sex" ColumnName="Sex" />
+          <ScalarProperty Name="EmployeeStatus" ColumnName="EmployeeStatus" />
+          <ScalarProperty Name="Remarks" ColumnName="Remarks" />
+          <ScalarProperty Name="ContactNumber" ColumnName="ContactNumber" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+          <ScalarProperty Name="CreatedByUserID" ColumnName="CreatedByUserID" />
+          <ScalarProperty Name="UpdatedByUserID" ColumnName="UpdatedByUserID" />
+          <ScalarProperty Name="LoginID" ColumnName="LoginID" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Estimates">
+      <EntityTypeMapping TypeName="SadguruCRMModel.Estimate">
+        <MappingFragment StoreEntitySet="Estimates">
+          <ScalarProperty Name="EstimateID" ColumnName="EstimateID" />
+          <ScalarProperty Name="NewCustomer" ColumnName="NewCustomer" />
+          <ScalarProperty Name="ExistingCustomer" ColumnName="ExistingCustomer" />
+          <ScalarProperty Name="LeadID" ColumnName="LeadID" />
+          <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+          <ScalarProperty Name="GSTinDate" ColumnName="GSTinDate" />
+          <ScalarProperty Name="FinalEstimateRate" ColumnName="FinalEstimateRate" />
+          <ScalarProperty Name="KindAttention" ColumnName="KindAttention" />
+          <ScalarProperty Name="Subject" ColumnName="Subject" />
+          <ScalarProperty Name="WelcomeSentence" ColumnName="WelcomeSentence" />
+          <ScalarProperty Name="Footer" ColumnName="Footer" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="FrequencyOfServices">
+      <EntityTypeMapping TypeName="SadguruCRMModel.FrequencyOfService">
+        <MappingFragment StoreEntitySet="FrequencyOfService">
+          <ScalarProperty Name="FrequencyOfServiceID" ColumnName="FrequencyOfServiceID" />
+          <ScalarProperty Name="FrequencyOfService1" ColumnName="FrequencyOfService" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+          <ScalarProperty Name="CreatedByUserID" ColumnName="CreatedByUserID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Lead_Cell_No_Mapping">
+      <EntityTypeMapping TypeName="SadguruCRMModel.Lead_Cell_No_Mapping">
+        <MappingFragment StoreEntitySet="Lead_Cell_No_Mapping">
+          <ScalarProperty Name="Lead_Cell_No_Mapping_ID" ColumnName="Lead_Cell_No_Mapping_ID" />
+          <ScalarProperty Name="LeadID" ColumnName="LeadID" />
+          <ScalarProperty Name="Lead_Cell_No" ColumnName="Lead_Cell_No" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Lead_Consult_Person">
+      <EntityTypeMapping TypeName="SadguruCRMModel.Lead_Consult_Person">
+        <MappingFragment StoreEntitySet="Lead_Consult_Person">
+          <ScalarProperty Name="Lead_Consult_Person_ID" ColumnName="Lead_Consult_Person_ID" />
+          <ScalarProperty Name="LeadID" ColumnName="LeadID" />
+          <ScalarProperty Name="PersonaName" ColumnName="PersonaName" />
+          <ScalarProperty Name="Designation" ColumnName="Designation" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Lead_Consult_Person_Contact_No_Mapping">
+      <EntityTypeMapping TypeName="SadguruCRMModel.Lead_Consult_Person_Contact_No_Mapping">
+        <MappingFragment StoreEntitySet="Lead_Consult_Person_Contact_No_Mapping">
+          <ScalarProperty Name="Lead_Consult_Person_Contact_No_Mapping_ID" ColumnName="Lead_Consult_Person_Contact_No_Mapping_ID" />
+          <ScalarProperty Name="Lead_Consult_Person_ID" ColumnName="Lead_Consult_Person_ID" />
+          <ScalarProperty Name="Lead_Consult_Person_Contact_No" ColumnName="Lead_Consult_Person_Contact_No" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Lead_Consult_Person_Email_Mapping">
+      <EntityTypeMapping TypeName="SadguruCRMModel.Lead_Consult_Person_Email_Mapping">
+        <MappingFragment StoreEntitySet="Lead_Consult_Person_Email_Mapping">
+          <ScalarProperty Name="Lead_Consult_Person_Email_Mapping_ID" ColumnName="Lead_Consult_Person_Email_Mapping_ID" />
+          <ScalarProperty Name="Lead_Consult_Person_ID" ColumnName="Lead_Consult_Person_ID" />
+          <ScalarProperty Name="Lead_Consult_Person_Email" ColumnName="Lead_Consult_Person_Email" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Lead_Email_Mapping">
+      <EntityTypeMapping TypeName="SadguruCRMModel.Lead_Email_Mapping">
+        <MappingFragment StoreEntitySet="Lead_Email_Mapping">
+          <ScalarProperty Name="Lead_Email_Mapping_ID" ColumnName="Lead_Email_Mapping_ID" />
+          <ScalarProperty Name="LeadID" ColumnName="LeadID" />
+          <ScalarProperty Name="Lead_Email" ColumnName="Lead_Email" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Lead_Locations_Mapping">
+      <EntityTypeMapping TypeName="SadguruCRMModel.Lead_Locations_Mapping">
+        <MappingFragment StoreEntitySet="Lead_Locations_Mapping">
+          <ScalarProperty Name="Lead_Locations_Mapping_ID" ColumnName="Lead_Locations_Mapping_ID" />
+          <ScalarProperty Name="LeadID" ColumnName="LeadID" />
+          <ScalarProperty Name="LocationID" ColumnName="LocationID" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Lead_Services_Mapping">
+      <EntityTypeMapping TypeName="SadguruCRMModel.Lead_Services_Mapping">
+        <MappingFragment StoreEntitySet="Lead_Services_Mapping">
+          <ScalarProperty Name="Lead_Services_Mapping_ID" ColumnName="Lead_Services_Mapping_ID" />
+          <ScalarProperty Name="LeadID" ColumnName="LeadID" />
+          <ScalarProperty Name="ServiceID" ColumnName="ServiceID" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+          <ScalarProperty Name="ServiceGroupID" ColumnName="ServiceGroupID" />
+          <ScalarProperty Name="FrequencyOfServiceID" ColumnName="FrequencyOfServiceID" />
+          <ScalarProperty Name="Rate" ColumnName="Rate" />
+          <ScalarProperty Name="GST" ColumnName="GST" />
+          <ScalarProperty Name="Qty" ColumnName="Qty" />
+          <ScalarProperty Name="Tax" ColumnName="Tax" />
+          <ScalarProperty Name="FinalRatePerService" ColumnName="FinalRatePerService" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Lead_Tel_No_Mapping">
+      <EntityTypeMapping TypeName="SadguruCRMModel.Lead_Tel_No_Mapping">
+        <MappingFragment StoreEntitySet="Lead_Tel_No_Mapping">
+          <ScalarProperty Name="Lead_Tel_No_Mapping_ID" ColumnName="Lead_Tel_No_Mapping_ID" />
+          <ScalarProperty Name="LeadID" ColumnName="LeadID" />
+          <ScalarProperty Name="Lead_Tel_No" ColumnName="Lead_Tel_No" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Leads">
+      <EntityTypeMapping TypeName="SadguruCRMModel.Lead">
+        <MappingFragment StoreEntitySet="Leads">
+          <ScalarProperty Name="LeadID" ColumnName="LeadID" />
+          <ScalarProperty Name="LeadDate" ColumnName="LeadDate" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+          <ScalarProperty Name="TelNo" ColumnName="TelNo" />
+          <ScalarProperty Name="CellNo" ColumnName="CellNo" />
+          <ScalarProperty Name="Pincode" ColumnName="Pincode" />
+          <ScalarProperty Name="CityID" ColumnName="CityID" />
+          <ScalarProperty Name="EmailID" ColumnName="EmailID" />
+          <ScalarProperty Name="SourceID" ColumnName="SourceID" />
+          <ScalarProperty Name="SubSourceID" ColumnName="SubSourceID" />
+          <ScalarProperty Name="TypeOfPremisesID" ColumnName="TypeOfPremisesID" />
+          <ScalarProperty Name="TeleCallerID" ColumnName="TeleCallerID" />
+          <ScalarProperty Name="BranchID" ColumnName="BranchID" />
+          <ScalarProperty Name="VisitAllocate" ColumnName="VisitAllocate" />
+          <ScalarProperty Name="VisitDateTime" ColumnName="VisitDateTime" />
+          <ScalarProperty Name="VisitReport" ColumnName="VisitReport" />
+          <ScalarProperty Name="RATE" ColumnName="RATE" />
+          <ScalarProperty Name="TAX" ColumnName="TAX" />
+          <ScalarProperty Name="FinalRate" ColumnName="FinalRate" />
+          <ScalarProperty Name="CustomerPriority" ColumnName="CustomerPriority" />
+          <ScalarProperty Name="NextFollowUpDateTime" ColumnName="NextFollowUpDateTime" />
+          <ScalarProperty Name="SpecialInstructions" ColumnName="SpecialInstructions" />
+          <ScalarProperty Name="FollowUpDetails" ColumnName="FollowUpDetails" />
+          <ScalarProperty Name="LeadStatusID" ColumnName="LeadStatusID" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+          <ScalarProperty Name="LocationID" ColumnName="LocationID" />
+          <ScalarProperty Name="AddressLine1" ColumnName="AddressLine1" />
+          <ScalarProperty Name="AddressLine2" ColumnName="AddressLine2" />
+          <ScalarProperty Name="AddressLine3" ColumnName="AddressLine3" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="NoOfWings" ColumnName="NoOfWings" />
+          <ScalarProperty Name="NoOfFloors" ColumnName="NoOfFloors" />
+          <ScalarProperty Name="LeasdClosedDateTime" ColumnName="LeasdClosedDateTime" />
+          <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+          <ScalarProperty Name="LastUpdatedBy" ColumnName="LastUpdatedBy" />
+          <ScalarProperty Name="ConsultPerson" ColumnName="ConsultPerson" />
+          <ScalarProperty Name="ConsultPersonDesignation" ColumnName="ConsultPersonDesignation" />
+          <ScalarProperty Name="Industry" ColumnName="Industry" />
+          <ScalarProperty Name="PremisesArea" ColumnName="PremisesArea" />
+          <ScalarProperty Name="PremisesAppSqFtArea" ColumnName="PremisesAppSqFtArea" />
+          <ScalarProperty Name="StatusReason" ColumnName="StatusReason" />
+          <ScalarProperty Name="StateID" ColumnName="StateID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LeadStatuses">
+      <EntityTypeMapping TypeName="SadguruCRMModel.LeadStatus">
+        <MappingFragment StoreEntitySet="LeadStatuses">
+          <ScalarProperty Name="StatusID" ColumnName="StatusID" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Locations">
+      <EntityTypeMapping TypeName="SadguruCRMModel.Location">
+        <MappingFragment StoreEntitySet="Locations">
+          <ScalarProperty Name="LocationID" ColumnName="LocationID" />
+          <ScalarProperty Name="LocationName" ColumnName="LocationName" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PeriodsOfContracts">
+      <EntityTypeMapping TypeName="SadguruCRMModel.PeriodsOfContract">
+        <MappingFragment StoreEntitySet="PeriodsOfContract">
+          <ScalarProperty Name="PeriodsOfContractID" ColumnName="PeriodsOfContractID" />
+          <ScalarProperty Name="PeriodsOfContract1" ColumnName="PeriodsOfContract" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PremisesTypes">
+      <EntityTypeMapping TypeName="SadguruCRMModel.PremisesType">
+        <MappingFragment StoreEntitySet="PremisesTypes">
+          <ScalarProperty Name="PremisesTypeID" ColumnName="PremisesTypeID" />
+          <ScalarProperty Name="PremisesType1" ColumnName="PremisesType" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Religions">
+      <EntityTypeMapping TypeName="SadguruCRMModel.Religion">
+        <MappingFragment StoreEntitySet="Religions">
+          <ScalarProperty Name="ReligionID" ColumnName="ReligionID" />
+          <ScalarProperty Name="ReligionName" ColumnName="ReligionName" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+          <ScalarProperty Name="CreatedByUserID" ColumnName="CreatedByUserID" />
+          <ScalarProperty Name="UpdatedByUserID" ColumnName="UpdatedByUserID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Service_Estimate_Templates">
+      <EntityTypeMapping TypeName="SadguruCRMModel.Service_Estimate_Templates">
+        <MappingFragment StoreEntitySet="Service_Estimate_Templates">
+          <ScalarProperty Name="Service_Estimate_Template_ID" ColumnName="Service_Estimate_Template_ID" />
+          <ScalarProperty Name="ServiceID" ColumnName="ServiceID" />
+          <ScalarProperty Name="Subject" ColumnName="Subject" />
+          <ScalarProperty Name="General_Instruction" ColumnName="General_Instruction" />
+          <ScalarProperty Name="General_Disinfestation" ColumnName="General_Disinfestation" />
+          <ScalarProperty Name="Frequency_Of_Services" ColumnName="Frequency_Of_Services" />
+          <ScalarProperty Name="Charges_Per_Annum" ColumnName="Charges_Per_Annum" />
+          <ScalarProperty Name="Terms_Of_Payment" ColumnName="Terms_Of_Payment" />
+          <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+          <ScalarProperty Name="CreatedByUserID" ColumnName="CreatedByUserID" />
+          <ScalarProperty Name="LastUpdatedOn" ColumnName="LastUpdatedOn" />
+          <ScalarProperty Name="LastUpdatedByUserID" ColumnName="LastUpdatedByUserID" />
+          <ScalarProperty Name="ServiceGroupID" ColumnName="ServiceGroupID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ServiceGroups">
+      <EntityTypeMapping TypeName="SadguruCRMModel.ServiceGroup">
+        <MappingFragment StoreEntitySet="ServiceGroups">
+          <ScalarProperty Name="ServiceGroupID" ColumnName="ServiceGroupID" />
+          <ScalarProperty Name="ServiceGroup1" ColumnName="ServiceGroup" />
+          <ScalarProperty Name="ParentServiceGroupID" ColumnName="ParentServiceGroupID" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Services">
+      <EntityTypeMapping TypeName="SadguruCRMModel.Service">
+        <MappingFragment StoreEntitySet="Services">
+          <ScalarProperty Name="ServiceID" ColumnName="ServiceID" />
+          <ScalarProperty Name="ServiceName" ColumnName="ServiceName" />
+          <ScalarProperty Name="ServiceShortCode" ColumnName="ServiceShortCode" />
+          <ScalarProperty Name="GST" ColumnName="GST" />
+          <ScalarProperty Name="SACCode" ColumnName="SACCode" />
+          <ScalarProperty Name="ServiceGroupID" ColumnName="ServiceGroupID" />
+          <ScalarProperty Name="ServiceSubGroupID" ColumnName="ServiceSubGroupID" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="LastUpdateddate" ColumnName="LastUpdateddate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Sources">
+      <EntityTypeMapping TypeName="SadguruCRMModel.Source">
+        <MappingFragment StoreEntitySet="Sources">
+          <ScalarProperty Name="SourceID" ColumnName="SourceID" />
+          <ScalarProperty Name="Source1" ColumnName="Source" />
+          <ScalarProperty Name="ParentSourceID" ColumnName="ParentSourceID" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="States">
+      <EntityTypeMapping TypeName="SadguruCRMModel.State">
+        <MappingFragment StoreEntitySet="States">
+          <ScalarProperty Name="StateID" ColumnName="StateID" />
+          <ScalarProperty Name="State1" ColumnName="State" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="LastUpdatedDate" ColumnName="LastUpdatedDate" />
+          <ScalarProperty Name="CreatedByUserID" ColumnName="CreatedByUserID" />
+          <ScalarProperty Name="UpdatedByUserID" ColumnName="UpdatedByUserID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserLogins">
+      <EntityTypeMapping TypeName="SadguruCRMModel.UserLogin">
+        <MappingFragment StoreEntitySet="UserLogins">
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="UserLoginTypeID" ColumnName="UserLoginTypeID" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="CreatedByUserID" ColumnName="CreatedByUserID" />
+          <ScalarProperty Name="LastUpdateDate" ColumnName="LastUpdateDate" />
+          <ScalarProperty Name="LastUpdatedByUserID" ColumnName="LastUpdatedByUserID" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UserLoginTypes">
+      <EntityTypeMapping TypeName="SadguruCRMModel.UserLoginType">
+        <MappingFragment StoreEntitySet="UserLoginTypes">
+          <ScalarProperty Name="UserLoginTypeID" ColumnName="UserLoginTypeID" />
+          <ScalarProperty Name="UserLoginTypeName" ColumnName="UserLoginTypeName" />
+          <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+          <ScalarProperty Name="LastUpdateDate" ColumnName="LastUpdateDate" />
+          <ScalarProperty Name="CreatedbyUserID" ColumnName="CreatedbyUserID" />
+          <ScalarProperty Name="LastUpdateByUserID" ColumnName="LastUpdateByUserID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

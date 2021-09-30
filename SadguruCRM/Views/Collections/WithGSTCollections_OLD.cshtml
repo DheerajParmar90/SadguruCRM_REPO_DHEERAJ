@@ -1,0 +1,540 @@
+﻿@model List<SadguruCRM.ViewModels.WithGSTCollectionViewModel>
+@{
+    ViewBag.Title = "With GST Collections";
+}
+
+<h2>WithGSTCollections</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            @*<th></th>
+                <th></th>
+                <th></th>*@
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayName("Invoice No")
+            </th>
+            <th>
+                @Html.DisplayName("Invoice Date")
+            </th>
+            <th>
+                @Html.DisplayName("Customer Name")
+            </th>
+            <th>
+                @Html.DisplayName("Total Amount")
+            </th>
+            <th>
+                @Html.DisplayName("Already Paid")
+            </th>
+            <th>
+                @Html.DisplayName("Bad Debts Amount")
+            </th>
+            <th></th>
+            @*<th></th>
+                <th></th>
+                <th></th>*@
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.HiddenFor(modelItem => item.singleInvoice.InvoiceID)
+                    @Html.DisplayFor(modelItem => item.singleInvoice.InvoiceNo)
+                </td>
+                <td>
+                    @Html.TextBoxFor(modelItem => item.singleInvoice.InvoiceDate, "{0:dd/MM/yyyy}", htmlAttributes: new { @type = "hidden" })
+                    @Html.ValueFor(modelItem => item.singleInvoice.InvoiceDate, "{0:dd/MM/yyyy}")
+                </td>
+                <td>
+                    @Html.HiddenFor(modelItem => item.singleInvoice.Customer.CustomerName)
+                    @Html.DisplayFor(modelItem => item.singleInvoice.Customer.CustomerName)
+                </td>
+                <td>
+                    @Html.HiddenFor(modelItem => item.singleInvoice.FinalInvoiceRate)
+                    @Html.DisplayFor(modelItem => item.singleInvoice.FinalInvoiceRate)
+                </td>
+                <td>
+                    @*It is acually Total Paid Amount*@
+                    @Html.HiddenFor(modelItem => item.singleInvoice.BalanceAmount)
+                    @Html.DisplayFor(modelItem => item.singleInvoice.BalanceAmount)
+                </td>
+                <td>
+                    @*@Html.DisplayFor(modelItem => item.singleInvoice.BadDebtsAmount)*@
+                </td>
+                <td>
+                    @Html.ActionLink(" ", "Entry", new { id = item.singleInvoice.InvoiceID }, new { @class = "fa fa-plus" })
+                </td>
+                @*<td>
+                        @Html.ActionLink(" ", "Edit", new { id = item.Collection_Entry_ID }, new { @class = "fa fa-edit" })
+                    </td>
+                    <td>@Html.ActionLink(" ", "Details", new { id = item.Collection_Entry_ID }, new { @class = "fa fa-info" })</td>
+                    <td>@Html.ActionLink(" ", "Delete", new { id = item.Collection_Entry_ID }, new { @class = "fa fa-trash" })</td>*@
+            </tr>
+            <tr>
+                <td></td>
+                <td colspan="6">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    @Html.DisplayName("Amount")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Received On")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Payment Mode")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("TDS Amount")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Cheque No")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Cheque Date")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Cheque Name")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Drawee Name")
+                                </th>
+                                <th>
+                                    @Html.DisplayName("Bank Name")
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var collectionEntry in item.listCollectionEntries)
+                            {
+                            <tr>
+                                <td>@collectionEntry.Amount</td>
+                                <td>@collectionEntry.ReceivedOn.Value.ToString("dd/MM/yyyy")</td>
+                                <td>@collectionEntry.PaymentMode.PaymentModeName</td>
+                                <td>@collectionEntry.TDSAmount</td>
+                                <td>@collectionEntry.ChequeNo</td>
+                                @if (String.IsNullOrEmpty(collectionEntry.ChequeDate.ToString()))
+                                {
+                                    <td></td>
+                                }
+                                else
+                                {
+                                    <td>
+                                        collectionEntry.ChequeDate.Value.ToString("dd/MM/yyyy")
+                                    </td>
+                                }
+                                <td>@collectionEntry.DraweeName</td>
+                                <td>@collectionEntry.ChequeName</td>
+                                @if (collectionEntry.BankID != null)
+                                {
+                                    <td>@collectionEntry.Bank_Master.BankName</td>
+                                }
+                                else
+                                {
+                                    <td></td>
+                                }
+
+                            </tr>
+                            }
+                        </tbody>
+
+                    </table>
+                </td>
+
+            </tr>
+
+        }
+    </tbody>
+</table>
+<div class="modal" id="myModal">
+    <div class="modal-dialog  modal-dialog-scrollable" style="max-width: 90% !important;">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                @Html.Hidden("InvoiceID")
+                <h4 class="modal-title">Add Collection Entry for</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <form id="popUpCollection">
+
+                    <div class="form-group row">
+                        <div class="col">
+
+                            @Html.Label("Customer Name", "Customer Name", htmlAttributes: new { @class = "control-label" })
+                            @Html.Editor("Customer Name", new { htmlAttributes = new { @class = "form-control", @disabled = "disabled", } })
+                            @Html.ValidationMessage("CustomerName", "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col">
+                            @Html.Label("InvoiceDate", "Invoice Date", htmlAttributes: new { @class = "control-label" })
+                            @Html.Editor("InvoiceDate", new { htmlAttributes = new { @class = "form-control", @disabled = "disabled", } })
+                            @Html.ValidationMessage("InvoiceDate", "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col">
+                            @Html.Label("TotalAmount", "Total Amount", htmlAttributes: new { @class = "control-label" })
+                            @Html.Editor("TotalAmount", new { htmlAttributes = new { @class = "form-control", @disabled = "disabled", } })
+                            @Html.ValidationMessage("TotalAmount", "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col">
+                            @Html.Label("AlreadyPaid", "Already Paid", htmlAttributes: new { @class = "control-label" })
+                            @Html.Editor("AlreadyPaid", new { htmlAttributes = new { @class = "form-control", @disabled = "disabled", @type = "number" } })
+                            @Html.ValidationMessage("Already Paid", "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col">
+
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col">
+                            @Html.Label("PaidByCustomer", "Paid By Customer", htmlAttributes: new { @class = "control-label" })
+                            @Html.Editor("PaidByCustomer", new { htmlAttributes = new { @class = "form-control", @type = "number", @required = "required" } })
+                            @Html.ValidationMessage("PaidByCustomer", "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col">
+                            @Html.Label("BalanceAmount", "Balance Amount", htmlAttributes: new { @class = "control-label" })
+                            @Html.Editor("BalanceAmount", new { htmlAttributes = new { @class = "form-control", @disabled = "disabled", @type = "number" } })
+                            @Html.ValidationMessage("BalanceAmount", "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col" id="divReceivedOn">
+                            @Html.Label("Payment Received On", htmlAttributes: new { @class = "control-label" })
+                            @Html.Editor("PaymentReceivedOn", new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessage("PaymentReceivedOn", "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col" id="divTDSapplicable">
+                            @Html.Label("TDS Applicable", htmlAttributes: new { @class = "control-label" })
+                            <div class="checkbox">
+                                @Html.CheckBox("TDSapplicable")
+                                @Html.ValidationMessage("TDSapplicable", "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col" id="divTDSAmount">
+                            @Html.Label("TDS Amount", htmlAttributes: new { @class = "control-label" })
+                            @Html.Editor("TDSAmount", new { htmlAttributes = new { @class = "form-control", @type = "number", @disabled = "disabled" } })
+                            @Html.ValidationMessage("TDSAmount", "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col" id="divBadDebtsAmount">
+                            @Html.Label("Bad Debts Amount", htmlAttributes: new { @class = "control-label" })
+                            @Html.Editor("BadDebtsAmount", new { htmlAttributes = new { @class = "form-control", @type = "number" } })
+                            @Html.ValidationMessage("BadDebtsAmount", "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-2">
+                            @Html.Label("PaymentModeID", "Payment Mode", htmlAttributes: new { @class = "control-label" })
+                            @Html.DropDownList("PaymentModeID", (SelectList)ViewBag.PaymentModes, "--SELECT--", htmlAttributes: new { @class = "form-control", required = "required" })
+                            @Html.ValidationMessage("PaymentModeID", "", new { @class = "text-danger" })
+                        </div>
+                        @*<div class="col-2" style="display:none;" id="divAmount">
+                @Html.LabelFor(model => model.Amount, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.Amount, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Amount, "", new { @class = "text-danger" })
+            </div>*@
+                        <div class="col-2" style="display:none;" id="divChequeNo">
+                            @Html.Label("ChequeNo", htmlAttributes: new { @class = "control-label" })
+                            @Html.Editor("ChequeNo", new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessage("ChequeNo", "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-2" style="display:none;" id="divChequeDate">
+                            @Html.Label("ChequeDate", htmlAttributes: new { @class = "control-label" })
+                            @Html.Editor("ChequeDate", new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessage("ChequeDate", "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-2" style="display:none;" id="divChequeName">
+                            @Html.Label("ChequeName", htmlAttributes: new { @class = "control-label" })
+                            @Html.Editor("ChequeName", new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessage("ChequeName", "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-2" style="display:none;" id="divBankID">
+                            @Html.Label("BankID", "BankID", htmlAttributes: new { @class = "control-label" })
+                            @Html.DropDownList("BankID", null, "--SELECT--", htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessage("BankID", "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-2" style="display:none;" id="divDraweeName">
+                            @Html.Label("DraweeName", htmlAttributes: new { @class = "control-label" })
+                            @Html.Editor("DraweeName", new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessage("DraweeName", "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-outline-secondary" id="saveCollectionEntry">Save</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+<script>
+    $("#PaymentReceivedOn").datetimepicker({
+        format: 'DD/MM/YYYY',
+        useCurrent: false
+    });
+    $(document).ready(function () {
+
+        var table = $('.table').DataTable({
+            "bPaginate": false,
+            fixedHeader: true,
+        });
+
+        $('.table thead tr:first th').each(function () {
+            var title = $('.table thead th').eq($(this).index()).text();
+            $(this).html('<input type="text" placeholder="Search ' + title + '" class="column_search"/>');
+        });
+        //table.columns().every(function () {
+        //    var column = this;
+
+        //    $('input', this.header()).on('keyup change', function () {
+        //        column
+        //            .search(this.value)
+        //            .draw();
+        //    });
+        //});
+        $('.table thead tr:first th').on('keyup', ".column_search", function () {
+            table
+                .column($(this).parent().index())
+                .search(this.value)
+                .draw();
+        });
+        $(".dataTables_filter").css("display", "none");
+        $('.dataTables_filter input[type="search"]').css(
+            { 'width': '350px', 'display': 'inline-block' }
+        );
+    });
+    $(".fa-plus").click(function () {
+        debugger;
+
+        if ($(this).parents("tr").find("#item_singleInvoice_InvoiceID")[0].value != "") {
+            $("#myModal .modal-title").text("Add Collection Entry for Invoice ID: " + $(this).parents("tr").find("#item_singleInvoice_InvoiceID")[0].value);
+            $("#InvoiceID").val($(this).parents("tr").find("#item_singleInvoice_InvoiceID")[0].value);
+            $("#Customer_Name").val($(this).parents("tr").find("#item_singleInvoice_Customer_CustomerName")[0].value)
+            $("#InvoiceDate").val($(this).parents("tr").find("#item_singleInvoice_InvoiceDate")[0].value)
+            $("#TotalAmount").val($(this).parents("tr").find("#item_singleInvoice_FinalInvoiceRate")[0].value)
+            $("#AlreadyPaid").val($(this).parents("tr").find("#item_singleInvoice_BalanceAmount")[0].value)
+
+
+        } else if ($(this).parents("tr").find("#item_singleInvoice_LeadID")[0].value != "") {
+            $("#myModal .modal-title").text("Add Collection Entry for Lead ID: " + $(this).parents("tr").find("#item_singleInvoice_LeadID")[0].value);
+        }
+        $('#myModal').modal('show');
+        return false;
+    });
+    $("#PaymentModeID").change(function () {
+        var selected = $("#PaymentModeID option:selected").html();
+        if (selected == "NEFT") {
+            $("#divChequeNo").hide();
+            $("#ChequeNo").val("");
+            $("#divChequeDate").hide();
+            $("#ChequeDate").val("");
+            $("#divChequeName").hide();
+            $("#ChequeName").val("");
+            $("#divBankID").show();
+            $("#BankID").val("");
+            $("#divDraweeName").show();
+            $("#DraweeName").val("");
+        } else if (selected == "UPI") {
+
+            $("#divChequeNo").hide();
+            $("#ChequeNo").val("");
+            $("#divChequeDate").hide();
+            $("#ChequeDate").val("");
+            $("#divChequeName").hide();
+            $("#ChequeName").val("");
+            $("#divBankID").show();
+            $("#BankID").val("");
+            $("#divDraweeName").show();
+            $("#DraweeName").val("");
+        } else if (selected == "CASH" || $("#PaymentModeID").val() == "") {
+            $("#divChequeNo").hide();
+            $("#ChequeNo").val("");
+            $("#divChequeDate").hide();
+            $("#ChequeDate").val("");
+            $("#divChequeName").hide();
+            $("#ChequeName").val("");
+            $("#divBankID").hide();
+            $("#BankID").val("");
+            $("#divDraweeName").hide();
+            $("#DraweeName").val("");
+        } else if (selected == "CHEQUE") {
+            $("#divChequeNo").show();
+            $("#ChequeNo").val("");
+            $("#divChequeDate").show();
+            $("#ChequeDate").val("");
+            $("#divChequeName").show();
+            $("#ChequeName").val("");
+            $("#divBankID").show();
+            $("#BankID").val("");
+            $("#divDraweeName").hide();
+            $("#DraweeName").val("");
+        }
+    });
+</script>
+<script>
+    var formValid = true;
+    $().ready(function () {
+        $('#popUpCollection').validate({
+            rules: {
+                PaidByCustomer: {
+                    required: true,
+                    max: function (element) { return getMaxAmountAllowed($("#TotalAmount").val(), $("#AlreadyPaid").val());}
+                },
+                PaymentReceivedOn: "required",
+                TDSAmount:{
+                               required:'#TDSapplicable:checked'
+                },
+                BankID: {
+                    required :function(element) {
+                                                    return $("#PaymentModeID option:selected").text() == "NEFT" || $("#PaymentModeID option:selected").text() == "UPI"|| $("#PaymentModeID option:selected").text() == "CHEQUE";
+                                                }
+                },
+                DraweeName: {
+                    required :function(element) {
+                                                    return $("#PaymentModeID option:selected").text() == "NEFT" || $("#PaymentModeID option:selected").text() == "UPI";
+                                                }
+                },
+                ChequeNo: {
+                    required :function(element) {
+                                                    return $("#PaymentModeID option:selected").text() == "CHEQUE" ;
+                                                }
+                },
+                ChequeName: {
+                    required :function(element) {
+                                                    return $("#PaymentModeID option:selected").text() == "CHEQUE" ;
+                                                }
+                },
+                ChequeDate: {
+                    required :function(element) {
+                                                    return $("#PaymentModeID option:selected").text() == "CHEQUE";
+                                                }
+                },
+            },
+            messages: {
+                PaymentReceivedOn: "Please enter Date"
+
+            },
+            submitHandler: function (form) {
+                
+                //form.submit();
+                
+            }
+
+            // any other options and/or rules
+        });
+
+        $("#PaidByCustomer").change(function () {
+            if ($("#PaidByCustomer").val() <= ($("#TotalAmount").val() - $("#AlreadyPaid").val())) {
+                $("#BalanceAmount").val($("#TotalAmount").val() - $("#AlreadyPaid").val() - $("#PaidByCustomer").val());
+            }
+        });
+        $("#TDSapplicable").click(function () {
+            if ($(this).prop("checked") == true) {
+                $("#TDSAmount").val("0");
+                $("#TDSAmount").prop("disabled", false);
+            } else {
+                $("#TDSAmount").prop("disabled", true);
+            }
+        })
+    });
+
+    function getMaxAmountAllowed(total, paid) {
+        return total - paid;
+    }
+    $("#popUpCollection").submit(function () {
+        debugger;
+        formValid = $(this).valid();
+    });
+</script>
+<script type="text/javascript">
+    
+    $(function () {
+        $("#saveCollectionEntry").click(function () {
+            //alert($("#InvoiceID").val());
+            //alert($("#PaidByCustomer").val());
+            //alert($("#PaymentReceivedOn").val());
+            //alert($("#TDSapplicable").is(":checked"));
+            //alert($("#TDSAmount").val());
+            //alert($("#BadDebtsAmount").val());
+            //alert($("#PaymentModeID").val());
+            //alert($("#ChequeNo").val());
+            //alert($("#ChequeDate").val());
+            //alert($("#ChequeName").val());
+            //alert($("#BankID").val());
+            //alert($("#DraweeName").val());
+            
+            debugger;
+            $("#popUpCollection").submit();
+            
+            //return false;
+            //alert(formValid);
+            if (formValid) {
+                var formData = new FormData();
+            formData.append("InvoiceID", $("#InvoiceID").val());
+            formData.append("PaidByCustomer", $("#PaidByCustomer").val());
+            formData.append("PaymentReceivedOn", $("#PaymentReceivedOn").val());
+            formData.append("TDSapplicable", $("#TDSapplicable").is(":checked"));
+
+            if ($("#TDSAmount").val() == "") {
+                formData.append("TDSAmount", "0");
+            } else {
+                formData.append("TDSAmount", $("#TDSAmount").val());
+            }
+
+            if ($("#BadDebtsAmount").val() == "") {
+                formData.append("BadDebtsAmount", "0");
+            } else {
+                formData.append("BadDebtsAmount", $("#BadDebtsAmount").val());
+            }
+            
+            formData.append("PaymentModeID", $("#PaymentModeID").val());
+            formData.append("ChequeNo", $("#ChequeNo").val());
+            if ($("#TDSAmount").val() == "") {
+                formData.append("ChequeDate", "");
+            } else {
+                formData.append("ChequeDate", $("#ChequeDate").val());
+            }
+            
+            formData.append("ChequeName", $("#ChequeName").val());
+            formData.append("BankID", $("#BankID").val());
+            formData.append("DraweeName", $("#DraweeName").val());
+            $.ajax({
+                url: "/Collections/AddCollectionWithGST",
+                type: 'POST',
+                cache: false,
+                contentType: false,
+                processData: false,
+                data: formData,
+                success: function (response) {
+                    alert(response);
+                    if (response == "Record Saved Successfully!") {
+                        window.location = window.location;
+                    }
+                }
+            });
+            }
+            
+        });
+    });
+</script>

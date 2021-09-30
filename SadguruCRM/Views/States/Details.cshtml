@@ -1,0 +1,58 @@
+﻿@model SadguruCRM.Models.State
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>State</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.State1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.State1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastUpdatedDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastUpdatedDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserLogin.UserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserLogin.UserName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserLogin1.UserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserLogin1.UserName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.StateID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

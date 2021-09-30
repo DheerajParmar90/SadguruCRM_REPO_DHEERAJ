@@ -1,0 +1,51 @@
+﻿@model IEnumerable<SadguruCRM.Models.CustomerStatu>
+
+@{
+    ViewBag.Title = "Customer Status";
+}
+
+<h2>Customer Status</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Order)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Status)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreatedOn)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.Order)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Status)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Description)
+    </td>
+    <td>
+        @Html.ValueFor(modelItem => item.CreatedOn, "{0:dd/MM/yyyy HH:mm}")
+    </td>
+    <td>
+        @Html.ActionLink(" ", "Edit", new { id = item.CustomerStatusID }, new { @class = "fa fa-edit" }) |
+        @Html.ActionLink(" ", "Details", new { id = item.CustomerStatusID }, new { @class = "fa fa-info" }) |
+        @Html.ActionLink(" ", "Delete", new { id = item.CustomerStatusID }, new { @class = "fa fa-trash" })
+    </td>
+</tr>
+}
+
+</table>

@@ -1,0 +1,69 @@
+﻿@model SadguruCRM.Models.FrequencyOfService
+
+@{
+    ViewBag.Title = "Create";
+}
+
+    <h2>Frequency Of Service</h2>
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+    <h4>Create</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.Label("Frequency Of Service", htmlAttributes: new { @class = "control-label col-md-2 required" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.FrequencyOfService1, new { htmlAttributes = new { @class = "form-control", @required = "required", @maxlength = "50" } })
+            @Html.ValidationMessageFor(model => model.FrequencyOfService1, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.Label("Order", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Order, new { htmlAttributes = new { @class = "form-control", @type = "number" } })
+            @Html.ValidationMessageFor(model => model.Order, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.Label("Days Between 2 Services", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Duration_Between_2_Services_Day, new { htmlAttributes = new { @class = "form-control", @type = "number" } })
+            @Html.ValidationMessageFor(model => model.Duration_Between_2_Services_Day, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.Label("Months Between 2 Services", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Duration_Between_2_Services_Month, new { htmlAttributes = new { @class = "form-control", @type = "number" } })
+            @Html.ValidationMessageFor(model => model.Duration_Between_2_Services_Month, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.Label("Years Between 2 Services", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Duration_Between_2_Services_Year, new { htmlAttributes = new { @class = "form-control", @type = "number" } })
+            @Html.ValidationMessageFor(model => model.Duration_Between_2_Services_Year, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+    <div class="form-group row">
+        <div class="col">
+            <input type="submit" value="Create" class="btn btn-secondary" style="float: right;" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@*@section Scripts {
+    
+}*@

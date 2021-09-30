@@ -1,0 +1,74 @@
+﻿@model SadguruCRM.Models.Service_Scope_Master
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Service_Scope_Master</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Service_Scope)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Service_Scope)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedOn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedOn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastUpdatedOn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastUpdatedOn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastUpdatedByUserID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastUpdatedByUserID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserLogin.UserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserLogin.UserName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Service.ServiceName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Service.ServiceName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ServiceGroup.ServiceGroup1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ServiceGroup.ServiceGroup1)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Service_Scope_ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

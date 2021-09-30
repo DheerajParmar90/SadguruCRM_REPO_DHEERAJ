@@ -1,0 +1,184 @@
+﻿@model IEnumerable<SadguruCRM.Models.Documents_Templates>
+
+@{
+    ViewBag.Title = "LetterHead Templates";
+}
+
+<div class="row">
+    <div class="col">
+        <h2>LetterHead Templates</h2>
+    </div>
+    <div class="pull-right">
+        @Html.ActionLink("Create New", "Create", null, new { @type = "button", @class = "btn btn-outline-secondary" })
+    </div>
+
+</div>
+<table class="table display cell-border">
+    <thead>
+        <tr>
+            <th>
+
+            </th>
+            <th>
+
+            </th>
+            <th>
+
+            </th>
+            <th>
+
+            </th>
+            <th>
+
+            </th>
+            <th>
+
+            </th>
+            <th>
+
+            </th>
+            <th></th>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayName("LetterHead Name")
+            </th>
+            <th>
+                @Html.DisplayName("Header")
+            </th>
+            <th>
+                @Html.DisplayName("Footer")
+            </th>
+            <th>
+                @Html.DisplayName("Created On")
+            </th>
+            <th>
+                @Html.DisplayName("Created By")
+            </th>
+            <th>
+                @Html.DisplayName("Last Updated On")
+            </th>
+            <th>
+                @Html.DisplayName("Last Updated By")
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Document_Name)
+                </td>
+                <td>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#headerModal" onclick="showHeader(this);">
+                        View
+                    </button>
+                    @Html.HiddenFor(modelItem => item.Document_Header)
+                </td>
+                <td>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#headerModal" onclick="showFooter(this);">
+                        View
+                    </button>
+                    @Html.HiddenFor(modelItem => item.Document_Footer)
+                </td>
+                <td>
+                    @Html.ValueFor(modelItem => item.CreatedOn, "{0:dd/MM/yyyy hh:mm tt}")
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserLogin.UserName)
+                </td>
+                <td>
+                    @Html.ValueFor(modelItem => item.LastUpdatedOn, "{0:dd/MM/yyyy hh:mm tt}")
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserLogin1.UserName)
+                </td>
+                <td>
+                    @Html.ActionLink(" ", "Edit", new { id = item.Document_Template_ID }, new { @class = "fa fa-edit" }) |
+                    @Html.ActionLink(" ", "Details", new { id = item.Document_Template_ID }, new { @class = "fa fa-info" }) |
+                    @Html.ActionLink(" ", "Delete", new { id = item.Document_Template_ID }, new { @class = "fa fa-trash" })
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+<div class="modal fade" id="headerModal" tabindex="-1" role="dialog" aria-labelledby="headerModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalLongTitle">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="headerModalBody">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function showHeader(obj) {
+        $("#headerModalBody").html($(obj).next("#item_Document_Header").val());
+        $("#modalLongTitle").text("Header");
+    }
+    function showFooter(obj) {
+        $("#headerModalBody").html($(obj).next("#item_Document_Footer").val());
+        $("#modalLongTitle").text("Footer");
+    }
+</script>
+<script>
+    var table;
+    $(document).ready(function () {
+
+        table = $('.table').DataTable({
+            fixedHeader: true,
+            order: [[0, 'desc']],
+            "pageLength": 25
+        });
+        var colindex = 1;
+        $('.table thead tr:first th').each(function () {
+            if (colindex < 12) {
+                //var title = $('#leads thead th').eq($(this).index()).text();
+                $(this).html('<input type="text" placeholder="" class="column_search"/>');
+            } else if (colindex == 12) {
+                $(this).html('<input type="button" value="RESET" class="btn btn-sm btn-outline-secondary" id="reset" onclick="clearSearchBoxes();"/>');
+            }
+            colindex++;
+        });
+        //table.columns().every(function () {
+        //    var column = this;
+
+        //    $('input', this.header()).on('keyup change', function () {
+        //        column
+        //            .search(this.value)
+        //            .draw();
+        //    });
+        //});
+        $('.table thead tr:first th').on('keyup', ".column_search", function () {
+            table
+                .column($(this).parent().index())
+                .search(this.value)
+                .draw();
+        });
+        $(".dataTables_filter").css("display", "none");
+
+
+    });
+    //table.columns( '.Status' ).search( 'Important' ).draw();
+    function clearSearchBoxes() {
+        var searchBoxes = $(".column_search");
+        for (var i = 0; i < searchBoxes.length; i++) {
+            $(searchBoxes[i]).val("");
+        }
+        table.search('').columns().search('').draw();
+    };
+
+</script>

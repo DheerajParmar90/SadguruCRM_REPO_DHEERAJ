@@ -1,0 +1,92 @@
+﻿@model IEnumerable<SadguruCRM.Models.Department_Master>
+
+@{
+    ViewBag.Title = "Departments";
+}
+
+<div class="row">
+    <div class="col">
+        <h2>Departments</h2>
+    </div>
+    <div class="pull-right">
+        @Html.ActionLink("New Department", "Create", null, new { @type = "button", @class = "btn btn-outline-secondary" })
+    </div>
+
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+        <tr>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Order)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Department)
+            </th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Order)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Department)
+                </td>
+                <td>
+                    @Html.ActionLink(" ", "Edit", new { id = item.DepartmentID }, new { @class = "fa fa-edit", @title = "EDIT" }) |
+                    @Html.ActionLink(" ", "Details", new { id = item.DepartmentID }, new { @class = "fa fa-info", @title = "DETAILS" }) |
+                    @Html.ActionLink(" ", "Delete", new { id = item.DepartmentID }, new { @class = "fa fa-trash", @title = "DELETE" })
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+<script>
+    var table;
+    $(document).ready(function () {
+
+        table = $('.table').DataTable({
+            fixedHeader: true,
+            order: [[1, 'asc']]
+        });
+        var colindex = 1;
+        $('.table thead tr:first th').each(function () {
+            if (colindex < 3) {
+                //var title = $('#leads thead th').eq($(this).index()).text();
+                $(this).html('<input type="text" placeholder="" class="column_search"/>');
+            } else if (colindex == 3) {
+                $(this).html('<input type="button" value="RESET" class="btn btn-sm btn-outline-secondary" id="reset" onclick="clearSearchBoxes();"/>');
+            }
+            colindex++;
+        });
+        //table.columns().every(function () {
+        //    var column = this;
+
+        //    $('input', this.header()).on('keyup change', function () {
+        //        column
+        //            .search(this.value)
+        //            .draw();
+        //    });
+        //});
+        $('.table thead tr:first th').on('keyup', ".column_search", function () {
+            table
+                .column($(this).parent().index())
+                .search(this.value)
+                .draw();
+        });
+        $(".dataTables_filter").css("display", "none");
+
+
+    });
+</script>

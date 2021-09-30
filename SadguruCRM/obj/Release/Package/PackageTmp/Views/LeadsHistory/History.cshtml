@@ -1,0 +1,727 @@
+﻿@model IEnumerable<SadguruCRM.Models.Leads_History>
+
+@{
+    /**/
+
+    ViewBag.Title = "Leads History";
+}
+
+<h2>Leads History</h2>
+
+
+@using (Html.BeginForm("History", "LeadsHistory", FormMethod.Post, new { id = "LeadHistory", enctype = "multipart/form-data", autocomplete = "off" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+        <div class="form-group row">
+            <div class="col-md-3">
+                @Html.Hidden("LeadID", (object)ViewBag.LeadID)
+                @Html.Label("Follow-Up Details", htmlAttributes: new { @class = "control-label required", @id = "FollowUpDetailsLabel" })
+                @Html.TextArea("FollowUpDetails", new { @class = "form-control", @maxlength = "200", @rows = "1", @required="required" })
+            </div>
+            <div class="col-md-3">
+                @Html.Label("Next Follow-Up Date", htmlAttributes: new { @class = "control-label", @id = "NextFollowUpDateLabel" })
+                @Html.Editor("NextFollowUpDate", new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+            <div class="col-md-3">
+                @Html.Label("Next Follow-Up Time", htmlAttributes: new { @class = "control-label", @id = "NextFollowUpTimeLabel" })
+                @Html.Editor("NextFollowUpTime", new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-3">
+                @Html.Label("Visit Allocate", htmlAttributes: new { @class = "control-label", @id = "VisitAllocateLabel" })
+                @Html.DropDownList("VisitAllocate", null, "-- SELECT --", htmlAttributes: new { @class = "form-control selectpicker", @data_live_search = "true" })
+            </div>
+            <div class="col-md-3">
+                @Html.Label("Visit Date", htmlAttributes: new { @class = "control-label",@id = "VisitDateLabel" })
+                @Html.Editor("VisitDate", new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+            <div class="col-md-3">
+                @Html.Label("Visit Time", htmlAttributes: new { @class = "control-label", @id = "VisitTimeLabel" })
+                @Html.Editor("VisitTime", new { htmlAttributes = new { @class = "form-control", @onkeydown = "return false" } })
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-3">
+                @Html.Label("Service Date", htmlAttributes: new { @class = "control-label", @id = "ServiceDateLabel" })
+                @Html.Editor("ServiceDate", new { htmlAttributes = new { @class = "form-control", @id = "VisitDateLabel" } })
+            </div>
+            <div class="col-md-3">
+                @Html.Label("Service Time", htmlAttributes: new { @class = "control-label", @id = "ServiceTimeLabel" })
+                @Html.Editor("ServiceTime", new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+            <div class="col-md-3">
+                @Html.Label("Lead Status", "Lead Status", htmlAttributes: new { @class = "control-label required" })
+                @Html.DropDownList("LeadStatusID", null, "-- SELECT --", htmlAttributes: new { @class = "form-control selectpicker dropup", @data_live_search = "true", @required = "required", })
+            </div>
+            <div class="col-md-3">
+                @Html.Label("Status Reason", htmlAttributes: new { @class = "control-label", @disabled = "disabled", id="LabelStatusReason" })
+                @Html.Editor("StatusReason", new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-12" style="text-align:right">
+                <input type="submit" value="Back To Leads" class="btn btn-outline-secondary" id="BackToLeads" style="float:left;" onclick="javascript: window.location.href = '/Leads'; return false;" />
+                <input  type="submit"  value="View" class="btn btn-outline-secondary" id="View" onclick="javascript: window.location.href = '@Url.Action("Details", "Leads", new { id = (object)ViewBag.LeadID })';return false;"/>
+                <input type="submit" value="Edit" class="btn btn-outline-secondary" id="Edit" onclick="javascript: window.location.href = '@Url.Action("Edit", "Leads", new { id = (object)ViewBag.LeadID })';return false;"/>
+                <input type="submit" value="Save & Go to Reminder" class="btn btn-outline-secondary" id="SaveAndGoToReminder" />
+                <input type="submit" value="Save" class="btn btn-outline-secondary submit-button-before-redirect" id="Save" onclick="assignSubmitType(this);" />
+            </div>
+        </div>
+    </div>
+
+}
+<table class="table display cell-border">
+    <thead>
+        <tr>
+            <th style="display:none"></th>
+            <th style="display:none"></th>
+            <th></th>
+            <th style="width:300px !important"></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th style="width: 300px !important"></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            @*<th></th>*@
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+        <tr>
+            <th style="display:none">
+                @Html.DisplayNameFor(model => model.LeadID)
+            </th>
+            <th style="display:none">
+                @Html.DisplayNameFor(model => model.Leads_History_ID)
+            </th>
+            <th>
+                @Html.DisplayName("Lead Number")
+            </th>
+            <th style="width: 300px !important">
+                @Html.DisplayName("Customer Name")
+            </th>
+            <th>
+                @Html.DisplayName("Location")
+            </th>
+            <th>
+                @Html.DisplayName("Tel")
+            </th>
+            <th>
+                @Html.DisplayName("Cell")
+            </th>
+            <th>
+                @Html.DisplayName("History Created On")
+            </th>
+            <th>
+                @Html.DisplayName("Next Follow-Up Date")
+            </th>
+            <th>
+                @Html.DisplayName("Next Follow-Up Time")
+            </th>
+            <th style="width: 300px !important">
+                @Html.DisplayName("Follow-Up Details")
+            </th>
+            <th>
+                @Html.DisplayName("Consult Person")
+            </th>
+            <th>
+                @Html.DisplayName("Consult Person Designation")
+            </th>
+            <th>
+                @Html.DisplayName("Lead Date")
+            </th>
+            <th>
+                @Html.DisplayName("Created On")
+            </th>
+            @*<th>
+                @Html.DisplayName("Last Updated On")
+            </th>*@
+            <th>
+                @Html.DisplayName("Last Updated By")
+            </th>
+            <th>
+                @Html.DisplayName("Lead Closed On")
+            </th>
+            <th>
+                @Html.DisplayName("Status")
+            </th>
+            <th>
+                @Html.DisplayName("Status Reason")
+            </th>
+            <th>
+                @Html.DisplayName("Visit Date")
+            </th>
+            <th>
+                @Html.DisplayName("Visit Time")
+            </th>
+            <th>
+                @Html.DisplayName("Visit Report")
+            </th>
+            <th>
+                @Html.DisplayName("Service Date")
+            </th>
+            <th>
+                @Html.DisplayName("Service Time")
+            </th>
+            <th>
+                @Html.DisplayName("Services Required")
+            </th>
+            <th>
+                @Html.DisplayName("Final Rate")
+            </th>
+            <th>
+                @Html.DisplayName("Type of Premise")
+            </th>
+            <th>
+                @Html.DisplayName("Premise Area")
+            </th>
+
+            <th>
+                @Html.DisplayName("App. Sq. Feet Area")
+            </th>
+            <th>
+                @Html.DisplayName("Wings")
+            </th>
+            <th>
+                @Html.DisplayName("Floors")
+            </th>
+            <th>
+                @Html.DisplayName("Flats")
+            </th>
+            <th>
+                @Html.DisplayName("Special Instructions")
+            </th>
+            <th>
+                @Html.DisplayName("AddressLine1")
+            </th>
+            <th>
+                @Html.DisplayName("AddressLine2")
+            </th>
+            <th>
+                @Html.DisplayName("AddressLine3")
+            </th>
+            <th>
+                @Html.DisplayName("City")
+            </th>
+            <th>
+                @Html.DisplayName("Pincode")
+            </th>
+            <th>
+                @Html.DisplayName("State")
+            </th>
+            <th>
+                @Html.DisplayName("Email ID")
+            </th>
+            <th>
+                @Html.DisplayName("Source")
+            </th>
+            <th>
+                @Html.DisplayName("Sub Source")
+            </th>
+            <th>
+                @Html.DisplayName("Industry")
+            </th>
+            <th>
+                @Html.DisplayName("Customer Priority")
+            </th>
+            <th>
+                @Html.DisplayName("Branch Name")
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td style="display:none">
+                @Html.DisplayFor(modelItem => item.LeadID)
+            </td>
+            <td style="display:none">
+                @Html.DisplayFor(modelItem => item.Leads_History_ID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LeadNumber)
+            </td>
+            <td style="width:300px">
+                @Html.DisplayFor(modelItem => item.CustomerName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Location.LocationName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TelNo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CellNo)
+            </td>
+            <td>
+                @Html.ValueFor(modelItem => item.History_Created_On, "{0:dd/MM/yyyy hh:mm tt}")
+            </td>
+            <td>
+                @Html.ValueFor(modelItem => item.NextFollowUpDateTime, "{0:dd/MM/yyyy}")
+            </td>
+            <td>
+                @Html.ValueFor(modelItem => item.NextFollowUpDateTime, "{0:hh:mm tt}")
+                @*//@Html.DisplayFor(modelItem => item.NextFollowUpTime)*@
+            </td>
+            <td style="width:300px">
+                @Html.DisplayFor(modelItem => item.FollowUpDetails)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ConsultPerson)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ConsultPersonDesignation)
+            </td>
+            <td>
+                @Html.ValueFor(modelItem => item.LeadDate, "{0:dd/MM/yyyy}")
+            </td>
+            <td>
+                @Html.ValueFor(modelItem => item.CreatedDate, "{0:dd/MM/yyyy hh:mm tt}")
+            </td>
+            @*<td>
+                @Html.ValueFor(modelItem => item.LastUpdatedDate, "{0:dd/MM/yyyy hh:mm tt}")
+            </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.UserLogin2.UserName)
+            </td>
+            <td>
+                @Html.ValueFor(modelItem => item.LeasdClosedDateTime, "{0:dd/MM/yyyy hh:mm tt}")
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LeadStatus.Status)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StatusReason)
+            </td>
+            <td>
+                @Html.ValueFor(modelItem => item.VisitDateTime, "{0:dd/MM/yyyy}")
+            </td>
+            <td>
+                @Html.ValueFor(modelItem => item.VisitDateTime, "{0:hh:mm tt}")
+                @*@Html.DisplayFor(modelItem => item.VisitTime)*@
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VisitReport)
+            </td>
+            <td>
+                @Html.ValueFor(modelItem => item.ServiceDate, "{0:dd/MM/yyyy}")
+            </td>
+            <td>
+                @Html.ValueFor(modelItem => item.ServiceDate, "{0:hh:mm tt}")
+                @*@Html.DisplayFor(modelItem => item.ServiceTime)*@
+            </td>
+            <td>
+                @ViewBag.ServicesShortCodes
+            </td>
+            <td>
+                @ViewBag.FinalRate
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PremisesType.PremisesType1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PremisesArea)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PremisesAppSqFtArea)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NoOfWings)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NoOfFloors)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NoOfFlats)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SpecialInstructions)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AddressLine1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AddressLine2)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AddressLine3)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.City.CityName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pincode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.State.State1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmailID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Source.Source1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Source1.Source1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Industry.IndustryName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CustomerPriority)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Branch.BranchName)
+            </td>
+
+        </tr>
+        }
+    </tbody>
+</table>
+<style>
+    table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+<script>
+    var yesterday = new Date(Date.now() - 86400000);
+    $("#NextFollowUpDate").datetimepicker({
+        format: 'DD/MM/YYYY',
+        minDate: yesterday,
+        disabledDates: [yesterday],
+        useCurrent: false
+    }).on('dp.change', function (e) {
+        if ($(this).val() != "") {
+            $("#NextFollowUpLabel").addClass("required");
+            $("#NextFollowUpTime").prop('required', true);
+            $("#FollowUpDetailsLabel").addClass("required");
+            $("#FollowUpDetails").prop('required', true);
+        }
+        else {
+        }
+    });
+    $("#VisitDate").datetimepicker({
+        format: 'DD/MM/YYYY',
+        //minDate: yesterday,
+        disabledDates: [yesterday],
+        useCurrent: false
+    });
+    $("#VisitTime").datetimepicker({
+        format: 'hh:mm A',
+        useCurrent: false
+    });
+
+    $("#ServiceDate").datetimepicker({
+        format: 'DD/MM/YYYY',
+        minDate: yesterday,
+        disabledDates: [yesterday],
+        useCurrent: false
+    }).on('dp.change', function (e) {
+
+        var selectedTextLeadStatusID = $("#LeadStatusID option:selected").html();
+        if ($(this).val() == "") {
+            if (selectedTextLeadStatusID != "Closed" && selectedTextLeadStatusID != "Rejected" && selectedTextLeadStatusID != "Done") {
+                $("#NextFollowUpDateLabel").addClass("required");
+                $("#NextFollowUpDate").prop('required', true);
+                $("#NextFollowUpTimeLabel").addClass("required");
+                $("#NextFollowUpTime").prop('required', true);
+                $("#FollowUpDetailsLabel").addClass("required");
+                $("#FollowUpDetails").prop('required', true);
+            } else {
+                $("#NextFollowUpDateTimeLabel").removeClass("required");
+                $("#NextFollowUpDateTime").prop('required', false);
+                $("#NextFollowUpTimeLabel").removeClass("required");
+                $("#NextFollowUpTime").prop('required', false);
+                $("#FollowUpDetailsLabel").removeClass("required");
+                $("#FollowUpDetails").prop('required', false);
+            }
+            
+        }
+        else {
+            
+            if (selectedTextLeadStatusID != "Process" && selectedTextLeadStatusID != "Visit Allocate") {
+                $("#NextFollowUpDateLabel").removeClass("required");
+                $("#NextFollowUpDate").prop('required', false);
+                $("#NextFollowUpTimeLabel").removeClass("required");
+                $("#NextFollowUpTime").prop('required', false);
+                $("#FollowUpDetailsLabel").removeClass("required");
+                $("#FollowUpDetails").prop('required', false);
+            }
+        }
+    });;
+    $("#ServiceTime").datetimepicker({
+        format: 'hh:mm A',
+        useCurrent: false
+    });
+    $("#NextFollowUpTime").datetimepicker({
+        format: 'hh:mm A',
+        useCurrent: false
+    });
+    $.validator.addMethod(
+        "australianDate",
+        function (value, element) {
+
+            //return value.match(/^\d\d?\/\d\d?\/\d\d\d\d$/);
+            return value.match(/(0[1-9]|[1-2][0-9]|3[0-1])\/(0[1-9]|1[0-2])\/[0-9]{4} (2[0-3]|[01][0-9]):[0-5][0-9]$/);
+        },
+        "Please enter a date in the format dd/mm/yyyy HH:mm."
+    );
+    //$.validator.addClassRules("CustCellNo", {
+    //    required: false,
+    //    minlength: 10,
+    //    maxlength: 10
+    //});
+    $.validator.addMethod(
+        "dateOnly",
+        function (value, element) {
+            debugger;
+            //alert($(element));
+            if (element.id == "NextFollowUpDate") {
+                if ($("#LeadStatusID").val() == "2") {
+                    return value.match(/^\d\d?\/\d\d?\/\d\d\d\d$/);
+                } else {
+                    if (value) {
+                        return value.match(/^\d\d?\/\d\d?\/\d\d\d\d$/);
+                    } else {
+                        return true;
+                    }
+                }
+            } else {
+                return value.match(/^\d\d?\/\d\d?\/\d\d\d\d$/);
+            }
+            // put your own logic here, this is just a (crappy) example
+
+        },
+        "Please enter a date in the format dd/mm/yyyy."
+    );
+    $.validator.addMethod(
+        "dateOnlyOrBlank",
+        function (value, element) {
+            // put your own logic here, this is just a (crappy) example
+            if (value) {
+                return value.match(/^\d\d?\/\d\d?\/\d\d\d\d$/);
+            } else {
+                return true;
+            }
+        },
+        "Please enter a date in the format dd/mm/yyyy."
+    );
+    $('#LeadsCreate')
+        .validate({
+            rules: {
+                NextFollowUpDate: {
+                    dateOnlyOrBlank: true
+                }, VisitDate: {
+                    dateOnlyOrBlank: true
+                }, ServiceDate: {
+                    dateOnlyOrBlank: true
+                }
+
+            }
+        });
+    $("#LeadStatusID").change(function () {
+        debugger;
+        var selectedText = $("#LeadStatusID option:selected").html();
+        if (selectedText == "Closed" || selectedText == "Rejected") {
+            $("#StatusReason").prop('disabled', false);
+            $("#StatusReason").prop('required', true);
+            $("#LabelStatusReason").addClass("required");
+        }
+        else {
+            $("#StatusReason").prop('disabled', true);
+            $('#StatusReason').removeAttr('required');
+            $("#LabelStatusReason").removeClass("required");
+            //resetInputs();
+        }
+        if (selectedText == "Process" || selectedText == "Visit Allocate") {
+            $("#NextFollowUpDateLabel").addClass("required");
+            $("#NextFollowUpDate").prop('required', true);
+            $("#NextFollowUpTimeLabel").addClass("required");
+            $("#NextFollowUpTime").prop('required', true);
+            $("#FollowUpDetailsLabel").addClass("required");
+            $("#FollowUpDetails").prop('required', true);
+        }
+        else if (selectedText == "Closed" || selectedText == "Rejected" || selectedText == "Done") {
+
+            $("#NextFollowUpDateLabel").removeClass("required");
+            $("#NextFollowUpDate").prop('required', false);
+            $("#NextFollowUpTimeLabel").removeClass("required");
+            $("#NextFollowUpTime").prop('required', false);
+            $("#FollowUpDetailsLabel").removeClass("required");
+            $("#FollowUpDetails").prop('required', false);
+
+        }
+        else {
+            if ($("#ServiceDate").val() != "") {
+                $("#NextFollowUpDateLabel").removeClass("required");
+                $("#NextFollowUpDate").prop('required', false);
+                $("#NextFollowUpTimeLabel").removeClass("required");
+                $("#NextFollowUpTime").prop('required', false);
+                $("#FollowUpDetailsLabel").removeClass("required");
+                $("#FollowUpDetails").prop('required', false);
+            }
+        }
+
+        if (selectedText == "Visit Allocate") {
+            $("#VisitDateLabel").addClass("required");
+            $("#VisitDate").prop('required', true);
+            $("#VisitTimeLabel").addClass("required");
+            $("#VisitTime").prop('required', true);
+            $("#VisitAllocateLabel").addClass("required");
+            $("#VisitAllocate").prop('required', true);
+        } else {
+            $("#VisitDateLabel").removeClass("required");
+            $("#VisitDate").prop('required', false);
+            $("#VisitTimeLabel").removeClass("required");
+            $("#VisitTime").prop('required', false);
+            $("#VisitAllocateLabel").removeClass("required");
+            $("#VisitAllocate").prop('required', false);
+        }
+
+        if (selectedText == "Done") {
+            $("#ServiceDateLabel").addClass("required");
+            $("#ServiceDate").prop('required', true);
+            $("#ServiceTimeLabel").addClass("required");
+            $("#ServiceTime").prop('required', true);
+        } else {
+            $("#ServiceDateLabel").removeClass("required");
+            $("#ServiceDate").prop('required', false);
+            $("#ServiceTimeLabel").removeClass("required");
+            $("#ServiceTime").prop('required', false);
+        }
+    });
+</script>
+<script>
+    var previousNode;
+    var indexRowsIterationNumber = 0;
+    $(document).ready(function () {
+        //debugger;
+        //$('#leads thead tr:eq(0) th').each(function () {
+
+        //    var title = $(this).text();
+        //    $(this).html( '<input type="text" class="column_search" />' );
+        //});
+        var table = $('.table').DataTable({
+            "bPaginate": false,
+            fixedHeader: true,
+            order: [[1, 'desc']],
+            //"ordering": false,
+            "scrollX": true,
+            "scrollY": "200px"
+            //'rowCallback': function (row, data, index) {
+            //    //if(data[3]> 11.7){
+            //    //    $(row).find('td:eq(3)').css('color', 'red');
+            //    //}
+            //    //if(data[2].toUpperCase() == 'EE'){
+            //    //    $(row).find('td:eq(2)').css('color', 'blue');
+            //    //}
+            //}
+        }).rows().iterator('row', function (context, index) {
+
+            debugger;
+            var node = $(this.row(index).node());
+            //node.context is element of tr generated by jQuery DataTables.
+            
+            if (indexRowsIterationNumber > 0) {
+                for (var i = 0; i < node.children().length; i++) {
+                    //alert($(node.children()[i]).text());
+                    //alert(previousNode.children()[i].text);
+                    //if (node !== 'undefined') {
+                        if (node.children()[i].innerHTML === previousNode.children()[i].innerHTML) {
+                            //debugger;
+
+                        }
+                        else {
+                            $(node.children()[i]).css('background-color', '#696969').css('color', 'white');
+                            $(previousNode.children()[i]).css('background-color', '#C0C0C0');
+                        }
+                    //}
+                    
+                }
+            }
+            indexRowsIterationNumber++;
+            previousNode = $(this.row(index).node());
+        });
+
+        $('.table thead tr:first th').each(function () {
+            var title = $('.table thead th').eq($(this).index()).text();
+            $(this).html('<input type="text" class="column_search"/>');
+        });
+        //table.columns().every(function () {
+        //    var column = this;
+
+        //    $('input', this.header()).on('keyup change', function () {
+        //        column
+        //            .search(this.value)
+        //            .draw();
+        //    });
+        //});
+        $('.table thead tr:first th').on('keyup', ".column_search", function () {
+            table
+                .column($(this).parent().index())
+                .search(this.value)
+                .draw();
+        });
+        $(".dataTables_filter").css("display", "none");
+
+        $("#LeadStatusID").trigger('change');
+    });
+                //table.columns( '.Status' ).search( 'Important' ).draw();
+</script>
+<script>
+    //function GetURLParameter(sParam)
+    //{
+    //    debugger;
+    //    var sPageURL = window.location.search.substring(1);        
+    //    var sURLVariables = sPageURL.split('&');        
+    //    for (var i = 0; i < sURLVariables.length; i++)            
+    //    {            
+    //        var sParameterName = sURLVariables[i].split('=');            
+    //        if (sParameterName[0] == sParam)                
+    //        {                
+    //            return sParameterName[1];                
+    //        }            
+    //    }        
+    //}​
+</script>

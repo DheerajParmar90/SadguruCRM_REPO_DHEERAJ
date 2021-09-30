@@ -1,0 +1,1046 @@
+﻿@model SadguruCRM.ViewModels.CustomerViewModel
+
+@*@model SadguruCRM.Models.Customers_Billing_Address_Mapping*@
+@*@model dynamic*@
+@{
+    ViewBag.Title = "Customer Details";
+}
+
+<style>
+    input, select, textarea {
+        max-width: 100%;
+        overflow: hidden;
+    }
+
+    label {
+        font-weight: 800;
+        border-bottom: 1px black solid;
+        margin-bottom: 10px;
+        margin-top: 12px;
+    }
+
+    input:disabled {
+        background-color: black;
+        border-color: rgb(247 247 252);
+    }
+
+    .form-control:disabled, .form-control[readonly], textarea, .bootstrap-select > .dropdown-toggle, .form-group .bootstrap-select, .form-horizontal .bootstrap-select, .form-inline .bootstrap-select {
+        background-color: #f7f7fc;
+        opacity: 1;
+        border-color: rgb(247 247 252);
+    }
+
+    .form-control {
+        padding: 0;
+        margin-top: -10px;
+    }
+
+    .bootstrap-select > .dropdown-toggle {
+        padding: 0;
+    }
+
+    .bootstrap-select > .dropdown-toggle {
+        word-wrap: break-word !important;
+        white-space: normal !important;
+    }
+
+        .dropdown-toggle::after, .bootstrap-select > .dropdown-toggle:after {
+            display: none;
+        }
+</style>
+
+
+@using (Html.BeginForm("Edit", "Customers", FormMethod.Post, new { id = "CustomerEdit", enctype = "multipart/form-data", autocomplete = "off", onkeypress = "return CancelReturnKey();" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        <div class="container-fluid">
+            <div class="alert alert-danger duplicate" style="padding: 20px; display:none;">
+                <strong>WARNING!</strong> &nbsp;&nbsp;Record with the same name and Cell Number Already Exists!
+            </div>
+        </div>
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <h6>CUSTOMER DETAILS</h6>
+
+        <div class="form-group row">
+            <div class="col">
+                @Html.HiddenFor(model => model.customer.CreatedBy)
+                @Html.HiddenFor(model => model.customer.CreatedOn)
+                @Html.HiddenFor(model => model.customer.CustomerID)
+                @Html.LabelFor(model => model.customer.LeadID, "Lead", htmlAttributes: new { @class = "control-label" })
+                @Html.DropDownListFor(model => model.customer.LeadID, (SelectList)ViewBag.LeadID, "-- SELECT --", htmlAttributes: new { @class = "LeadID form-control selectpicker", @data_live_search = "true" })
+            </div>
+            <div class="col">
+
+                @Html.Label("Customer ID", "Customer ID", htmlAttributes: new { @class = "control-label required" })
+                @Html.EditorFor(model => model.customer.CustomerNo, new { htmlAttributes = new { @class = "form-control CustomerNo", @required = "required" } })
+            </div>
+            <div class="col">
+            </div>
+            <div class="col">
+            </div>
+            <div class="col">
+            </div>
+        </div>
+        <div class="form-group row">
+
+            <div class="fourty row">
+                <div class="col-3">
+                    @Html.Label("Title", htmlAttributes: new { @class = "control-label required" })
+                    @Html.DropDownListFor(model => model.customer.Title, new List<SelectListItem>(){
+                                                       new SelectListItem() { Text = "Mr.", Value = "Mr." },
+                                                       new SelectListItem() { Text = "Ms.", Value = "Ms."},
+                                                       new SelectListItem() { Text = "Mrs.", Value = "Mrs."},
+                                                       new SelectListItem() { Text = "M/S.", Value = "M/S."}
+                                                    }, "SELECT", new { @class = "form-control selectpicker Title", @required = "required", @data_live_search = "true" })
+                    @Html.ValidationMessageFor(model => model.customer.Title, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-9" id="DivCommercialName" style="display:none">
+                    @Html.Label("Name", htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.customer.CustomerName, new { htmlAttributes = new { @class = "form-control CustomerName", @style = "max-width:100%", @maxlength = "100" } })
+                    @Html.ValidationMessageFor(model => model.customer.CustomerName, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-4" id="DivFirstName">
+                    @Html.Label("First Name", htmlAttributes: new { @class = "control-label required" })
+                    @Html.EditorFor(model => model.customer.FirstName, new { htmlAttributes = new { @class = "form-control FirstName", @required = "required" } })
+                    @Html.ValidationMessageFor(model => model.customer.FirstName, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-5" id="DivLastName">
+                    @Html.Label("Last Name", htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.customer.LastName, new { htmlAttributes = new { @class = "form-control LastName" } })
+                    @Html.ValidationMessageFor(model => model.customer.LastName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="sixty row">
+                <div class="col">
+                    @Html.Label("Date", htmlAttributes: new { @class = "control-label required" })
+                    @Html.EditorFor(model => model.customer.CustomerDate, new { htmlAttributes = new { @class = "form-control  dateOnly CustomerDate", @required = "required" } })
+                    @Html.ValidationMessageFor(model => model.customer.CustomerDate, "", new { @class = "text-danger" })
+                </div>
+                <div class="col">
+                    @Html.Label("Consult Person", htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.customer.ConsultPerson, new { htmlAttributes = new { @class = "form-control ConsultPerson", @maxlength = "50" } })
+                    @Html.ValidationMessageFor(model => model.customer.ConsultPerson, "", new { @class = "text-danger" })
+                </div>
+                <div class="col">
+                    @Html.Label("Designation", htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.customer.ConsultPersonDesignation, new { htmlAttributes = new { @class = "form-control ConsultPersonDesignation", @maxlength = "50" } })
+                    @Html.ValidationMessageFor(model => model.customer.ConsultPersonDesignation, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+            @*<div class="col-md-3">
+                    @Html.LabelFor(model => model.CustomerName, "Customer Name", htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.CustomerName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.CustomerName, "", new { @class = "text-danger" })
+                </div>*@
+
+
+        </div>
+
+        <div class="form-group row">
+            <div class="col">
+                @Html.LabelFor(model => model.customer.CustomerType, "Customer Type", htmlAttributes: new { @class = "control-label required" })
+                @Html.DropDownListFor(model => model.customer.CustomerType, new List<SelectListItem>(){
+                                                       new SelectListItem() { Text = "Residential", Value = "Residential" },
+                                                       new SelectListItem() { Text = "Commercial", Value = "Commercial"},
+                                                       new SelectListItem() { Text = "HSG. Society", Value = "HSG. Society"},
+                                                       new SelectListItem() { Text = "Shop", Value = "Shop"}
+                                                    }, "-- SELECT --", new { @class = "form-control selectpicker CustomerType", @required = "required", @data_live_search = "true" })
+                @Html.ValidationMessageFor(model => model.customer.CustomerType, "", new { @class = "text-danger" })
+
+            </div>
+            <div class="col">
+                @Html.LabelFor(model => model.customer.SourceID, "Source", htmlAttributes: new { @class = "control-label required" })
+                @Html.DropDownListFor(model => model.customer.SourceID, (SelectList)ViewBag.SourceID, "-- SELECT --", htmlAttributes: new { @class = "form-control selectpicker SourceID", @data_live_search = "true", @required = "required" })
+                @Html.ValidationMessageFor(model => model.customer.SourceID, "", new { @class = "text-danger" })
+            </div>
+            <div class="col">
+                @Html.LabelFor(model => model.customer.SubSourceID, "SubSource", htmlAttributes: new { @class = "control-label required" })
+                @Html.DropDownListFor(model => model.customer.SubSourceID, (SelectList)ViewBag.SubSourceID, "-- SELECT --", htmlAttributes: new { @class = "form-control selectpicker SubSourceID", @data_live_search = "true", @required = "required" })
+                @Html.ValidationMessageFor(model => model.customer.SubSourceID, "", new { @class = "text-danger" })
+            </div>
+            <div class="col">
+                @Html.LabelFor(model => model.customer.BranchID, "Branch", htmlAttributes: new { @class = "control-label required" })
+                @Html.DropDownListFor(model => model.customer.BranchID, (SelectList)ViewBag.BranchID, "-- SELECT --", htmlAttributes: new { @class = "form-control selectpicker BranchID", @required = "required", @data_live_search = "true" })
+                @Html.ValidationMessageFor(model => model.customer.BranchID, "", new { @class = "text-danger" })
+            </div>
+            <div class="col">
+                @Html.LabelFor(model => model.customer.CustomerStatusID, "Customer Status", htmlAttributes: new { @class = "control-label required" })
+                @Html.DropDownListFor(model => model.customer.CustomerStatusID, (SelectList)ViewBag.CustomerStatusID, "-- SELECT --", htmlAttributes: new { @class = "form-control selectpicker CustomerStatusID", @required = "required", @data_live_search = "true" })
+                @Html.ValidationMessageFor(model => model.customer.CustomerStatusID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col">
+                @Html.LabelFor(model => model.customer.StatusReason, "Status Reason", htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.customer.StatusReason, new { htmlAttributes = new { @class = "form-control StatusReason", @disabled = "disabled", @maxlength = "100" } })
+                @Html.ValidationMessageFor(model => model.customer.StatusReason, "", new { @class = "text-danger" })
+            </div>
+            <div class="col">
+                @Html.LabelFor(model => model.customer.IndustryID, "Industry", htmlAttributes: new { @class = "control-label" })
+                @Html.DropDownListFor(model => model.customer.IndustryID, (SelectList)ViewBag.IndustryID, "-- SELECT --", htmlAttributes: new { @class = "form-control selectpicker IndustryID", @data_live_search = "true" })
+                @*@Html.EditorFor(model => model.Industry, new { htmlAttributes = new { @class = "form-control" } })*@
+                @Html.ValidationMessageFor(model => model.customer.IndustryID, "", new { @class = "text-danger" })
+            </div>
+            <div class="col">
+            </div>
+            <div class="col">
+            </div>
+            <div class="col">
+            </div>
+        </div>
+
+        <hr />
+        <h5>Billing Address</h5>
+        <div class="form-group row">
+            @Html.HiddenFor(model => model.billing_address.CustomerID)
+            @Html.HiddenFor(model => model.billing_address.Customers_Billing_Address_Mapping_ID)
+            <div class="col">
+                @Html.Label("AddressLine1", "Address Line 1", htmlAttributes: new { @class = "control-label required" })
+                @Html.EditorFor(model => model.billing_address.AddressLine1, new { htmlAttributes = new { @class = "form-control BillingAddressLine1", @required = "required", @maxlength = "100", @onchange = "$('.IsBillAddSame').trigger('change');" } })
+                @Html.ValidationMessageFor(model => model.billing_address.AddressLine1, "", new { @class = "text-danger" })
+            </div>
+            <div class="col">
+                @Html.Label("AddressLine2", "Address Line 2", htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.billing_address.AddressLine2, new { htmlAttributes = new { @class = "form-control BillingAddressLine2", @maxlength = "100", @onchange = "$('.IsBillAddSame').trigger('change');" } })
+
+            </div>
+            <div class="col">
+                @Html.Label("AddressLine3", "Address Line 3", htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.billing_address.AddressLine3, new { htmlAttributes = new { @class = "form-control BillingAddressLine3", @maxlength = "100", @onchange = "$('.IsBillAddSame').trigger('change');" } })
+            </div>
+            <div class="col">
+                @Html.Label("LocationID", "Location", htmlAttributes: new { @class = "control-label required" })
+                @Html.DropDownListFor(model => model.billing_address.BillingLocationID, (IEnumerable<SelectListItem>)ViewBag.LocationID, "-- SELECT --", new { @class = "form-control selectpicker BillingLocationID", @data_live_search = "true", @required = "required", @onchange = "$('.IsBillAddSame').trigger('change');" })
+                @Html.ValidationMessageFor(model => model.billing_address.BillingLocationID, "", new { @class = "text-danger" })
+            </div>
+            <div class="col">
+                @Html.Label("CityId", "City", htmlAttributes: new { @class = "control-label required" })
+                @Html.DropDownListFor(model => model.billing_address.BillingCityID, (IEnumerable<SelectListItem>)ViewBag.CityID, "-- SELECT --", new { @class = "form-control selectpicker BillingCityID", @data_live_search = "true", @required = "required", @onchange = "$('.IsBillAddSame').trigger('change');" })
+                @Html.ValidationMessageFor(model => model.billing_address.BillingCityID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col">
+                @Html.Label("Pincode", "Pincode", htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.billing_address.BillingPincode, new { htmlAttributes = new { @class = "form-control BillingPincode", @minlength = "6", @maxlength = "6", @onchange = "$('.IsBillAddSame').trigger('change');" } })
+                @Html.ValidationMessageFor(model => model.billing_address.BillingPincode, "", new { @class = "text-danger" })
+            </div>
+            <div class="col">
+                @Html.Label("State", "State", htmlAttributes: new { @class = "control-label required" })
+                @Html.DropDownListFor(model => model.billing_address.BillingStateID, (IEnumerable<SelectListItem>)ViewBag.StateID, "-- SELECT --", new { @class = "form-control selectpicker BillingStateID", required = "required", @data_live_search = "true", @onchange = "$('.IsBillAddSame').trigger('change');" })
+                @Html.ValidationMessageFor(model => model.billing_address.BillingStateID, "", new { @class = "text-danger" })
+            </div>
+            <div class="col">
+
+                @Html.Label("Tel No", htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.customer.TelNumber, new { htmlAttributes = new { @class = "form-control BillingTelNo", @maxlength = "20", @onchange = "$('.IsBillAddSame').trigger('change');" } })
+                @{ for (int i = 0; i < Model.list_billing_address_tel.Count; i++)
+                    {
+                        @Html.HiddenFor(model => Model.list_billing_address_tel[i].Customers_Billing_Address_Mapping_ID)
+                        @Html.HiddenFor(model => Model.list_billing_address_tel[i].Customers_Billing_Address_Tel_No_Mapping_ID)
+                        @Html.EditorFor(model => model.list_billing_address_tel[i].Customers_Billing_Address_Tel_No, new { htmlAttributes = new { @class = "form-control BillingTelNo", @maxlength = "20", @onchange = "$('.IsBillAddSame').trigger('change');" } })
+
+                        @Html.ValidationMessageFor(model => model.list_billing_address_tel[i].Customers_Billing_Address_Tel_No, "", new { @class = "text-danger" })
+                    }
+
+                }
+            </div>
+            <div class="col">
+                @Html.Label("Cell Number", "Cell No", htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.customer.CellNumber, new { htmlAttributes = new { @class = "form-control BillingCellNumber", @minlength = "10", @maxlength = "10", @onchange = "$('.IsBillAddSame').trigger('change');" } })
+                @{ for (int i = 0; i < Model.list_billing_address_cell.Count; i++)
+                    {
+                        @Html.HiddenFor(model => Model.list_billing_address_cell[i].Customers_Billing_Address_Mapping_ID)
+                        @Html.HiddenFor(model => Model.list_billing_address_cell[i].Customers_Billing_Address_Cell_No_Mapping_ID)
+                        @Html.EditorFor(model => Model.list_billing_address_cell[i].Customers_Billing_Address_Cell_No, new { htmlAttributes = new { @class = "form-control BillingCellNumber", @minlength = "10", @maxlength = "10", @onchange = "$('.IsBillAddSame').trigger('change');" } })
+
+                        @Html.ValidationMessageFor(model => model.list_billing_address_cell[i].Customers_Billing_Address_Cell_No, "", new { @class = "text-danger" })
+                    }
+
+                }
+            </div>
+            <div class="col">
+                @Html.Label("Email", htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.customer.EmailId, new { htmlAttributes = new { @class = "form-control BillingEmail", @maxlength = "50", @onchange = "$('.IsBillAddSame').trigger('change');" } })
+                @{ for (int i = 0; i < Model.list_billing_address_email.Count; i++)
+                    {
+                        @Html.HiddenFor(model => Model.list_billing_address_email[i].Customers_Billing_Address_Mapping_ID)
+                        @Html.HiddenFor(model => Model.list_billing_address_email[i].Customers_Billing_Address_Email_Mapping_ID)
+                        @Html.EditorFor(model => Model.list_billing_address_email[i].Customers_Billing_Address_Email, new { htmlAttributes = new { @class = "form-control BillingEmail", @onchange = "$('.IsBillAddSame').trigger('change');" } })
+
+                        @Html.ValidationMessageFor(model => model.list_billing_address_email[i].Customers_Billing_Address_Email, "", new { @class = "text-danger" })
+                    }
+
+                }
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col">
+                @Html.Label("GSTNo", "GST No", htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.customer.GstinNo, new { htmlAttributes = new { @class = "form-control BillingGSTNo", @style = "text-transform: uppercase;", @minlength = "15", @maxlength = "15" } })
+            </div>
+            <div class="col">
+                @Html.Label("GST Type", htmlAttributes: new { @class = "control-label" })
+                @Html.DropDownListFor(model => model.customer.GST_Type_Enum, (SelectList)(ViewBag.GSTTypes), "--SELECT--", new { @class = "form-control selectpicker GST_Type_Enum", @data_live_search = "true" })
+                @Html.ValidationMessageFor(model => model.customer.GST_Type_Enum, "", new { @class = "text-danger" })
+            </div>
+            <div class="col">
+            </div>
+            <div class="col">
+            </div>
+            <div class="col">
+            </div>
+        </div>
+
+        <hr />
+        <h5>SERVICE ADDRESS</h5>
+        <div class="form-group row">
+            <div class="col-md-12">
+                @Html.CheckBoxFor(model => model.customer.IsBillAddSame, new { @class = "IsBillAddSame" })
+                @Html.Label("IsBillAddSame", "Is billing address and service address same", htmlAttributes: new { @class = "control-label" })
+                @*@Html.CheckBox(Model.IsBillAddSame, Model.IsBillAddSame ?? false)
+                    @Html.LabelFor(m => m.IsBillAddSame)*@
+            </div>
+        </div>
+        @for (int i = 0; i < Model.list_service_address.Count; i++)
+        {
+            <div class="SingleServiceAddress" id="SingleServiceAddress">
+                @Html.HiddenFor(model => model.list_service_address[i].Customers_Service_Address_Mapping_ID)
+                <div class="form-group row">
+                    <div class="col">
+                        @Html.Label("AddressLine1", "Address Line 1", htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.list_service_address[i].AddressLine1, new { htmlAttributes = new { @class = "form-control ServiceAddressLine1", @maxlength = "100", @onchange = "serviceAdd1Changed(this);" } })
+                    </div>
+                    <div class="col">
+                        @Html.Label("AddressLine2", "Address Line 2", htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.list_service_address[i].AddressLine2, new { htmlAttributes = new { @class = "form-control ServiceAddressLine2", @maxlength = "100" } })
+                    </div>
+                    <div class="col">
+                        @Html.Label("AddressLine3", "Address Line 3", htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.list_service_address[i].AddressLine3, new { htmlAttributes = new { @class = "form-control ServiceAddressLine3", @maxlength = "100" } })
+                    </div>
+                    <div class="col">
+                        @Html.Label("LocationID", "Location", htmlAttributes: new { @class = "control-label" })
+                        @Html.DropDownListFor(model => model.list_service_address[i].ServiceLocationID, new SelectList(ViewBag.Locations, "Value", "Text", Model.list_service_address[i].ServiceLocationID), "-- SELECT --", new { @class = "form-control selectpicker ServiceLocationID", @data_live_search = "true", @required = "required" })
+                    </div>
+                    <div class="col">
+                        @Html.Label("CityId", "City", htmlAttributes: new { @class = "control-label" })
+                        @Html.DropDownListFor(model => model.list_service_address[i].ServiceCityID, new SelectList(ViewBag.CityID, "Value", "Text", Model.list_service_address[i].ServiceCityID), "-- SELECT --", new { @class = "form-control selectpicker ServiceCityID", @data_live_search = "true", @required = "required" })
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col">
+                        @Html.Label("Pincode", "Pincode", htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.list_service_address[i].ServicePincode, new { htmlAttributes = new { @class = "form-control ServicePincode", @minlength = "6", @maxlength = "6" } })
+                    </div>
+                    <div class="col">
+                        @Html.Label("StateId", "State", htmlAttributes: new { @class = "control-label" })
+                        @Html.DropDownListFor(model => model.list_service_address[i].ServiceStateID, new SelectList(ViewBag.StateID, "Value", "Text", Model.list_service_address[i].ServiceStateID), "-- SELECT --", new { @class = "form-control selectpicker ServiceStateID", @data_live_search = "true" })
+                        @*@Html.DropDownList("CityID", null, "-- SELECT --", htmlAttributes: new { @class = "form-control" , @onchange = "populateCity(this);" })*@
+                    </div>
+                    <div class="col">
+                        @Html.Label("ServiceTelNo", "TelNo", htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.list_service_address[i].Customer_Service_Address_Tel_No_1, new { htmlAttributes = new { @class = "form-control ServiceTelNo", @maxlength = "20" } })
+
+                        @Html.EditorFor(model => model.list_service_address[i].Customer_Service_Address_Tel_No_2, new { htmlAttributes = new { @class = "form-control ServiceTelNo", @maxlength = "20" } })
+
+                        @Html.EditorFor(model => model.list_service_address[i].Customer_Service_Address_Tel_No_3, new { htmlAttributes = new { @class = "form-control ServiceTelNo", @maxlength = "20" } })
+
+                        @Html.EditorFor(model => model.list_service_address[i].Customer_Service_Address_Tel_No_4, new { htmlAttributes = new { @class = "form-control ServiceTelNo", @maxlength = "20" } })
+
+                        @Html.EditorFor(model => model.list_service_address[i].Customer_Service_Address_Tel_No_5, new { htmlAttributes = new { @class = "form-control ServiceTelNo", @maxlength = "20" } })
+
+                    </div>
+                    <div class="col">
+                        @Html.Label("ServiceCellNo", "Cell No", htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.list_service_address[i].Customer_Service_Address_Cell_No_1, new { htmlAttributes = new { @class = "form-control ServiceCellNo", @minlength = "10", @maxlength = "10" } })
+
+                        @Html.EditorFor(model => model.list_service_address[i].Customer_Service_Address_Cell_No_2, new { htmlAttributes = new { @class = "form-control ServiceCellNo", @minlength = "10", @maxlength = "10" } })
+
+                        @Html.EditorFor(model => model.list_service_address[i].Customer_Service_Address_Cell_No_3, new { htmlAttributes = new { @class = "form-control ServiceCellNo", @minlength = "10", @maxlength = "10" } })
+
+                        @Html.EditorFor(model => model.list_service_address[i].Customer_Service_Address_Cell_No_4, new { htmlAttributes = new { @class = "form-control ServiceCellNo", @minlength = "10", @maxlength = "10" } })
+
+                        @Html.EditorFor(model => model.list_service_address[i].Customer_Service_Address_Cell_No_5, new { htmlAttributes = new { @class = "form-control ServiceCellNo", @minlength = "10", @maxlength = "10" } })
+
+                    </div>
+                    <div class="col">
+                        @Html.Label("Email", "Email", htmlAttributes: new { @class = "control-label" })
+
+                        @Html.EditorFor(model => model.list_service_address[i].Customer_Service_Address_Email_1, new { htmlAttributes = new { @class = "form-control ServiceEmail", @maxlength = "50" } })
+
+                        @Html.EditorFor(model => model.list_service_address[i].Customer_Service_Address_Email_2, new { htmlAttributes = new { @class = "form-control ServiceEmail", @maxlength = "50" } })
+
+                        @Html.EditorFor(model => model.list_service_address[i].Customer_Service_Address_Email_3, new { htmlAttributes = new { @class = "form-control ServiceEmail", @maxlength = "50" } })
+
+                        @Html.EditorFor(model => model.list_service_address[i].Customer_Service_Address_Email_4, new { htmlAttributes = new { @class = "form-control ServiceEmail", @maxlength = "50" } })
+
+                        @Html.EditorFor(model => model.list_service_address[i].Customer_Service_Address_Email_5, new { htmlAttributes = new { @class = "form-control ServiceEmail", @maxlength = "50" } })
+
+                    </div>
+                </div>
+                <div class="form-group row">
+
+                    <div class="col">
+                        @Html.Label("ServiceConsultPerson", "Consult Person", htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.list_service_address[i].ServiceAddressConsultPerson, new { htmlAttributes = new { @class = "form-control ServiceConsultPerson", @maxlength = "100" } })
+                    </div>
+                    <div class="col">
+
+                    </div>
+                    <div class="col">
+
+                    </div>
+                    <div class="col">
+
+                    </div>
+                    <div class="col" style="text-align: end;">
+                    </div>
+                </div>
+                <hr />
+            </div>
+
+        }
+        <hr />
+        <h5>OTHER DETAILS</h5>
+        <div class="form-group row">
+            <div class="col">
+                @Html.Label("DOB", htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.customer.DOB, new { htmlAttributes = new { @class = "form-control dateOnly DOB", @onkeydown = "return false" } })
+                @Html.ValidationMessageFor(model => model.customer.DOB, "", new { @class = "text-danger" })
+            </div>
+            <div class="col">
+                @Html.Label("Facebook Link", htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.customer.FacebookLink, new { htmlAttributes = new { @class = "form-control", @maxlength = "50" } })
+                @Html.ValidationMessageFor(model => model.customer.FacebookLink, "", new { @class = "text-danger" })
+            </div>
+            <div class="col">
+                @Html.Label("Twitter Link", htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.customer.TwitterLink, new { htmlAttributes = new { @class = "form-control", @maxlength = "50" } })
+                @Html.ValidationMessageFor(model => model.customer.TwitterLink, "", new { @class = "text-danger" })
+            </div>
+            <div class="col">
+                @Html.Label("LinkedIn Link", htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.customer.LinkedInLink, new { htmlAttributes = new { @class = "form-control", @maxlength = "50" } })
+                @Html.ValidationMessageFor(model => model.customer.LinkedInLink, "", new { @class = "text-danger" })
+            </div>
+            <div class="col">
+                @Html.Label("Religion", "Religion", htmlAttributes: new { @class = "control-label" })
+                @Html.DropDownList("ReligionID", (IEnumerable<SelectListItem>)ViewBag.ReligionID, "-- SELECT --", new { @class = "selectpicker dropup", @data_live_search = "true", data_size = "5" })
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-3">
+                @Html.Label("Anniversary Date", "Anniversary Date", htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.customer.AnniversaryDate, new { htmlAttributes = new { @class = "form-control  dateOnly AnniversaryDate" } })
+            </div>
+            <div class="col-9">
+                @Html.LabelFor(model => model.customer.Remarks, htmlAttributes: new { @class = "control-label" })
+                @Html.EditorFor(model => model.customer.Remarks, new { htmlAttributes = new { @class = "form-control", @style = "max-width:100%", @maxlength = "250" } })
+                @Html.ValidationMessageFor(model => model.customer.Remarks, "", htmlAttributes: new { @class = "text-danger" })
+            </div>
+        </div>
+
+        @*<div class="form-group">
+                <div class="col-md-12">
+                    <input type="submit" value="Save" class="btn btn-outline-secondary" style="float:right;" id="Save" />
+                </div>
+            </div>*@
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index", null, new { @type = "button", @class = "btn btn-outline-secondary" })
+</div>
+
+@*@section Scripts {
+
+    }*@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
+@*For Multiselect - Bootstrap Select*@
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/css/bootstrap-select.min.css">
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/bootstrap-select.min.js"></script>
+
+<!-- (Optional) Latest compiled and minified JavaScript translation files -->
+@*<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.9/dist/js/i18n/defaults-*.min.js"></script>*@
+<script>
+    $(document).ready(function () {
+
+        $(".ServiceTelNo").each(function (index, obj) {
+            if (index != 0) {
+                if ($(obj).val() == "") {
+                    $(obj).css("display", "none");
+                }
+            }
+        });
+        $(".ServiceCellNo").each(function (index, obj) {
+            if (index != 0) {
+                if ($(obj).val() == "") {
+                    $(obj).css("display", "none");
+                }
+            }
+        });
+        $(".ServiceEmail").each(function (index, obj) {
+            if (index != 0) {
+                if ($(obj).val() == "") {
+                    $(obj).css("display", "none");
+                }
+            }
+        });
+        $("#CustomerEdit :input").prop("disabled", true);
+        $('select').each(function () {
+            if ($(this).val() == "") {
+                $(this).html('');
+                $(this).selectpicker("destroy");
+            }
+
+        });
+        $(".Title").trigger("change");
+    });
+    $("#customer_DOB").datetimepicker({
+        format: 'DD/MM/YYYY',
+        useCurrent: false
+    });
+    $("#customer_AnniversaryDate").datetimepicker({
+        format: 'DD/MM/YYYY',
+        useCurrent: false
+    });
+    $("#customer_CustomerDate").datetimepicker({
+        format: 'DD/MM/YYYY',
+        useCurrent: false
+    });
+    $.validator.addMethod(
+        "allowblank",
+        function (value, element) {
+            if (value) {
+                return value.match(/^\d\d?\/\d\d?\/\d\d\d\d$/);
+            } else {
+                return true;
+            }
+        },
+        "Enter a date in the format dd/mm/yyyy."
+    );
+    $('#CustomerEdit')
+        .validate({
+            rules: {
+                customer_DOB: {
+                    allowblank: true
+                },
+                customer_AnniversaryDate: {
+                    allowblank: true
+                },
+                customer_CustomerDate: {
+                    allowblank: true
+                }
+            },
+            errorPlacement: function (error, element) {
+                if (element.hasClass("selectpicker"))
+                    error.insertAfter(element.next(".btn"));
+                else if (element.hasClass("CustCellNo"))
+                    error.insertAfter(element.next(".deleteTextboxButton"));
+                else
+                    error.insertAfter(element);
+
+
+            }
+        });
+
+
+    //$("#CustomerEdit").submit(function (event) {
+
+    //    //var followupdate = $('#NextFollowUpDateTime').val();
+    //    //var newfollowupdate = followupdate.split("/").reverse().join("/");
+    //    //$('#NextFollowUpDateTime').val(newfollowupdate);
+
+    //    //for consult contact no.
+    //    debugger;
+    //    var serviceAdds = $('div[id="SingleServiceAddress"]');
+    //    for (i = 0; i < serviceAdds.length; i++) {
+    //        var ServiceEmailHidden = $(serviceAdds[i]).find("#ServiceEmailHidden");
+    //        var ServiceTelNoHidden = $(serviceAdds[i]).find("#ServiceTelNoHidden");
+    //        var ServiceCellNoHidden = $(serviceAdds[i]).find("#ServiceCellNoHidden");
+    //        $(ServiceEmailHidden).val("");
+    //        $(ServiceTelNoHidden).val("");
+    //        $(ServiceCellNoHidden).val("");
+    //        var ServiceEmail = $(serviceAdds[i]).find(".ServiceEmail")
+    //        for (j = 0; j < ServiceEmail.length; j++) {
+    //            $(ServiceEmailHidden).val($(ServiceEmailHidden).val() + $(ServiceEmail[j]).val() + "|");
+    //        }
+    //        var ServiceTelNo = $(serviceAdds[i]).find(".ServiceTelNo")
+    //        for (j = 0; j < ServiceTelNo.length; j++) {
+    //            $(ServiceTelNoHidden).val($(ServiceTelNoHidden).val() + $(ServiceTelNo[j]).val() + "|");
+    //        }
+    //        var ServiceCellNo = $(serviceAdds[i]).find(".ServiceCellNo")
+    //        for (j = 0; j < ServiceTelNo.length; j++) {
+    //            $(ServiceCellNoHidden).val($(ServiceCellNoHidden).val() + $(ServiceCellNo[j]).val() + "|");
+    //        }
+    //        //alert($(consultContactNumberHidden).val());
+    //        //alert($(consultEmailHidden).val());
+    //        $(ServiceEmailHidden).val($(ServiceEmailHidden).val().slice(0, -1));
+    //        $(ServiceTelNoHidden).val($(ServiceTelNoHidden).val().slice(0, -1));
+    //        $(ServiceCellNoHidden).val($(ServiceCellNoHidden).val().slice(0, -1));
+    //        //alert($(consultContactNumberHidden).val());
+    //        //alert($(consultEmailHidden).val());
+    //    }
+    //return false;
+    //});
+    //$("#Title").change(function () {
+    //    var title = $("#Title").val();
+    //    if (title == "Mr." || title == "Mrs." || title == "Ms." || title == "") {
+    //        $("#DivCommercialName").css('display', 'none');
+    //        $("#CustomerName").removeAttr('required');
+    //        $("#DivFirstName").css('display', 'block');
+    //        $("#FirstName").prop('required', true);
+    //        $("#DivLastName").css('display', 'block');
+    //        $("#LastName").prop('required', true);
+    //    }
+    //    else if (title == "M/S.") {
+    //        $("#DivCommercialName").css('display', 'block').prop('required', true);
+    //        $("#CustomerName").prop('required', true);
+    //        $("#DivFirstName").css('display', 'none').removeAttr('required');
+    //        $("#FirstName").removeAttr('required');
+    //        $("#DivLastName").css('display', 'none').removeAttr('required');
+    //        $("#LastName").removeAttr('required');
+    //    }
+    //});
+
+    $(".Title").change(function () {
+        var title = $(this).val();
+        if (title == "Mr." || title == "Mrs." || title == "Ms." || title == "") {
+            $("#DivCommercialName").css('display', 'none');
+            $(".CustomerName").removeAttr('required');
+            $("#DivFirstName").css('display', 'block');
+            $(".FirstName").prop('required', true);
+            $("#DivLastName").css('display', 'block');
+            $(".LastName").prop('required', true);
+        }
+        else if (title == "M/S.") {
+            $("#DivCommercialName").css('display', 'block').prop('required', true);
+            $(".CustomerName").prop('required', true);
+            $("#DivFirstName").css('display', 'none').removeAttr('required');
+            $(".FirstName").removeAttr('required');
+            $("#DivLastName").css('display', 'none').removeAttr('required');
+            $(".LastName").removeAttr('required');
+        }
+    });
+    $(".IsBillAddSame").change(function () {
+        if (this.checked) {
+            //$(".SingleServiceAddress").slideUp();
+            //$("#AddServiceAddress").slideUp();
+            var firstServiceElement = $(".SingleServiceAddress").first();
+            firstServiceElement.find(".ServiceAddressLine1").val($(".BillingAddressLine1").val());
+            firstServiceElement.find(".ServiceAddressLine2").val($(".BillingAddressLine2").val());
+            firstServiceElement.find(".ServiceAddressLine3").val($(".BillingAddressLine3").val());
+            //alert($("#billing_address_BillingLocationID").val());
+            firstServiceElement.find("#list_service_address_0__ServiceLocationID").val($("#billing_address_BillingLocationID").val());
+            firstServiceElement.find("#list_service_address_0__ServiceLocationID").selectpicker("refresh");
+            firstServiceElement.find("#list_service_address_0__ServiceCityID").val($("#billing_address_BillingCityID").val());
+            firstServiceElement.find("#list_service_address_0__ServiceCityID").selectpicker("refresh");
+            firstServiceElement.find("#list_service_address_0__ServiceStateID").val($("#billing_address_BillingStateID").val());
+            firstServiceElement.find("#list_service_address_0__ServiceStateID").selectpicker("refresh");
+
+
+            firstServiceElement.find(".ServicePincode").val($(".BillingPincode").val());
+
+            $("#list_service_address_0__Customer_Service_Address_Tel_No_1").val(($($(".BillingTelNo")[0]).val()));
+            if ($($(".BillingTelNo")[1]).val() != undefined) {
+                var data = $($(".BillingTelNo")[1]).val();
+                $("#list_service_address_0__Customer_Service_Address_Tel_No_2").val(data);
+                $("#list_service_address_0__Customer_Service_Address_Tel_No_2").show();
+            } else {
+                $("#list_service_address_0__Customer_Service_Address_Tel_No_2").val('');
+                $("#list_service_address_0__Customer_Service_Address_Tel_No_2").hide();
+            }
+            if ($($(".BillingTelNo")[2]).val() != undefined) {
+                var data = $($(".BillingTelNo")[2]).val();
+                $("#list_service_address_0__Customer_Service_Address_Tel_No_3").val(data);
+                $("#list_service_address_0__Customer_Service_Address_Tel_No_3").show();
+            } else {
+                $("#list_service_address_0__Customer_Service_Address_Tel_No_3").val('');
+                $("#list_service_address_0__Customer_Service_Address_Tel_No_3").hide();
+            }
+            if ($($(".BillingTelNo")[3]).val() != undefined) {
+                var data = $($(".BillingTelNo")[3]).val();
+                $("#list_service_address_0__Customer_Service_Address_Tel_No_4").val(data);
+                $("#list_service_address_0__Customer_Service_Address_Tel_No_4").show();
+            } else {
+                $("#list_service_address_0__Customer_Service_Address_Tel_No_4").val('');
+                $("#list_service_address_0__Customer_Service_Address_Tel_No_4").hide();
+            }
+            if ($($(".BillingTelNo")[4]).val() != undefined) {
+                var data = $($(".BillingTelNo")[4]).val();
+                $("#list_service_address_0__Customer_Service_Address_Tel_No_5").val(data);
+                $("#list_service_address_0__Customer_Service_Address_Tel_No_5").show();
+            } else {
+                $("#list_service_address_0__Customer_Service_Address_Tel_No_5").val('');
+                $("#list_service_address_0__Customer_Service_Address_Tel_No_5").hide();
+            }
+
+            $("#list_service_address_0__Customer_Service_Address_Cell_No_1").val(($($(".BillingCellNumber")[0]).val()));
+            if ($($(".BillingCellNumber")[1]).val() != undefined) {
+                var data = $($(".BillingCellNumber")[1]).val();
+                $("#list_service_address_0__Customer_Service_Address_Cell_No_2").val(data);
+                $("#list_service_address_0__Customer_Service_Address_Cell_No_2").show();
+            } else {
+                $("#list_service_address_0__Customer_Service_Address_Cell_No_2").val('');
+                $("#list_service_address_0__Customer_Service_Address_Cell_No_2").hide();
+            }
+            if ($($(".BillingCellNumber")[2]).val() != undefined) {
+                var data = $($(".BillingCellNumber")[2]).val();
+                $("#list_service_address_0__Customer_Service_Address_Cell_No_3").val(data);
+                $("#list_service_address_0__Customer_Service_Address_Cell_No_3").show();
+            } else {
+                $("#list_service_address_0__Customer_Service_Address_Cell_No_3").val('');
+                $("#list_service_address_0__Customer_Service_Address_Cell_No_3").hide();
+            }
+            if ($($(".BillingCellNumber")[3]).val() != undefined) {
+                var data = $($(".BillingCellNumber")[3]).val();
+                $("#list_service_address_0__Customer_Service_Address_Cell_No_4").val(data);
+                $("#list_service_address_0__Customer_Service_Address_Cell_No_4").show();
+            } else {
+                $("#list_service_address_0__Customer_Service_Address_Cell_No_4").val('');
+                $("#list_service_address_0__Customer_Service_Address_Cell_No_4").hide();
+            }
+            if ($($(".BillingCellNumber")[4]).val() != undefined) {
+                var data = $($(".BillingCellNumber")[4]).val();
+                $("#list_service_address_0__Customer_Service_Address_Cell_No_5").val(data);
+                $("#list_service_address_0__Customer_Service_Address_Cell_No_5").show();
+            } else {
+                $("#list_service_address_0__Customer_Service_Address_Cell_No_5").val('');
+                $("#list_service_address_0__Customer_Service_Address_Cell_No_5").hide();
+            }
+
+            $("#list_service_address_0__Customer_Service_Address_Email_1").val(($($(".BillingEmail")[0]).val()));
+            if ($($(".BillingEmail")[1]).val() != undefined) {
+                var data = $($(".BillingEmail")[1]).val();
+                $("#list_service_address_0__Customer_Service_Address_Email_2").val(data);
+                $("#list_service_address_0__Customer_Service_Address_Email_2").show();
+            } else {
+                $("#list_service_address_0__Customer_Service_Address_Email_2").val('');
+                $("#list_service_address_0__Customer_Service_Address_Email_2").hide();
+            }
+            if ($($(".BillingEmail")[2]).val() != undefined) {
+                var data = $($(".BillingEmail")[2]).val();
+                $("#list_service_address_0__Customer_Service_Address_Email_3").val(data);
+                $("#list_service_address_0__Customer_Service_Address_Email_3").show();
+            } else {
+                $("#list_service_address_0__Customer_Service_Address_Email_3").val('');
+                $("#list_service_address_0__Customer_Service_Address_Email_3").hide();
+            }
+            if ($($(".BillingEmail")[3]).val() != undefined) {
+                var data = $($(".BillingEmail")[3]).val();
+                $("#list_service_address_0__Customer_Service_Address_Email_4").val(data);
+                $("#list_service_address_0__Customer_Service_Address_Email_4").show();
+            } else {
+                $("#list_service_address_0__Customer_Service_Address_Email_4").val('');
+                $("#list_service_address_0__Customer_Service_Address_Email_4").hide();
+            }
+            if ($($(".BillingEmail")[4]).val() != undefined) {
+                var data = $($(".BillingEmail")[4]).val();
+                $("#list_service_address_0__Customer_Service_Address_Email_5").val(data);
+                $("#list_service_address_0__Customer_Service_Address_Email_5").show();
+            } else {
+                $("#list_service_address_0__Customer_Service_Address_Email_5").val('');
+                $("#list_service_address_0__Customer_Service_Address_Email_5").hide();
+            }
+            //alert($($(".BillingTelNo")[2]).val());
+            //alert($($(".BillingTelNo")[3]).val());
+            //alert($($(".BillingTelNo")[4]).val());
+
+            //firstServiceElement.find(".ServiceTelNo").val($(".BillingTelNo").val());
+
+            //firstServiceElement.find(".ServiceCellNo").val($(".BillingCellNumber").val());
+
+            //firstServiceElement.find(".ServiceEmail").val($(".BillingEmail").val());
+
+        } else {
+            //$(".SingleServiceAddress").slideDown();
+            //$("#AddServiceAddress").slideDown();
+        }
+    });
+    $(".CustomerStatusID").change(function () {
+        var selectedText = $(".CustomerStatusID option:selected").html();
+        if (selectedText == "Blacklisted") {
+            $(".StatusReason").prop('disabled', false);
+            $(".StatusReason").prop('required', true);
+        }
+        else {
+            $(".StatusReason").prop('disabled', true);
+            $('.StatusReason').removeAttr('required');
+        }
+    });
+
+    function AddCustTelNo(obj) {
+        //var idToAdd = $('.CustTelNo').length - 1;
+        var newel = $('#TelNumber:first').clone().val('');
+        $(newel).insertBefore(obj);
+        newel = $('.deleteTextboxButton:first').clone();
+        $(newel).insertBefore(obj);
+        return false;
+    }
+    function AddCustCellNo(obj) {
+        var newel = $('#CellNumber:first').clone().val('');
+        $(newel).insertBefore(obj);
+        newel = $('.deleteTextboxButton:first').clone();
+        $(newel).insertBefore(obj);
+        return false;
+    }
+
+    function AddCustEmail(obj) {
+        var newel = $('#EmailId:first').clone().val('');
+        $(newel).insertBefore(obj);
+        newel = $('.deleteTextboxButton:first').clone();
+        $(newel).insertBefore(obj);
+        return false;
+    }
+    function AddCustBillTelNo(obj, val) {
+        var idToAdd = $('.BillingTelNo').length - 1;
+        //alert();
+        var newel = $('.BillingTelNo:first').clone().val(val);
+
+        $(newel).attr('id', 'list_billing_address_tel_' + idToAdd + '__Customers_Billing_Address_Tel_No');
+        $(newel).attr('name', 'list_billing_address_tel[' + idToAdd + '].Customers_Billing_Address_Tel_No');
+        $(newel).insertBefore(obj);
+        var idElement = '<input data-val="true" data-val-number="The field Customers_Billing_Address_Tel_No_Mapping_ID must be a number." data-val-required="The Customers_Billing_Address_Tel_No_Mapping_ID field is required." id="list_billing_address_tel_' + idToAdd + '__Customers_Billing_Address_Tel_No_Mapping_ID" name="list_billing_address_tel[' + idToAdd + '].Customers_Billing_Address_Tel_No_Mapping_ID" type="hidden" value="0">';
+        $(idElement).insertBefore($(newel));
+
+        newel = $('.deleteTextboxButton:first').clone();
+        $(newel).insertBefore(obj);
+        return false;
+    }
+    function AddCustBillCellNo(obj, val) {
+        var idToAdd = $('.BillingCellNumber').length - 1;
+        var newel = $('.BillingCellNumber:first').clone().val(val);
+
+        $(newel).attr('id', 'list_billing_address_cell_' + idToAdd + '__Customers_Billing_Address_Cell_No');
+        $(newel).attr('name', 'list_billing_address_cell[' + idToAdd + '].Customers_Billing_Address_Cell_No');
+        $(newel).insertBefore(obj);
+        var idElement = '<input data-val="true" data-val-number="The field Customers_Billing_Address_Cell_No_Mapping_ID must be a number." data-val-required="The Customers_Billing_Address_Cell_No_Mapping_ID field is required." id="list_billing_address_cell_' + idToAdd + '__Customers_Billing_Address_Cell_No_Mapping_ID" name="list_billing_address_cell[' + idToAdd + '].Customers_Billing_Address_Cell_No_Mapping_ID" type="hidden" value="0">';
+        $(idElement).insertBefore($(newel));
+
+        newel = $('.deleteTextboxButton:first').clone();
+        $(newel).insertBefore(obj);
+        return false;
+    }
+
+    function AddCustBillEmail(obj, val) {
+
+        var idToAdd = $('.BillingEmail').length - 1;
+        var newel = $('.BillingEmail:first').clone().val(val);
+        $(newel).attr('id', 'list_billing_address_email_' + idToAdd + '__Customers_Billing_Address_Email');
+        $(newel).attr('name', 'list_billing_address_email[' + idToAdd + '].Customers_Billing_Address_Email');
+        $(newel).insertBefore(obj);
+
+        var idElement = '<input data-val="true" data-val-number="The field Customers_Billing_Address_Email_Mapping_ID must be a number." data-val-required="The Customers_Billing_Address_Email_Mapping_ID field is required." id="list_billing_address_email_' + idToAdd + '__Customers_Billing_Address_Email_Mapping_ID" name="list_billing_address_email[' + idToAdd + '].Customers_Billing_Address_Email_Mapping_ID" type="hidden" value="0">';
+        $(idElement).insertBefore($(newel));
+        newel = $('.deleteTextboxButton:first').clone();
+        $(newel).insertBefore(obj);
+        return false;
+    }
+    function AddServiceEmail(obj) {
+        //var newel = $('#ServiceEmail:first').clone().val('');
+        //$(newel).insertBefore(obj);
+        //newel = $('.deleteTextboxButton:first').clone();
+        //$(newel).insertBefore(obj);
+        var second = $(obj).parent().find(('[id*="Customer_Service_Address_Email_2"]'));
+        var third = $(obj).parent().find(('[id*="Customer_Service_Address_Email_3"]'));
+        var fourth = $(obj).parent().find(('[id*="Customer_Service_Address_Email_4"]'));
+        var fifth = $(obj).parent().find(('[id*="Customer_Service_Address_Email_5"]'));
+        if ($(second).css('display') == 'none') {
+            $(second).css('display', '');
+        } else if ($(third).css('display') == 'none') {
+            $(third).css('display', '');
+        } else if ($(fourth).css('display') == 'none') {
+            $(fourth).css('display', '');
+        } else if ($(fifth).css('display') == 'none') {
+            $(fifth).css('display', '');
+            $(obj).css('display', 'none');
+        }
+        return false;
+    }
+    function AddServiceTelNo(obj) {
+        var second = $(obj).parent().find(('[id*="Customer_Service_Address_Tel_No_2"]'));
+        var third = $(obj).parent().find(('[id*="Customer_Service_Address_Tel_No_3"]'));
+        var fourth = $(obj).parent().find(('[id*="Customer_Service_Address_Tel_No_4"]'));
+        var fifth = $(obj).parent().find(('[id*="Customer_Service_Address_Tel_No_5"]'));
+        if ($(second).css('display') == 'none') {
+            $(second).css('display', '');
+        } else if ($(third).css('display') == 'none') {
+            $(third).css('display', '');
+        } else if ($(fourth).css('display') == 'none') {
+            $(fourth).css('display', '');
+        } else if ($(fifth).css('display') == 'none') {
+            $(fifth).css('display', '');
+            $(obj).css('display', 'none');
+        }
+        return false;
+    }
+
+    function AddServiceCellNo(obj) {
+        var second = $(obj).parent().find(('[id*="Customer_Service_Address_Cell_No_2"]'));
+        var third = $(obj).parent().find(('[id*="Customer_Service_Address_Cell_No_3"]'));
+        var fourth = $(obj).parent().find(('[id*="Customer_Service_Address_Cell_No_4"]'));
+        var fifth = $(obj).parent().find(('[id*="Customer_Service_Address_Cell_No_5"]'));
+        if ($(second).css('display') == 'none') {
+            $(second).css('display', '');
+        } else if ($(third).css('display') == 'none') {
+            $(third).css('display', '');
+        } else if ($(fourth).css('display') == 'none') {
+            $(fourth).css('display', '');
+        } else if ($(fifth).css('display') == 'none') {
+            $(fifth).css('display', '');
+            $(obj).css('display', 'none');
+        }
+        return false;
+    }
+    function deleteTextbox(obj) {
+        debugger;
+        if ($(obj).parent().find('.deleteTextboxButton').length == 1) {
+            alert('At least one is Required!')
+        } else {
+            $(obj).prev().remove();
+            $(obj).remove();
+        }
+    }
+
+    function deleteTextbox(obj) {
+        debugger;
+        if ($(obj).parent().find('.deleteTextboxButton').length == 1) {
+            alert('At least one is Required!')
+        } else {
+            $(obj).prev().remove();
+            $(obj).remove();
+        }
+    }
+
+
+    function populateLocation(obj) {
+
+        if ($(obj).val() == "") {
+            var services = "<select id='LocationID' name = 'LocationID' required='required'>";
+            services = services + '<option value>--SELECT--</option>';
+            services = services + '</select>';
+            $(obj).parent().closest('.SingleServiceAddress').find('#LocationID').html(services);
+            //$(obj).closest("#ServiceID").html(services);
+        }
+        else {
+            $.ajax({
+                type: "post",
+                url: "/Customers/GetServiceLocations",
+                data: { ServiceGroupID: $(obj).val() },
+                datatype: "json",
+                traditional: true,
+                success: function (data) {
+                    var services = "<select id='ServiceID' name = 'ServiceID' required='required'>";
+                    services = services + '<option value="">--SELECT--</option>';
+                    for (var i = 0; i < data.length; i++) {
+                        services = services + '<option value=' + data[i].Value + '>' + data[i].Text + '</option>';
+                    }
+                    services = services + '</select>';
+                    $(obj).parent().closest('.SingleServiceAddress').find('#ServiceID').html(services);
+                    //$(obj).closest('#ServiceID').html(services);
+                }
+            });
+        }
+    }
+
+
+    $('#AddServiceAddress').click(function () {
+
+        // Create clone of <div class='input-form'>
+        var newel = $('.SingleServiceAddress:last').clone();
+
+        newel.find('input').each(function () {
+            // debugger;
+            //alert(this.val());
+            $(this).val('');
+            if ($(this).hasClass('deleteTextboxButton')) {
+                $(this).val('-');
+            }
+        });
+
+        $(newel).find("select").val("");
+        newel.find('.bootstrap-select').replaceWith(function () { return $('select', this); })
+        newel.find('.selectpicker').selectpicker('render');
+        newel.find('.selectpicker').selectpicker('refresh');
+        // Add after last <div class='input-form'>
+        $(newel).insertAfter(".SingleServiceAddress:last");
+        return false;
+    });
+
+    function deleteService(obj) {
+        //alert();
+        if ($('.SingleServiceAddress').length < 2) {
+            alert('At least one Service Address is Required');
+        }
+        else {
+            $(obj).parent().closest('.SingleServiceAddress').remove();
+        }
+
+    }
+
+    function populatecity(obj) {
+
+        if ($(obj).val() == "") {
+            var cities = "<select id='CityID' name = 'CityID' required='required'>";
+            cities = cities + '<option value>--SELECT--</option>';
+            cities = cities + '</select>';
+            $(obj).parent().closest('.SingleServiceAddress').find('#CityID').html(cities);
+            //$(obj).closest("#ServiceID").html(services);
+        }
+        else {
+            $.ajax({
+                type: "post",
+                url: "/Customers/GetServiceCities",
+                data: { ServiceGroupID: $(obj).val() },
+                datatype: "json",
+                traditional: true,
+                success: function (data) {
+                    var cities = "<select id='CityID' name = 'CityID' required='required'>";
+                    cities = cities + '<option value="">--SELECT--</option>';
+                    for (var i = 0; i < data.length; i++) {
+                        cities = cities + '<option value=' + data[i].Value + '>' + data[i].Text + '</option>';
+                    }
+                    cities = cities + '</select>';
+                    $(obj).parent().closest('.SingleServiceAddress').find('#CityID').html(services);
+                    //$(obj).closest('#ServiceID').html(services);
+                }
+            });
+        }
+    }
+</script>
+<style>
+    .deleteTextboxButton {
+        float: right;
+        margin-top: -30px;
+        height: 30px;
+    }
+
+    textarea {
+        max-width: 100% !important;
+    }
+</style>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-actions no-color">
+        <input type="submit" value="Delete" class="btn btn-outline-secondary" style="float:right"/>
+    </div>
+}
+

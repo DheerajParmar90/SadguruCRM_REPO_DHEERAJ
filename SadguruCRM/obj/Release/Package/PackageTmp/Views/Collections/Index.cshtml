@@ -1,0 +1,404 @@
+﻿@model IEnumerable<SadguruCRM.Models.Collection_Entry>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayName("Invoice No")
+            </th>
+            <th>
+                @Html.DisplayName("Invoice Date")
+            </th>
+            <th>
+                @Html.DisplayName("Customer Name")
+            </th>
+            <th>
+                @Html.DisplayName("Total Amount")
+            </th>
+            <th>
+                @Html.DisplayName("Already Paid")
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Amount)
+            </th>
+            <th>
+                @Html.DisplayName("Received On")
+            </th>
+            @*<th>
+            @Html.DisplayName("TDS applicable")
+        </th>*@
+            <th>
+                @Html.DisplayName("TDS Amount")
+            </th>
+            <th>
+                @Html.DisplayName("Bad Debts Amount")
+            </th>
+            <th>
+                @Html.DisplayName("Cheque No")
+            </th>
+            <th>
+                @Html.DisplayName("Cheque Date")
+            </th>
+            <th>
+                @Html.DisplayName("Cheque Name")
+            </th>
+            <th>
+                @Html.DisplayName("Drawee Name")
+            </th>
+            <th>
+                @Html.DisplayName("Bank Name")
+            </th>
+            <th>
+                @Html.DisplayName("Invoice No")
+            </th>
+            @*<th>
+            @Html.DisplayName(model => model.Lead.Title)
+        </th>*@
+            <th>
+                @Html.DisplayName("Payment Mode")
+            </th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.HiddenFor(modelItem => item.InvoiceID)
+                @Html.DisplayFor(modelItem => item.Invoice.InvoiceNo)
+            </td>
+            <td>
+                @Html.TextBoxFor(modelItem => item.Invoice.InvoiceDate, "{0:dd/MM/yyyy}", htmlAttributes: new { @type = "hidden" })
+                @Html.ValueFor(modelItem => item.Invoice.InvoiceDate, "{0:dd/MM/yyyy}")
+            </td>
+            <td>
+                @Html.HiddenFor(modelItem => item.Invoice.Customer.CustomerName)
+                @Html.DisplayFor(modelItem => item.Invoice.Customer.CustomerName)
+            </td>
+            <td>
+                @Html.HiddenFor(modelItem => item.Invoice.FinalInvoiceRate)
+                @Html.DisplayFor(modelItem => item.Invoice.FinalInvoiceRate)
+            </td>
+            <td>
+                @*It is acually Total Paid Amount*@
+                @Html.HiddenFor(modelItem => item.Invoice.BalanceAmount)
+                @Html.DisplayFor(modelItem => item.Invoice.BalanceAmount)
+            </td>
+            @*<td>
+            @Html.HiddenFor(modelItem => item.LeadID)
+            @Html.DisplayFor(modelItem => item.LeadID)
+        </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.Amount)
+            </td>
+            <td>
+                @Html.ValueFor(modelItem => item.ReceivedOn, "{0:dd/MM/yyyy}")
+            </td>
+            @*<td>
+
+            @if (item.TDSapplicable)
+            {
+                <i class="fa fa-check" aria-hidden="true"></i>
+            }
+            else
+            {
+                <i class="fa fa-ban" aria-hidden="true"></i>
+            }
+        </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.TDSAmount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BadDebtsAmount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ChequeNo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ChequeDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ChequeName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DraweeName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Bank_Master.BankName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Invoice.InvoiceNo)
+            </td>
+            @*<td>
+            @Html.DisplayFor(modelItem => item.Lead.Title)
+        </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.PaymentMode.PaymentModeName)
+            </td>
+            <td>
+                @Html.ActionLink(" ", "Entry", new { id = item.Collection_Entry_ID }, new { @class = "fa fa-plus" })
+            </td>
+            <td>
+                @Html.ActionLink(" ", "Edit", new { id = item.Collection_Entry_ID }, new { @class = "fa fa-edit" })
+            </td>
+            <td>@Html.ActionLink(" ", "Details", new { id = item.Collection_Entry_ID }, new { @class = "fa fa-info" })</td>
+            <td>@Html.ActionLink(" ", "Delete", new { id = item.Collection_Entry_ID }, new { @class = "fa fa-trash" })</td>
+        </tr>
+        }
+    </tbody>
+</table>
+<div class="modal" id="myModal">
+    <div class="modal-dialog  modal-dialog-scrollable" style="max-width: 90% !important;">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Add Collection Entry for</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="form-group row">
+                    <div class="col">
+
+                        @Html.Label("Customer Name", "Customer Name", htmlAttributes: new { @class = "control-label" })
+                        @Html.Editor("Customer Name", new { htmlAttributes = new { @class = "form-control", @disabled = "disabled", } })
+                        @Html.ValidationMessage("CustomerName", "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col">
+                        @Html.Label("InvoiceDate", "Invoice Date", htmlAttributes: new { @class = "control-label" })
+                        @Html.Editor("InvoiceDate", new { htmlAttributes = new { @class = "form-control", @disabled = "disabled", } })
+                        @Html.ValidationMessage("InvoiceDate", "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col">
+                        @Html.Label("TotalAmount", "Total Amount", htmlAttributes: new { @class = "control-label" })
+                        @Html.Editor("TotalAmount", new { htmlAttributes = new { @class = "form-control", @disabled = "disabled", } })
+                        @Html.ValidationMessage("TotalAmount", "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col">
+                        @Html.Label("AlreadyPaid", "Already Paid", htmlAttributes: new { @class = "control-label" })
+                        @Html.Editor("AlreadyPaid", new { htmlAttributes = new { @class = "form-control", @disabled = "disabled", @type = "number" } })
+                        @Html.ValidationMessage("Already Paid", "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col">
+
+                    </div>
+                </div>
+                    <div class="form-group row">
+                        <div class="col">
+                            @Html.Label("PaidByCustomer", "Paid By Customer", htmlAttributes: new { @class = "control-label" })
+                            @Html.Editor("PaidByCustomer", new { htmlAttributes = new { @class = "form-control", @type = "number" } })
+                            @Html.ValidationMessage("PaidByCustomer", "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col">
+                            @Html.Label("BalanceAmount", "Balance Amount", htmlAttributes: new { @class = "control-label" })
+                            @Html.Editor("BalanceAmount", new { htmlAttributes = new { @class = "form-control", @disabled = "disabled", @type = "number" } })
+                            @Html.ValidationMessage("BalanceAmount", "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col" id="divReceivedOn">
+                            @Html.Label("Payment Received On", htmlAttributes: new { @class = "control-label" })
+                            @Html.Editor("PaymentReceivedOn", new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessage("PaymentReceivedOn", "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col" id="divTDSapplicable">
+                            @Html.Label("TDS Applicable", htmlAttributes: new { @class = "control-label" })
+                            <div class="checkbox">
+                                @Html.CheckBox("TDSapplicable")
+                                @Html.ValidationMessage("TDSapplicable", "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="col" id="divTDSAmount">
+                            @Html.Label("TDS Amount", htmlAttributes: new { @class = "control-label" })
+                            @Html.Editor("TDSAmount", new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessage("TDSAmount", "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col" id="divBadDebtsAmount">
+                            @Html.Label("Bad Debts Amount", htmlAttributes: new { @class = "control-label" })
+                            @Html.Editor("BadDebtsAmount", new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessage("BadDebtsAmount", "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-2">
+                            @Html.Label("PaymentModeID", "Payment Mode", htmlAttributes: new { @class = "control-label" })
+                            @Html.DropDownList("PaymentModeID", (SelectList)ViewBag.PaymentModes, "--SELECT--", htmlAttributes: new { @class = "form-control", required = "required" })
+                            @Html.ValidationMessage("PaymentModeID", "", new { @class = "text-danger" })
+                        </div>
+                        @*<div class="col-2" style="display:none;" id="divAmount">
+                    @Html.LabelFor(model => model.Amount, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.Amount, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Amount, "", new { @class = "text-danger" })
+                </div>*@
+                        <div class="col-2" style="display:none;" id="divChequeNo">
+                            @Html.Label("ChequeNo", htmlAttributes: new { @class = "control-label" })
+                            @Html.Editor("ChequeNo", new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessage("ChequeNo", "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-2" style="display:none;" id="divChequeDate">
+                            @Html.Label("ChequeDate", htmlAttributes: new { @class = "control-label" })
+                            @Html.Editor("ChequeDate", new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessage("ChequeDate", "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-2" style="display:none;" id="divChequeName">
+                            @Html.Label("ChequeName", htmlAttributes: new { @class = "control-label" })
+                            @Html.Editor("ChequeName", new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessage("ChequeName", "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-2" style="display:none;" id="divBankID">
+                            @Html.Label("BankID", "BankID", htmlAttributes: new { @class = "control-label" })
+                            @Html.DropDownList("BankID", null, "--SELECT--", htmlAttributes: new { @class = "form-control" })
+                            @Html.ValidationMessage("BankID", "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-2" style="display:none;" id="divDraweeName">
+                            @Html.Label("DraweeName", htmlAttributes: new { @class = "control-label" })
+                            @Html.Editor("DraweeName", new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessage("DraweeName", "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Save</button>
+                </div>
+
+            </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+
+        var table = $('.table').DataTable({
+            "bPaginate": false,
+            fixedHeader: true,
+        });
+
+        $('.table thead tr:first th').each( function () {
+            var title = $('.table thead th').eq( $(this).index() ).text();
+            $(this).html( '<input type="text" placeholder="Search '+title+'" class="column_search"/>' );
+        } );
+        //table.columns().every(function () {
+        //    var column = this;
+
+        //    $('input', this.header()).on('keyup change', function () {
+        //        column
+        //            .search(this.value)
+        //            .draw();
+        //    });
+        //});
+        $('.table thead tr:first th').on( 'keyup', ".column_search",function () {
+            table
+                .column( $(this).parent().index() )
+                .search( this.value )
+                .draw();
+        });
+        $(".dataTables_filter").css("display", "none");
+        $('.dataTables_filter input[type="search"]').css(
+             {'width':'350px','display':'inline-block'}
+          );
+    });
+    $(".fa-plus").click(function () {
+        debugger;
+        
+        if ($(this).parents("tr").find("#item_InvoiceID")[0].value != "") {
+            $("#myModal .modal-title").text("Add Collection Entry for Invoice ID: " + $(this).parents("tr").find("#item_InvoiceID")[0].value);
+            $("#Customer_Name").val($(this).parents("tr").find("#item_Invoice_Customer_CustomerName")[0].value) 
+            $("#InvoiceDate").val($(this).parents("tr").find("#item_Invoice_InvoiceDate")[0].value) 
+            $("#TotalAmount").val($(this).parents("tr").find("#item_Invoice_FinalInvoiceRate")[0].value) 
+            $("#AlreadyPaid").val($(this).parents("tr").find("#item_Invoice_BalanceAmount")[0].value) 
+            
+            
+        } else if($(this).parents("tr").find("#item_LeadID")[0].value != ""){
+            $("#myModal .modal-title").text("Add Collection Entry for Lead ID: " +$(this).parents("tr").find("#item_LeadID")[0].value );
+        }
+        $('#myModal').modal('show');
+        return false;
+    });
+    $("#PaymentModeID").change(function () {
+        var selected = $("#PaymentModeID option:selected").html();
+        if (selected == "NEFT") {
+            $("#divChequeNo").hide();
+            $("#ChequeNo").val("");
+            $("#divChequeDate").hide();
+            $("#ChequeDate").val("");
+            $("#divChequeName").hide();
+            $("#ChequeName").val("");
+            $("#divBankID").show();
+            $("#BankID").val("");
+            $("#divDraweeName").show();
+            $("#DraweeName").val("");
+        } else if (selected == "UPI") {
+
+            $("#divChequeNo").hide();
+            $("#ChequeNo").val("");
+            $("#divChequeDate").hide();
+            $("#ChequeDate").val("");
+            $("#divChequeName").hide();
+            $("#ChequeName").val("");
+            $("#divBankID").show();
+            $("#BankID").val("");
+            $("#divDraweeName").show();
+            $("#DraweeName").val("");
+        } else if (selected == "CASH" || $("#PaymentModeID").val() == "") {
+            $("#divChequeNo").hide();
+            $("#ChequeNo").val("");
+            $("#divChequeDate").hide();
+            $("#ChequeDate").val("");
+            $("#divChequeName").hide();
+            $("#ChequeName").val("");
+            $("#divBankID").hide();
+            $("#BankID").val("");
+            $("#divDraweeName").hide();
+            $("#DraweeName").val("");
+        } else if (selected == "CHEQUE") {
+            $("#divChequeNo").show();
+            $("#ChequeNo").val("");
+            $("#divChequeDate").show();
+            $("#ChequeDate").val("");
+            $("#divChequeName").show();
+            $("#ChequeName").val("");
+            $("#divBankID").show();
+            $("#BankID").val("");
+            $("#divDraweeName").hide();
+            $("#DraweeName").val("");
+        }
+    });
+</script>

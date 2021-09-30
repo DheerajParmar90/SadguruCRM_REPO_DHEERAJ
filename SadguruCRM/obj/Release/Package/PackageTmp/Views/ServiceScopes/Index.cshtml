@@ -1,0 +1,105 @@
+﻿@model IEnumerable<SadguruCRM.Models.Service_Scope_Master>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Service Scopes</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayName("Service")
+        </th>
+        <th>
+            @Html.DisplayName("Sub Service")
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Service_Scope)
+        </th>
+
+        <th>
+            @Html.DisplayName("Created By")
+        </th>
+        <th>
+            @Html.DisplayName("Created On")
+        </th>
+        <th>
+            @Html.DisplayName("Last Updated On")
+        </th>
+        <th>
+            @Html.DisplayName("Last Updated By")
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ServiceGroup.ServiceGroup1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Service.ServiceName)
+            </td>
+            <td>
+
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#headerModal" onclick="showHeader(this);">
+                    View
+                </button>
+                @Html.HiddenFor(modelItem => item.Service_Scope)
+                @*@Html.DisplayFor(modelItem => item.Service_Scope)*@
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserLogin.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedOn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastUpdatedOn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastUpdatedByUserID)
+            </td>
+            <td>
+                @Html.ActionLink(" ", "Edit", new { id = item.Service_Scope_ID }, new { @class = "fa fa-edit" }) |
+                @Html.ActionLink(" ", "Details", new { id = item.Service_Scope_ID }, new { @class = "fa fa-info" }) |
+                @Html.ActionLink(" ", "Delete", new { id = item.Service_Scope_ID }, new { @class = "fa fa-trash" })
+            </td>
+        </tr>
+    }
+
+</table>
+
+<div class="modal fade" id="headerModal" tabindex="-1" role="dialog" aria-labelledby="headerModal" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalLongTitle">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="headerModalBody">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function showHeader(obj) {
+        $("#headerModalBody").html($(obj).next("#item_Service_Scope").val());
+        $("#modalLongTitle").text("Service Scope");
+    }
+    function showFooter(obj) {
+        $("#headerModalBody").html($(obj).next("#item_Document_Footer").val());
+        $("#modalLongTitle").text("Footer");
+    }
+</script>

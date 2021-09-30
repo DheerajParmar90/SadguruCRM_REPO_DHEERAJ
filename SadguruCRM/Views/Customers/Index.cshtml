@@ -1,0 +1,154 @@
+﻿@model IEnumerable<SadguruCRM.Models.Customer>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="row">
+    <div class="col">
+        <h2>Customers</h2>
+    </div>
+    <div class="pull-right">
+        @Html.ActionLink("New Customer", "Create", null, new { @type = "button", @class = "btn btn-outline-secondary" })
+        @Html.ActionLink("Export", "Export", null, new { @type = "button", @class = "btn btn-outline-secondary" })
+        <button class="btn btn-outline-secondary"><i class="fa fa-pie-chart"></i></button>
+    </div>
+
+</div>
+<table class="table display cell-border" id="customers">
+    <thead>
+        <tr>
+            <th style="display:none"></th>
+            <th>
+            </th>
+            <th>
+            </th>
+            <th>
+            </th>
+            <th>
+            </th>
+            <th>
+            </th>
+            <th>
+            </th>
+            <th>
+            </th>
+            <th>
+            </th>
+            <th></th>
+            <th></th>
+        </tr>
+        <tr>
+            <th style="display:none">
+                @Html.DisplayName("Customer ID")
+            </th>
+            <th>
+                @Html.DisplayName("Customer ID")
+            </th>
+            <th>
+                @Html.DisplayName("Date")
+            </th>
+            <th>
+                @Html.DisplayName("Customer Name")
+            </th>
+            <th>
+                @Html.DisplayName("Location")
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CustomerType)
+            </th>
+            <th>
+                @Html.DisplayName("Required Services")
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TelNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CellNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CustomerStatu.Status)
+            </th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td style="display:none">
+                @Html.DisplayFor(modelItem => item.CustomerID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CustomerNo)
+            </td>
+            <td>
+                @Html.ValueFor(modelItem => item.CustomerDate, "{0:dd/MM/yyyy}")
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CustomerName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CustomerType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StatusReason)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TelNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CellNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CustomerStatu.Status)
+            </td>
+            @*<td>
+            @Html.DisplayFor(modelItem => item.UserLogin1.UserName)
+        </td>*@
+            <td>
+                @Html.ActionLink(" ", "Edit", new { id = item.CustomerID }, new { @class = "fa fa-edit" }) |
+                @Html.ActionLink(" ", "Details", new { id = item.CustomerID }, new { @class = "fa fa-info" }) |
+                @Html.ActionLink(" ", "Delete", new { id = item.CustomerID }, new { @class = "fa fa-trash" })
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>
+
+<script>
+    var table;
+    $(document).ready(function () {
+        table = $('#customers').DataTable({
+            fixedHeader: true,
+            order: [[0, 'desc']],
+            "pageLength": 25
+        });
+        var colindex = 1;
+        $('#customers thead tr:first th').each(function () {
+            if (colindex < 11) {
+                $(this).html('<input type="text" class="column_search"/>');
+            } else if (colindex == 11) {
+                $(this).html('<input type="button" value="RESET" class="btn btn-sm btn-outline-secondary" id="reset" onclick="clearSearchBoxes();"/>');
+            }
+            colindex++;
+        });
+        $('#customers thead tr:first th').on('keyup', ".column_search", function () {
+            table
+                .column($(this).parent().index())
+                .search(this.value)
+                .draw();
+        });
+        $(".dataTables_filter").css("display", "none");
+    });
+    function clearSearchBoxes() {
+        var searchBoxes = $(".column_search");
+        for (var i = 0; i < searchBoxes.length; i++) {
+            $(searchBoxes[i]).val("");
+        }
+        table.search('').columns().search('').draw();
+    };
+</script>

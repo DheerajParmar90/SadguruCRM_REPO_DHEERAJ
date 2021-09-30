@@ -1,0 +1,106 @@
+﻿@model SadguruCRM.Models.Service_Estimate_Templates
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Service_Estimate_Templates</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Subject)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Subject)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.General_Instruction)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.General_Instruction)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.General_Disinfestation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.General_Disinfestation)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Frequency_Of_Services)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Frequency_Of_Services)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Charges_Per_Annum)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Charges_Per_Annum)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Terms_Of_Payment)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Terms_Of_Payment)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedOn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedOn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastUpdatedOn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastUpdatedOn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastUpdatedByUserID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastUpdatedByUserID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserLogin.UserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserLogin.UserName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Service.ServiceName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Service.ServiceName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Service_Estimate_Template_ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,2209 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="SadguruCRMModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Branch">
+    <Key>
+      <PropertyRef Name="BranchID" />
+    </Key>
+    <Property Name="BranchID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="BranchName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastUpdatedDate" Type="DateTime" Precision="3" />
+    <Property Name="CreatedByUserID" Type="Int32" />
+    <Property Name="UpdatedByUserID" Type="Int32" />
+    <NavigationProperty Name="UserLogin" Relationship="Self.FK__Branches__Create__690797E6" FromRole="Branches" ToRole="UserLogins" />
+    <NavigationProperty Name="UserLogin1" Relationship="Self.FK__Branches__Update__6DCC4D03" FromRole="Branches" ToRole="UserLogins" />
+    <NavigationProperty Name="Contracts" Relationship="Self.FK__Contracts__Branc__361203C5" FromRole="Branches" ToRole="Contracts" />
+    <NavigationProperty Name="Customers" Relationship="Self.FK__Customers__Branc__13F1F5EB" FromRole="Branches" ToRole="Customers" />
+    <NavigationProperty Name="Leads" Relationship="Self.FK__Leads__BranchID__3E1D39E1" FromRole="Branches" ToRole="Leads" />
+  </EntityType>
+  <EntityType Name="City">
+    <Key>
+      <PropertyRef Name="CityID" />
+    </Key>
+    <Property Name="CityID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CityName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastUpdatedDate" Type="DateTime" Precision="3" />
+    <Property Name="CreatedByUserID" Type="Int32" />
+    <Property Name="UpdatedByUserID" Type="Int32" />
+    <NavigationProperty Name="UserLogin" Relationship="Self.FK__Cities__CreatedB__69FBBC1F" FromRole="Cities" ToRole="UserLogins" />
+    <NavigationProperty Name="UserLogin1" Relationship="Self.FK__Cities__UpdatedB__6EC0713C" FromRole="Cities" ToRole="UserLogins" />
+    <NavigationProperty Name="Customers_Billing_Address_Mapping" Relationship="Self.FK__Customers__CityI__43A1090D" FromRole="Cities" ToRole="Customers_Billing_Address_Mapping" />
+    <NavigationProperty Name="Customers_Service_Address_Mapping" Relationship="Self.FK__Customers__CityI__4959E263" FromRole="Cities" ToRole="Customers_Service_Address_Mapping" />
+    <NavigationProperty Name="Leads" Relationship="Self.FK__Leads__CityID__3F115E1A" FromRole="Cities" ToRole="Leads" />
+  </EntityType>
+  <EntityType Name="Contract_Customer_Service_Address_Mapping">
+    <Key>
+      <PropertyRef Name="Contract_Customer_Service_Address_Mapping_ID" />
+    </Key>
+    <Property Name="Contract_Customer_Service_Address_Mapping_ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ContractID" Type="Int32" Nullable="false" />
+    <Property Name="Customers_Service_Address_Mapping_ID" Type="Int64" Nullable="false" />
+    <NavigationProperty Name="Contract" Relationship="Self.FK__Contract___Contr__408F9238" FromRole="Contract_Customer_Service_Address_Mapping" ToRole="Contracts" />
+    <NavigationProperty Name="Customers_Service_Address_Mapping" Relationship="Self.FK__Contract___Custo__4183B671" FromRole="Contract_Customer_Service_Address_Mapping" ToRole="Customers_Service_Address_Mapping" />
+  </EntityType>
+  <EntityType Name="Contract_Customer_Service_Mapping">
+    <Key>
+      <PropertyRef Name="Contract_Customer_Service_Mapping_ID" />
+    </Key>
+    <Property Name="Contract_Customer_Service_Mapping_ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ContractID" Type="Int32" Nullable="false" />
+    <Property Name="Customer_Services_Mapping_ID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Contract" Relationship="Self.FK__Contract___Contr__4B0D20AB" FromRole="Contract_Customer_Service_Mapping" ToRole="Contracts" />
+    <NavigationProperty Name="Customer_Services_Mapping" Relationship="Self.FK__Contract___Custo__4C0144E4" FromRole="Contract_Customer_Service_Mapping" ToRole="Customer_Services_Mapping" />
+  </EntityType>
+  <EntityType Name="Contract">
+    <Key>
+      <PropertyRef Name="ContractID" />
+    </Key>
+    <Property Name="ContractID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ContractNo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ContractDate" Type="DateTime" Precision="3" />
+    <Property Name="TypeOfContract" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="PeriodOfContract" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="PurchaseOrderNo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="PurchaseOtrderDate" Type="DateTime" Precision="3" />
+    <Property Name="TermsOfPayment" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="CustomerID" Type="Int64" Nullable="false" />
+    <Property Name="SiteAddressSameAsBillingAddress" Type="Boolean" Nullable="false" />
+    <Property Name="Remark" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="PaidByCustomer" Type="Boolean" Nullable="false" />
+    <Property Name="BalanceAmount" Type="Int32" Nullable="false" />
+    <Property Name="ModeOfPayment" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="PAymentTerms" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="BranchID" Type="Int32" Nullable="false" />
+    <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="LastUpdatedDate" Type="DateTime" Precision="3" />
+    <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+    <Property Name="LastUpdatedBy" Type="Int32" />
+    <NavigationProperty Name="Branch" Relationship="Self.FK__Contracts__Branc__361203C5" FromRole="Contracts" ToRole="Branches" />
+    <NavigationProperty Name="Contract_Customer_Service_Address_Mapping" Relationship="Self.FK__Contract___Contr__408F9238" FromRole="Contracts" ToRole="Contract_Customer_Service_Address_Mapping" />
+    <NavigationProperty Name="Contract_Customer_Service_Mapping" Relationship="Self.FK__Contract___Contr__4B0D20AB" FromRole="Contracts" ToRole="Contract_Customer_Service_Mapping" />
+    <NavigationProperty Name="UserLogin" Relationship="Self.FK__Contracts__Creat__37FA4C37" FromRole="Contracts" ToRole="UserLogins" />
+    <NavigationProperty Name="Customer" Relationship="Self.FK__Contracts__Custo__351DDF8C" FromRole="Contracts" ToRole="Customers" />
+    <NavigationProperty Name="UserLogin1" Relationship="Self.FK__Contracts__LastU__38EE7070" FromRole="Contracts" ToRole="UserLogins" />
+  </EntityType>
+  <EntityType Name="Customer_Services_Mapping">
+    <Key>
+      <PropertyRef Name="Customer_Services_Mapping_ID" />
+    </Key>
+    <Property Name="Customer_Services_Mapping_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CustomerID" Type="Int64" Nullable="false" />
+    <Property Name="ServiceID" Type="Int32" Nullable="false" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastUpdatedDate" Type="DateTime" Precision="3" />
+    <Property Name="ServiceGroupID" Type="Int32" Nullable="false" />
+    <Property Name="FrequencyOfServiceID" Type="Int32" Nullable="false" />
+    <Property Name="Rate" Type="Int32" Nullable="false" />
+    <Property Name="GST" Type="Boolean" />
+    <Property Name="Qty" Type="Int16" />
+    <Property Name="Tax" Type="Int32" />
+    <Property Name="FinalRatePerService" Type="Int32" />
+    <NavigationProperty Name="Contract_Customer_Service_Mapping" Relationship="Self.FK__Contract___Custo__4C0144E4" FromRole="Customer_Services_Mapping" ToRole="Contract_Customer_Service_Mapping" />
+    <NavigationProperty Name="Customer" Relationship="Self.FK__Customer___Custo__46486B8E" FromRole="Customer_Services_Mapping" ToRole="Customers" />
+    <NavigationProperty Name="FrequencyOfService" Relationship="Self.FK__Customer___Frequ__45544755" FromRole="Customer_Services_Mapping" ToRole="FrequencyOfService" />
+    <NavigationProperty Name="Service" Relationship="Self.FK__Customer___Servi__473C8FC7" FromRole="Customer_Services_Mapping" ToRole="Services" />
+    <NavigationProperty Name="ServiceGroup" Relationship="Self.FK__Customer___Servi__4830B400" FromRole="Customer_Services_Mapping" ToRole="ServiceGroups" />
+  </EntityType>
+  <EntityType Name="Customer">
+    <Key>
+      <PropertyRef Name="CustomerID" />
+    </Key>
+    <Property Name="CustomerID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CustomerName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="CustomerType" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="StatusReason" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="TelNumber" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="CellNumber" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="EmailId" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="GstinNo" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="Industry" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Remarks" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="BranchID" Type="Int32" Nullable="false" />
+    <Property Name="SourceID" Type="Int32" Nullable="false" />
+    <Property Name="SubSourceID" Type="Int32" Nullable="false" />
+    <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+    <Property Name="LastupdatedOn" Type="DateTime" Precision="3" />
+    <Property Name="LastupdatedBy" Type="Int32" Nullable="false" />
+    <Property Name="CustomerStatusID" Type="Int64" Nullable="false" />
+    <Property Name="ConsultPerson" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ConsultPersonDesignation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="IsBillAddSame" Type="Boolean" Nullable="false" />
+    <Property Name="FirstName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="LastName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="Title" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="DOB" Type="DateTime" Precision="3" />
+    <Property Name="FacebookLink" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="TwitterLink" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="LinkedInLink" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ReligionID" Type="Int32" />
+    <Property Name="LocationID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Branch" Relationship="Self.FK__Customers__Branc__13F1F5EB" FromRole="Customers" ToRole="Branches" />
+    <NavigationProperty Name="Contracts" Relationship="Self.FK__Contracts__Custo__351DDF8C" FromRole="Customers" ToRole="Contracts" />
+    <NavigationProperty Name="Customer_Services_Mapping" Relationship="Self.FK__Customer___Custo__46486B8E" FromRole="Customers" ToRole="Customer_Services_Mapping" />
+    <NavigationProperty Name="UserLogin" Relationship="Self.FK__Customers__Creat__16CE6296" FromRole="Customers" ToRole="UserLogins" />
+    <NavigationProperty Name="CustomerStatu" Relationship="Self.FK__Customers__Custo__2334397B" FromRole="Customers" ToRole="CustomerStatus" />
+    <NavigationProperty Name="Customers_Consult_Person_Mapping" Relationship="Self.FK__Customers__Custo__2610A626" FromRole="Customers" ToRole="Customers_Consult_Person_Mapping" />
+    <NavigationProperty Name="Customers_Billing_Address_Mapping" Relationship="Self.FK__Customers__Custo__41B8C09B" FromRole="Customers" ToRole="Customers_Billing_Address_Mapping" />
+    <NavigationProperty Name="Customers_Service_Address_Mapping" Relationship="Self.FK__Customers__Custo__477199F1" FromRole="Customers" ToRole="Customers_Service_Address_Mapping" />
+    <NavigationProperty Name="UserLogin1" Relationship="Self.FK__Customers__Lastu__214BF109" FromRole="Customers" ToRole="UserLogins" />
+    <NavigationProperty Name="Location" Relationship="Self.FK__Customers__Locat__52AE4273" FromRole="Customers" ToRole="Locations" />
+    <NavigationProperty Name="Religion" Relationship="Self.FK__Customers__Relig__51BA1E3A" FromRole="Customers" ToRole="Religions" />
+    <NavigationProperty Name="Source" Relationship="Self.FK__Customers__Sourc__14E61A24" FromRole="Customers" ToRole="Sources" />
+    <NavigationProperty Name="Source1" Relationship="Self.FK__Customers__SubSo__15DA3E5D" FromRole="Customers" ToRole="Sources" />
+    <NavigationProperty Name="Estimates" Relationship="Self.FK__Estimates__Custo__084B3915" FromRole="Customers" ToRole="Estimates" />
+  </EntityType>
+  <EntityType Name="Customers_Billing_Address_Cell_No_Mapping">
+    <Key>
+      <PropertyRef Name="Customers_Billing_Address_Cell_No_Mapping_ID" />
+    </Key>
+    <Property Name="Customers_Billing_Address_Cell_No_Mapping_ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Customers_Billing_Address_Mapping_ID" Type="Int64" Nullable="false" />
+    <Property Name="Customers_Billing_Address_Cell_No" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Customers_Service_Address_Mapping" Relationship="Self.FK__Customers__Custo__5D60DB10" FromRole="Customers_Billing_Address_Cell_No_Mapping" ToRole="Customers_Service_Address_Mapping" />
+  </EntityType>
+  <EntityType Name="Customers_Billing_Address_Email_Mapping">
+    <Key>
+      <PropertyRef Name="Customers_Billing_Address_Email_Mapping_ID" />
+    </Key>
+    <Property Name="Customers_Billing_Address_Email_Mapping_ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Customers_Billing_Address_Mapping_ID" Type="Int64" Nullable="false" />
+    <Property Name="Customers_Billing_Address_Email" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Customers_Service_Address_Mapping" Relationship="Self.FK__Customers__Custo__56B3DD81" FromRole="Customers_Billing_Address_Email_Mapping" ToRole="Customers_Service_Address_Mapping" />
+  </EntityType>
+  <EntityType Name="Customers_Billing_Address_Mapping">
+    <Key>
+      <PropertyRef Name="Customers_Billing_Address_Mapping_ID" />
+    </Key>
+    <Property Name="Customers_Billing_Address_Mapping_ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CustomerID" Type="Int64" Nullable="false" />
+    <Property Name="BillingLocationID" Type="Int32" Nullable="false" />
+    <Property Name="CityID" Type="Int32" Nullable="false" />
+    <Property Name="Pincode" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+    <Property Name="StateID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="City" Relationship="Self.FK__Customers__CityI__43A1090D" FromRole="Customers_Billing_Address_Mapping" ToRole="Cities" />
+    <NavigationProperty Name="Customer" Relationship="Self.FK__Customers__Custo__41B8C09B" FromRole="Customers_Billing_Address_Mapping" ToRole="Customers" />
+    <NavigationProperty Name="Location" Relationship="Self.FK__Customers__Locat__42ACE4D4" FromRole="Customers_Billing_Address_Mapping" ToRole="Locations" />
+    <NavigationProperty Name="State" Relationship="Self.FK__Customers__State__44952D46" FromRole="Customers_Billing_Address_Mapping" ToRole="States" />
+  </EntityType>
+  <EntityType Name="Customers_Billing_Address_Tel_No_Mapping">
+    <Key>
+      <PropertyRef Name="Customers_Billing_Address_Tel_No_Mapping_ID" />
+    </Key>
+    <Property Name="Customers_Billing_Address_Tel_No_Mapping_ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Customers_Billing_Address_Mapping_ID" Type="Int64" Nullable="false" />
+    <Property Name="Customers_Billing_Address_Tel_No" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Customers_Service_Address_Mapping" Relationship="Self.FK__Customers__Custo__5A846E65" FromRole="Customers_Billing_Address_Tel_No_Mapping" ToRole="Customers_Service_Address_Mapping" />
+  </EntityType>
+  <EntityType Name="Customers_Consult_Person_Cell_No_Mapping">
+    <Key>
+      <PropertyRef Name="Customers_Consult_Person_Cell_No_Mapping_ID" />
+    </Key>
+    <Property Name="Customers_Consult_Person_Cell_No_Mapping_ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Customers_Consult_Person_Mapping_ID" Type="Int64" Nullable="false" />
+    <Property Name="Consult_Person_Cell_No" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Customers_Consult_Person_Mapping" Relationship="Self.FK__Customers__Custo__2DB1C7EE" FromRole="Customers_Consult_Person_Cell_No_Mapping" ToRole="Customers_Consult_Person_Mapping" />
+  </EntityType>
+  <EntityType Name="Customers_Consult_Person_Email_Mapping">
+    <Key>
+      <PropertyRef Name="Customers_Consult_Person_Email_Mapping_ID" />
+    </Key>
+    <Property Name="Customers_Consult_Person_Email_Mapping_ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Customers_Consult_Person_Mapping_ID" Type="Int64" Nullable="false" />
+    <Property Name="Consult_Person_Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Customers_Consult_Person_Mapping" Relationship="Self.FK__Customers__Custo__308E3499" FromRole="Customers_Consult_Person_Email_Mapping" ToRole="Customers_Consult_Person_Mapping" />
+  </EntityType>
+  <EntityType Name="Customers_Consult_Person_Mapping">
+    <Key>
+      <PropertyRef Name="Customers_Consult_Person_Mapping_ID" />
+    </Key>
+    <Property Name="Customers_Consult_Person_Mapping_ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CustomerID" Type="Int64" Nullable="false" />
+    <Property Name="Consult_Person_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="Consult_Person_Designation" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+    <Property Name="LastupdatedOn" Type="DateTime" Precision="3" />
+    <Property Name="LastupdatedBy" Type="Int32" />
+    <NavigationProperty Name="Customer" Relationship="Self.FK__Customers__Custo__2610A626" FromRole="Customers_Consult_Person_Mapping" ToRole="Customers" />
+    <NavigationProperty Name="Customers_Consult_Person_Cell_No_Mapping" Relationship="Self.FK__Customers__Custo__2DB1C7EE" FromRole="Customers_Consult_Person_Mapping" ToRole="Customers_Consult_Person_Cell_No_Mapping" />
+    <NavigationProperty Name="Customers_Consult_Person_Email_Mapping" Relationship="Self.FK__Customers__Custo__308E3499" FromRole="Customers_Consult_Person_Mapping" ToRole="Customers_Consult_Person_Email_Mapping" />
+    <NavigationProperty Name="UserLogin" Relationship="Self.FK__Customers__Creat__2704CA5F" FromRole="Customers_Consult_Person_Mapping" ToRole="UserLogins" />
+    <NavigationProperty Name="Customers_Consult_Person_Tel_No_Mapping" Relationship="Self.FK__Customers__Custo__2AD55B43" FromRole="Customers_Consult_Person_Mapping" ToRole="Customers_Consult_Person_Tel_No_Mapping" />
+  </EntityType>
+  <EntityType Name="Customers_Consult_Person_Tel_No_Mapping">
+    <Key>
+      <PropertyRef Name="Customers_Consult_Person_Tel_No_Mapping_ID" />
+    </Key>
+    <Property Name="Customers_Consult_Person_Tel_No_Mapping_ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Customers_Consult_Person_Mapping_ID" Type="Int64" Nullable="false" />
+    <Property Name="Consult_Person_Tel_No" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Customers_Consult_Person_Mapping" Relationship="Self.FK__Customers__Custo__2AD55B43" FromRole="Customers_Consult_Person_Tel_No_Mapping" ToRole="Customers_Consult_Person_Mapping" />
+  </EntityType>
+  <EntityType Name="Customers_Service_Address_Cell_No_Mapping">
+    <Key>
+      <PropertyRef Name="Customers_Service_Address_Cell_No_Mapping_ID" />
+    </Key>
+    <Property Name="Customers_Service_Address_Cell_No_Mapping_ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Customers_Service_Address_Mapping_ID" Type="Int64" Nullable="false" />
+    <Property Name="Customers_Service_Address_Cell_No" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Customers_Service_Address_Mapping" Relationship="Self.FK__Customers__Custo__50FB042B" FromRole="Customers_Service_Address_Cell_No_Mapping" ToRole="Customers_Service_Address_Mapping" />
+  </EntityType>
+  <EntityType Name="Customers_Service_Address_Email_Mapping">
+    <Key>
+      <PropertyRef Name="Customers_Service_Address_Email_Mapping_ID" />
+    </Key>
+    <Property Name="Customers_Service_Address_Email_Mapping_ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Customers_Service_Address_Mapping_ID" Type="Int64" Nullable="false" />
+    <Property Name="Customers_Service_Address_Email" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Customers_Service_Address_Mapping" Relationship="Self.FK__Customers__Custo__53D770D6" FromRole="Customers_Service_Address_Email_Mapping" ToRole="Customers_Service_Address_Mapping" />
+  </EntityType>
+  <EntityType Name="Customers_Service_Address_Mapping">
+    <Key>
+      <PropertyRef Name="Customers_Service_Address_Mapping_ID" />
+    </Key>
+    <Property Name="Customers_Service_Address_Mapping_ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CustomerID" Type="Int64" Nullable="false" />
+    <Property Name="ServiceLocationID" Type="Int32" Nullable="false" />
+    <Property Name="CityID" Type="Int32" Nullable="false" />
+    <Property Name="Pincode" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+    <Property Name="StateID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="City" Relationship="Self.FK__Customers__CityI__4959E263" FromRole="Customers_Service_Address_Mapping" ToRole="Cities" />
+    <NavigationProperty Name="Contract_Customer_Service_Address_Mapping" Relationship="Self.FK__Contract___Custo__4183B671" FromRole="Customers_Service_Address_Mapping" ToRole="Contract_Customer_Service_Address_Mapping" />
+    <NavigationProperty Name="Customer" Relationship="Self.FK__Customers__Custo__477199F1" FromRole="Customers_Service_Address_Mapping" ToRole="Customers" />
+    <NavigationProperty Name="Customers_Billing_Address_Cell_No_Mapping" Relationship="Self.FK__Customers__Custo__5D60DB10" FromRole="Customers_Service_Address_Mapping" ToRole="Customers_Billing_Address_Cell_No_Mapping" />
+    <NavigationProperty Name="Customers_Billing_Address_Email_Mapping" Relationship="Self.FK__Customers__Custo__56B3DD81" FromRole="Customers_Service_Address_Mapping" ToRole="Customers_Billing_Address_Email_Mapping" />
+    <NavigationProperty Name="Customers_Billing_Address_Tel_No_Mapping" Relationship="Self.FK__Customers__Custo__5A846E65" FromRole="Customers_Service_Address_Mapping" ToRole="Customers_Billing_Address_Tel_No_Mapping" />
+    <NavigationProperty Name="Customers_Service_Address_Cell_No_Mapping" Relationship="Self.FK__Customers__Custo__50FB042B" FromRole="Customers_Service_Address_Mapping" ToRole="Customers_Service_Address_Cell_No_Mapping" />
+    <NavigationProperty Name="Customers_Service_Address_Email_Mapping" Relationship="Self.FK__Customers__Custo__53D770D6" FromRole="Customers_Service_Address_Mapping" ToRole="Customers_Service_Address_Email_Mapping" />
+    <NavigationProperty Name="Customers_Service_Address_Tel_No_Mapping" Relationship="Self.FK__Customers__Custo__4E1E9780" FromRole="Customers_Service_Address_Mapping" ToRole="Customers_Service_Address_Tel_No_Mapping" />
+    <NavigationProperty Name="Location" Relationship="Self.FK__Customers__Locat__4865BE2A" FromRole="Customers_Service_Address_Mapping" ToRole="Locations" />
+    <NavigationProperty Name="State" Relationship="Self.FK__Customers__State__4A4E069C" FromRole="Customers_Service_Address_Mapping" ToRole="States" />
+  </EntityType>
+  <EntityType Name="Customers_Service_Address_Tel_No_Mapping">
+    <Key>
+      <PropertyRef Name="Customers_Service_Address_Tel_No_Mapping_ID" />
+    </Key>
+    <Property Name="Customers_Service_Address_Tel_No_Mapping_ID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Customers_Service_Address_Mapping_ID" Type="Int64" Nullable="false" />
+    <Property Name="Customers_Service_Address_Tel_No" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Customers_Service_Address_Mapping" Relationship="Self.FK__Customers__Custo__4E1E9780" FromRole="Customers_Service_Address_Tel_No_Mapping" ToRole="Customers_Service_Address_Mapping" />
+  </EntityType>
+  <EntityType Name="CustomerStatu">
+    <Key>
+      <PropertyRef Name="CustomerStatusID" />
+    </Key>
+    <Property Name="CustomerStatusID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Status" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="Customers" Relationship="Self.FK__Customers__Custo__2334397B" FromRole="CustomerStatus" ToRole="Customers" />
+  </EntityType>
+  <EntityType Name="Documents_Templates">
+    <Key>
+      <PropertyRef Name="Document_Template_ID" />
+    </Key>
+    <Property Name="Document_Template_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Document_Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Document_Header" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="Document_Footer" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+    <Property Name="CreatedByUserID" Type="Int32" Nullable="false" />
+    <Property Name="LastUpdatedOn" Type="DateTime" Precision="3" />
+    <Property Name="LastUpdatedByUserID" Type="Int32" />
+    <NavigationProperty Name="UserLogin" Relationship="Self.FK__Documents__Creat__220B0B18" FromRole="Documents_Templates" ToRole="UserLogins" />
+    <NavigationProperty Name="UserLogin1" Relationship="Self.FK__Documents__LastU__2022C2A6" FromRole="Documents_Templates" ToRole="UserLogins" />
+  </EntityType>
+  <EntityType Name="EmployeeDesignation">
+    <Key>
+      <PropertyRef Name="EmployeeDesignationID" />
+    </Key>
+    <Property Name="EmployeeDesignationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Designation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastUpdatedDate" Type="DateTime" Precision="3" />
+    <Property Name="CreatedByUserID" Type="Int32" />
+    <Property Name="UpdatedByUserID" Type="Int32" />
+    <NavigationProperty Name="UserLogin" Relationship="Self.FK__EmployeeD__Creat__6AEFE058" FromRole="EmployeeDesignations" ToRole="UserLogins" />
+    <NavigationProperty Name="UserLogin1" Relationship="Self.FK__EmployeeD__Updat__6FB49575" FromRole="EmployeeDesignations" ToRole="UserLogins" />
+    <NavigationProperty Name="Employees" Relationship="Self.FK__Employees__Desig__1CBC4616" FromRole="EmployeeDesignations" ToRole="Employees" />
+  </EntityType>
+  <EntityType Name="Employee">
+    <Key>
+      <PropertyRef Name="EmployeeID" />
+    </Key>
+    <Property Name="EmployeeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DesignationID" Type="Int32" />
+    <Property Name="EnrolmentDate" Type="DateTime" Precision="3" />
+    <Property Name="EmployeePhotoPath" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="DOB" Type="DateTime" Precision="3" />
+    <Property Name="PermanentAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="CorrespondenceAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="CellNos" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="EmailID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="MaritalStatus" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+    <Property Name="Sex" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="EmployeeStatus" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="Remarks" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ContactNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastUpdatedDate" Type="DateTime" Precision="3" />
+    <Property Name="CreatedByUserID" Type="Int32" />
+    <Property Name="UpdatedByUserID" Type="Int32" />
+    <Property Name="LoginID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Password" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="EmployeeDesignation" Relationship="Self.FK__Employees__Desig__1CBC4616" FromRole="Employees" ToRole="EmployeeDesignations" />
+    <NavigationProperty Name="UserLogin" Relationship="Self.FK__Employees__Creat__6BE40491" FromRole="Employees" ToRole="UserLogins" />
+    <NavigationProperty Name="UserLogin1" Relationship="Self.FK__Employees__Updat__70A8B9AE" FromRole="Employees" ToRole="UserLogins" />
+    <NavigationProperty Name="Leads" Relationship="Self.FK_VisitAllocate_EmpID" FromRole="Employees" ToRole="Leads" />
+  </EntityType>
+  <EntityType Name="Estimate">
+    <Key>
+      <PropertyRef Name="EstimateID" />
+    </Key>
+    <Property Name="EstimateID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NewCustomer" Type="Boolean" Nullable="false" />
+    <Property Name="ExistingCustomer" Type="Boolean" Nullable="false" />
+    <Property Name="LeadID" Type="Int32" />
+    <Property Name="CustomerID" Type="Int64" />
+    <Property Name="GSTinDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="FinalEstimateRate" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="KindAttention" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="Subject" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="WelcomeSentence" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
+    <Property Name="Footer" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="LastUpdatedDate" Type="DateTime" Precision="3" />
+    <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+    <Property Name="LastUpdatedBy" Type="Int32" />
+    <NavigationProperty Name="Customer" Relationship="Self.FK__Estimates__Custo__084B3915" FromRole="Estimates" ToRole="Customers" />
+    <NavigationProperty Name="UserLogin" Relationship="Self.FK__Estimates__Creat__0B27A5C0" FromRole="Estimates" ToRole="UserLogins" />
+    <NavigationProperty Name="UserLogin1" Relationship="Self.FK__Estimates__LastU__0C1BC9F9" FromRole="Estimates" ToRole="UserLogins" />
+    <NavigationProperty Name="Lead" Relationship="Self.FK__Estimates__LeadI__075714DC" FromRole="Estimates" ToRole="Leads" />
+  </EntityType>
+  <EntityType Name="FrequencyOfService">
+    <Key>
+      <PropertyRef Name="FrequencyOfServiceID" />
+    </Key>
+    <Property Name="FrequencyOfServiceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="FrequencyOfService1" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastUpdatedDate" Type="DateTime" Precision="3" />
+    <Property Name="CreatedByUserID" Type="Int32" />
+    <NavigationProperty Name="Customer_Services_Mapping" Relationship="Self.FK__Customer___Frequ__45544755" FromRole="FrequencyOfService" ToRole="Customer_Services_Mapping" />
+    <NavigationProperty Name="UserLogin" Relationship="Self.FK__Frequency__Creat__6CD828CA" FromRole="FrequencyOfService" ToRole="UserLogins" />
+    <NavigationProperty Name="Lead_Services_Mapping" Relationship="Self.FK__Lead_Serv__Frequ__74794A92" FromRole="FrequencyOfService" ToRole="Lead_Services_Mapping" />
+  </EntityType>
+  <EntityType Name="Lead_Cell_No_Mapping">
+    <Key>
+      <PropertyRef Name="Lead_Cell_No_Mapping_ID" />
+    </Key>
+    <Property Name="Lead_Cell_No_Mapping_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="LeadID" Type="Int32" Nullable="false" />
+    <Property Name="Lead_Cell_No" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Lead" Relationship="Self.FK__Lead_Cell__LeadI__7720AD13" FromRole="Lead_Cell_No_Mapping" ToRole="Leads" />
+  </EntityType>
+  <EntityType Name="Lead_Consult_Person">
+    <Key>
+      <PropertyRef Name="Lead_Consult_Person_ID" />
+    </Key>
+    <Property Name="Lead_Consult_Person_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="LeadID" Type="Int32" Nullable="false" />
+    <Property Name="PersonaName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Designation" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastUpdatedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Lead_Consult_Person_Contact_No_Mapping" Relationship="Self.FK__Lead_Cons__Lead___61316BF4" FromRole="Lead_Consult_Person" ToRole="Lead_Consult_Person_Contact_No_Mapping" />
+    <NavigationProperty Name="Lead_Consult_Person_Email_Mapping" Relationship="Self.FK__Lead_Cons__Lead___640DD89F" FromRole="Lead_Consult_Person" ToRole="Lead_Consult_Person_Email_Mapping" />
+    <NavigationProperty Name="Lead" Relationship="Self.FK__Lead_Cons__LeadI__59C55456" FromRole="Lead_Consult_Person" ToRole="Leads" />
+  </EntityType>
+  <EntityType Name="Lead_Consult_Person_Contact_No_Mapping">
+    <Key>
+      <PropertyRef Name="Lead_Consult_Person_Contact_No_Mapping_ID" />
+    </Key>
+    <Property Name="Lead_Consult_Person_Contact_No_Mapping_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Lead_Consult_Person_ID" Type="Int32" Nullable="false" />
+    <Property Name="Lead_Consult_Person_Contact_No" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Lead_Consult_Person" Relationship="Self.FK__Lead_Cons__Lead___61316BF4" FromRole="Lead_Consult_Person_Contact_No_Mapping" ToRole="Lead_Consult_Person" />
+  </EntityType>
+  <EntityType Name="Lead_Consult_Person_Email_Mapping">
+    <Key>
+      <PropertyRef Name="Lead_Consult_Person_Email_Mapping_ID" />
+    </Key>
+    <Property Name="Lead_Consult_Person_Email_Mapping_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Lead_Consult_Person_ID" Type="Int32" Nullable="false" />
+    <Property Name="Lead_Consult_Person_Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Lead_Consult_Person" Relationship="Self.FK__Lead_Cons__Lead___640DD89F" FromRole="Lead_Consult_Person_Email_Mapping" ToRole="Lead_Consult_Person" />
+  </EntityType>
+  <EntityType Name="Lead_Email_Mapping">
+    <Key>
+      <PropertyRef Name="Lead_Email_Mapping_ID" />
+    </Key>
+    <Property Name="Lead_Email_Mapping_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="LeadID" Type="Int32" Nullable="false" />
+    <Property Name="Lead_Email" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Lead" Relationship="Self.FK__Lead_Emai__LeadI__79FD19BE" FromRole="Lead_Email_Mapping" ToRole="Leads" />
+  </EntityType>
+  <EntityType Name="Lead_Locations_Mapping">
+    <Key>
+      <PropertyRef Name="Lead_Locations_Mapping_ID" />
+    </Key>
+    <Property Name="Lead_Locations_Mapping_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="LeadID" Type="Int32" Nullable="false" />
+    <Property Name="LocationID" Type="Int32" Nullable="false" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastUpdatedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Lead" Relationship="Self.FK__Lead_Loca__LeadI__4E53A1AA" FromRole="Lead_Locations_Mapping" ToRole="Leads" />
+    <NavigationProperty Name="Location" Relationship="Self.FK__Lead_Loca__Locat__4F47C5E3" FromRole="Lead_Locations_Mapping" ToRole="Locations" />
+  </EntityType>
+  <EntityType Name="Lead_Services_Mapping">
+    <Key>
+      <PropertyRef Name="Lead_Services_Mapping_ID" />
+    </Key>
+    <Property Name="Lead_Services_Mapping_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="LeadID" Type="Int32" Nullable="false" />
+    <Property Name="ServiceID" Type="Int32" Nullable="false" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastUpdatedDate" Type="DateTime" Precision="3" />
+    <Property Name="ServiceGroupID" Type="Int32" Nullable="false" />
+    <Property Name="FrequencyOfServiceID" Type="Int32" Nullable="false" />
+    <Property Name="Rate" Type="Int32" Nullable="false" />
+    <Property Name="GST" Type="Boolean" />
+    <Property Name="Qty" Type="Int16" />
+    <Property Name="Tax" Type="Int32" />
+    <Property Name="FinalRatePerService" Type="Int32" />
+    <NavigationProperty Name="FrequencyOfService" Relationship="Self.FK__Lead_Serv__Frequ__74794A92" FromRole="Lead_Services_Mapping" ToRole="FrequencyOfService" />
+    <NavigationProperty Name="Lead" Relationship="Self.FK__Lead_Serv__LeadI__55009F39" FromRole="Lead_Services_Mapping" ToRole="Leads" />
+    <NavigationProperty Name="Service" Relationship="Self.FK__Lead_Serv__Servi__55F4C372" FromRole="Lead_Services_Mapping" ToRole="Services" />
+    <NavigationProperty Name="ServiceGroup" Relationship="Self.FK__Lead_Serv__Servi__73852659" FromRole="Lead_Services_Mapping" ToRole="ServiceGroups" />
+  </EntityType>
+  <EntityType Name="Lead_Tel_No_Mapping">
+    <Key>
+      <PropertyRef Name="Lead_Tel_No_Mapping_ID" />
+    </Key>
+    <Property Name="Lead_Tel_No_Mapping_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="LeadID" Type="Int32" Nullable="false" />
+    <Property Name="Lead_Tel_No" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Lead" Relationship="Self.FK__Lead_Tel___LeadI__7CD98669" FromRole="Lead_Tel_No_Mapping" ToRole="Leads" />
+  </EntityType>
+  <EntityType Name="Lead">
+    <Key>
+      <PropertyRef Name="LeadID" />
+    </Key>
+    <Property Name="LeadID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="LeadDate" Type="DateTime" Precision="3" />
+    <Property Name="Title" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="CustomerName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="TelNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CellNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Pincode" Type="String" MaxLength="6" FixedLength="false" Unicode="false" />
+    <Property Name="CityID" Type="Int32" />
+    <Property Name="EmailID" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="SourceID" Type="Int32" />
+    <Property Name="SubSourceID" Type="Int32" />
+    <Property Name="TypeOfPremisesID" Type="Int32" />
+    <Property Name="TeleCallerID" Type="Int32" />
+    <Property Name="BranchID" Type="Int32" />
+    <Property Name="VisitAllocate" Type="Int32" />
+    <Property Name="VisitDateTime" Type="DateTime" Precision="3" />
+    <Property Name="VisitReport" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="RATE" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="TAX" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="FinalRate" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="CustomerPriority" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="NextFollowUpDateTime" Type="DateTime" Precision="3" />
+    <Property Name="SpecialInstructions" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="FollowUpDetails" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="LeadStatusID" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastUpdatedDate" Type="DateTime" Precision="3" />
+    <Property Name="LocationID" Type="Int32" />
+    <Property Name="AddressLine1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="AddressLine2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="AddressLine3" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="NoOfWings" Type="Int16" />
+    <Property Name="NoOfFloors" Type="Int16" />
+    <Property Name="LeasdClosedDateTime" Type="DateTime" Precision="3" />
+    <Property Name="CreatedBy" Type="Int32" />
+    <Property Name="LastUpdatedBy" Type="Int32" />
+    <Property Name="ConsultPerson" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ConsultPersonDesignation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Industry" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="PremisesArea" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="PremisesAppSqFtArea" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="StatusReason" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="StateID" Type="Int32" />
+    <NavigationProperty Name="Branch" Relationship="Self.FK__Leads__BranchID__3E1D39E1" FromRole="Leads" ToRole="Branches" />
+    <NavigationProperty Name="City" Relationship="Self.FK__Leads__CityID__3F115E1A" FromRole="Leads" ToRole="Cities" />
+    <NavigationProperty Name="Employee" Relationship="Self.FK_VisitAllocate_EmpID" FromRole="Leads" ToRole="Employees" />
+    <NavigationProperty Name="Estimates" Relationship="Self.FK__Estimates__LeadI__075714DC" FromRole="Leads" ToRole="Estimates" />
+    <NavigationProperty Name="Lead_Cell_No_Mapping" Relationship="Self.FK__Lead_Cell__LeadI__7720AD13" FromRole="Leads" ToRole="Lead_Cell_No_Mapping" />
+    <NavigationProperty Name="Lead_Consult_Person" Relationship="Self.FK__Lead_Cons__LeadI__59C55456" FromRole="Leads" ToRole="Lead_Consult_Person" />
+    <NavigationProperty Name="Lead_Email_Mapping" Relationship="Self.FK__Lead_Emai__LeadI__79FD19BE" FromRole="Leads" ToRole="Lead_Email_Mapping" />
+    <NavigationProperty Name="Lead_Locations_Mapping" Relationship="Self.FK__Lead_Loca__LeadI__4E53A1AA" FromRole="Leads" ToRole="Lead_Locations_Mapping" />
+    <NavigationProperty Name="Lead_Services_Mapping" Relationship="Self.FK__Lead_Serv__LeadI__55009F39" FromRole="Leads" ToRole="Lead_Services_Mapping" />
+    <NavigationProperty Name="Lead_Tel_No_Mapping" Relationship="Self.FK__Lead_Tel___LeadI__7CD98669" FromRole="Leads" ToRole="Lead_Tel_No_Mapping" />
+    <NavigationProperty Name="UserLogin" Relationship="Self.FK__Leads__CreatedBy__74444068" FromRole="Leads" ToRole="UserLogins" />
+    <NavigationProperty Name="LeadStatus" Relationship="Self.FK__Leads__LeadStatu__40F9A68C" FromRole="Leads" ToRole="LeadStatuses" />
+    <NavigationProperty Name="Location" Relationship="Self.FK__Leads__LocationI__5E54FF49" FromRole="Leads" ToRole="Locations" />
+    <NavigationProperty Name="Source" Relationship="Self.FK__Leads__SourceID__43D61337" FromRole="Leads" ToRole="Sources" />
+    <NavigationProperty Name="State" Relationship="Self.FK__Leads__StateID__1D4655FB" FromRole="Leads" ToRole="States" />
+    <NavigationProperty Name="Source1" Relationship="Self.FK__Leads__SubSource__44CA3770" FromRole="Leads" ToRole="Sources" />
+    <NavigationProperty Name="UserLogin1" Relationship="Self.FK__Leads__TeleCalle__756D6ECB" FromRole="Leads" ToRole="UserLogins" />
+    <NavigationProperty Name="PremisesType" Relationship="Self.FK__Leads__TypeOfPre__46B27FE2" FromRole="Leads" ToRole="PremisesTypes" />
+  </EntityType>
+  <EntityType Name="LeadStatus">
+    <Key>
+      <PropertyRef Name="StatusID" />
+    </Key>
+    <Property Name="StatusID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Status" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastUpdatedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Leads" Relationship="Self.FK__Leads__LeadStatu__40F9A68C" FromRole="LeadStatuses" ToRole="Leads" />
+  </EntityType>
+  <EntityType Name="Location">
+    <Key>
+      <PropertyRef Name="LocationID" />
+    </Key>
+    <Property Name="LocationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="LocationName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastUpdatedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Customers" Relationship="Self.FK__Customers__Locat__52AE4273" FromRole="Locations" ToRole="Customers" />
+    <NavigationProperty Name="Customers_Billing_Address_Mapping" Relationship="Self.FK__Customers__Locat__42ACE4D4" FromRole="Locations" ToRole="Customers_Billing_Address_Mapping" />
+    <NavigationProperty Name="Customers_Service_Address_Mapping" Relationship="Self.FK__Customers__Locat__4865BE2A" FromRole="Locations" ToRole="Customers_Service_Address_Mapping" />
+    <NavigationProperty Name="Lead_Locations_Mapping" Relationship="Self.FK__Lead_Loca__Locat__4F47C5E3" FromRole="Locations" ToRole="Lead_Locations_Mapping" />
+    <NavigationProperty Name="Leads" Relationship="Self.FK__Leads__LocationI__5E54FF49" FromRole="Locations" ToRole="Leads" />
+  </EntityType>
+  <EntityType Name="PeriodsOfContract">
+    <Key>
+      <PropertyRef Name="PeriodsOfContractID" />
+    </Key>
+    <Property Name="PeriodsOfContractID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PeriodsOfContract1" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastUpdatedDate" Type="DateTime" Precision="3" />
+  </EntityType>
+  <EntityType Name="PremisesType">
+    <Key>
+      <PropertyRef Name="PremisesTypeID" />
+    </Key>
+    <Property Name="PremisesTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PremisesType1" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastUpdatedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Leads" Relationship="Self.FK__Leads__TypeOfPre__46B27FE2" FromRole="PremisesTypes" ToRole="Leads" />
+  </EntityType>
+  <EntityType Name="Religion">
+    <Key>
+      <PropertyRef Name="ReligionID" />
+    </Key>
+    <Property Name="ReligionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ReligionName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastUpdatedDate" Type="DateTime" Precision="3" />
+    <Property Name="CreatedByUserID" Type="Int32" Nullable="false" />
+    <Property Name="UpdatedByUserID" Type="Int32" />
+    <NavigationProperty Name="Customers" Relationship="Self.FK__Customers__Relig__51BA1E3A" FromRole="Religions" ToRole="Customers" />
+    <NavigationProperty Name="UserLogin" Relationship="Self.FK__Religions__Creat__4FD1D5C8" FromRole="Religions" ToRole="UserLogins" />
+    <NavigationProperty Name="UserLogin1" Relationship="Self.FK__Religions__Updat__50C5FA01" FromRole="Religions" ToRole="UserLogins" />
+  </EntityType>
+  <EntityType Name="Service_Estimate_Templates">
+    <Key>
+      <PropertyRef Name="Service_Estimate_Template_ID" />
+    </Key>
+    <Property Name="Service_Estimate_Template_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ServiceID" Type="Int32" Nullable="false" />
+    <Property Name="Subject" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="General_Instruction" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="General_Disinfestation" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Frequency_Of_Services" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Charges_Per_Annum" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Terms_Of_Payment" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CreatedOn" Type="DateTime" Precision="3" />
+    <Property Name="CreatedByUserID" Type="Int32" Nullable="false" />
+    <Property Name="LastUpdatedOn" Type="DateTime" Precision="3" />
+    <Property Name="LastUpdatedByUserID" Type="Int32" />
+    <Property Name="ServiceGroupID" Type="Int32" />
+    <NavigationProperty Name="UserLogin" Relationship="Self.FK__Service_E__Creat__68D28DBC" FromRole="Service_Estimate_Templates" ToRole="UserLogins" />
+    <NavigationProperty Name="Service" Relationship="Self.FK__Service_E__Servi__66EA454A" FromRole="Service_Estimate_Templates" ToRole="Services" />
+    <NavigationProperty Name="ServiceGroup" Relationship="Self.FK__Service_E__Servi__6ABAD62E" FromRole="Service_Estimate_Templates" ToRole="ServiceGroups" />
+  </EntityType>
+  <EntityType Name="ServiceGroup">
+    <Key>
+      <PropertyRef Name="ServiceGroupID" />
+    </Key>
+    <Property Name="ServiceGroupID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ServiceGroup1" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ParentServiceGroupID" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastUpdatedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Customer_Services_Mapping" Relationship="Self.FK__Customer___Servi__4830B400" FromRole="ServiceGroups" ToRole="Customer_Services_Mapping" />
+    <NavigationProperty Name="Lead_Services_Mapping" Relationship="Self.FK__Lead_Serv__Servi__73852659" FromRole="ServiceGroups" ToRole="Lead_Services_Mapping" />
+    <NavigationProperty Name="Service_Estimate_Templates" Relationship="Self.FK__Service_E__Servi__6ABAD62E" FromRole="ServiceGroups" ToRole="Service_Estimate_Templates" />
+    <NavigationProperty Name="Services" Relationship="Self.FK__Services__Servic__3493CFA7" FromRole="ServiceGroups" ToRole="Services" />
+    <NavigationProperty Name="Services1" Relationship="Self.FK__Services__Servic__3587F3E0" FromRole="ServiceGroups" ToRole="Services" />
+  </EntityType>
+  <EntityType Name="Service">
+    <Key>
+      <PropertyRef Name="ServiceID" />
+    </Key>
+    <Property Name="ServiceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ServiceName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="ServiceShortCode" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="GST" Type="Byte" />
+    <Property Name="SACCode" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="ServiceGroupID" Type="Int32" Nullable="false" />
+    <Property Name="ServiceSubGroupID" Type="Int32" Nullable="false" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastUpdateddate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Customer_Services_Mapping" Relationship="Self.FK__Customer___Servi__473C8FC7" FromRole="Services" ToRole="Customer_Services_Mapping" />
+    <NavigationProperty Name="Lead_Services_Mapping" Relationship="Self.FK__Lead_Serv__Servi__55F4C372" FromRole="Services" ToRole="Lead_Services_Mapping" />
+    <NavigationProperty Name="Service_Estimate_Templates" Relationship="Self.FK__Service_E__Servi__66EA454A" FromRole="Services" ToRole="Service_Estimate_Templates" />
+    <NavigationProperty Name="ServiceGroup" Relationship="Self.FK__Services__Servic__3493CFA7" FromRole="Services" ToRole="ServiceGroups" />
+    <NavigationProperty Name="ServiceGroup1" Relationship="Self.FK__Services__Servic__3587F3E0" FromRole="Services" ToRole="ServiceGroups" />
+  </EntityType>
+  <EntityType Name="Source">
+    <Key>
+      <PropertyRef Name="SourceID" />
+    </Key>
+    <Property Name="SourceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Source1" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="ParentSourceID" Type="Int32" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastUpdatedDate" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Customers" Relationship="Self.FK__Customers__Sourc__14E61A24" FromRole="Sources" ToRole="Customers" />
+    <NavigationProperty Name="Customers1" Relationship="Self.FK__Customers__SubSo__15DA3E5D" FromRole="Sources" ToRole="Customers" />
+    <NavigationProperty Name="Leads" Relationship="Self.FK__Leads__SourceID__43D61337" FromRole="Sources" ToRole="Leads" />
+    <NavigationProperty Name="Leads1" Relationship="Self.FK__Leads__SubSource__44CA3770" FromRole="Sources" ToRole="Leads" />
+  </EntityType>
+  <EntityType Name="State">
+    <Key>
+      <PropertyRef Name="StateID" />
+    </Key>
+    <Property Name="StateID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="State1" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="LastUpdatedDate" Type="DateTime" Precision="3" />
+    <Property Name="CreatedByUserID" Type="Int32" />
+    <Property Name="UpdatedByUserID" Type="Int32" />
+    <NavigationProperty Name="Customers_Billing_Address_Mapping" Relationship="Self.FK__Customers__State__44952D46" FromRole="States" ToRole="Customers_Billing_Address_Mapping" />
+    <NavigationProperty Name="Customers_Service_Address_Mapping" Relationship="Self.FK__Customers__State__4A4E069C" FromRole="States" ToRole="Customers_Service_Address_Mapping" />
+    <NavigationProperty Name="Leads" Relationship="Self.FK__Leads__StateID__1D4655FB" FromRole="States" ToRole="Leads" />
+    <NavigationProperty Name="UserLogin" Relationship="Self.FK__States__CreatedB__3EDC53F0" FromRole="States" ToRole="UserLogins" />
+    <NavigationProperty Name="UserLogin1" Relationship="Self.FK__States__UpdatedB__1B5E0D89" FromRole="States" ToRole="UserLogins" />
+  </EntityType>
+  <EntityType Name="UserLogin">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserLoginTypeID" Type="Int32" />
+    <Property Name="UserName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="Password" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="CreatedDate" Type="DateTime" Precision="3" />
+    <Property Name="CreatedByUserID" Type="Int32" Nullable="false" />
+    <Property Name="LastUpdateDate" Type="DateTime" Precision="3" />
+    <Property Name="LastUpdatedByUserID" Type="Int32" />
+    <Property Name="Status" Type="Boolean" />
+    <NavigationProperty Name="Branches" Relationship="Self.FK__Branches__Create__690797E6" FromRole="UserLogins" ToRole="Branches" />
+    <NavigationProperty Name="Branches1" Relationship="Self.FK__Branches__Update__6DCC4D03" FromRole="UserLogins" ToRole="Branches" />
+    <NavigationProperty Name="Cities" Relationship="Self.FK__Cities__CreatedB__69FBBC1F" FromRole="UserLogins" ToRole="Cities" />
+    <NavigationProperty Name="Cities1" Relationship="Self.FK__Cities__UpdatedB__6EC0713C" FromRole="UserLogins" ToRole="Cities" />
+    <NavigationProperty Name="Contracts" Relationship="Self.FK__Contracts__Creat__37FA4C37" FromRole="UserLogins" ToRole="Contracts" />
+    <NavigationProperty Name="Contracts1" Relationship="Self.FK__Contracts__LastU__38EE7070" FromRole="UserLogins" ToRole="Contracts" />
+    <NavigationProperty Name="Customers" Relationship="Self.FK__Customers__Creat__16CE6296" FromRole="UserLogins" ToRole="Customers" />
+    <NavigationProperty Name="Customers1" Relationship="Self.FK__Customers__Lastu__214BF109" FromRole="UserLogins" ToRole="Customers" />
+    <NavigationProperty Name="Customers_Consult_Person_Mapping" Relationship="Self.FK__Customers__Creat__2704CA5F" FromRole="UserLogins" ToRole="Customers_Consult_Person_Mapping" />
+    <NavigationProperty Name="Documents_Templates" Relationship="Self.FK__Documents__Creat__220B0B18" FromRole="UserLogins" ToRole="Documents_Templates" />
+    <NavigationProperty Name="Documents_Templates1" Relationship="Self.FK__Documents__LastU__2022C2A6" FromRole="UserLogins" ToRole="Documents_Templates" />
+    <NavigationProperty Name="EmployeeDesignations" Relationship="Self.FK__EmployeeD__Creat__6AEFE058" FromRole="UserLogins" ToRole="EmployeeDesignations" />
+    <NavigationProperty Name="EmployeeDesignations1" Relationship="Self.FK__EmployeeD__Updat__6FB49575" FromRole="UserLogins" ToRole="EmployeeDesignations" />
+    <NavigationProperty Name="Employees" Relationship="Self.FK__Employees__Creat__6BE40491" FromRole="UserLogins" ToRole="Employees" />
+    <NavigationProperty Name="Employees1" Relationship="Self.FK__Employees__Updat__70A8B9AE" FromRole="UserLogins" ToRole="Employees" />
+    <NavigationProperty Name="Estimates" Relationship="Self.FK__Estimates__Creat__0B27A5C0" FromRole="UserLogins" ToRole="Estimates" />
+    <NavigationProperty Name="Estimates1" Relationship="Self.FK__Estimates__LastU__0C1BC9F9" FromRole="UserLogins" ToRole="Estimates" />
+    <NavigationProperty Name="FrequencyOfServices" Relationship="Self.FK__Frequency__Creat__6CD828CA" FromRole="UserLogins" ToRole="FrequencyOfService" />
+    <NavigationProperty Name="Leads" Relationship="Self.FK__Leads__CreatedBy__74444068" FromRole="UserLogins" ToRole="Leads" />
+    <NavigationProperty Name="Leads1" Relationship="Self.FK__Leads__TeleCalle__756D6ECB" FromRole="UserLogins" ToRole="Leads" />
+    <NavigationProperty Name="Religions" Relationship="Self.FK__Religions__Creat__4FD1D5C8" FromRole="UserLogins" ToRole="Religions" />
+    <NavigationProperty Name="Religions1" Relationship="Self.FK__Religions__Updat__50C5FA01" FromRole="UserLogins" ToRole="Religions" />
+    <NavigationProperty Name="Service_Estimate_Templates" Relationship="Self.FK__Service_E__Creat__68D28DBC" FromRole="UserLogins" ToRole="Service_Estimate_Templates" />
+    <NavigationProperty Name="States" Relationship="Self.FK__States__CreatedB__3EDC53F0" FromRole="UserLogins" ToRole="States" />
+    <NavigationProperty Name="States1" Relationship="Self.FK__States__UpdatedB__1B5E0D89" FromRole="UserLogins" ToRole="States" />
+    <NavigationProperty Name="UserLoginType" Relationship="Self.FK__UserLogin__UserL__6442E2C9" FromRole="UserLogins" ToRole="UserLoginTypes" />
+  </EntityType>
+  <EntityType Name="UserLoginType">
+    <Key>
+      <PropertyRef Name="UserLoginTypeID" />
+    </Key>
+    <Property Name="UserLoginTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserLoginTypeName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="LastUpdateDate" Type="DateTime" Precision="3" />
+    <Property Name="CreatedbyUserID" Type="Int32" />
+    <Property Name="LastUpdateByUserID" Type="Int32" />
+    <NavigationProperty Name="UserLogins" Relationship="Self.FK__UserLogin__UserL__6442E2C9" FromRole="UserLoginTypes" ToRole="UserLogins" />
+  </EntityType>
+  <Association Name="FK__Branches__Create__690797E6">
+    <End Role="UserLogins" Type="Self.UserLogin" Multiplicity="0..1" />
+    <End Role="Branches" Type="Self.Branch" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserLogins">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Branches">
+        <PropertyRef Name="CreatedByUserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Branches__Update__6DCC4D03">
+    <End Role="UserLogins" Type="Self.UserLogin" Multiplicity="0..1" />
+    <End Role="Branches" Type="Self.Branch" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserLogins">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Branches">
+        <PropertyRef Name="UpdatedByUserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Contracts__Branc__361203C5">
+    <End Role="Branches" Type="Self.Branch" Multiplicity="1" />
+    <End Role="Contracts" Type="Self.Contract" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Branches">
+        <PropertyRef Name="BranchID" />
+      </Principal>
+      <Dependent Role="Contracts">
+        <PropertyRef Name="BranchID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Customers__Branc__13F1F5EB">
+    <End Role="Branches" Type="Self.Branch" Multiplicity="1" />
+    <End Role="Customers" Type="Self.Customer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Branches">
+        <PropertyRef Name="BranchID" />
+      </Principal>
+      <Dependent Role="Customers">
+        <PropertyRef Name="BranchID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Leads__BranchID__3E1D39E1">
+    <End Role="Branches" Type="Self.Branch" Multiplicity="0..1" />
+    <End Role="Leads" Type="Self.Lead" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Branches">
+        <PropertyRef Name="BranchID" />
+      </Principal>
+      <Dependent Role="Leads">
+        <PropertyRef Name="BranchID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Cities__CreatedB__69FBBC1F">
+    <End Role="UserLogins" Type="Self.UserLogin" Multiplicity="0..1" />
+    <End Role="Cities" Type="Self.City" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserLogins">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Cities">
+        <PropertyRef Name="CreatedByUserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Cities__UpdatedB__6EC0713C">
+    <End Role="UserLogins" Type="Self.UserLogin" Multiplicity="0..1" />
+    <End Role="Cities" Type="Self.City" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserLogins">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Cities">
+        <PropertyRef Name="UpdatedByUserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Customers__CityI__43A1090D">
+    <End Role="Cities" Type="Self.City" Multiplicity="1" />
+    <End Role="Customers_Billing_Address_Mapping" Type="Self.Customers_Billing_Address_Mapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cities">
+        <PropertyRef Name="CityID" />
+      </Principal>
+      <Dependent Role="Customers_Billing_Address_Mapping">
+        <PropertyRef Name="CityID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Customers__CityI__4959E263">
+    <End Role="Cities" Type="Self.City" Multiplicity="1" />
+    <End Role="Customers_Service_Address_Mapping" Type="Self.Customers_Service_Address_Mapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cities">
+        <PropertyRef Name="CityID" />
+      </Principal>
+      <Dependent Role="Customers_Service_Address_Mapping">
+        <PropertyRef Name="CityID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Leads__CityID__3F115E1A">
+    <End Role="Cities" Type="Self.City" Multiplicity="0..1" />
+    <End Role="Leads" Type="Self.Lead" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Cities">
+        <PropertyRef Name="CityID" />
+      </Principal>
+      <Dependent Role="Leads">
+        <PropertyRef Name="CityID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Contract___Contr__408F9238">
+    <End Role="Contracts" Type="Self.Contract" Multiplicity="1" />
+    <End Role="Contract_Customer_Service_Address_Mapping" Type="Self.Contract_Customer_Service_Address_Mapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Contracts">
+        <PropertyRef Name="ContractID" />
+      </Principal>
+      <Dependent Role="Contract_Customer_Service_Address_Mapping">
+        <PropertyRef Name="ContractID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Contract___Custo__4183B671">
+    <End Role="Customers_Service_Address_Mapping" Type="Self.Customers_Service_Address_Mapping" Multiplicity="1" />
+    <End Role="Contract_Customer_Service_Address_Mapping" Type="Self.Contract_Customer_Service_Address_Mapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customers_Service_Address_Mapping">
+        <PropertyRef Name="Customers_Service_Address_Mapping_ID" />
+      </Principal>
+      <Dependent Role="Contract_Customer_Service_Address_Mapping">
+        <PropertyRef Name="Customers_Service_Address_Mapping_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Contract___Contr__4B0D20AB">
+    <End Role="Contracts" Type="Self.Contract" Multiplicity="1" />
+    <End Role="Contract_Customer_Service_Mapping" Type="Self.Contract_Customer_Service_Mapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Contracts">
+        <PropertyRef Name="ContractID" />
+      </Principal>
+      <Dependent Role="Contract_Customer_Service_Mapping">
+        <PropertyRef Name="ContractID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Contract___Custo__4C0144E4">
+    <End Role="Customer_Services_Mapping" Type="Self.Customer_Services_Mapping" Multiplicity="1" />
+    <End Role="Contract_Customer_Service_Mapping" Type="Self.Contract_Customer_Service_Mapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer_Services_Mapping">
+        <PropertyRef Name="Customer_Services_Mapping_ID" />
+      </Principal>
+      <Dependent Role="Contract_Customer_Service_Mapping">
+        <PropertyRef Name="Customer_Services_Mapping_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Contracts__Creat__37FA4C37">
+    <End Role="UserLogins" Type="Self.UserLogin" Multiplicity="1" />
+    <End Role="Contracts" Type="Self.Contract" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserLogins">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Contracts">
+        <PropertyRef Name="CreatedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Contracts__Custo__351DDF8C">
+    <End Role="Customers" Type="Self.Customer" Multiplicity="1" />
+    <End Role="Contracts" Type="Self.Contract" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customers">
+        <PropertyRef Name="CustomerID" />
+      </Principal>
+      <Dependent Role="Contracts">
+        <PropertyRef Name="CustomerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Contracts__LastU__38EE7070">
+    <End Role="UserLogins" Type="Self.UserLogin" Multiplicity="0..1" />
+    <End Role="Contracts" Type="Self.Contract" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserLogins">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Contracts">
+        <PropertyRef Name="LastUpdatedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Customer___Custo__46486B8E">
+    <End Role="Customers" Type="Self.Customer" Multiplicity="1" />
+    <End Role="Customer_Services_Mapping" Type="Self.Customer_Services_Mapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customers">
+        <PropertyRef Name="CustomerID" />
+      </Principal>
+      <Dependent Role="Customer_Services_Mapping">
+        <PropertyRef Name="CustomerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Customer___Frequ__45544755">
+    <End Role="FrequencyOfService" Type="Self.FrequencyOfService" Multiplicity="1" />
+    <End Role="Customer_Services_Mapping" Type="Self.Customer_Services_Mapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FrequencyOfService">
+        <PropertyRef Name="FrequencyOfServiceID" />
+      </Principal>
+      <Dependent Role="Customer_Services_Mapping">
+        <PropertyRef Name="FrequencyOfServiceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Customer___Servi__473C8FC7">
+    <End Role="Services" Type="Self.Service" Multiplicity="1" />
+    <End Role="Customer_Services_Mapping" Type="Self.Customer_Services_Mapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Services">
+        <PropertyRef Name="ServiceID" />
+      </Principal>
+      <Dependent Role="Customer_Services_Mapping">
+        <PropertyRef Name="ServiceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Customer___Servi__4830B400">
+    <End Role="ServiceGroups" Type="Self.ServiceGroup" Multiplicity="1" />
+    <End Role="Customer_Services_Mapping" Type="Self.Customer_Services_Mapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ServiceGroups">
+        <PropertyRef Name="ServiceGroupID" />
+      </Principal>
+      <Dependent Role="Customer_Services_Mapping">
+        <PropertyRef Name="ServiceGroupID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Customers__Creat__16CE6296">
+    <End Role="UserLogins" Type="Self.UserLogin" Multiplicity="1" />
+    <End Role="Customers" Type="Self.Customer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserLogins">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Customers">
+        <PropertyRef Name="CreatedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Customers__Custo__2334397B">
+    <End Role="CustomerStatus" Type="Self.CustomerStatu" Multiplicity="1" />
+    <End Role="Customers" Type="Self.Customer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CustomerStatus">
+        <PropertyRef Name="CustomerStatusID" />
+      </Principal>
+      <Dependent Role="Customers">
+        <PropertyRef Name="CustomerStatusID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Customers__Custo__2610A626">
+    <End Role="Customers" Type="Self.Customer" Multiplicity="1" />
+    <End Role="Customers_Consult_Person_Mapping" Type="Self.Customers_Consult_Person_Mapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customers">
+        <PropertyRef Name="CustomerID" />
+      </Principal>
+      <Dependent Role="Customers_Consult_Person_Mapping">
+        <PropertyRef Name="CustomerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Customers__Custo__41B8C09B">
+    <End Role="Customers" Type="Self.Customer" Multiplicity="1" />
+    <End Role="Customers_Billing_Address_Mapping" Type="Self.Customers_Billing_Address_Mapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customers">
+        <PropertyRef Name="CustomerID" />
+      </Principal>
+      <Dependent Role="Customers_Billing_Address_Mapping">
+        <PropertyRef Name="CustomerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Customers__Custo__477199F1">
+    <End Role="Customers" Type="Self.Customer" Multiplicity="1" />
+    <End Role="Customers_Service_Address_Mapping" Type="Self.Customers_Service_Address_Mapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customers">
+        <PropertyRef Name="CustomerID" />
+      </Principal>
+      <Dependent Role="Customers_Service_Address_Mapping">
+        <PropertyRef Name="CustomerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Customers__Lastu__214BF109">
+    <End Role="UserLogins" Type="Self.UserLogin" Multiplicity="1" />
+    <End Role="Customers" Type="Self.Customer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserLogins">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Customers">
+        <PropertyRef Name="LastupdatedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Customers__Locat__52AE4273">
+    <End Role="Locations" Type="Self.Location" Multiplicity="1" />
+    <End Role="Customers" Type="Self.Customer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Locations">
+        <PropertyRef Name="LocationID" />
+      </Principal>
+      <Dependent Role="Customers">
+        <PropertyRef Name="LocationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Customers__Relig__51BA1E3A">
+    <End Role="Religions" Type="Self.Religion" Multiplicity="0..1" />
+    <End Role="Customers" Type="Self.Customer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Religions">
+        <PropertyRef Name="ReligionID" />
+      </Principal>
+      <Dependent Role="Customers">
+        <PropertyRef Name="ReligionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Customers__Sourc__14E61A24">
+    <End Role="Sources" Type="Self.Source" Multiplicity="1" />
+    <End Role="Customers" Type="Self.Customer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sources">
+        <PropertyRef Name="SourceID" />
+      </Principal>
+      <Dependent Role="Customers">
+        <PropertyRef Name="SourceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Customers__SubSo__15DA3E5D">
+    <End Role="Sources" Type="Self.Source" Multiplicity="1" />
+    <End Role="Customers" Type="Self.Customer" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sources">
+        <PropertyRef Name="SourceID" />
+      </Principal>
+      <Dependent Role="Customers">
+        <PropertyRef Name="SubSourceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Estimates__Custo__084B3915">
+    <End Role="Customers" Type="Self.Customer" Multiplicity="0..1" />
+    <End Role="Estimates" Type="Self.Estimate" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customers">
+        <PropertyRef Name="CustomerID" />
+      </Principal>
+      <Dependent Role="Estimates">
+        <PropertyRef Name="CustomerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Customers__Custo__5D60DB10">
+    <End Role="Customers_Service_Address_Mapping" Type="Self.Customers_Service_Address_Mapping" Multiplicity="1" />
+    <End Role="Customers_Billing_Address_Cell_No_Mapping" Type="Self.Customers_Billing_Address_Cell_No_Mapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customers_Service_Address_Mapping">
+        <PropertyRef Name="Customers_Service_Address_Mapping_ID" />
+      </Principal>
+      <Dependent Role="Customers_Billing_Address_Cell_No_Mapping">
+        <PropertyRef Name="Customers_Billing_Address_Mapping_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Customers__Custo__56B3DD81">
+    <End Role="Customers_Service_Address_Mapping" Type="Self.Customers_Service_Address_Mapping" Multiplicity="1" />
+    <End Role="Customers_Billing_Address_Email_Mapping" Type="Self.Customers_Billing_Address_Email_Mapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customers_Service_Address_Mapping">
+        <PropertyRef Name="Customers_Service_Address_Mapping_ID" />
+      </Principal>
+      <Dependent Role="Customers_Billing_Address_Email_Mapping">
+        <PropertyRef Name="Customers_Billing_Address_Mapping_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Customers__Locat__42ACE4D4">
+    <End Role="Locations" Type="Self.Location" Multiplicity="1" />
+    <End Role="Customers_Billing_Address_Mapping" Type="Self.Customers_Billing_Address_Mapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Locations">
+        <PropertyRef Name="LocationID" />
+      </Principal>
+      <Dependent Role="Customers_Billing_Address_Mapping">
+        <PropertyRef Name="BillingLocationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Customers__State__44952D46">
+    <End Role="States" Type="Self.State" Multiplicity="1" />
+    <End Role="Customers_Billing_Address_Mapping" Type="Self.Customers_Billing_Address_Mapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="States">
+        <PropertyRef Name="StateID" />
+      </Principal>
+      <Dependent Role="Customers_Billing_Address_Mapping">
+        <PropertyRef Name="StateID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Customers__Custo__5A846E65">
+    <End Role="Customers_Service_Address_Mapping" Type="Self.Customers_Service_Address_Mapping" Multiplicity="1" />
+    <End Role="Customers_Billing_Address_Tel_No_Mapping" Type="Self.Customers_Billing_Address_Tel_No_Mapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customers_Service_Address_Mapping">
+        <PropertyRef Name="Customers_Service_Address_Mapping_ID" />
+      </Principal>
+      <Dependent Role="Customers_Billing_Address_Tel_No_Mapping">
+        <PropertyRef Name="Customers_Billing_Address_Mapping_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Customers__Custo__2DB1C7EE">
+    <End Role="Customers_Consult_Person_Mapping" Type="Self.Customers_Consult_Person_Mapping" Multiplicity="1" />
+    <End Role="Customers_Consult_Person_Cell_No_Mapping" Type="Self.Customers_Consult_Person_Cell_No_Mapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customers_Consult_Person_Mapping">
+        <PropertyRef Name="Customers_Consult_Person_Mapping_ID" />
+      </Principal>
+      <Dependent Role="Customers_Consult_Person_Cell_No_Mapping">
+        <PropertyRef Name="Customers_Consult_Person_Mapping_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Customers__Custo__308E3499">
+    <End Role="Customers_Consult_Person_Mapping" Type="Self.Customers_Consult_Person_Mapping" Multiplicity="1" />
+    <End Role="Customers_Consult_Person_Email_Mapping" Type="Self.Customers_Consult_Person_Email_Mapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customers_Consult_Person_Mapping">
+        <PropertyRef Name="Customers_Consult_Person_Mapping_ID" />
+      </Principal>
+      <Dependent Role="Customers_Consult_Person_Email_Mapping">
+        <PropertyRef Name="Customers_Consult_Person_Mapping_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Customers__Creat__2704CA5F">
+    <End Role="UserLogins" Type="Self.UserLogin" Multiplicity="1" />
+    <End Role="Customers_Consult_Person_Mapping" Type="Self.Customers_Consult_Person_Mapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserLogins">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Customers_Consult_Person_Mapping">
+        <PropertyRef Name="CreatedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Customers__Custo__2AD55B43">
+    <End Role="Customers_Consult_Person_Mapping" Type="Self.Customers_Consult_Person_Mapping" Multiplicity="1" />
+    <End Role="Customers_Consult_Person_Tel_No_Mapping" Type="Self.Customers_Consult_Person_Tel_No_Mapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customers_Consult_Person_Mapping">
+        <PropertyRef Name="Customers_Consult_Person_Mapping_ID" />
+      </Principal>
+      <Dependent Role="Customers_Consult_Person_Tel_No_Mapping">
+        <PropertyRef Name="Customers_Consult_Person_Mapping_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Customers__Custo__50FB042B">
+    <End Role="Customers_Service_Address_Mapping" Type="Self.Customers_Service_Address_Mapping" Multiplicity="1" />
+    <End Role="Customers_Service_Address_Cell_No_Mapping" Type="Self.Customers_Service_Address_Cell_No_Mapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customers_Service_Address_Mapping">
+        <PropertyRef Name="Customers_Service_Address_Mapping_ID" />
+      </Principal>
+      <Dependent Role="Customers_Service_Address_Cell_No_Mapping">
+        <PropertyRef Name="Customers_Service_Address_Mapping_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Customers__Custo__53D770D6">
+    <End Role="Customers_Service_Address_Mapping" Type="Self.Customers_Service_Address_Mapping" Multiplicity="1" />
+    <End Role="Customers_Service_Address_Email_Mapping" Type="Self.Customers_Service_Address_Email_Mapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customers_Service_Address_Mapping">
+        <PropertyRef Name="Customers_Service_Address_Mapping_ID" />
+      </Principal>
+      <Dependent Role="Customers_Service_Address_Email_Mapping">
+        <PropertyRef Name="Customers_Service_Address_Mapping_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Customers__Custo__4E1E9780">
+    <End Role="Customers_Service_Address_Mapping" Type="Self.Customers_Service_Address_Mapping" Multiplicity="1" />
+    <End Role="Customers_Service_Address_Tel_No_Mapping" Type="Self.Customers_Service_Address_Tel_No_Mapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customers_Service_Address_Mapping">
+        <PropertyRef Name="Customers_Service_Address_Mapping_ID" />
+      </Principal>
+      <Dependent Role="Customers_Service_Address_Tel_No_Mapping">
+        <PropertyRef Name="Customers_Service_Address_Mapping_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Customers__Locat__4865BE2A">
+    <End Role="Locations" Type="Self.Location" Multiplicity="1" />
+    <End Role="Customers_Service_Address_Mapping" Type="Self.Customers_Service_Address_Mapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Locations">
+        <PropertyRef Name="LocationID" />
+      </Principal>
+      <Dependent Role="Customers_Service_Address_Mapping">
+        <PropertyRef Name="ServiceLocationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Customers__State__4A4E069C">
+    <End Role="States" Type="Self.State" Multiplicity="1" />
+    <End Role="Customers_Service_Address_Mapping" Type="Self.Customers_Service_Address_Mapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="States">
+        <PropertyRef Name="StateID" />
+      </Principal>
+      <Dependent Role="Customers_Service_Address_Mapping">
+        <PropertyRef Name="StateID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Documents__Creat__220B0B18">
+    <End Role="UserLogins" Type="Self.UserLogin" Multiplicity="1" />
+    <End Role="Documents_Templates" Type="Self.Documents_Templates" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserLogins">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Documents_Templates">
+        <PropertyRef Name="CreatedByUserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Documents__LastU__2022C2A6">
+    <End Role="UserLogins" Type="Self.UserLogin" Multiplicity="0..1" />
+    <End Role="Documents_Templates" Type="Self.Documents_Templates" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserLogins">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Documents_Templates">
+        <PropertyRef Name="LastUpdatedByUserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__EmployeeD__Creat__6AEFE058">
+    <End Role="UserLogins" Type="Self.UserLogin" Multiplicity="0..1" />
+    <End Role="EmployeeDesignations" Type="Self.EmployeeDesignation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserLogins">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="EmployeeDesignations">
+        <PropertyRef Name="CreatedByUserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__EmployeeD__Updat__6FB49575">
+    <End Role="UserLogins" Type="Self.UserLogin" Multiplicity="0..1" />
+    <End Role="EmployeeDesignations" Type="Self.EmployeeDesignation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserLogins">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="EmployeeDesignations">
+        <PropertyRef Name="UpdatedByUserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Employees__Desig__1CBC4616">
+    <End Role="EmployeeDesignations" Type="Self.EmployeeDesignation" Multiplicity="0..1" />
+    <End Role="Employees" Type="Self.Employee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EmployeeDesignations">
+        <PropertyRef Name="EmployeeDesignationID" />
+      </Principal>
+      <Dependent Role="Employees">
+        <PropertyRef Name="DesignationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Employees__Creat__6BE40491">
+    <End Role="UserLogins" Type="Self.UserLogin" Multiplicity="0..1" />
+    <End Role="Employees" Type="Self.Employee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserLogins">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Employees">
+        <PropertyRef Name="CreatedByUserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Employees__Updat__70A8B9AE">
+    <End Role="UserLogins" Type="Self.UserLogin" Multiplicity="0..1" />
+    <End Role="Employees" Type="Self.Employee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserLogins">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Employees">
+        <PropertyRef Name="UpdatedByUserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_VisitAllocate_EmpID">
+    <End Role="Employees" Type="Self.Employee" Multiplicity="0..1" />
+    <End Role="Leads" Type="Self.Lead" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Employees">
+        <PropertyRef Name="EmployeeID" />
+      </Principal>
+      <Dependent Role="Leads">
+        <PropertyRef Name="VisitAllocate" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Estimates__Creat__0B27A5C0">
+    <End Role="UserLogins" Type="Self.UserLogin" Multiplicity="1" />
+    <End Role="Estimates" Type="Self.Estimate" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserLogins">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Estimates">
+        <PropertyRef Name="CreatedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Estimates__LastU__0C1BC9F9">
+    <End Role="UserLogins" Type="Self.UserLogin" Multiplicity="0..1" />
+    <End Role="Estimates" Type="Self.Estimate" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserLogins">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Estimates">
+        <PropertyRef Name="LastUpdatedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Estimates__LeadI__075714DC">
+    <End Role="Leads" Type="Self.Lead" Multiplicity="0..1" />
+    <End Role="Estimates" Type="Self.Estimate" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Leads">
+        <PropertyRef Name="LeadID" />
+      </Principal>
+      <Dependent Role="Estimates">
+        <PropertyRef Name="LeadID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Frequency__Creat__6CD828CA">
+    <End Role="UserLogins" Type="Self.UserLogin" Multiplicity="0..1" />
+    <End Role="FrequencyOfService" Type="Self.FrequencyOfService" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserLogins">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="FrequencyOfService">
+        <PropertyRef Name="CreatedByUserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Lead_Serv__Frequ__74794A92">
+    <End Role="FrequencyOfService" Type="Self.FrequencyOfService" Multiplicity="1" />
+    <End Role="Lead_Services_Mapping" Type="Self.Lead_Services_Mapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FrequencyOfService">
+        <PropertyRef Name="FrequencyOfServiceID" />
+      </Principal>
+      <Dependent Role="Lead_Services_Mapping">
+        <PropertyRef Name="FrequencyOfServiceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Lead_Cell__LeadI__7720AD13">
+    <End Role="Leads" Type="Self.Lead" Multiplicity="1" />
+    <End Role="Lead_Cell_No_Mapping" Type="Self.Lead_Cell_No_Mapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Leads">
+        <PropertyRef Name="LeadID" />
+      </Principal>
+      <Dependent Role="Lead_Cell_No_Mapping">
+        <PropertyRef Name="LeadID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Lead_Cons__Lead___61316BF4">
+    <End Role="Lead_Consult_Person" Type="Self.Lead_Consult_Person" Multiplicity="1" />
+    <End Role="Lead_Consult_Person_Contact_No_Mapping" Type="Self.Lead_Consult_Person_Contact_No_Mapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Lead_Consult_Person">
+        <PropertyRef Name="Lead_Consult_Person_ID" />
+      </Principal>
+      <Dependent Role="Lead_Consult_Person_Contact_No_Mapping">
+        <PropertyRef Name="Lead_Consult_Person_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Lead_Cons__Lead___640DD89F">
+    <End Role="Lead_Consult_Person" Type="Self.Lead_Consult_Person" Multiplicity="1" />
+    <End Role="Lead_Consult_Person_Email_Mapping" Type="Self.Lead_Consult_Person_Email_Mapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Lead_Consult_Person">
+        <PropertyRef Name="Lead_Consult_Person_ID" />
+      </Principal>
+      <Dependent Role="Lead_Consult_Person_Email_Mapping">
+        <PropertyRef Name="Lead_Consult_Person_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Lead_Cons__LeadI__59C55456">
+    <End Role="Leads" Type="Self.Lead" Multiplicity="1" />
+    <End Role="Lead_Consult_Person" Type="Self.Lead_Consult_Person" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Leads">
+        <PropertyRef Name="LeadID" />
+      </Principal>
+      <Dependent Role="Lead_Consult_Person">
+        <PropertyRef Name="LeadID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Lead_Emai__LeadI__79FD19BE">
+    <End Role="Leads" Type="Self.Lead" Multiplicity="1" />
+    <End Role="Lead_Email_Mapping" Type="Self.Lead_Email_Mapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Leads">
+        <PropertyRef Name="LeadID" />
+      </Principal>
+      <Dependent Role="Lead_Email_Mapping">
+        <PropertyRef Name="LeadID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Lead_Loca__LeadI__4E53A1AA">
+    <End Role="Leads" Type="Self.Lead" Multiplicity="1" />
+    <End Role="Lead_Locations_Mapping" Type="Self.Lead_Locations_Mapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Leads">
+        <PropertyRef Name="LeadID" />
+      </Principal>
+      <Dependent Role="Lead_Locations_Mapping">
+        <PropertyRef Name="LeadID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Lead_Loca__Locat__4F47C5E3">
+    <End Role="Locations" Type="Self.Location" Multiplicity="1" />
+    <End Role="Lead_Locations_Mapping" Type="Self.Lead_Locations_Mapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Locations">
+        <PropertyRef Name="LocationID" />
+      </Principal>
+      <Dependent Role="Lead_Locations_Mapping">
+        <PropertyRef Name="LocationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Lead_Serv__LeadI__55009F39">
+    <End Role="Leads" Type="Self.Lead" Multiplicity="1" />
+    <End Role="Lead_Services_Mapping" Type="Self.Lead_Services_Mapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Leads">
+        <PropertyRef Name="LeadID" />
+      </Principal>
+      <Dependent Role="Lead_Services_Mapping">
+        <PropertyRef Name="LeadID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Lead_Serv__Servi__55F4C372">
+    <End Role="Services" Type="Self.Service" Multiplicity="1" />
+    <End Role="Lead_Services_Mapping" Type="Self.Lead_Services_Mapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Services">
+        <PropertyRef Name="ServiceID" />
+      </Principal>
+      <Dependent Role="Lead_Services_Mapping">
+        <PropertyRef Name="ServiceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Lead_Serv__Servi__73852659">
+    <End Role="ServiceGroups" Type="Self.ServiceGroup" Multiplicity="1" />
+    <End Role="Lead_Services_Mapping" Type="Self.Lead_Services_Mapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ServiceGroups">
+        <PropertyRef Name="ServiceGroupID" />
+      </Principal>
+      <Dependent Role="Lead_Services_Mapping">
+        <PropertyRef Name="ServiceGroupID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Lead_Tel___LeadI__7CD98669">
+    <End Role="Leads" Type="Self.Lead" Multiplicity="1" />
+    <End Role="Lead_Tel_No_Mapping" Type="Self.Lead_Tel_No_Mapping" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Leads">
+        <PropertyRef Name="LeadID" />
+      </Principal>
+      <Dependent Role="Lead_Tel_No_Mapping">
+        <PropertyRef Name="LeadID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Leads__CreatedBy__74444068">
+    <End Role="UserLogins" Type="Self.UserLogin" Multiplicity="0..1" />
+    <End Role="Leads" Type="Self.Lead" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserLogins">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Leads">
+        <PropertyRef Name="CreatedBy" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Leads__LeadStatu__40F9A68C">
+    <End Role="LeadStatuses" Type="Self.LeadStatus" Multiplicity="0..1" />
+    <End Role="Leads" Type="Self.Lead" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LeadStatuses">
+        <PropertyRef Name="StatusID" />
+      </Principal>
+      <Dependent Role="Leads">
+        <PropertyRef Name="LeadStatusID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Leads__LocationI__5E54FF49">
+    <End Role="Locations" Type="Self.Location" Multiplicity="0..1" />
+    <End Role="Leads" Type="Self.Lead" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Locations">
+        <PropertyRef Name="LocationID" />
+      </Principal>
+      <Dependent Role="Leads">
+        <PropertyRef Name="LocationID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Leads__SourceID__43D61337">
+    <End Role="Sources" Type="Self.Source" Multiplicity="0..1" />
+    <End Role="Leads" Type="Self.Lead" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sources">
+        <PropertyRef Name="SourceID" />
+      </Principal>
+      <Dependent Role="Leads">
+        <PropertyRef Name="SourceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Leads__StateID__1D4655FB">
+    <End Role="States" Type="Self.State" Multiplicity="0..1" />
+    <End Role="Leads" Type="Self.Lead" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="States">
+        <PropertyRef Name="StateID" />
+      </Principal>
+      <Dependent Role="Leads">
+        <PropertyRef Name="StateID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Leads__SubSource__44CA3770">
+    <End Role="Sources" Type="Self.Source" Multiplicity="0..1" />
+    <End Role="Leads" Type="Self.Lead" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Sources">
+        <PropertyRef Name="SourceID" />
+      </Principal>
+      <Dependent Role="Leads">
+        <PropertyRef Name="SubSourceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Leads__TeleCalle__756D6ECB">
+    <End Role="UserLogins" Type="Self.UserLogin" Multiplicity="0..1" />
+    <End Role="Leads" Type="Self.Lead" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserLogins">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Leads">
+        <PropertyRef Name="TeleCallerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Leads__TypeOfPre__46B27FE2">
+    <End Role="PremisesTypes" Type="Self.PremisesType" Multiplicity="0..1" />
+    <End Role="Leads" Type="Self.Lead" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PremisesTypes">
+        <PropertyRef Name="PremisesTypeID" />
+      </Principal>
+      <Dependent Role="Leads">
+        <PropertyRef Name="TypeOfPremisesID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Religions__Creat__4FD1D5C8">
+    <End Role="UserLogins" Type="Self.UserLogin" Multiplicity="1" />
+    <End Role="Religions" Type="Self.Religion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserLogins">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Religions">
+        <PropertyRef Name="CreatedByUserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Religions__Updat__50C5FA01">
+    <End Role="UserLogins" Type="Self.UserLogin" Multiplicity="0..1" />
+    <End Role="Religions" Type="Self.Religion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserLogins">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Religions">
+        <PropertyRef Name="UpdatedByUserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Service_E__Creat__68D28DBC">
+    <End Role="UserLogins" Type="Self.UserLogin" Multiplicity="1" />
+    <End Role="Service_Estimate_Templates" Type="Self.Service_Estimate_Templates" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserLogins">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Service_Estimate_Templates">
+        <PropertyRef Name="CreatedByUserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Service_E__Servi__66EA454A">
+    <End Role="Services" Type="Self.Service" Multiplicity="1" />
+    <End Role="Service_Estimate_Templates" Type="Self.Service_Estimate_Templates" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Services">
+        <PropertyRef Name="ServiceID" />
+      </Principal>
+      <Dependent Role="Service_Estimate_Templates">
+        <PropertyRef Name="ServiceID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Service_E__Servi__6ABAD62E">
+    <End Role="ServiceGroups" Type="Self.ServiceGroup" Multiplicity="0..1" />
+    <End Role="Service_Estimate_Templates" Type="Self.Service_Estimate_Templates" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ServiceGroups">
+        <PropertyRef Name="ServiceGroupID" />
+      </Principal>
+      <Dependent Role="Service_Estimate_Templates">
+        <PropertyRef Name="ServiceGroupID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Services__Servic__3493CFA7">
+    <End Role="ServiceGroups" Type="Self.ServiceGroup" Multiplicity="1" />
+    <End Role="Services" Type="Self.Service" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ServiceGroups">
+        <PropertyRef Name="ServiceGroupID" />
+      </Principal>
+      <Dependent Role="Services">
+        <PropertyRef Name="ServiceGroupID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Services__Servic__3587F3E0">
+    <End Role="ServiceGroups" Type="Self.ServiceGroup" Multiplicity="1" />
+    <End Role="Services" Type="Self.Service" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ServiceGroups">
+        <PropertyRef Name="ServiceGroupID" />
+      </Principal>
+      <Dependent Role="Services">
+        <PropertyRef Name="ServiceSubGroupID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__States__CreatedB__3EDC53F0">
+    <End Role="UserLogins" Type="Self.UserLogin" Multiplicity="0..1" />
+    <End Role="States" Type="Self.State" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserLogins">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="States">
+        <PropertyRef Name="CreatedByUserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__States__UpdatedB__1B5E0D89">
+    <End Role="UserLogins" Type="Self.UserLogin" Multiplicity="0..1" />
+    <End Role="States" Type="Self.State" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserLogins">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="States">
+        <PropertyRef Name="UpdatedByUserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__UserLogin__UserL__6442E2C9">
+    <End Role="UserLoginTypes" Type="Self.UserLoginType" Multiplicity="0..1" />
+    <End Role="UserLogins" Type="Self.UserLogin" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UserLoginTypes">
+        <PropertyRef Name="UserLoginTypeID" />
+      </Principal>
+      <Dependent Role="UserLogins">
+        <PropertyRef Name="UserLoginTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="SadguruCRMEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Branches" EntityType="Self.Branch" />
+    <EntitySet Name="Cities" EntityType="Self.City" />
+    <EntitySet Name="Contract_Customer_Service_Address_Mapping" EntityType="Self.Contract_Customer_Service_Address_Mapping" />
+    <EntitySet Name="Contract_Customer_Service_Mapping" EntityType="Self.Contract_Customer_Service_Mapping" />
+    <EntitySet Name="Contracts" EntityType="Self.Contract" />
+    <EntitySet Name="Customer_Services_Mapping" EntityType="Self.Customer_Services_Mapping" />
+    <EntitySet Name="Customers" EntityType="Self.Customer" />
+    <EntitySet Name="Customers_Billing_Address_Cell_No_Mapping" EntityType="Self.Customers_Billing_Address_Cell_No_Mapping" />
+    <EntitySet Name="Customers_Billing_Address_Email_Mapping" EntityType="Self.Customers_Billing_Address_Email_Mapping" />
+    <EntitySet Name="Customers_Billing_Address_Mapping" EntityType="Self.Customers_Billing_Address_Mapping" />
+    <EntitySet Name="Customers_Billing_Address_Tel_No_Mapping" EntityType="Self.Customers_Billing_Address_Tel_No_Mapping" />
+    <EntitySet Name="Customers_Consult_Person_Cell_No_Mapping" EntityType="Self.Customers_Consult_Person_Cell_No_Mapping" />
+    <EntitySet Name="Customers_Consult_Person_Email_Mapping" EntityType="Self.Customers_Consult_Person_Email_Mapping" />
+    <EntitySet Name="Customers_Consult_Person_Mapping" EntityType="Self.Customers_Consult_Person_Mapping" />
+    <EntitySet Name="Customers_Consult_Person_Tel_No_Mapping" EntityType="Self.Customers_Consult_Person_Tel_No_Mapping" />
+    <EntitySet Name="Customers_Service_Address_Cell_No_Mapping" EntityType="Self.Customers_Service_Address_Cell_No_Mapping" />
+    <EntitySet Name="Customers_Service_Address_Email_Mapping" EntityType="Self.Customers_Service_Address_Email_Mapping" />
+    <EntitySet Name="Customers_Service_Address_Mapping" EntityType="Self.Customers_Service_Address_Mapping" />
+    <EntitySet Name="Customers_Service_Address_Tel_No_Mapping" EntityType="Self.Customers_Service_Address_Tel_No_Mapping" />
+    <EntitySet Name="CustomerStatus" EntityType="Self.CustomerStatu" />
+    <EntitySet Name="Documents_Templates" EntityType="Self.Documents_Templates" />
+    <EntitySet Name="EmployeeDesignations" EntityType="Self.EmployeeDesignation" />
+    <EntitySet Name="Employees" EntityType="Self.Employee" />
+    <EntitySet Name="Estimates" EntityType="Self.Estimate" />
+    <EntitySet Name="FrequencyOfServices" EntityType="Self.FrequencyOfService" />
+    <EntitySet Name="Lead_Cell_No_Mapping" EntityType="Self.Lead_Cell_No_Mapping" />
+    <EntitySet Name="Lead_Consult_Person" EntityType="Self.Lead_Consult_Person" />
+    <EntitySet Name="Lead_Consult_Person_Contact_No_Mapping" EntityType="Self.Lead_Consult_Person_Contact_No_Mapping" />
+    <EntitySet Name="Lead_Consult_Person_Email_Mapping" EntityType="Self.Lead_Consult_Person_Email_Mapping" />
+    <EntitySet Name="Lead_Email_Mapping" EntityType="Self.Lead_Email_Mapping" />
+    <EntitySet Name="Lead_Locations_Mapping" EntityType="Self.Lead_Locations_Mapping" />
+    <EntitySet Name="Lead_Services_Mapping" EntityType="Self.Lead_Services_Mapping" />
+    <EntitySet Name="Lead_Tel_No_Mapping" EntityType="Self.Lead_Tel_No_Mapping" />
+    <EntitySet Name="Leads" EntityType="Self.Lead" />
+    <EntitySet Name="LeadStatuses" EntityType="Self.LeadStatus" />
+    <EntitySet Name="Locations" EntityType="Self.Location" />
+    <EntitySet Name="PeriodsOfContracts" EntityType="Self.PeriodsOfContract" />
+    <EntitySet Name="PremisesTypes" EntityType="Self.PremisesType" />
+    <EntitySet Name="Religions" EntityType="Self.Religion" />
+    <EntitySet Name="Service_Estimate_Templates" EntityType="Self.Service_Estimate_Templates" />
+    <EntitySet Name="ServiceGroups" EntityType="Self.ServiceGroup" />
+    <EntitySet Name="Services" EntityType="Self.Service" />
+    <EntitySet Name="Sources" EntityType="Self.Source" />
+    <EntitySet Name="States" EntityType="Self.State" />
+    <EntitySet Name="UserLogins" EntityType="Self.UserLogin" />
+    <EntitySet Name="UserLoginTypes" EntityType="Self.UserLoginType" />
+    <AssociationSet Name="FK__Branches__Create__690797E6" Association="Self.FK__Branches__Create__690797E6">
+      <End Role="UserLogins" EntitySet="UserLogins" />
+      <End Role="Branches" EntitySet="Branches" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Branches__Update__6DCC4D03" Association="Self.FK__Branches__Update__6DCC4D03">
+      <End Role="UserLogins" EntitySet="UserLogins" />
+      <End Role="Branches" EntitySet="Branches" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Contracts__Branc__361203C5" Association="Self.FK__Contracts__Branc__361203C5">
+      <End Role="Branches" EntitySet="Branches" />
+      <End Role="Contracts" EntitySet="Contracts" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Customers__Branc__13F1F5EB" Association="Self.FK__Customers__Branc__13F1F5EB">
+      <End Role="Branches" EntitySet="Branches" />
+      <End Role="Customers" EntitySet="Customers" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Leads__BranchID__3E1D39E1" Association="Self.FK__Leads__BranchID__3E1D39E1">
+      <End Role="Branches" EntitySet="Branches" />
+      <End Role="Leads" EntitySet="Leads" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Cities__CreatedB__69FBBC1F" Association="Self.FK__Cities__CreatedB__69FBBC1F">
+      <End Role="UserLogins" EntitySet="UserLogins" />
+      <End Role="Cities" EntitySet="Cities" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Cities__UpdatedB__6EC0713C" Association="Self.FK__Cities__UpdatedB__6EC0713C">
+      <End Role="UserLogins" EntitySet="UserLogins" />
+      <End Role="Cities" EntitySet="Cities" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Customers__CityI__43A1090D" Association="Self.FK__Customers__CityI__43A1090D">
+      <End Role="Cities" EntitySet="Cities" />
+      <End Role="Customers_Billing_Address_Mapping" EntitySet="Customers_Billing_Address_Mapping" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Customers__CityI__4959E263" Association="Self.FK__Customers__CityI__4959E263">
+      <End Role="Cities" EntitySet="Cities" />
+      <End Role="Customers_Service_Address_Mapping" EntitySet="Customers_Service_Address_Mapping" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Leads__CityID__3F115E1A" Association="Self.FK__Leads__CityID__3F115E1A">
+      <End Role="Cities" EntitySet="Cities" />
+      <End Role="Leads" EntitySet="Leads" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Contract___Contr__408F9238" Association="Self.FK__Contract___Contr__408F9238">
+      <End Role="Contracts" EntitySet="Contracts" />
+      <End Role="Contract_Customer_Service_Address_Mapping" EntitySet="Contract_Customer_Service_Address_Mapping" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Contract___Custo__4183B671" Association="Self.FK__Contract___Custo__4183B671">
+      <End Role="Customers_Service_Address_Mapping" EntitySet="Customers_Service_Address_Mapping" />
+      <End Role="Contract_Customer_Service_Address_Mapping" EntitySet="Contract_Customer_Service_Address_Mapping" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Contract___Contr__4B0D20AB" Association="Self.FK__Contract___Contr__4B0D20AB">
+      <End Role="Contracts" EntitySet="Contracts" />
+      <End Role="Contract_Customer_Service_Mapping" EntitySet="Contract_Customer_Service_Mapping" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Contract___Custo__4C0144E4" Association="Self.FK__Contract___Custo__4C0144E4">
+      <End Role="Customer_Services_Mapping" EntitySet="Customer_Services_Mapping" />
+      <End Role="Contract_Customer_Service_Mapping" EntitySet="Contract_Customer_Service_Mapping" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Contracts__Creat__37FA4C37" Association="Self.FK__Contracts__Creat__37FA4C37">
+      <End Role="UserLogins" EntitySet="UserLogins" />
+      <End Role="Contracts" EntitySet="Contracts" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Contracts__Custo__351DDF8C" Association="Self.FK__Contracts__Custo__351DDF8C">
+      <End Role="Customers" EntitySet="Customers" />
+      <End Role="Contracts" EntitySet="Contracts" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Contracts__LastU__38EE7070" Association="Self.FK__Contracts__LastU__38EE7070">
+      <End Role="UserLogins" EntitySet="UserLogins" />
+      <End Role="Contracts" EntitySet="Contracts" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Customer___Custo__46486B8E" Association="Self.FK__Customer___Custo__46486B8E">
+      <End Role="Customers" EntitySet="Customers" />
+      <End Role="Customer_Services_Mapping" EntitySet="Customer_Services_Mapping" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Customer___Frequ__45544755" Association="Self.FK__Customer___Frequ__45544755">
+      <End Role="FrequencyOfService" EntitySet="FrequencyOfServices" />
+      <End Role="Customer_Services_Mapping" EntitySet="Customer_Services_Mapping" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Customer___Servi__473C8FC7" Association="Self.FK__Customer___Servi__473C8FC7">
+      <End Role="Services" EntitySet="Services" />
+      <End Role="Customer_Services_Mapping" EntitySet="Customer_Services_Mapping" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Customer___Servi__4830B400" Association="Self.FK__Customer___Servi__4830B400">
+      <End Role="ServiceGroups" EntitySet="ServiceGroups" />
+      <End Role="Customer_Services_Mapping" EntitySet="Customer_Services_Mapping" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Customers__Creat__16CE6296" Association="Self.FK__Customers__Creat__16CE6296">
+      <End Role="UserLogins" EntitySet="UserLogins" />
+      <End Role="Customers" EntitySet="Customers" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Customers__Custo__2334397B" Association="Self.FK__Customers__Custo__2334397B">
+      <End Role="CustomerStatus" EntitySet="CustomerStatus" />
+      <End Role="Customers" EntitySet="Customers" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Customers__Custo__2610A626" Association="Self.FK__Customers__Custo__2610A626">
+      <End Role="Customers" EntitySet="Customers" />
+      <End Role="Customers_Consult_Person_Mapping" EntitySet="Customers_Consult_Person_Mapping" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Customers__Custo__41B8C09B" Association="Self.FK__Customers__Custo__41B8C09B">
+      <End Role="Customers" EntitySet="Customers" />
+      <End Role="Customers_Billing_Address_Mapping" EntitySet="Customers_Billing_Address_Mapping" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Customers__Custo__477199F1" Association="Self.FK__Customers__Custo__477199F1">
+      <End Role="Customers" EntitySet="Customers" />
+      <End Role="Customers_Service_Address_Mapping" EntitySet="Customers_Service_Address_Mapping" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Customers__Lastu__214BF109" Association="Self.FK__Customers__Lastu__214BF109">
+      <End Role="UserLogins" EntitySet="UserLogins" />
+      <End Role="Customers" EntitySet="Customers" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Customers__Locat__52AE4273" Association="Self.FK__Customers__Locat__52AE4273">
+      <End Role="Locations" EntitySet="Locations" />
+      <End Role="Customers" EntitySet="Customers" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Customers__Relig__51BA1E3A" Association="Self.FK__Customers__Relig__51BA1E3A">
+      <End Role="Religions" EntitySet="Religions" />
+      <End Role="Customers" EntitySet="Customers" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Customers__Sourc__14E61A24" Association="Self.FK__Customers__Sourc__14E61A24">
+      <End Role="Sources" EntitySet="Sources" />
+      <End Role="Customers" EntitySet="Customers" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Customers__SubSo__15DA3E5D" Association="Self.FK__Customers__SubSo__15DA3E5D">
+      <End Role="Sources" EntitySet="Sources" />
+      <End Role="Customers" EntitySet="Customers" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Estimates__Custo__084B3915" Association="Self.FK__Estimates__Custo__084B3915">
+      <End Role="Customers" EntitySet="Customers" />
+      <End Role="Estimates" EntitySet="Estimates" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Customers__Custo__5D60DB10" Association="Self.FK__Customers__Custo__5D60DB10">
+      <End Role="Customers_Service_Address_Mapping" EntitySet="Customers_Service_Address_Mapping" />
+      <End Role="Customers_Billing_Address_Cell_No_Mapping" EntitySet="Customers_Billing_Address_Cell_No_Mapping" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Customers__Custo__56B3DD81" Association="Self.FK__Customers__Custo__56B3DD81">
+      <End Role="Customers_Service_Address_Mapping" EntitySet="Customers_Service_Address_Mapping" />
+      <End Role="Customers_Billing_Address_Email_Mapping" EntitySet="Customers_Billing_Address_Email_Mapping" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Customers__Locat__42ACE4D4" Association="Self.FK__Customers__Locat__42ACE4D4">
+      <End Role="Locations" EntitySet="Locations" />
+      <End Role="Customers_Billing_Address_Mapping" EntitySet="Customers_Billing_Address_Mapping" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Customers__State__44952D46" Association="Self.FK__Customers__State__44952D46">
+      <End Role="States" EntitySet="States" />
+      <End Role="Customers_Billing_Address_Mapping" EntitySet="Customers_Billing_Address_Mapping" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Customers__Custo__5A846E65" Association="Self.FK__Customers__Custo__5A846E65">
+      <End Role="Customers_Service_Address_Mapping" EntitySet="Customers_Service_Address_Mapping" />
+      <End Role="Customers_Billing_Address_Tel_No_Mapping" EntitySet="Customers_Billing_Address_Tel_No_Mapping" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Customers__Custo__2DB1C7EE" Association="Self.FK__Customers__Custo__2DB1C7EE">
+      <End Role="Customers_Consult_Person_Mapping" EntitySet="Customers_Consult_Person_Mapping" />
+      <End Role="Customers_Consult_Person_Cell_No_Mapping" EntitySet="Customers_Consult_Person_Cell_No_Mapping" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Customers__Custo__308E3499" Association="Self.FK__Customers__Custo__308E3499">
+      <End Role="Customers_Consult_Person_Mapping" EntitySet="Customers_Consult_Person_Mapping" />
+      <End Role="Customers_Consult_Person_Email_Mapping" EntitySet="Customers_Consult_Person_Email_Mapping" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Customers__Creat__2704CA5F" Association="Self.FK__Customers__Creat__2704CA5F">
+      <End Role="UserLogins" EntitySet="UserLogins" />
+      <End Role="Customers_Consult_Person_Mapping" EntitySet="Customers_Consult_Person_Mapping" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Customers__Custo__2AD55B43" Association="Self.FK__Customers__Custo__2AD55B43">
+      <End Role="Customers_Consult_Person_Mapping" EntitySet="Customers_Consult_Person_Mapping" />
+      <End Role="Customers_Consult_Person_Tel_No_Mapping" EntitySet="Customers_Consult_Person_Tel_No_Mapping" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Customers__Custo__50FB042B" Association="Self.FK__Customers__Custo__50FB042B">
+      <End Role="Customers_Service_Address_Mapping" EntitySet="Customers_Service_Address_Mapping" />
+      <End Role="Customers_Service_Address_Cell_No_Mapping" EntitySet="Customers_Service_Address_Cell_No_Mapping" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Customers__Custo__53D770D6" Association="Self.FK__Customers__Custo__53D770D6">
+      <End Role="Customers_Service_Address_Mapping" EntitySet="Customers_Service_Address_Mapping" />
+      <End Role="Customers_Service_Address_Email_Mapping" EntitySet="Customers_Service_Address_Email_Mapping" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Customers__Custo__4E1E9780" Association="Self.FK__Customers__Custo__4E1E9780">
+      <End Role="Customers_Service_Address_Mapping" EntitySet="Customers_Service_Address_Mapping" />
+      <End Role="Customers_Service_Address_Tel_No_Mapping" EntitySet="Customers_Service_Address_Tel_No_Mapping" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Customers__Locat__4865BE2A" Association="Self.FK__Customers__Locat__4865BE2A">
+      <End Role="Locations" EntitySet="Locations" />
+      <End Role="Customers_Service_Address_Mapping" EntitySet="Customers_Service_Address_Mapping" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Customers__State__4A4E069C" Association="Self.FK__Customers__State__4A4E069C">
+      <End Role="States" EntitySet="States" />
+      <End Role="Customers_Service_Address_Mapping" EntitySet="Customers_Service_Address_Mapping" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Documents__Creat__220B0B18" Association="Self.FK__Documents__Creat__220B0B18">
+      <End Role="UserLogins" EntitySet="UserLogins" />
+      <End Role="Documents_Templates" EntitySet="Documents_Templates" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Documents__LastU__2022C2A6" Association="Self.FK__Documents__LastU__2022C2A6">
+      <End Role="UserLogins" EntitySet="UserLogins" />
+      <End Role="Documents_Templates" EntitySet="Documents_Templates" />
+    </AssociationSet>
+    <AssociationSet Name="FK__EmployeeD__Creat__6AEFE058" Association="Self.FK__EmployeeD__Creat__6AEFE058">
+      <End Role="UserLogins" EntitySet="UserLogins" />
+      <End Role="EmployeeDesignations" EntitySet="EmployeeDesignations" />
+    </AssociationSet>
+    <AssociationSet Name="FK__EmployeeD__Updat__6FB49575" Association="Self.FK__EmployeeD__Updat__6FB49575">
+      <End Role="UserLogins" EntitySet="UserLogins" />
+      <End Role="EmployeeDesignations" EntitySet="EmployeeDesignations" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Employees__Desig__1CBC4616" Association="Self.FK__Employees__Desig__1CBC4616">
+      <End Role="EmployeeDesignations" EntitySet="EmployeeDesignations" />
+      <End Role="Employees" EntitySet="Employees" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Employees__Creat__6BE40491" Association="Self.FK__Employees__Creat__6BE40491">
+      <End Role="UserLogins" EntitySet="UserLogins" />
+      <End Role="Employees" EntitySet="Employees" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Employees__Updat__70A8B9AE" Association="Self.FK__Employees__Updat__70A8B9AE">
+      <End Role="UserLogins" EntitySet="UserLogins" />
+      <End Role="Employees" EntitySet="Employees" />
+    </AssociationSet>
+    <AssociationSet Name="FK_VisitAllocate_EmpID" Association="Self.FK_VisitAllocate_EmpID">
+      <End Role="Employees" EntitySet="Employees" />
+      <End Role="Leads" EntitySet="Leads" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Estimates__Creat__0B27A5C0" Association="Self.FK__Estimates__Creat__0B27A5C0">
+      <End Role="UserLogins" EntitySet="UserLogins" />
+      <End Role="Estimates" EntitySet="Estimates" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Estimates__LastU__0C1BC9F9" Association="Self.FK__Estimates__LastU__0C1BC9F9">
+      <End Role="UserLogins" EntitySet="UserLogins" />
+      <End Role="Estimates" EntitySet="Estimates" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Estimates__LeadI__075714DC" Association="Self.FK__Estimates__LeadI__075714DC">
+      <End Role="Leads" EntitySet="Leads" />
+      <End Role="Estimates" EntitySet="Estimates" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Frequency__Creat__6CD828CA" Association="Self.FK__Frequency__Creat__6CD828CA">
+      <End Role="UserLogins" EntitySet="UserLogins" />
+      <End Role="FrequencyOfService" EntitySet="FrequencyOfServices" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Lead_Serv__Frequ__74794A92" Association="Self.FK__Lead_Serv__Frequ__74794A92">
+      <End Role="FrequencyOfService" EntitySet="FrequencyOfServices" />
+      <End Role="Lead_Services_Mapping" EntitySet="Lead_Services_Mapping" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Lead_Cell__LeadI__7720AD13" Association="Self.FK__Lead_Cell__LeadI__7720AD13">
+      <End Role="Leads" EntitySet="Leads" />
+      <End Role="Lead_Cell_No_Mapping" EntitySet="Lead_Cell_No_Mapping" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Lead_Cons__Lead___61316BF4" Association="Self.FK__Lead_Cons__Lead___61316BF4">
+      <End Role="Lead_Consult_Person" EntitySet="Lead_Consult_Person" />
+      <End Role="Lead_Consult_Person_Contact_No_Mapping" EntitySet="Lead_Consult_Person_Contact_No_Mapping" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Lead_Cons__Lead___640DD89F" Association="Self.FK__Lead_Cons__Lead___640DD89F">
+      <End Role="Lead_Consult_Person" EntitySet="Lead_Consult_Person" />
+      <End Role="Lead_Consult_Person_Email_Mapping" EntitySet="Lead_Consult_Person_Email_Mapping" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Lead_Cons__LeadI__59C55456" Association="Self.FK__Lead_Cons__LeadI__59C55456">
+      <End Role="Leads" EntitySet="Leads" />
+      <End Role="Lead_Consult_Person" EntitySet="Lead_Consult_Person" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Lead_Emai__LeadI__79FD19BE" Association="Self.FK__Lead_Emai__LeadI__79FD19BE">
+      <End Role="Leads" EntitySet="Leads" />
+      <End Role="Lead_Email_Mapping" EntitySet="Lead_Email_Mapping" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Lead_Loca__LeadI__4E53A1AA" Association="Self.FK__Lead_Loca__LeadI__4E53A1AA">
+      <End Role="Leads" EntitySet="Leads" />
+      <End Role="Lead_Locations_Mapping" EntitySet="Lead_Locations_Mapping" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Lead_Loca__Locat__4F47C5E3" Association="Self.FK__Lead_Loca__Locat__4F47C5E3">
+      <End Role="Locations" EntitySet="Locations" />
+      <End Role="Lead_Locations_Mapping" EntitySet="Lead_Locations_Mapping" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Lead_Serv__LeadI__55009F39" Association="Self.FK__Lead_Serv__LeadI__55009F39">
+      <End Role="Leads" EntitySet="Leads" />
+      <End Role="Lead_Services_Mapping" EntitySet="Lead_Services_Mapping" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Lead_Serv__Servi__55F4C372" Association="Self.FK__Lead_Serv__Servi__55F4C372">
+      <End Role="Services" EntitySet="Services" />
+      <End Role="Lead_Services_Mapping" EntitySet="Lead_Services_Mapping" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Lead_Serv__Servi__73852659" Association="Self.FK__Lead_Serv__Servi__73852659">
+      <End Role="ServiceGroups" EntitySet="ServiceGroups" />
+      <End Role="Lead_Services_Mapping" EntitySet="Lead_Services_Mapping" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Lead_Tel___LeadI__7CD98669" Association="Self.FK__Lead_Tel___LeadI__7CD98669">
+      <End Role="Leads" EntitySet="Leads" />
+      <End Role="Lead_Tel_No_Mapping" EntitySet="Lead_Tel_No_Mapping" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Leads__CreatedBy__74444068" Association="Self.FK__Leads__CreatedBy__74444068">
+      <End Role="UserLogins" EntitySet="UserLogins" />
+      <End Role="Leads" EntitySet="Leads" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Leads__LeadStatu__40F9A68C" Association="Self.FK__Leads__LeadStatu__40F9A68C">
+      <End Role="LeadStatuses" EntitySet="LeadStatuses" />
+      <End Role="Leads" EntitySet="Leads" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Leads__LocationI__5E54FF49" Association="Self.FK__Leads__LocationI__5E54FF49">
+      <End Role="Locations" EntitySet="Locations" />
+      <End Role="Leads" EntitySet="Leads" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Leads__SourceID__43D61337" Association="Self.FK__Leads__SourceID__43D61337">
+      <End Role="Sources" EntitySet="Sources" />
+      <End Role="Leads" EntitySet="Leads" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Leads__StateID__1D4655FB" Association="Self.FK__Leads__StateID__1D4655FB">
+      <End Role="States" EntitySet="States" />
+      <End Role="Leads" EntitySet="Leads" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Leads__SubSource__44CA3770" Association="Self.FK__Leads__SubSource__44CA3770">
+      <End Role="Sources" EntitySet="Sources" />
+      <End Role="Leads" EntitySet="Leads" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Leads__TeleCalle__756D6ECB" Association="Self.FK__Leads__TeleCalle__756D6ECB">
+      <End Role="UserLogins" EntitySet="UserLogins" />
+      <End Role="Leads" EntitySet="Leads" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Leads__TypeOfPre__46B27FE2" Association="Self.FK__Leads__TypeOfPre__46B27FE2">
+      <End Role="PremisesTypes" EntitySet="PremisesTypes" />
+      <End Role="Leads" EntitySet="Leads" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Religions__Creat__4FD1D5C8" Association="Self.FK__Religions__Creat__4FD1D5C8">
+      <End Role="UserLogins" EntitySet="UserLogins" />
+      <End Role="Religions" EntitySet="Religions" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Religions__Updat__50C5FA01" Association="Self.FK__Religions__Updat__50C5FA01">
+      <End Role="UserLogins" EntitySet="UserLogins" />
+      <End Role="Religions" EntitySet="Religions" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Service_E__Creat__68D28DBC" Association="Self.FK__Service_E__Creat__68D28DBC">
+      <End Role="UserLogins" EntitySet="UserLogins" />
+      <End Role="Service_Estimate_Templates" EntitySet="Service_Estimate_Templates" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Service_E__Servi__66EA454A" Association="Self.FK__Service_E__Servi__66EA454A">
+      <End Role="Services" EntitySet="Services" />
+      <End Role="Service_Estimate_Templates" EntitySet="Service_Estimate_Templates" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Service_E__Servi__6ABAD62E" Association="Self.FK__Service_E__Servi__6ABAD62E">
+      <End Role="ServiceGroups" EntitySet="ServiceGroups" />
+      <End Role="Service_Estimate_Templates" EntitySet="Service_Estimate_Templates" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Services__Servic__3493CFA7" Association="Self.FK__Services__Servic__3493CFA7">
+      <End Role="ServiceGroups" EntitySet="ServiceGroups" />
+      <End Role="Services" EntitySet="Services" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Services__Servic__3587F3E0" Association="Self.FK__Services__Servic__3587F3E0">
+      <End Role="ServiceGroups" EntitySet="ServiceGroups" />
+      <End Role="Services" EntitySet="Services" />
+    </AssociationSet>
+    <AssociationSet Name="FK__States__CreatedB__3EDC53F0" Association="Self.FK__States__CreatedB__3EDC53F0">
+      <End Role="UserLogins" EntitySet="UserLogins" />
+      <End Role="States" EntitySet="States" />
+    </AssociationSet>
+    <AssociationSet Name="FK__States__UpdatedB__1B5E0D89" Association="Self.FK__States__UpdatedB__1B5E0D89">
+      <End Role="UserLogins" EntitySet="UserLogins" />
+      <End Role="States" EntitySet="States" />
+    </AssociationSet>
+    <AssociationSet Name="FK__UserLogin__UserL__6442E2C9" Association="Self.FK__UserLogin__UserL__6442E2C9">
+      <End Role="UserLoginTypes" EntitySet="UserLoginTypes" />
+      <End Role="UserLogins" EntitySet="UserLogins" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

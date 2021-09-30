@@ -1,0 +1,657 @@
+﻿@model SadguruCRM.Models.Lead
+
+@{
+    ViewBag.Title = "Edit Lead";
+}
+
+<h2>Lead</h2><h4>Edit</h4>
+
+
+
+@using (Html.BeginForm("Edit", "Leads", FormMethod.Post, new { id = "LeadsEdit", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.LeadID)
+    @Html.HiddenFor(model => model.CreatedBy)
+    @Html.HiddenFor(model => model.CreatedDate)
+
+    <div class="form-group">
+        <hr />
+        <div class="col-md-3">
+            @Html.Label("Lead Status", "Lead Status ", htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("LeadStatusID", null, "-- SELECT --", htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.LeadStatusID, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-md-3">
+            @Html.Label("Status Reason", htmlAttributes: new { @class = "control-label", @disabled = "disabled" })
+            @Html.EditorFor(model => model.StatusReason, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.StatusReason, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-md-3">
+            @Html.Label("Tele-Caller", "Tele Caller", htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("TeleCallerID", null, "-- SELECT --", htmlAttributes: new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-1">
+            @Html.Label("Title", htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownListFor(model => model.Title, (SelectList)ViewBag.LeadTitle, "-- SELECT --", htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-md-5" id="DivCommercialName" style="display:none">
+            @Html.Label("Name", htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.CustomerName, new { htmlAttributes = new { @class = "form-control", @style = "max-width:100%" } })
+            @Html.ValidationMessageFor(model => model.CustomerName, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-md-2" id="DivFirstName">
+            @Html.Label("First Name", htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-md-3" id="DivLastName">
+            @Html.Label("Last Name", htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-md-3">
+            @Html.Label("Consult Person", htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.ConsultPerson, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.ConsultPerson, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-md-3">
+            @Html.Label("Designation", htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.ConsultPersonDesignation, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.ConsultPersonDesignation, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-3">
+            @Html.Label("Address Line 1", htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.AddressLine1, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.AddressLine1, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-md-3">
+            @Html.Label("Address Line 2", htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.AddressLine2, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.AddressLine2, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-md-3">
+            @Html.Label("Address Line 3", htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.AddressLine3, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.AddressLine3, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-md-3">
+            @Html.Label("Location", "Location", htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("LocationID", null, "-- SELECT --", htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.LocationID, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-3">
+            @Html.Label("Pincode", htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.Pincode, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Pincode, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="col-md-3">
+            @Html.Label("City", "City", htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("CityID", null, "-- SELECT --", htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.CityID, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-md-3">
+            @Html.Label("State", "State", htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("StateID", null, "-- SELECT --", htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.StateID, "", new { @class = "text-danger" })
+        </div>
+
+    </div>
+    <div class="form-group">
+        <div class="col-md-3">
+            @Html.Label("Email", htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.EmailID, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.EmailID, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-md-3">
+            @Html.Label("Industry", htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.Industry, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Industry, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-md-3">
+            @Html.Label("Tel No", htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.TelNo, new { htmlAttributes = new { @class = "form-control CustTelNo" } })
+            <input type="button" class="btn-danger deleteTextboxButton" value="-" onclick="deleteTextbox(this);">
+            @Html.ValidationMessageFor(model => model.TelNo, "", new { @class = "text-danger" })
+            <i class="fa fa-plus btn btn-primary" style="float:right;padding: 0px 4px;font-size: 10px;" onclick="AddCustTelNo(this);"></i>
+        </div>
+        <div class="col-md-3">
+            @Html.Label("Cell No", htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.CellNo, new { htmlAttributes = new { @class = "form-control CustCellNo" } })
+            <input type="button" class="btn-danger deleteTextboxButton" value="-" onclick="deleteTextbox(this);">
+            @Html.ValidationMessageFor(model => model.CellNo, "", new { @class = "text-danger" })
+            <i class="fa fa-plus btn btn-primary" style="float:right;padding: 0px 4px;font-size: 10px;" onclick="AddCustCellNo(this);"></i>
+        </div>
+    </div>
+    <hr />
+    <h5>Consult Person</h5>
+    <div class="form-group ConsultPerson" id="ConsultPerson" style="display:none;">
+        <div class="col-md-3">
+            @Html.Label("Name", "Name")
+            @Html.Editor("ConsultPersonName", new { htmlAttributes = new { @class = "form-control" } })
+            @*@Html.Editor("Lead_Consult_Person.PersonName", new { htmlAttributes = new { @class = "form-control" } })*@
+
+        </div>
+
+        <div class="col-md-2">
+            @Html.Label("Designation", "Designation")
+            @Html.Editor("Designation", new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+
+        <div class="col-md-3">
+            @Html.Label("Contact Number", "Contact Number")
+            @Html.Hidden("ConsultContactNumberHidden", "")
+            @Html.Editor("ConsultContactNumber", new { htmlAttributes = new { @class = "form-control ConsultContactNumber" } })
+            <input type="button" class="btn-danger deleteTextboxButton" value="-" onclick="deleteTextbox(this);">
+            <i class="fa fa-plus btn btn-primary" style="float:right;padding: 0px 4px;font-size: 10px;" onclick="AddConsultContactNumber(this);"></i>
+        </div>
+
+        <div class="col-md-3">
+            @Html.Label("Email", "Email")
+            @Html.Hidden("ConsultEmailHidden", "")
+            @Html.Editor("ConsultEmail", new { htmlAttributes = new { @class = "form-control ConsultEmail" } })
+            <input type="button" class="btn-danger deleteTextboxButton" value="-" onclick="deleteTextbox(this);">
+            <i class="fa fa-plus btn btn-primary" style="float:right;padding: 0px 4px;font-size: 10px;" onclick="AddConsultEmail(this);"></i>
+        </div>
+        <div class="col-md-1">
+            @Html.Label("Delete", "Delete")
+            <i class="fa fa-trash-o form-control" style="color:red; border:none; box-shadow:none;" onclick="deleteConsultPerson(this);"></i>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-12">
+            <input type="submit" value="Add More" class="btn btn-primary" style="float:right;" id="AddMoreConsultPerson" />
+        </div>
+    </div>
+    <hr />
+    <h5>Services required</h5>
+
+    <div class="form-group SingleService" id="SingleService">
+
+        <div class="col-md-2">
+            @Html.Label("Service Group", "Service Group", htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("ServiceGroupID", null, "-- SELECT --", htmlAttributes: new { @class = "form-control", @onchange = "populateServices(this);" })
+        </div>
+
+        <div class="col-md-2">
+            @Html.Label("Service", "Service", htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("ServiceID", null, "-- SELECT --", htmlAttributes: new { @class = "form-control" })
+        </div>
+
+        <div class="col-md-2">
+            @Html.Label("Frequency Of Service", "Frequency Of Service", htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("FrequencyOfServiceID", null, "-- SELECT --", htmlAttributes: new { @class = "form-control" })
+        </div>
+        @*<div class="row">
+
+            </div>*@
+
+        <div class="col-md-1">
+            @Html.Label("Qty", "Qty", htmlAttributes: new { @class = "control-label" })
+            @Html.Editor("Qty", new { htmlAttributes = new { @class = "form-control", @type = "number", @onchange = "calculateTax(this);" } })
+        </div>
+        <div class="col-md-1">
+            @Html.Label("Rate", "Rate", htmlAttributes: new { @class = "control-label" })
+            @Html.Editor("Rate", new { htmlAttributes = new { @class = "form-control singleServiceRate", @type = "number", @onchange = "calculateTax(this);" } })
+        </div>
+        <div class="col-md-1">
+            @Html.Label("GST", "GST", htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("GST", new List<SelectListItem>(){
+                                               new SelectListItem() { Text = "Yes", Value = "True" },
+                                               new SelectListItem() { Text = "No", Value = "False"}
+                                            }, "--", new { @class = "form-control", @onchange = "calculateTax(this);" })
+        </div>
+        <div class="col-md-1">
+            @Html.Label("Tax", "Tax", htmlAttributes: new { @class = "control-label" })
+            @Html.Editor("Tax", new { htmlAttributes = new { @class = "form-control", @type = "number", @onchange = "addServiceTotal();", @readonly = "readonly" } })
+        </div>
+        <div class="col-md-1">
+            @Html.Label("Final Rate", "Final Rate", htmlAttributes: new { @class = "control-label" })
+            @Html.Editor("FinalRatePerService", new { htmlAttributes = new { @class = "form-control singleServiceFinalRate", @type = "number", @onchange = "addFinalServiceTotal();", @readonly = "readonly" } })
+        </div>
+        <div class="col-md-1">
+            @Html.Label("Delete", "Delete", htmlAttributes: new { @class = "control-label" })
+            <i class="fa fa-trash-o form-control" style="color:red; border:none; box-shadow:none;" onclick="deleteService(this);"></i>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-10">
+            @Html.Label("Total", "Total", new { @style = "float:right;" })
+        </div>
+        <div class="col-md-2">
+            <input class="form-control text-box single-line" id="FinalRate" name="FinalRate" type="text" readonly style="float:right;">
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-12">
+            <input type="submit" value="Add More Service" class="btn btn-primary" style="float:right;" id="AddMoreServices" />
+        </div>
+    </div>
+    <hr />
+    <div class="form-group">
+        <div class="col-md-3">
+            @Html.Label("Type Of Premises", "Type Of Premise", htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("TypeOfPremisesID", null, "-- SELECT --", htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.TypeOfPremisesID, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-md-1" style="display:none" id="divNoOfWings">
+            @Html.Label("No. of Wings", "No. Wings", htmlAttributes: new { @class = "control-label", @id = "labelNoOfWings", @style = "display:none" })
+            @Html.Editor("NoOfWings", new { htmlAttributes = new { @class = "form-control", @type = "number" } })
+            @Html.ValidationMessageFor(model => model.NoOfWings, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-md-2" style="display:none" id="divNoOfFloors">
+            @Html.Label("No. of Floors", "No. of Floors", htmlAttributes: new { @class = "control-label", @id = "labelNoOfFloors", @style = "display:none" })
+            @Html.Editor("NoOfFloors", new { htmlAttributes = new { @class = "form-control", @type = "number" } })
+            @Html.ValidationMessageFor(model => model.NoOfFloors, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-md-3">
+            @Html.Label("Premises Area", "Premises Area", htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("Premises_Area_ID", null, "-- SELECT --", htmlAttributes: new { @class = "form-control" })
+            @*@Html.Editor("PremisesArea", new { htmlAttributes = new { @class = "form-control" } })*@
+            @Html.ValidationMessageFor(model => model.Premises_Area_ID, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="col-md-3">
+            @Html.Label("Approx. Sq.Ft. Area", "Approx. Sq.Ft. Area", htmlAttributes: new { @class = "control-label" })
+            @Html.Editor("PremisesAppSqFtArea", new { htmlAttributes = new { @class = "form-control", @type = "number" } })
+            @Html.ValidationMessageFor(model => model.NoOfFloors, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-3">
+            @Html.Label("Branch", "Branch", htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("BranchID", null, "-- SELECT --", htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.BranchID, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="col-md-3">
+            @Html.Label("Visit Allocate", htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("VisitAllocate", null, "-- SELECT --", htmlAttributes: new { @class = "form-control" })
+            @*@Html.EditorFor(model => model.VisitAllocate, new { htmlAttributes = new { @class = "form-control" } })*@
+            @Html.ValidationMessageFor(model => model.VisitAllocate, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="col-md-3">
+            @Html.Label("Visit Date & Time", htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.VisitDateTime, new { htmlAttributes = new { @class = "form-control", @onkeydown = "return false" } })
+            @Html.ValidationMessageFor(model => model.VisitDateTime, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="col-md-3">
+            @Html.Label("Next Follow-Up Date & Time", htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.NextFollowUpDateTime, new { htmlAttributes = new { @class = "form-control", @onkeydown = "return false" } })
+            @Html.ValidationMessageFor(model => model.NextFollowUpDateTime, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+
+        <div class="col-md-6">
+            @Html.Label("Visit Report", htmlAttributes: new { @class = "control-label" })
+            @Html.TextAreaFor(model => model.VisitReport, 5, 100, new { htmlAttributes = new { @class = "form-control", @style = "max-width: 100%;" } })
+            @Html.ValidationMessageFor(model => model.VisitReport, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-md-6">
+            @Html.Label("Follow-Up Details", htmlAttributes: new { @class = "control-label" })
+            @Html.TextAreaFor(model => model.FollowUpDetails, 5, 100, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.FollowUpDetails, "", new { @class = "text-danger" })
+        </div>
+
+    </div>
+    <div class="form-group">
+        <div class="col-md-3">
+            @Html.Label("Special Instructions", htmlAttributes: new { @class = "control-label" })
+            @Html.EditorFor(model => model.SpecialInstructions, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.SpecialInstructions, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-md-3">
+            @Html.Label("Source", "Source", htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("SourceID", null, "-- SELECT --", htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.SourceID, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-md-3">
+            @Html.Label("SubSource", "Sub Source", htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownList("SubSourceID", null, "-- SELECT --", htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.SubSourceID, "", new { @class = "text-danger" })
+        </div>
+        <div class="col-md-3">
+            @Html.Label("Customer Priority", htmlAttributes: new { @class = "control-label" })
+            @Html.DropDownListFor(model => model.CustomerPriority, new List<SelectListItem>(){
+                                               new SelectListItem() { Text = "Very High", Value = "Very High" },
+                                               new SelectListItem() { Text = "High", Value = "High"},
+                                               new SelectListItem() { Text = "Medium", Value = "Medium"},
+                                               new SelectListItem() { Text = "Low", Value = "Low"}
+                                            }, "-- SELECT --", new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.CustomerPriority, "", new { @class = "text-danger" })
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@*@section Scripts {
+
+    }*@
+<script>
+    $(document).ready(function () {
+
+        $("#Title option").filter(function() {
+            return $(this).text() =='@Model.Title';
+        }).prop("selected", true);
+        $("#Title").trigger('change');
+        $("#LeadStatusID").trigger('change');
+        alert('@ViewBag.leadTelNos.Count');
+    });
+    $("#Title").change(function () {
+        var title = $("#Title").val();
+        if (title == "Mr." || title == "Mrs." || title == "Ms.") {
+            $("#DivCommercialName").css('display', 'none');
+            $("#CustomerName").removeAttr('required');
+            $("#DivFirstName").css('display', 'block');
+            $("#FirstName").prop('required', true);
+            $("#DivLastName").css('display', 'block');
+            $("#LastName").prop('required', true);
+        }
+        else if (title == "M/S." || title == "") {
+            $("#DivCommercialName").css('display', 'block').prop('required', true);
+            $("#CustomerName").prop('required', true);
+            $("#DivFirstName").css('display', 'none').removeAttr('required');
+            $("#FirstName").removeAttr('required');
+            $("#DivLastName").css('display', 'none').removeAttr('required');
+            $("#LastName").removeAttr('required');
+        }
+    });
+    $('#AddMoreServices').click(function () {
+
+        // Create clone of <div class='input-form'>
+        var newel = $('.SingleService:last').clone();
+        
+        newel.find('input[type=number]').each(function () {
+            debugger;
+            //alert(this.val());
+            $(this).val('');
+        });
+        
+
+        // Add after last <div class='input-form'>
+        $(newel).insertAfter(".SingleService:last");
+        return false;
+    });
+    $('#AddMoreConsultPerson').click(function () {
+
+        // Create clone of <div class='input-form'>
+        var newel = $('.ConsultPerson:first').clone().removeAttr('style');
+        //alert(newle);
+        // Add after last <div class='input-form'>
+        $(newel).insertAfter(".ConsultPerson:last");
+        return false;
+    });
+    $("#LeadsEdit").submit(function (event) {
+        //var leaddate = $('#LeadDate').val();
+        //var newleaddate = leaddate.split("/").reverse().join("/");
+        //$('#LeadDate').val(newleaddate);
+        //var followupdate = $('#NextFollowUpDateTime').val();
+        //var newfollowupdate = followupdate.split("/").reverse().join("/");
+        //$('#NextFollowUpDateTime').val(newfollowupdate);
+
+        //for consult contact no.
+        debugger;
+        var consultpersons = $('div[id="ConsultPerson"]');
+        for (i = 1; i < consultpersons.length; i++) {
+            var consultContactNumberHidden = $(consultpersons[i]).find("#ConsultContactNumberHidden");
+            var consultEmailHidden = $(consultpersons[i]).find("#ConsultEmailHidden");
+            $(consultContactNumberHidden).val("");
+            $(consultEmailHidden).val("");
+            var consultpersoncontact = $(consultpersons[i]).find(".ConsultContactNumber")
+            for (j = 0; j < consultpersoncontact.length; j++) {
+                $(consultContactNumberHidden).val($(consultContactNumberHidden).val() + $(consultpersoncontact[j]).val() + "|");
+            }
+            var consultpersonemail = $(consultpersons[i]).find(".ConsultEmail")
+            for (j = 0; j < consultpersonemail.length; j++) {
+                $(consultEmailHidden).val($(consultEmailHidden).val() + $(consultpersonemail[j]).val() + "|");
+            }
+            //alert($(consultContactNumberHidden).val());
+            //alert($(consultEmailHidden).val());
+            $(consultContactNumberHidden).val($(consultContactNumberHidden).val().slice(0, -1));
+            $(consultEmailHidden).val($(consultEmailHidden).val().slice(0, -1));
+            //alert($(consultContactNumberHidden).val());
+            //alert($(consultEmailHidden).val());
+        }
+        //return false;
+    });
+    function AddConsultContactNumber(obj) {
+        //alert();
+        var newel = $('#ConsultContactNumber:first').clone().val('');
+        $(newel).insertBefore(obj);
+        newel = $('.deleteTextboxButton:first').clone();
+        $(newel).insertBefore(obj);
+        return false;
+    }
+    function AddCustTelNo(obj) {
+        var newel = $('#TelNo:first').clone().val('');
+        $(newel).insertBefore(obj);
+        newel = $('.deleteTextboxButton:first').clone();
+        $(newel).insertBefore(obj);
+        return false;
+    }
+    function AddCustCellNo(obj) {
+        var newel = $('#CellNo:first').clone().val('');
+        $(newel).insertBefore(obj);
+        newel = $('.deleteTextboxButton:first').clone();
+        $(newel).insertBefore(obj);
+        return false;
+    }
+
+    function AddConsultEmail(obj) {
+        //alert();
+        var newel = $('#ConsultEmail:first').clone().val('');
+        $(newel).insertBefore(obj);
+        newel = $('.deleteTextboxButton:first').clone();
+        $(newel).insertBefore(obj);
+        return false;
+    }
+    function deleteService(obj) {
+        //alert();
+        if ($('.SingleService').length < 2) {
+            alert('At least one Service is Required');
+        }
+        else {
+            $(obj).parent().closest('.SingleService').remove();
+        }
+        addFinalServiceTotal();
+    }
+    function deleteConsultPerson(obj) {
+        //alert();
+        //if ($('.SingleService').length < 2) {
+        //    alert('At least one Service is Required');
+        //}
+        //else {
+        $(obj).parent().closest('.ConsultPerson').remove();
+        //}
+        }
+    $("#LeadStatusID").change(function () {
+        var selectedText = $("#LeadStatusID option:selected").html();
+        if (selectedText == "Closed" || selectedText == "Rejected") {
+            $("#StatusReason").prop('disabled', false);
+            $("#StatusReason").prop('required',true);
+        }
+        else{
+            $("#StatusReason").prop('disabled', true);
+            $('#StatusReason').removeAttr('required');
+            //resetInputs();
+        }
+    });
+    
+    function addServiceTotal() {
+
+        //var sum = 0;
+        //$(".singleServiceRate").each(function () {
+        //    sum += +$(this).val();
+        //});
+        //$("#FinalRate").val(sum);
+    }
+    function addFinalServiceTotal() {
+
+        var sum = 0;
+        $(".singleServiceFinalRate").each(function () {
+            sum += +$(this).val();
+        });
+        $("#FinalRate").val(sum);
+    }
+    $("#TypeOfPremisesID").change(function () {
+
+        if ($("#TypeOfPremisesID").val() == "3") {
+            $("#labelNoOfWings").css('display', "block");
+            $("#divNoOfWings").css("display", "block");
+            $("#labelNoOfFloors").css("display", "block");
+            $("#divNoOfFloors").css("display", "block");
+        } else {
+            $("#labelNoOfWings").css("display", "none");
+            $("#divNoOfWings").css("display", "none");
+            $("#labelNoOfFloors").css("display", "none");
+            $("#divNoOfFloors").css("display", "none");
+        }
+    });
+    function populateServices(obj) {
+        
+            if ($(obj).val() == "") {
+                var services = "<select id='ServiceID' name = 'ServiceID' required='required'>";
+                services = services + '<option value>--SELECT--</option>';
+                services = services + '</select>';
+                $(obj).parent().closest('.SingleService').find('#ServiceID').html(services);
+                //$(obj).closest("#ServiceID").html(services);
+            } else {
+                $.ajax({
+                    type: "post",
+                    url: "/Leads/GetServices",
+                    data: { ServiceGroupID: $(obj).val() },
+                    datatype: "json",
+                    traditional: true,
+                    success: function (data) {
+                        var services = "<select id='ServiceID' name = 'ServiceID' required='required'>";
+                        services = services + '<option value="">--SELECT--</option>';
+                        for (var i = 0; i < data.length; i++) {
+                            services = services + '<option value=' + data[i].Value + '>' + data[i].Text + '</option>';
+                        }
+                        services = services + '</select>';
+                        $(obj).parent().closest('.SingleService').find('#ServiceID').html(services);
+                        //$(obj).closest('#ServiceID').html(services);
+                    }
+                });
+            }
+        }
+    function calculateTax(obj) {
+        debugger;
+        //alert($(obj).prev('#ServiceGroupID').val());
+        var gst = $(obj).parent().parent().find('#GST').val();
+        //if (gst == "") {
+        //    alert("Please select GST applicable or not!");
+        //    return false;
+        //}
+        var serviceGroup = $(obj).parent().parent().find('#ServiceGroupID').val();
+        var service = $(obj).parent().parent().find('#ServiceID').val();
+        var freq = $(obj).parent().parent().find('#FrequencyOfServiceID').val();
+        var qty = $(obj).parent().parent().find('#Qty').val();
+        var rate = $(obj).parent().parent().find('#Rate').val();
+
+        
+        if (serviceGroup == '') {
+            alert('Please select Service Group!');
+            $(obj).parent().parent().find('#ServiceGroupID').focus();
+            return false;
+        }
+        else if (service == '') {
+            alert('Please select Service!');
+            $(obj).parent().parent().find('#ServiceID').focus();
+            return false;
+        }
+        else if (freq == '') {
+            alert('Please select Frequency of Service!');
+            $(obj).parent().parent().find('#FrequencyOfServiceID').focus();
+            return false;
+        }
+        else if (qty == '') {
+            //alert('Please enter Quantity!');
+            //$(obj).parent().parent().find('#Qty').focus();
+            //return false;
+            qty = 1;
+        }
+        else if (rate == '') {
+            alert('Please enter Rate!');
+            $(obj).parent().parent().find('#Rate').focus();
+            return false;
+        }
+        // All values OK then proceed
+                $.ajax({
+                    type: "post",
+                    url: "/Leads/GetSingleServiceTaxAfterGSTSelection",
+                    data: { ServiceID: service, Rate: rate, Qty: qty, GSTapplicable: gst },
+                    datatype: "json",
+                    traditional: true,
+                    success: function (data) {
+                        //alert(data);
+                        //var services = "<select id='ServiceID' name = 'ServiceID' required='required'>";
+                        //services = services + '<option value="">--SELECT--</option>';
+                        //for (var i = 0; i < data.length; i++) {
+                        //    services = services + '<option value=' + data[i].Value + '>' + data[i].Text + '</option>';
+                        //}
+                        //services = services + '</select>';
+                        //$(obj).parent().closest('.SingleService').find('#ServiceID').html(services);
+                        //$(obj).closest('#ServiceID').html(services);
+                        if (gst == "True") {
+                            $(obj).parent().parent().find('#Tax').val(data);
+                            $(obj).parent().parent().find('#FinalRatePerService').val((rate * qty) + data);
+                        } else {
+                            $(obj).parent().parent().find('#Tax').val("0");
+                            $(obj).parent().parent().find('#FinalRatePerService').val((rate * qty));
+                        }
+                        
+                        $(obj).parent().parent().find('#FinalRatePerService').change();
+                    }
+                });
+            
+        }
+
+    function deleteTextbox(obj) {
+        debugger;
+        if ($(obj).parent().find('.deleteTextboxButton').length == 1) {
+            alert('At least one is Required!')
+        } else {
+            $(obj).prev().remove();
+            $(obj).remove();
+        }
+        }
+    function resetInputs() {
+        debugger;
+        var validator = $("#LeadsEdit").validate();
+        validator.resetForm();
+    }
+</script>
+<style>
+    .deleteTextboxButton {
+        float: right;
+        margin-top: -30px;
+        height: 30px;
+    }
+
+    textarea {
+        max-width: 100% !important;
+    }
+</style>

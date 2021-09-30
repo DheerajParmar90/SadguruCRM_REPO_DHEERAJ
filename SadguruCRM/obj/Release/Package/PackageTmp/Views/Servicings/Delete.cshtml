@@ -1,0 +1,224 @@
+﻿@model SadguruCRM.Models.Servicing
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Servicing</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ServicingNo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ServicingNo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PremisesArea)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PremisesArea)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PremisesAppSqFtArea)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PremisesAppSqFtArea)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Period_Of_Contract_Start_Date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Period_Of_Contract_Start_Date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Period_Of_Contract_End_Date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Period_Of_Contract_End_Date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Servicing_Frequency_Number)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Servicing_Frequency_Number)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Quantity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Quantity)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.System_Servicing_Datetime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.System_Servicing_Datetime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Servicing_Datetime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Servicing_Datetime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Actual_Servicing_Datetime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Actual_Servicing_Datetime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PaidByCustomer)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PaidByCustomer)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BalanceAmount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BalanceAmount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ServicingInstructions)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ServicingInstructions)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastUpdatedDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastUpdatedDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Customer.CustomerName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Customer.CustomerName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FrequencyOfService.FrequencyOfService1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FrequencyOfService.FrequencyOfService1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PaymentMode.PaymentModeName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PaymentMode.PaymentModeName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PaymentTerm.PaymentTermName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PaymentTerm.PaymentTermName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PremisesType.PremisesType1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PremisesType.PremisesType1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ServiceGroup.ServiceGroup1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ServiceGroup.ServiceGroup1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Service.ServiceName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Service.ServiceName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserLogin.UserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserLogin.UserName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserLogin1.UserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserLogin1.UserName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Vendor.VendorName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Vendor.VendorName)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

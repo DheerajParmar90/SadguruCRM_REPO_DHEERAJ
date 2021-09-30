@@ -1,0 +1,141 @@
+﻿@model IEnumerable<SadguruCRM.Models.Service>
+
+@{
+    ViewBag.Title = "Services";
+}
+
+<h2>Services</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+
+            </th>
+            <th>
+
+            </th>
+            <th>
+
+            </th>
+            <th>
+
+            </th>
+            <th>
+
+            </th>
+            <th>
+
+            </th>
+            <th>
+
+            </th>
+            <th>
+
+            </th>
+            <th></th>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayName("Order")
+            </th>
+            <th>
+                @Html.DisplayName("Service Name")
+            </th>
+            <th>
+                @Html.DisplayName("Service Short Code")
+            </th>
+            <th>
+                @Html.DisplayName("GST")
+            </th>
+            <th>
+                @Html.DisplayName("SAC Code")
+            </th>
+            <th>
+                @Html.DisplayName("Created Date")
+            </th>
+            <th>
+                @Html.DisplayName("Last Updated Date")
+            </th>
+            <th>
+                @Html.DisplayName("Service Group")
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Order)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ServiceName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ServiceShortCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.GST)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SACCode)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastUpdateddate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ServiceGroup.ServiceGroup1)
+            </td>
+            <td>
+                @Html.ActionLink(" ", "Edit", new { id = item.ServiceID }, new { @class = "fa fa-edit" }) |
+                @Html.ActionLink(" ", "Details", new { id = item.ServiceID }, new { @class = "fa fa-info" }) |
+                @Html.ActionLink(" ", "Delete", new { id = item.ServiceID }, new { @class = "fa fa-trash" })
+            </td>
+        </tr>
+    }
+
+</table>
+<script>
+    $(document).ready(function () {
+        //debugger;
+        //$('#leads thead tr:eq(0) th').each(function () {
+
+        //    var title = $(this).text();
+        //    $(this).html( '<input type="text" class="column_search" />' );
+        //});
+        var table = $('.table').DataTable({
+            "bPaginate": false,
+            fixedHeader: true,
+        });
+
+        $('.table thead tr:first th').each(function () {
+            var title = $('.table thead th').eq($(this).index()).text();
+            $(this).html('<input type="text" placeholder="Search ' + title + '" class="column_search"/>');
+        });
+        //table.columns().every(function () {
+        //    var column = this;
+
+        //    $('input', this.header()).on('keyup change', function () {
+        //        column
+        //            .search(this.value)
+        //            .draw();
+        //    });
+        //});
+        $('.table thead tr:first th').on('keyup', ".column_search", function () {
+            table
+                .column($(this).parent().index())
+                .search(this.value)
+                .draw();
+        });
+        $(".dataTables_filter").css("display", "none");
+    });
+                    //table.columns( '.Status' ).search( 'Important' ).draw();
+</script>

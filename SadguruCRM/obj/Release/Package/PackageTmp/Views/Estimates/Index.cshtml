@@ -1,0 +1,260 @@
+﻿@model IEnumerable<SadguruCRM.Models.Estimate>
+
+@{
+    ViewBag.Title = "Estimates";
+}
+
+<div class="row">
+        <div class="col">
+            <h2>Estimates</h2>
+        </div>
+        <div class="pull-right">
+            @Html.ActionLink("New Estimate", "Create", null, new { @type = "button", @class = "btn btn-outline-secondary" })
+            <button class = "btn btn-outline-secondary"><i class="fa fa-pie-chart"></i></button>
+            @*@Html.ActionLink("Import", "ImportLeads", null, new { @type = "button", @class = "btn btn-outline-secondary" })
+            @Html.ActionLink("Export", "Create", null, new { @type = "button", @class = "btn btn-outline-secondary" })
+            @Html.ActionLink("Transfer Leads", "TransferLeads", null, new { @type = "button", @class = "btn btn-outline-secondary" })*@
+        </div>
+        
+    </div>
+
+<table class="table display cell-border" id="estimates">
+    <thead>
+        <tr>
+
+            <th style="display:none"></th>
+            <th></th>
+            <th></th>
+            <th style="width:92px"></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th style="min-width:105px"></th>
+        </tr>
+        <tr>
+            <th style="display:none">
+                @Html.DisplayName("Estimate ID")
+            </th>
+            <th>
+                @Html.DisplayName("Estimate Created On")
+            </th>
+            <th>
+                @Html.DisplayName("Reference Number")
+            </th>
+            <th style="width:92px">
+                @Html.DisplayName("New/Existing Customer")
+            </th>
+            <th>
+                @Html.DisplayName("Customer Name")
+            </th>
+            <th>
+                @Html.DisplayName("Location")
+            </th>
+            <th>
+                @Html.DisplayName("Required Services")
+            </th>
+            <th>
+                @Html.DisplayName("Telephone")
+            </th>
+            <th>
+                @Html.DisplayName("Cell No")
+            </th>
+            <th>
+                @Html.DisplayName("Final Amount")
+            </th>
+            <th>
+                @Html.DisplayName("Approval")
+            </th>
+            <th>
+                @Html.DisplayName("Created By")
+            </th>
+            <th style="min-width:105px">
+                Actions
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td style="display:none">
+                @Html.DisplayFor(modelItem => item.EstimateID)
+            </td>
+            <td>
+                @Html.ValueFor(modelItem => item.CreatedDate, "{0:dd/MM/yyyy hh:mm tt}")
+            </td>
+            <td>
+                @{
+                    string referece;
+                    referece = item.ReferenceNo.ToString().Replace("/2020-21", "").Replace("/2021-22", "");
+                    @Html.Raw(referece);
+                }
+            </td>
+            <td style="width:92px">
+                @if (item.NewCustomer)
+                {
+                    <text>New</text>
+                }
+                else
+                {
+                    <text>Existing</text>
+                }
+            </td>
+            <td>
+                @if (item.NewCustomer)
+                {
+                    string custname;
+                    if (item.Lead.CustomerName == null)
+                    {
+                        custname = Html.Encode(item.Lead.Title + " " + item.Lead.FirstName + " " + item.Lead.LastName);
+                    }
+                    else
+                    {
+                        custname = Html.Encode(item.Lead.Title + " " + item.Lead.CustomerName);
+                    }
+                    @Html.Raw(custname);
+                }
+                else
+                {
+                    string custname;
+                    if (item.Customer.CustomerName == null)
+                    {
+                        custname = Html.Encode(item.Customer.Title + " " + item.Customer.FirstName + " " + item.Customer.LastName);
+                    }
+                    else
+                    {
+                        custname = Html.Encode(item.Customer.Title + " " + item.Customer.CustomerName);
+                    }
+                    @Html.Raw(custname);
+                }
+            </td>
+            <td>
+                @if (item.NewCustomer)
+                {
+                    string location;
+                    location = Html.Encode(item.Lead.Location.LocationName);
+                    @Html.Raw(location);
+                }
+                else
+                {
+                    string location;
+                    location = Html.Encode(item.KindAttention); // Just to display Customer Location on index page
+                    @Html.Raw(location);
+                }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FinalEstimateRate)
+            </td>
+            <td>
+                @if (item.NewCustomer)
+                {
+                    string Tel;
+                    Tel = Html.Encode(item.Lead.TelNo);
+                    @Html.Raw(Tel);
+                }
+                else
+                {
+                    string Tel;
+                    Tel = Html.Encode(item.Customer.TelNumber);
+                    @Html.Raw(Tel);
+                }
+            </td>
+            <td>
+                @if (item.NewCustomer)
+                {
+                    string Cell;
+                    Cell = Html.Encode(item.Lead.CellNo);
+                    @Html.Raw(Cell);
+                }
+                else
+                {
+                    string Cell;
+                    Cell = Html.Encode(item.Customer.CellNumber);
+                    @Html.Raw(Cell);
+                }
+            </td>
+            <td>
+                @Html.ValueFor(modelItem => item.FinalRate)
+            </td>
+            <td>
+                @if (item.isApproved == null || !(bool)item.isApproved)
+                {
+                    @Html.Raw("NO");
+                }
+                else
+                {
+                    @Html.Raw("YES");
+                }
+            </td>
+            @*<td>
+            @Html.DisplayFor(modelItem => item.KindAttention)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Subject)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.WelcomeSentence)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Footer)
+        </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.UserLogin.UserName)
+            </td>
+            <td style="min-width:105px">
+                @Html.ActionLink(" ", "Edit", new { id = item.EstimateID }, new { @class = "fa fa-edit" }) |
+                @Html.ActionLink(" ", "Details", new { id = item.EstimateID }, new { @class = "fa fa-info" }) |
+                @Html.ActionLink(" ", "Delete", new { id = item.EstimateID }, new { @class = "fa fa-trash" })|
+                @Html.ActionLink(" ", "PrintEstimate", new { id = item.EstimateID }, new { @class = "fa fa-file-pdf-o", @target="_blank" })|
+                @Html.ActionLink(" ", "EMAIL", new { id = item.EstimateID }, new { @class = "fa fa-envelope" })
+            </td>
+        </tr>
+        }
+
+    </tbody>
+</table>
+<script>
+    var table;
+    $(document).ready(function () {
+        table = $('#estimates').DataTable({
+            fixedHeader: true,
+            order: [[0, 'desc']],
+            "pageLength": 25
+        });
+        var colindex = 1;
+        $('#estimates thead tr:first th').each(function () {
+            if (colindex < 12) {
+                //var title = $('#estimates thead th').eq( $(this).index() ).text();
+                $(this).html('<input type="text" placeholder="" class="column_search"/>');
+            } else {
+                $(this).html('<input type="button" value="RESET" class="btn btn-sm btn-outline-secondary" id="reset" onclick="clearSearchBoxes();"/>');
+            }
+            colindex++;
+        } );
+        $('#estimates thead tr:first th').on( 'keyup', ".column_search",function () {
+            table
+                .column( $(this).parent().index() )
+                .search( this.value )
+                .draw();
+        });
+        $(".dataTables_filter").css("display", "none");
+       
+    } );
+        function clearSearchBoxes() {
+        var searchBoxes = $(".column_search");
+        //alert(searchBoxes.length);
+        //$('#leads .column_search').val('').change();
+        for (var i = 0; i < searchBoxes.length; i++) {
+            //alert(i);
+            //searchBoxes[i].value == "";
+            $(searchBoxes[i]).val("");
+
+        }
+        table.search('').columns().search('').draw();
+    };
+</script>

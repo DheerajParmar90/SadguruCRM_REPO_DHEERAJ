@@ -1,0 +1,51 @@
+﻿@model IEnumerable<SadguruCRM.Models.PremisesType>
+
+@{
+    ViewBag.Title = "Premise Types";
+}
+
+<h2>Premise Types</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayName("Order")
+        </th>
+        <th>
+            @Html.DisplayName("Premise Type")
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreatedDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LastUpdatedDate)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.Order)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.PremisesType1)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.CreatedDate)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.LastUpdatedDate)
+    </td>
+    <td>
+        @Html.ActionLink(" ", "Edit", new { id = item.PremisesTypeID }, new { @class = "fa fa-edit" }) |
+        @Html.ActionLink(" ", "Details", new { id = item.PremisesTypeID }, new { @class = "fa fa-info" }) |
+        @Html.ActionLink(" ", "Delete", new { id = item.PremisesTypeID }, new { @class = "fa fa-trash" })
+    </td>
+</tr>
+}
+
+</table>

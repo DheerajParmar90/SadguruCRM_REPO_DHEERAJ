@@ -1,0 +1,1070 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    @*<meta name="description" content="Responsive Web UI Kit &amp; Dashboard Template based on Bootstrap">
+        <meta name="author" content="AdminKit">
+        <meta name="keywords" content="adminkit, bootstrap, web ui kit, dashboard template, admin template">*@
+    <title>@ViewBag.Title - Sadguru CRM</title>
+
+    <link rel="shortcut icon" href="~/img/icons/icon-48x48.png" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+
+    <link href="~/Content/adminkit/app.css" rel="stylesheet" />
+
+    @*<link href="~/Content/bootstrap.css" rel="stylesheet" />*@
+    <link href="~/Content/Site.css" rel="stylesheet" />
+
+    <link href="~/Content/jquery-ui.css" rel="stylesheet" />
+    @*<link href="~/Content/bootstrap-theme.css" rel="stylesheet" />*@
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/adminkit/app.js"></script>
+    @*<script src="~/Scripts/bootstrap.js"></script>*@
+    <script src="~/Scripts/jquery-ui.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/modernizr-2.8.3.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" charset="utf8" src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.6/dist/loadingoverlay.min.js"></script>
+    <style>
+
+        .dropdown-submenu {
+            position: relative;
+        }
+
+            .dropdown-submenu > .dropdown-menu {
+                top: 0;
+                left: 100%;
+                /*margin-top: -6px;*/
+                margin-left: 1px;
+                -webkit-border-radius: 0 6px 6px 6px;
+                -moz-border-radius: 0 6px 6px;
+                border-radius: 0 6px 6px 6px;
+            }
+
+            .dropdown-submenu:hover > .dropdown-menu {
+                display: block;
+            }
+
+            .dropdown-submenu > a:after {
+                display: block;
+                content: " ";
+                float: right;
+                width: 0;
+                height: 0;
+                /*border-color: transparent;*/
+                border-style: solid;
+                /*border-width: 5px 0 5px 5px;*/
+                /*border-left-color: #ccc;*/
+                /*margin-top: 5px;*/
+                margin-right: -10px;
+                transform: rotate(-45deg);
+            }
+
+            .dropdown-submenu:hover > a:after {
+                border-left-color: #fff;
+            }
+
+            .dropdown-submenu.pull-left {
+                float: none;
+            }
+
+                .dropdown-submenu.pull-left > .dropdown-menu {
+                    left: 100%;
+                    margin-left: 10px;
+                    -webkit-border-radius: 6px 0 6px 6px;
+                    -moz-border-radius: 6px 0 6px 6px;
+                    border-radius: 6px 0 6px 6px;
+                }
+    </style>
+
+</head>
+
+<body>
+    <div class="wrapper">
+        @*<nav id="sidebar" class="sidebar">
+                <div class="sidebar-content js-simplebar">
+                    <a class="sidebar-brand" href="index.html">
+                        <span class="align-middle">AdminKit</span>
+                    </a>
+
+                    <ul class="sidebar-nav">
+                        <li class="sidebar-header">
+                            Pages
+                        </li>
+
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="index.html">
+                                <i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Dashboard</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="pages-profile.html">
+                                <i class="align-middle" data-feather="user"></i> <span class="align-middle">Profile</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="pages-settings.html">
+                                <i class="align-middle" data-feather="settings"></i> <span class="align-middle">Settings</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="pages-invoice.html">
+                                <i class="align-middle" data-feather="credit-card"></i> <span class="align-middle">Invoice</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-item active">
+                            <a class="sidebar-link" href="pages-blank.html">
+                                <i class="align-middle" data-feather="book"></i> <span class="align-middle">Blank</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-header">
+                            Tools & Components
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="#ui" data-toggle="collapse" class="sidebar-link collapsed">
+                                <i class="align-middle" data-feather="briefcase"></i> <span class="align-middle">UI Elements</span>
+                            </a>
+                            <ul id="ui" class="sidebar-dropdown list-unstyled collapse " data-parent="#sidebar">
+                                <li class="sidebar-item"><a class="sidebar-link" href="ui-alerts.html">Alerts</a></li>
+                                <li class="sidebar-item"><a class="sidebar-link" href="ui-buttons.html">Buttons</a></li>
+                                <li class="sidebar-item"><a class="sidebar-link" href="ui-cards.html">Cards</a></li>
+                                <li class="sidebar-item"><a class="sidebar-link" href="ui-general.html">General</a></li>
+                                <li class="sidebar-item"><a class="sidebar-link" href="ui-grid.html">Grid</a></li>
+                                <li class="sidebar-item"><a class="sidebar-link" href="ui-modals.html">Modals</a></li>
+                                <li class="sidebar-item"><a class="sidebar-link" href="ui-typography.html">Typography</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="icons-feather.html">
+                                <i class="align-middle" data-feather="coffee"></i> <span class="align-middle">Icons</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-item">
+                            <a href="#forms" data-toggle="collapse" class="sidebar-link collapsed">
+                                <i class="align-middle" data-feather="check-circle"></i> <span class="align-middle">Forms</span>
+                            </a>
+                            <ul id="forms" class="sidebar-dropdown list-unstyled collapse " data-parent="#sidebar">
+                                <li class="sidebar-item"><a class="sidebar-link" href="forms-layouts.html">Form Layouts</a></li>
+                                <li class="sidebar-item"><a class="sidebar-link" href="forms-basic-inputs.html">Basic Inputs</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="tables-bootstrap.html">
+                                <i class="align-middle" data-feather="list"></i> <span class="align-middle">Tables</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-header">
+                            Plugins & Addons
+                        </li>
+
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="charts-chartjs.html">
+                                <i class="align-middle" data-feather="bar-chart-2"></i> <span class="align-middle">Charts</span>
+                            </a>
+                        </li>
+
+                        <li class="sidebar-item">
+                            <a class="sidebar-link" href="maps-google.html">
+                                <i class="align-middle" data-feather="map"></i> <span class="align-middle">Maps</span>
+                            </a>
+                        </li>
+                    </ul>
+
+                    <div class="sidebar-cta">
+                        <div class="sidebar-cta-content">
+                            <strong class="d-inline-block mb-2">Upgrade to Pro</strong>
+                            <div class="mb-3 text-sm">
+                                Are you looking for more components?
+                            </div>
+                            <a href="https://adminkit.io/pricing" target="_blank" class="btn btn-outline-primary btn-block">Upgrade</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>*@
+
+        <div class="main">
+            @*<nav class="navbar navbar-expand-lg navbar-light navbar-bg">
+                    <!-- Navbar brand -->
+                    <a class="navbar-brand" href="#">Navbar</a>
+                    <!-- Collapse button -->
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
+                            aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <!-- Collapsible content -->
+                    <div class="collapse navbar-collapse" id="basicExampleNav">
+                        <!-- Links -->
+                        <ul class="navbar-nav mr-auto">
+                            <li class="nav-item active">
+                                <a class="nav-link" href="#">
+                                    Home
+                                    <span class="sr-only">(current)</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Features</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Pricing</a>
+                            </li>
+                            <!-- Dropdown -->
+                            <li class="nav-item dropdown multi-level-dropdown">
+                                <a href="#" id="menu" data-toggle="dropdown" class="nav-link dropdown-toggle w-100">Dropdown</a>
+                                <ul class="dropdown-menu mt-2 rounded-0 primary-color border-0 z-depth-1">
+                                    <li class="dropdown-item dropdown-submenu p-0">
+                                        <a href="#" data-toggle="dropdown" class="dropdown-toggle w-100">Click Me Too! </a>
+                                        <ul class="dropdown-menu ml-2 rounded-0 primary-color border-0 z-depth-1">
+                                            <li class="dropdown-item p-0">
+                                                <a href="#" class="text-white w-100">Hey</a>
+                                            </li>
+                                            <li class="dropdown-item p-0">
+                                                <a href="#" class="text-white w-100">Hi</a>
+                                            </li>
+                                            <li class="dropdown-item dropdown-submenu p-0">
+                                                <a href="#" data-toggle="dropdown" class="dropdown-toggle w-100">Hello </a>
+                                                <ul class="dropdown-menu mr-2 rounded-0 primary-color border-0 z-depth-1 r-100 ">
+                                                    <li class="dropdown-item p-0">
+                                                        <a href="#" class=" w-100">Some</a>
+                                                    </li>
+                                                    <li class="dropdown-item p-0">
+                                                        <a href="#" class="t w-100">Text</a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown-item dropdown-submenu">
+                                        <a href="#" data-toggle="dropdown" class="dropdown-toggle text-white w-100">Click me </a>
+                                        <ul class="dropdown-menu mr-2 rounded-0  primary-color border-0 z-depth-1 r-100 ">
+                                            <li class="dropdown-item p-0">
+                                                <a href="#" class="w-100">How</a>
+                                            </li>
+                                            <li class="dropdown-item p-0">
+                                                <a href="#" class="w-100">are</a>
+                                            </li>
+                                            <li class="dropdown-item p-0">
+                                                <a href="#" class="w-100">you </a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <!-- Links -->
+                        <form class="form-inline">
+                            <div class="md-form my-0">
+                                <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+                            </div>
+                        </form>
+                    </div>
+                    <!-- Collapsible content -->
+                </nav>*@
+            <nav class="navbar navbar-expand navbar-light navbar-bg">
+                @*<a class="sidebar-toggle d-flex">
+                        Sadguru CRM
+                        @*<i class="hamburger align-self-center"></i>
+                    </a>*@
+
+                @*<form class="form-inline d-none d-sm-inline-block">
+                        <div class="input-group input-group-navbar">
+                            <input type="text" class="form-control" placeholder="Search…" aria-label="Search">
+                            <div class="input-group-append">
+                                <button class="btn" type="button">
+                                    <i class="align-middle" data-feather="search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </form>*@
+
+                @Html.ActionLink("Sadguru CRM", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#primaryNav"
+                        aria-controls="primaryNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse" id="primaryNav" style="font-size: 0.7rem;">
+                    <ul class="nav navbar-nav">
+                        <li class="nav-item">@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li class="nav-item">@Html.ActionLink("Leads", "Index", "Leads", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li class="nav-item">@Html.ActionLink("Estimates", "Index", "Estimates", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li class="nav-item">@Html.ActionLink("Customers", "Index", "Customers", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li class="nav-item">@Html.ActionLink("Contracts", "Index", "Contracts", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Invoice
+                            </a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                                <li class="dropdown-item">
+                                    <a role="menuitem" tabindex="-1" href=@Url.Action("Index", "Invoices" , new { type=(Byte)SadguruCRM.EnumClassesAndHelpers.TaxInvoiceTypes.NewTaxInvoice })>Tax Invoices</a>
+                                </li>
+                                <li class="dropdown-item">
+                                    <a role="menuitem" tabindex="-1" href=@Url.Action("Index", "Invoices" , new { type=(Byte)SadguruCRM.EnumClassesAndHelpers.TaxInvoiceTypes.ProformaInvoice })>Proforma Invoices</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">@Html.ActionLink("Services", "Index", "Servicings", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li class="nav-item">@Html.ActionLink("Employees", "Index", "Employees", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Collection Book
+                            </a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                                <li class="dropdown-item">
+                                    <a role="menuitem" tabindex="-1" href=@Url.Action("WithGSTCollections", "Collections")>With GST Collections</a>
+                                </li>
+                                <li class="dropdown-item">
+                                    <a role="menuitem" tabindex="-1" href=@Url.Action("WithoutGSTCollections", "Collections")>Without GST Collections</a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Master Data
+                            </a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+
+                                <li class="dropdown-item dropdown-submenu">
+                                    <a href="#" data-toggle="dropdown" class="dropdown-toggle w-100">Customers</a>
+                                    <ul class="dropdown-menu rounded-0 primary-color border-0 z-depth-1">
+
+                                        <li role="presentation" class="dropdown-item">
+                                            <a role="menuitem" tabindex="-1" href="/Customers">View / Create Customers</a>
+                                        </li>
+                                        <li role="presentation" class="dropdown-item">
+                                            <a role="menuitem" tabindex="-1" href="/CustomerStatus">Customer Status</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown-item dropdown-submenu">
+                                    <a href="#" data-toggle="dropdown" class="dropdown-toggle w-100">Products</a>
+                                    <ul class="dropdown-menu rounded-0 primary-color border-0 z-depth-1">
+
+                                        <li role="presentation" class="dropdown-item">
+                                            <a role="menuitem" tabindex="-1" href="/ProductCategory">Product Categories</a>
+                                        </li>
+                                        <li role="presentation" class="dropdown-item">
+                                            <a role="menuitem" tabindex="-1" href="/Products">Products</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                @*<li class="dropdown-item dropdown-submenu">
+            <a href="#" data-toggle="dropdown" class="dropdown-toggle w-100">Products</a>
+            <ul class="dropdown-menu rounded-0 primary-color border-0 z-depth-1">
+                <li role="presentation" class="dropdown-item">
+                    <a role="menuitem" tabindex="-1" href="/Products">View / Create Products</a>
+                </li>
+                <li role="presentation" class="dropdown-item">
+                    <a role="menuitem" tabindex="-1" href="/ProductCategory">Product Category</a>
+                </li>
+            </ul>
+        </li>*@
+
+                                <li class="dropdown-item">
+                                    <a href="/LeadStatus">Lead Status</a>
+                                </li>
+                                <li role="presentation" class="dropdown-item">
+                                    <a role="menuitem" tabindex="-1" href="/Locations">Locations</a>
+                                </li>
+                                <li role="presentation" class="dropdown-item">
+                                    <a role="menuitem" tabindex="-1" href="/Branches">Branches</a>
+                                </li>
+                                <li role="presentation" class="dropdown-item">
+                                    <a role="menuitem" tabindex="-1" href="/Cities">Cities</a>
+                                </li>
+                                <li role="presentation" class="dropdown-item">
+                                    <a role="menuitem" tabindex="-1" href="/Sources">Sources</a>
+                                </li>
+                                <li role="presentation" class="dropdown-item">
+                                    <a role="menuitem" tabindex="-1" href="/SubSources">Sub-Sources</a>
+                                </li>
+                                <li role="presentation" class="dropdown-item">
+                                    <a role="menuitem" tabindex="-1" href="/Industries">Industries</a>
+                                </li>
+                                <li role="presentation" class="dropdown-item">
+                                    <a role="menuitem" tabindex="-1" href="/Estimates">Estimates</a>
+                                </li>
+                                <li role="presentation" class="dropdown-item">
+                                    <a role="menuitem" tabindex="-1" href="/DocumentsTemplates">LetterHead Templates</a>
+                                </li>
+                                <li role="presentation" class="dropdown-item">
+                                    <a role="menuitem" tabindex="-1" href="/Religions">Religions</a>
+                                </li>
+                                <li role="presentation" class="dropdown-item">
+                                    <a role="menuitem" tabindex="-1" href="/Vendors">Vendors</a>
+                                </li>
+                                <li class="dropdown-item">
+                                    <a href="/Departments" class="w-100">Departments</a>
+                                </li>
+                                <li class="dropdown-item">
+                                    <a href="/EmployeeDesignations" class="w-100">Employee Designations</a>
+                                </li>
+                                <li class="dropdown-item">
+                                    <a href="/PeriodsOfContracts">Periods Of Contract</a>
+                                </li>
+                                <li class="dropdown-item">
+                                    <a href="/ServiceGroups">Service Groups</a>
+                                </li>
+                                <li class="dropdown-item">
+                                    <a href="/Services">Sub-Services</a>
+                                </li>
+                                <li class="dropdown-item">
+                                    <a href="/FrequencyOfServices">Frequency Of Service</a>
+                                </li>
+                                <li class="dropdown-item">
+                                    <a href="/FrequencyOfInvoices">Frequency Of Invoices</a>
+                                </li>
+                                <li class="dropdown-item">
+                                    <a href="/ServiceEstimateTemplates">Service Estimate Templates</a>
+                                </li>
+                                <li class="dropdown-item">
+                                    <a href="/ServiceScopes">Service Scope</a>
+                                </li>
+                                <li class="dropdown-item">
+                                    <a href="/ShortServiceScope">Short Service Scope</a>
+                                </li>
+                                <li role="presentation" class="dropdown-item">
+                                    <a role="menuitem" tabindex="-1" href="/PremisesTypes">Premises Types</a>
+                                </li>
+                                <li role="presentation" class="dropdown-item">
+                                    <a role="menuitem" tabindex="-1" href="/PremisesArea">Premises Areas</a>
+                                </li>
+                                <li role="presentation" class="dropdown-item">
+                                    <a role="menuitem" tabindex="-1" href="/PaymentModes">Payment Modes</a>
+                                </li>
+                                <li role="presentation" class="dropdown-item">
+                                    <a role="menuitem" tabindex="-1" href="/PaymentTerms">Payment Terms</a>
+                                </li>
+                                <li role="presentation" class="dropdown-item">
+                                    <a role="menuitem" tabindex="-1" href="/Banks">Banks</a>
+                                </li>
+
+                                @*<li class="dropdown-item dropdown-submenu">
+            <a href="#" data-toggle="dropdown" class="dropdown-toggle w-100">Collection Book</a>
+            <ul class="dropdown-menu rounded-0 primary-color border-0 z-depth-1">
+
+                <li role="presentation" class="dropdown-item">
+                    <a role="menuitem" tabindex="-1" href="/Collections">With GST</a>
+                </li>
+                <li role="presentation" class="dropdown-item">
+                    <a role="menuitem" tabindex="-1" href="/Collections">Without GST</a>
+                </li>
+            </ul>
+        </li>*@
+                                @*
+        <li role="presentation" class="divider dropdown-item"></li>
+        <li role="presentation" class="dropdown-item"><a role="menuitem" tabindex="-1" href="#">Separated link</a>
+        </li>*@
+                            </ul>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav navbar-align">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Create New
+                            </a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                                <li class="dropdown-item">
+                                    <a href="~/Leads/Create">Lead</a>
+                                </li>
+                                <li class="dropdown-item">
+                                    <a href="~/Estimates/Create">Estimate</a>
+                                </li>
+                                <li class="dropdown-item">
+                                    <a href="~/Customers/Create">Customer</a>
+                                </li>
+                                <li class="dropdown-item">
+                                    <a href="~/Contracts/Create">Contract</a>
+                                </li>
+                                <li class="dropdown-item">
+                                    <a href="~/Invoices/Create">Invoice</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-icon dropdown-toggle" href="#" id="alertsDropdown" data-toggle="dropdown">
+                                <div class="position-relative">
+                                    <i class="align-middle" data-feather="bell"></i>
+                                    <span class="indicator count" style="display:none;">@*4*@</span>
+                                </div>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right py-0" aria-labelledby="alertsDropdown">
+                                <div class="dropdown-menu-header headerNoti">
+                                    Loading Notifications
+                                    @*4 New Notifications*@
+                                </div>
+                                <div class="list-group listNoti" style="display:none;">
+                                    <a href="#" class="list-group-item aNotification1" style="display:none;">
+                                        <div class="row no-gutters align-items-center">
+                                            <div class="col-2">
+                                                @*<i class="text-danger" data-feather="alert-circle"></i>*@
+                                                <i class="text-success" data-feather="user-plus"></i>
+                                            </div>
+                                            <div class="col-10">
+                                                <div class="text-dark titleNot1"></div>
+                                                <div class="text-muted small mt-1 descNot1"></div>
+                                                <div class="text-muted small mt-1 timeNot1"></div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a href="#" class="list-group-item aNotification2" style="display:none;">
+                                        <div class="row no-gutters align-items-center">
+                                            <div class="col-2">
+                                                @*<i class="text-warning" data-feather="bell"></i>*@
+                                                <i class="text-success" data-feather="user-plus"></i>
+                                            </div>
+                                            <div class="col-10">
+                                                <div class="text-dark titleNot2"></div>
+                                                <div class="text-muted small mt-1 descNot2"></div>
+                                                <div class="text-muted small mt-1 timeNot2"></div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a href="#" class="list-group-item aNotification3" style="display:none;">
+                                        <div class="row no-gutters align-items-center">
+                                            <div class="col-2">
+                                                @*<i class="text-primary" data-feather="home"></i>*@
+                                                <i class="text-success" data-feather="user-plus"></i>
+                                            </div>
+                                            <div class="col-10">
+                                                <div class="text-dark titleNot3"></div>
+                                                <div class="text-muted small mt-1 descNot3"></div>
+                                                <div class="text-muted small mt-1 timeNot3"></div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a href="#" class="list-group-item aNotification4" style="display:none;">
+                                        <div class="row no-gutters align-items-center">
+                                            <div class="col-2">
+                                                <i class="text-success" data-feather="user-plus"></i>
+                                            </div>
+                                            <div class="col-10">
+                                                <div class="text-dark titleNot4"></div>
+                                                <div class="text-muted small mt-1 descNot4"></div>
+                                                <div class="text-muted small mt-1 timeNot4"></div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="dropdown-menu-footer footerNoti" style="display:none;">
+                                    <a href="#" class="text-muted">Show all notifications</a>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-icon dropdown-toggle" href="#" id="messagesDropdown" data-toggle="dropdown">
+                                <div class="position-relative">
+                                    <i class="align-middle" data-feather="message-square"></i>
+                                </div>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right py-0" aria-labelledby="messagesDropdown">
+                                <div class="dropdown-menu-header">
+                                    <div class="position-relative">
+                                        4 New Messages
+                                    </div>
+                                </div>
+                                <div class="list-group">
+                                    <a href="#" class="list-group-item">
+                                        <div class="row no-gutters align-items-center">
+                                            <div class="col-2">
+                                                <img src="~/img/avatars/avatar-5.jpg" class="avatar img-fluid rounded-circle" alt="Vanessa Tucker">
+                                            </div>
+                                            <div class="col-10 pl-2">
+                                                <div class="text-dark">Vanessa Tucker</div>
+                                                <div class="text-muted small mt-1">Nam pretium turpis et arcu. Duis arcu tortor.</div>
+                                                <div class="text-muted small mt-1">15m ago</div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a href="#" class="list-group-item">
+                                        <div class="row no-gutters align-items-center">
+                                            <div class="col-2">
+                                                <img src="~/img/avatars/avatar-2.jpg" class="avatar img-fluid rounded-circle" alt="William Harris">
+                                            </div>
+                                            <div class="col-10 pl-2">
+                                                <div class="text-dark">William Harris</div>
+                                                <div class="text-muted small mt-1">Curabitur ligula sapien euismod vitae.</div>
+                                                <div class="text-muted small mt-1">2h ago</div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a href="#" class="list-group-item">
+                                        <div class="row no-gutters align-items-center">
+                                            <div class="col-2">
+                                                <img src="~/img/avatars/avatar-4.jpg" class="avatar img-fluid rounded-circle" alt="Christina Mason">
+                                            </div>
+                                            <div class="col-10 pl-2">
+                                                <div class="text-dark">Christina Mason</div>
+                                                <div class="text-muted small mt-1">Pellentesque auctor neque nec urna.</div>
+                                                <div class="text-muted small mt-1">4h ago</div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a href="#" class="list-group-item">
+                                        <div class="row no-gutters align-items-center">
+                                            <div class="col-2">
+                                                <img src="~/img/avatars/avatar-3.jpg" class="avatar img-fluid rounded-circle" alt="Sharon Lessman">
+                                            </div>
+                                            <div class="col-10 pl-2">
+                                                <div class="text-dark">Sharon Lessman</div>
+                                                <div class="text-muted small mt-1">Aenean tellus metus, bibendum sed, posuere ac, mattis non.</div>
+                                                <div class="text-muted small mt-1">5h ago</div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="dropdown-menu-footer">
+                                    <a href="#" class="text-muted">Show all messages</a>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-toggle="dropdown">
+                                <i class="align-middle" data-feather="settings"></i>
+                            </a>
+
+                            <a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-toggle="dropdown">
+                                <img src="~/img/avatars/avatar.png" class="avatar img-fluid rounded mr-1" alt="Charles Hall" /> <span class="text-dark">@Session["UserName"].ToString()</span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item" href="pages-profile.html"><i class="align-middle mr-1" data-feather="user"></i> Profile</a>
+                                <a class="dropdown-item" href="#"><i class="align-middle mr-1" data-feather="pie-chart"></i> Analytics</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="pages-settings.html"><i class="align-middle mr-1" data-feather="settings"></i> Settings & Privacy</a>
+                                <a class="dropdown-item" href="#"><i class="align-middle mr-1" data-feather="help-circle"></i> Help Center</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="/Login/Logout">Log out</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <main class="content"  oncopy="return false;" oncut="return false;">
+                <div class="container-fluid p-0">
+                    <div id="errorDiv" class="alert alert-danger alert-dismissible fade show row" role="alert" style="padding:17px;display:none;">
+
+                        <div class="col-12">
+                            <h4 class="alert-heading  col-12">Error!</h4>
+                        </div>
+
+                        <div class="col-12">
+                            <p class=" col-12 alert-content"></p>
+                        </div>
+
+
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    @RenderBody()
+
+                    @*<div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5 class="card-title mb-0">Empty card</h5>
+                                    </div>
+                                    <div class="card-body">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>*@
+
+                </div>
+            </main>
+
+            <footer class="footer">
+                <div class="container-fluid">
+                    <div class="row text-muted">
+                        <div class="col-6 text-left">
+                            <p class="mb-0">
+                                <a href="index.html" class="text-muted"><strong>Sadguru CRM</strong></a> &copy;
+                            </p>
+                        </div>
+                        <div class="col-6 text-right">
+                            <ul class="list-inline">
+                                <li class="list-inline-item">
+                                    <a class="text-muted" href="#">Support</a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a class="text-muted" href="#">Help Center</a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a class="text-muted" href="#">Privacy</a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a class="text-muted" href="#">Terms</a>
+                                </li>
+                                <li class="list-inline-item">
+                                    <a class="text-muted" href="#">@ViewBag.TimeTaken</a>
+                                </li>
+                                <li class="list-inline-item" style="display:none;">
+                                    @Html.Hidden("ForHub", Session["UserID"].ToString())
+                                </li>
+                                <li class="list-inline-item">
+                                    @Html.Hidden("FromHub")
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+
+    @*<script src="js/vendor.js"></script>*@
+
+</body>
+
+</html>
+
+<script>
+
+    $('.multi-level-dropdown .dropdown-submenu > a').on("mouseenter", function (e) {
+        var submenu = $(this);
+        $('.multi-level-dropdown .dropdown-submenu .dropdown-menu').removeClass('show');
+        submenu.next('.dropdown-menu').addClass('show');
+        e.stopPropagation();
+    });
+
+    $('.multi-level-dropdown .dropdown').on("hidden.bs.dropdown", function () {
+        // hide any open menus when parent closes
+        $('.multi-level-dropdown .dropdown-menu.show').removeClass('show');
+    });
+    //$('#LeadsCreate')
+    //    .validate({
+
+    //        errorPlacement: function (error, element) {
+    //            if (element.hasClass("selectpicker"))
+    //                error.insertAfter(element.next(".btn"));
+    //            else
+    //                 error.insertAfter(element);
+    //                //if (element.hasClass("CustCellNo"))
+    //                //error.insertAfter(element.next(".addTextboxButton"));
+
+    //        }
+    //    });
+    //$.validator.addMethod("cMinlength", $.validator.methods.minlength,"Must have {0} characters");
+    //$.validator.addMethod("cMaxlength", $.validator.methods.maxlength,"Must have {0} characters");
+    //// combine them both, including the parameter for minlength
+    //$.validator.addClassRules("CustCellNo", { cMinlength: 2, cMaxlength: 2});
+    //$(document).ready(function () {
+    //    $("div .dropup").each(function (index) {
+    //        $(this).removeClass('dropdown');
+
+    //    });
+    //    $(".selectpicker").each(function (index) {
+    //        $(this).selectpicker('refresh');
+    //    });
+    //});
+
+
+    // this is because dropdowns where the options are too lengthy, increase the size of thye dropdowns and put columns at the end of the row to next lines - 7/11/2020
+    //Do not remember why this was added.. commenting because columns with selectpicker pick up different sizes
+    $(document).ready(function () {
+        
+        restricDropdownWidths();
+        //$.getScript("../signalr/hubs")
+        //    .done(function (script, textStatus) {
+
+
+        //    });
+        
+        $('.dropup').on('loaded.bs.select', function () {
+            debugger;
+            $(this).parent().removeClass("dropdown");
+            //$(this).selectpicker('render');
+
+        });
+        //$('.selectpicker').selectpicker('dropup');
+        //$('button.dropdown-toggle').keypress(function (e) {
+        //    //e.stopPropagation;
+        //    alert(e.keyCode);
+        //    //e.stopPropagation;
+
+        //});
+        //$('button.dropdown-toggle').keyup(function (e) {
+        //    //e.stopPropagation;
+        //    alert(e.keyCode);
+        //    //e.stopPropagation;
+
+        //});
+        //$('button.dropdown-toggle').keydown(function (e) {
+        //    //e.stopPropagation;
+        //    alert(e.keyCode);
+        //    //e.stopPropagation;
+
+        //});
+        //$(".Branch").keydown(function (e) {
+        //    //e.stopPropagation;
+        //    alert(e.keyCode);
+        //    //e.stopPropagation;
+
+        //});
+
+    });
+
+        
+
+</script>
+<script src="~/Scripts/jquery.signalR-2.4.1.min.js"></script>
+@*<script src="/signalr/hubs" type="text/javascript"></script>*@
+@*<script src="@Url.Content("~/signalr/hubs")"></script>*@
+<script type="text/javascript" src="~/signalr/hubs"></script>
+<script type="text/javascript">
+    //$(function () {
+    //    // Click on notification icon for show notification
+    //    $('span.noti').click(function (e) {
+    //        e.stopPropagation();
+    //        $('.noti-content').show();
+    //        var count = 0;
+    //        count = parseInt($('span.count').html()) || 0;
+    //        //only load notification if not already loaded
+    //        if (count > 0) {
+    //            updateNotification();
+    //        }
+    //        $('span.count', this).html('&nbsp;');
+    //    })
+    //    // hide notifications
+    //    $('html').click(function () {
+    //        $('.noti-content').hide();
+    //    })
+    //    // update notification
+    //    function updateNotification() {
+    //        $('#notiContent').empty();
+    //        $('#notiContent').append($('<li>Loading...</li>'));
+    //        $.ajax({
+    //            type: 'GET',
+    //            url: '/Leads/GetNotificationLeads',
+    //            success: function (response) {
+    //                $('#notiContent').empty();
+    //                if (response.length == 0) {
+    //                    $('#notiContent').append($('<li>No data available</li>'));
+    //                }
+    //                $.each(response, function (index, value) {
+    //                    $('#notiContent').append($('<li>New contact : ' + value.ContactName + ' (' + value.ContactNo + ') added</li>'));
+    //                });
+    //            },
+    //            error: function (error) {
+    //                console.log(error);
+    //            }
+    //        })
+    //    }
+    //    // update notification count
+    //    function updateNotificationCount() {
+    //        var count = 0;
+    //        count = parseInt($('span.count').html()) || 0;
+    //        count++;
+    //        $('span.count').html(count);
+    //    }
+    //    // signalr js code for start hub and send receive notification
+    //    var notificationHub = $.connection.notificationHub;
+    //    $.connection.hub.start().done(function () {
+    //        console.log('Notification hub started');
+    //    });
+    //    //signalr method for push server message to client
+    //    notificationHub.client.notify = function (message) {
+    //        if (message && message.toLowerCase() == "added") {
+    //            updateNotificationCount();
+    //        }
+    //    }
+    //})
+</script>
+<script>
+    //https://www.c-sharpcorner.com/article/user-specific-notifications-using-asp-net-mvc-and-signalr/
+    $(document).ready(function () {
+        var hub = $.connection.notificationHub;
+
+
+        $.connection.notificationHub.client.NotificationReciever = function (notifications) {
+            debugger;
+            //alert("success!");
+            UpdateNotifications(notifications);
+            //alert(notificationsArray.length);
+        }
+        //$.connection.notificationHub.client.broadcaastNotif = function (notifications) {
+        //    debugger;
+        //    alert("test");
+        //    alert(notifications);
+        //}
+        $.connection.notificationHub.client.GenerteAsynchRequestToCreateNotifications = function (leadID) {
+            debugger;
+            GenerteAsynchRequestToCreateNotifications(leadID);
+        }
+        $.connection.hub.qs = { 'ForHub': $("#ForHub").val() };
+        $.connection.hub.start()
+            .done(function () {
+                console.log("Hub Connected!");
+
+            })
+            .fail(function () {
+                console.log("Could not Connect!");
+            });
+
+        // Arranging Notifications
+
+        //result by SignalR
+        // Calling ajax asynch to get notification - now trying to call it on Task OnConnected on SignalR Hub
+        //$.ajax({
+        //    type: "POST",
+        //    url: "/Notifications/GetNotificationSingleUser",
+        //        data: { userID: $("#ForHub").val() },
+        //        datatype: "json",
+        //    success: function (data) {
+        //        //reset field
+        //        //$("#myMessage").val("");
+        //    },
+        //    error: function () {
+        //        alert("Error getting Notifications!")
+        //    }
+        //});
+    });
+    function GenerteAsynchRequestToCreateNotifications(leadID) {
+        $.ajax({
+            type: "POST",
+            url: "/Notifications/CreateNotifications",
+            data: { leadID: leadID },
+            datatype: "json",
+            success: function (data) {
+                //reset field
+                //$("#myMessage").val("");
+            },
+            error: function () {
+                alert("Error in GenerteAsynchRequestToCreateNotifications!")
+            }
+        });
+    }
+    function UpdateNotifications(notifications) {
+        debugger;
+        var notificationsArray = $.parseJSON(notifications);
+        //alert(notificationsArray.length);
+        var length = notificationsArray.length;
+        if (length == 0) {
+            $(".headerNoti").html("No Notifications.");
+        }
+        if (length > 0) {
+            $(".headerNoti").html("1 New Notifications");
+            $(".titleNot1").html(notificationsArray[0].Title);
+            $(".titleNot1").show();
+            $(".descNot1").html(notificationsArray[0].Details);
+            $(".descNot1").show();
+            $(".timeNot1").html(notificationsArray[0].CreatedOn);
+            $(".timeNot1").show();
+            $(".aNotification1").show();
+            $(".listNoti").show();
+            $(".count").show();
+            $(".count").html("1");
+        }
+        if (length > 1) {
+            $(".headerNoti").html("2 New Notifications");
+            $(".titleNot2").html(notificationsArray[1].Title);
+            $(".titleNot2").show();
+            $(".descNot2").html(notificationsArray[1].Details);
+            $(".descNot2").show();
+            $(".timeNot2").html(notificationsArray[1].CreatedOn);
+            $(".timeNot2").show();
+            $(".aNotification2").show();
+            $(".listNoti").show();
+            $(".count").show();
+            $(".count").html("2");
+        }
+        if (length > 2) {
+            $(".headerNoti").html("3 New Notifications");
+            $(".titleNot3").html(notificationsArray[2].Title);
+            $(".titleNot3").show();
+            $(".descNot3").html(notificationsArray[2].Details);
+            $(".descNot3").show();
+            $(".timeNot3").html(notificationsArray[2].CreatedOn);
+            $(".timeNot3").show();
+            $(".aNotification3").show();
+            $(".listNoti").show();
+            $(".count").show();
+            $(".count").html("3");
+        }
+        if (length > 3) {
+            $(".headerNoti").html("4 New Notifications");
+            $(".titleNot4").html(notificationsArray[3].Title);
+            $(".titleNot4").show();
+            $(".descNot4").html(notificationsArray[3].Details);
+            $(".descNot4").show();
+            $(".timeNot4").html(notificationsArray[3].CreatedOn);
+            $(".timeNot4").show();
+            $(".aNotification4").show();
+            $(".listNoti").show();
+            $(".count").show();
+            $(".count").html("4");
+        }
+    }
+
+    function restricDropdownWidths() {
+        $(".restrict-dropdown-widths.selectpicker").each(function (index) {
+            //alert($(this).parent(".col").width());
+            debugger;
+            var x = $(this).parent(".col").width();
+            //alert(x);
+            if (x != 'undefined') {
+                $(this).parent(".col").css("max-width", x + "px");
+            } else {
+                $(this).parent(".col").css("max-width", "180px");
+            }
+        });
+    }
+</script>
+@if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+{
+    <script type="text/javascript">
+        $(".alert-content").text('@ViewBag.ErrorMessage');
+        $("#errorDiv").show();
+        //alert('@ViewBag.ErrorMessage');
+    </script>
+}
+else
+{
+    <script type="text/javascript">
+        $(".alert-content").text('No Error!');
+        $("#errorDiv").hide();
+        //alert('@ViewBag.ErrorMessage');
+    </script>
+
+}
+<script type="text/javascript">
+    function CancelReturnKey() {
+        if (window.event.keyCode == 13)
+            return false;
+    }
+    function resetFormValidator(formId) {
+        $(formId).removeData('validator');
+        $(formId).removeData('unobtrusiveValidation');
+        $.validator.unobtrusive.parse(formId);
+    }
+    function getDateInDDMMYYYY(d) {
+        let month = String(d.getMonth() + 1);
+        let day = String(d.getDate());
+        const year = String(d.getFullYear());
+
+        if (month.length < 2) month = '0' + month;
+        if (day.length < 2) day = '0' + day;
+
+        return `${day}/${month}/${year}`;
+        return output;
+    }
+</script>

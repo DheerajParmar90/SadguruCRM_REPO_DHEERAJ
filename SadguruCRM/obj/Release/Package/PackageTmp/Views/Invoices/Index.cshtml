@@ -1,0 +1,173 @@
+﻿@model IEnumerable<SadguruCRM.Models.Invoice>
+
+@{
+    ViewBag.Title = "Invoices";
+}
+
+
+<div class="row">
+    <div class="col">
+
+        <h2>@ViewBag.InvoiceTypeName</h2>
+    </div>
+    <div class="pull-right">
+        @Html.ActionLink("Create New", "Create", "Invoices", new { type = ViewBag.InvoiceType }, new { @type = "button", @class = "btn btn-outline-secondary" })
+    </div>
+</div>
+
+<table class="table display cell-border">
+    <thead>
+        <tr>
+            <th style="display:none;"></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+        <tr>
+            <th style="display:none;">
+                @Html.DisplayName("Invoice ID")
+            </th>
+            <th>
+                    @Html.DisplayName("Invoice Date")
+            </th>
+            <th>
+                @Html.DisplayName("Invoice No")
+            </th>
+
+            <th>
+                @Html.DisplayName("Customer Name")
+            </th>
+            <th>
+                @Html.DisplayName("Location")
+            </th>
+            <th>
+                @Html.DisplayName("Required Services")
+            </th>
+            <th>
+                @Html.DisplayName("Telephone No")
+            </th>
+            <th>
+                @Html.DisplayName("Cell No")
+            </th>
+            <th>
+                @Html.DisplayName("Final Amount")
+            </th>
+            <th>
+                @Html.DisplayName("Payment Status")
+            </th>
+            <th>
+                @Html.DisplayName("Created By")
+            </th>
+            <th>
+                @Html.DisplayName("Action")
+            </th>
+        </tr>
+    </thead>
+
+
+    @foreach (var item in Model)
+    {
+<tr>
+
+    <td style="display:none;">
+        @Html.DisplayFor(modelItem => item.InvoiceID)
+    </td>
+    <td>
+        @Html.ValueFor(modelItem => item.CreatedDate, "{0:dd/MM/yyyy}")
+        <br />
+        @Html.ValueFor(modelItem => item.CreatedDate, "{0:hh:mm tt}")
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.InvoiceNo)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Customer.CustomerName)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Customer.Customers_Billing_Address_Mapping.First().Location.LocationName)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.ExecutiveName)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Customer.TelNumber)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Customer.CellNumber)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.FinalInvoiceRate)
+    </td>
+    <td>
+        @*@Html.DisplayFor(modelItem => item.PaymentTerm.PaymentTermName)*@
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.UserLogin.UserName)
+    </td>
+    <td>
+        @Html.ActionLink(" ", "Edit", new { id = item.InvoiceID }, new { @class = "fa fa-edit", @title = "EDIT" }) |
+        @Html.ActionLink(" ", "Details", new { id = item.InvoiceID }, new { @class = "fa fa-info", @title = "DETAILS" }) |
+        @Html.ActionLink(" ", "Delete", new { id = item.InvoiceID }, new { @class = "fa fa-trash", @title = "DELETE" }) |
+        @Html.ActionLink(" ", "Print", new { id = item.InvoiceID }, new { @class = "fa fa-file-pdf-o", @target = "_blank" }) 
+    </td>
+</tr>
+    }
+
+</table>
+<script>
+    var table;
+    $(document).ready(function () {
+
+        table = $('.table').DataTable({
+            fixedHeader: true,
+            order: [[0, 'desc']],
+            "pageLength": 25
+        });
+        var colindex = 1;
+        $('.table thead tr:first th').each(function () {
+            if (colindex < 12) {
+                //var title = $('.table thead th').eq( $(this).index() ).text();
+                $(this).html('<input type="text" class="column_search"/>');
+            } else if (colindex == 12) {
+
+                $(this).html('<input type="button" value="RESET" class="btn btn-sm btn-outline-secondary" id="reset" onclick="clearSearchBoxes();"/>');
+            }
+            colindex++;
+
+        });
+        //table.columns().every(function () {
+        //    var column = this;
+
+        //    $('input', this.header()).on('keyup change', function () {
+        //        column
+        //            .search(this.value)
+        //            .draw();
+        //    });
+        //});
+        $('.table thead tr:first th').on('keyup', ".column_search", function () {
+            table
+                .column($(this).parent().index())
+                .search(this.value)
+                .draw();
+        });
+        $(".dataTables_filter").css("display", "none");
+        $('.dataTables_filter input[type="search"]').css(
+            { 'width': '350px', 'display': 'inline-block' }
+        );
+    });
+    function clearSearchBoxes() {
+        var searchBoxes = $(".column_search");
+        for (var i = 0; i < searchBoxes.length; i++) {
+            $(searchBoxes[i]).val("");
+        }
+        table.search('').columns().search('').draw();
+    };
+</script>

@@ -1,0 +1,24 @@
+﻿@model IEnumerable<SadguruCRM.Models.ViewModels.imagesviewmodel>
+@{
+    Layout = null;
+}
+@foreach (var image in Model)
+{
+    <a href="#" class="returnImage" data-url="@Request.Url.GetLeftPart(UriPartial.Authority)@image.Url">
+        <img src="@image.Url" alt="Hejsan" id="#image" data-source="@image.Url" width="200" height="200" />
+    </a>
+}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $(".returnImage").click("click", function (e) {
+            debugger;
+            var urlImage = $(this).attr("data-url");
+            window.opener.updateValue("cke_dialog_ui_input_text", urlImage);
+            window.close();
+        });
+    });
+</script>

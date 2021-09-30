@@ -1,0 +1,153 @@
+﻿@model IEnumerable<SadguruCRM.Models.Product_Category_Master>
+
+@{
+    ViewBag.Title = "Product Categories";
+}
+
+
+
+<div class="row">
+    <div class="col">
+        <h2>Product Categories</h2>
+    </div>
+    <div class="pull-right">
+        @Html.ActionLink("New Category", "Create", null, new { @type = "button", @class = "btn btn-outline-secondary" })
+    </div>
+
+</div>
+<table class="table display cell-border">
+    <thead>
+
+        <tr>
+            <th>
+
+            </th>
+            <th>
+
+            </th>
+            <th>
+
+            </th>
+            <th>
+
+            </th>
+            <th>
+
+            </th>
+            <th>
+
+            </th>
+            <th>
+
+            </th>
+            <th></th>
+        </tr>
+        <tr>
+            <th>
+                @Html.DisplayName("Order")
+            </th>
+            <th>
+                @Html.DisplayName("Product Category")
+            </th>
+            <th>
+                @Html.DisplayName("Parent Category")
+            </th>
+            <th>
+                @Html.DisplayName("Created By")
+            </th>
+            <th>
+                @Html.DisplayName("Created On")
+            </th>
+            <th>
+                @Html.DisplayName("Last Updated By")
+            </th>
+            <th>
+                @Html.DisplayName("Last Updated On")
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Order)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Product_Category)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Parent_Category_Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserLogin.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreatedDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserLogin1.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastUpdatedDate)
+            </td>
+            <td style="font-size: 10px;">
+                @Html.ActionLink(" ", "Edit", new { id = item.Product_Category_ID }, new { @class = "fa fa-edit", @title = "EDIT" })
+                @Html.ActionLink(" ", "Details", new { id = item.Product_Category_ID }, new { @class = "fa fa-info", @title = "VIEW" })
+                @Html.ActionLink(" ", "Delete", new { id = item.Product_Category_ID }, new { @class = "fa fa-trash", @title = "DELETE" })
+            </td>
+        </tr>
+        }
+
+    </tbody>
+
+</table>
+<script>
+    var table;
+    $(document).ready(function () {
+
+        table = $('.table').DataTable({
+            fixedHeader: true,
+            order: [[0, 'asc']],
+            "pageLength": 25
+        });
+        var colindex = 1;
+        $('.table thead tr:first th').each(function () {
+            if (colindex < 8) {
+                //var title = $('#leads thead th').eq($(this).index()).text();
+                $(this).html('<input type="text" placeholder="" class="column_search"/>');
+            } else if (colindex == 8) {
+                $(this).html('<input type="button" value="RESET" class="btn btn-sm btn-outline-secondary" id="reset" onclick="clearSearchBoxes();"/>');
+            }
+            colindex++;
+        });
+        //table.columns().every(function () {
+        //    var column = this;
+
+        //    $('input', this.header()).on('keyup change', function () {
+        //        column
+        //            .search(this.value)
+        //            .draw();
+        //    });
+        //});
+        $('.table thead tr:first th').on('keyup', ".column_search", function () {
+            table
+                .column($(this).parent().index())
+                .search(this.value)
+                .draw();
+        });
+        $(".dataTables_filter").css("display", "none");
+
+
+    });
+    //table.columns( '.Status' ).search( 'Important' ).draw();
+    function clearSearchBoxes() {
+        var searchBoxes = $(".column_search");
+        for (var i = 0; i < searchBoxes.length; i++) {
+            $(searchBoxes[i]).val("");
+        }
+        table.search('').columns().search('').draw();
+    };
+
+</script>

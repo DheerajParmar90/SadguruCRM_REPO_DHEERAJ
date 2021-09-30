@@ -1,0 +1,157 @@
+﻿@model IEnumerable<SadguruCRM.Models.Contract>
+
+@{
+    ViewBag.Title = "Contracts";
+}
+
+<div class="row">
+    <div class="col">
+        <h2>Contracts</h2>
+    </div>
+    <div class="pull-right">
+        @Html.ActionLink("New Contract", "Create", null, new { @type = "button", @class = "btn btn-outline-secondary" })
+        @*@Html.ActionLink("Export", "Export", null, new { @type = "button", @class = "btn btn-outline-secondary" })
+        <button class="btn btn-outline-secondary"><i class="fa fa-pie-chart"></i></button>*@
+    </div>
+
+</div>
+<table class="table display cell-border" id="table">
+    <thead>
+        <tr>
+            <th style="display:none;">Contract ID</th>
+            <th>Contract Date</th>
+            <th>Contract No</th>
+            <th>Contract Type</th>
+            <th>Customer Name</th>
+            <th>Branch</th>
+            <th>Required Services</th>
+            <th>Tel No.</th>
+            <th>Cell No.</th>
+            <th>Created By</th>
+            <th></th>
+            <th></th>
+        </tr>
+        <tr>
+            <th style="display:none;">
+                @Html.DisplayName("Contract ID")
+            </th>
+            <th>
+                @Html.DisplayName("Contract Date")
+            </th>
+            <th>
+                @Html.DisplayName("Contract ID")
+            </th>
+            <th>
+                @Html.DisplayName("Contract Type")
+            </th>
+            <th>
+                @Html.DisplayName("Customer Name")
+            </th>
+            <th>
+                @Html.DisplayName("Location")
+            </th>
+            <th>
+                @Html.DisplayName("Required Services")
+            </th>
+            <th>
+                @Html.DisplayName("Tel No")
+            </th>
+            <th>
+                @Html.DisplayName("Cell No")
+            </th>
+            <th>
+                @Html.DisplayName("Services")
+            </th>
+            <th>
+                @Html.DisplayName("Created By")
+            </th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td style="display:none;">
+                @Html.DisplayFor(modelItem => item.ContractID)
+            </td>
+            <td>
+                @Html.ValueFor(modelItem => item.CreatedDate, "{0:dd/MM/yyyy}")
+                <br />
+                @Html.ValueFor(modelItem => item.CreatedDate, "{0:hh:mm tt}")
+
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ContractNo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TypeOfContract)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Customer.CustomerName)
+            </td>
+            <td>
+                @*@Html.DisplayFor(modelItem => item.Branch.BranchName)*@
+                @Html.DisplayFor(modelItem => item.Remark)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ExecutiveName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Customer.TelNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Customer.CellNumber)
+            </td>
+            <td>
+                @Html.ActionLink("Check", "ContractServices", "Contracts", new { ContractID = item.ContractID }, null)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserLogin.UserName)
+            </td>
+            <td>
+                @Html.ActionLink(" ", "Edit", new { id = item.ContractID }, new { @class = "fa fa-edit", @title = "EDIT" }) |
+                @Html.ActionLink(" ", "Details", new { id = item.ContractID }, new { @class = "fa fa-info", @title = "VIEW" }) |
+                @Html.ActionLink(" ", "Delete", new { id = item.ContractID }, new { @class = "fa fa-trash", @title = "DELETE" })|
+                @Html.ActionLink(" ", "Print", new { id = item.ContractID }, new { @class = "fa fa-file-pdf-o", @title = "PDF", @target = "_blank" })|
+                @Html.ActionLink(" ", "EMAIL", new { id = item.ContractID }, new { @class = "fa fa-envelope", @title = "EMAIL" })
+            </td>
+        </tr>
+    }
+
+</table>
+<script>
+    var table;
+    $(document).ready(function () {
+        table = $('#table').DataTable({
+            fixedHeader: true,
+            order: [[0, 'desc']],
+            "pageLength": 25
+        });
+        var colindex = 1;
+        $('#table thead tr:first th').each(function () {
+            if (colindex < 12) {
+                //var title = $('#table thead th').eq( $(this).index() ).text();
+                $(this).html('<input type="text" class="column_search"/>');
+            }
+            else if (colindex == 12) {
+
+                $(this).html('<input type="button" value="RESET" class="btn btn-sm btn-outline-secondary" id="reset" onclick="clearSearchBoxes();"/>');
+            }
+            colindex++;
+        });
+        $('#table thead tr:first th').on('keyup', ".column_search", function () {
+            table
+                .column($(this).parent().index())
+                .search(this.value)
+                .draw();
+        });
+        $(".dataTables_filter").css("display", "none");
+    });
+    function clearSearchBoxes() {
+        var searchBoxes = $(".column_search");
+        for (var i = 0; i < searchBoxes.length; i++) {
+            $(searchBoxes[i]).val("");
+        }
+        table.search('').columns().search('').draw();
+    };
+</script>

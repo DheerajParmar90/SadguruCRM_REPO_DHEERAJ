@@ -1,0 +1,88 @@
+﻿@model SadguruCRM.Models.FrequencyOfInvoice
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>FrequencyOfInvoice</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.FrequencyOfInvoice1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FrequencyOfInvoice1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatedDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastUpdatedDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastUpdatedDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Order)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Order)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Duration_Between_2_Invoices_Year)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Duration_Between_2_Invoices_Year)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Duration_Between_2_Invoices_Month)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Duration_Between_2_Invoices_Month)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Duration_Between_2_Invoices_Day)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Duration_Between_2_Invoices_Day)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserLogin.UserName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserLogin.UserName)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

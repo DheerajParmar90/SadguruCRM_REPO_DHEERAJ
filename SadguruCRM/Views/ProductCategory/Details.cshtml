@@ -1,0 +1,73 @@
+﻿@model SadguruCRM.Models.Product_Category_Master
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Product Category</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.Label("Product Category", new { @class = "control-label" })
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Product_Category)
+        </dd>
+
+        <dt>
+            @Html.Label("Parent Category", new { @class = "control-label" })
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Parent_Category_Name)
+        </dd>
+
+
+        <dt>
+            @Html.Label("Order", new { @class = "control-label" })
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Order)
+        </dd>
+
+        <dt>
+            @Html.Label("Created By", new { @class = "control-label" })
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserLogin.UserName)
+        </dd>
+        <dt>
+            @Html.Label("Created On", new { @class = "control-label" })
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreatedDate)
+        </dd>
+        <dt>
+            @Html.Label("Last Updated By", new { @class = "control-label" })
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserLogin1.UserName)
+        </dd>
+        <dt>
+            @Html.Label("Last Updated On", new { @class = "control-label" })
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastUpdatedDate)
+        </dd>
+
+
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Back to List", "Index", null, new { @type = "button", @class = "btn btn-outline-secondary" })
+</p>

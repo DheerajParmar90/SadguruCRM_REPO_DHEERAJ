@@ -1,0 +1,179 @@
+﻿@model SadguruCRM.Models.Estimate
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    @*<meta name="description" content="Responsive Web UI Kit &amp; Dashboard Template based on Bootstrap">
+        <meta name="author" content="AdminKit">
+        <meta name="keywords" content="adminkit, bootstrap, web ui kit, dashboard template, admin template">*@
+    <title>PDF View - Estimate - Sadguru CRM</title>
+
+    @*<link rel="shortcut icon" href="~/img/icons/icon-48x48.png" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+
+    <link href="~/Content/adminkit/app.css" rel="stylesheet" />
+    <link href="~/Content/jquery-ui.css" rel="stylesheet" />*@
+
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+
+</head>
+<body>
+    <div class="container">
+        @{
+            SadguruCRM.Models.Lead lead = new SadguruCRM.Models.Lead();
+            SadguruCRM.Models.Customer cust = new SadguruCRM.Models.Customer();
+            string name = "", address = "", locationCityAndPincode = "", kindAttn="";
+            if (Model.NewCustomer)
+            {
+                lead = Model.Lead;
+                cust = null;
+                name = lead.Title + " " + lead.FirstName + " " + lead.LastName + " " + lead.CustomerName;
+                address = lead.AddressLine1 + " " + lead.AddressLine2 + " " + lead.AddressLine3;
+                locationCityAndPincode = lead.Location.LocationName + " " + lead.City.CityName + " " + lead.Pincode;
+                if (!String.IsNullOrEmpty(lead.ConsultPerson))
+                {
+                    kindAttn = lead.ConsultPerson + " (" + lead.ConsultPersonDesignation + ") - " + lead.CellNo;
+                }
+                else
+                {
+                    kindAttn = name + " - " + lead.TelNo;
+                }
+            }
+            else
+            {
+                lead = null;
+                cust = Model.Customer;
+                name = cust.Title + " " + cust.FirstName + " " + cust.LastName + " " + cust.CustomerName;
+                address = cust.Customers_Billing_Address_Mapping.First().AddressLine1 + " " + cust.Customers_Billing_Address_Mapping.First().AddressLine2 + " " + cust.Customers_Billing_Address_Mapping.First().AddressLine3;
+                locationCityAndPincode = cust.Customers_Billing_Address_Mapping.First().Location.LocationName + " "
+                    + cust.Customers_Billing_Address_Mapping.First().City.CityName + " "
+                    + cust.Customers_Billing_Address_Mapping.First().BillingPincode;
+                if (!String.IsNullOrEmpty(cust.ConsultPerson))
+                {
+                    kindAttn = cust.ConsultPerson + " (" + cust.ConsultPersonDesignation + ") - " + cust.TelNumber;
+                }
+                else
+                {
+                    kindAttn = name + " - " + cust.CellNumber;
+                }
+            }
+        }
+        <div class="row">
+            <div class="col text-center">
+                <u>
+                    <b>
+                        @if (Model.isNewEstimate == true)
+                        {
+                            <text>Estimate</text>
+                        }
+                        else
+                        {
+                            <text>Revised Estimate</text>
+                        }
+                    </b>
+                </u>
+            </div>
+        </div>
+        <div class="row">
+
+            <div class="col-6 text-left">
+                <b>Ref.: @Model.ReferenceNo</b>
+            </div>
+            <div class="col-6 text-right">
+                <b>Date: @Html.ValueFor(modelItem => modelItem.EstimateDate, "{0:dd/MMM/yyyy}")</b>
+            </div>
+        </div>
+        <br />
+        <p>
+            To,<br />
+            <b>@name</b><br />
+            @address<br />
+            @locationCityAndPincode<br /><br />
+            <text><b>Kind Attn: </b></text>@kindAttn<br /><br />
+            <text><b>Subject: </b></text>@Model.Subject<br /><br />
+            @Html.Raw(Model.WelcomeSentence)<br /><br />
+            @Html.Raw(Model.ServiceScope)<br /><br />
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Sr. No.</th>
+                        <th>Description Of Service</th>
+                        <th>Frequency Of Service</th>
+                        <th>Quantity</th>
+                        <th>Rate / Per</th>
+                        <th>Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.Estimate_Services_Mapping.Count(); i++)
+                    {
+                        <tr>
+                            <td>
+                                @(i + 1)
+                            </td>
+                            <td>
+                                @Model.Estimate_Services_Mapping.ElementAt(i).Service.ServiceName
+                            </td>
+                            <td>
+
+                                @Model.Estimate_Services_Mapping.ElementAt(i).FrequencyOfService.FrequencyOfService1
+                            </td>
+                            <td>
+                                @Model.Estimate_Services_Mapping.ElementAt(i).Qty
+                            </td>
+                            <td>
+                                @Model.Estimate_Services_Mapping.ElementAt(i).Rate
+                            </td>
+                            <td>
+                                @Model.Estimate_Services_Mapping.ElementAt(i).FinalRatePerService
+                            </td>
+                        </tr>
+                    }
+                    <tr>
+                        <td colspan="3" rowspan="5"><b>Remarks:</b></td>
+                        <td colspan="2"><b>Total:</b></td>
+                        <td>@Model.Estimate_Services_Mapping.Sum(s => s.FinalRatePerService)</td>
+                    </tr>
+                    <tr>
+                        @*<td colspan="3" rowspan="5"><b>Remarks:</b></td>*@
+                        <td colspan="2"><b>SGST 9%:</b></td>
+                        <td>@(Model.Estimate_Services_Mapping.Sum(s => s.FinalRatePerService) * 9 / 100)</td>
+                    </tr>
+                    <tr>
+                        @*<td colspan="3" rowspan="5"><b>Remarks:</b></td>*@
+                        <td colspan="2"><b>CGST 9%:</b></td>
+                        <td>@(Model.Estimate_Services_Mapping.Sum(s => s.FinalRatePerService) * 9 / 100)</td>
+                    </tr>
+                    <tr>
+                        @*<td colspan="3" rowspan="5"><b>Remarks:</b></td>*@
+                        <td colspan="2"><b>R/O (+/-):</b></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        @*<td colspan="3" rowspan="5"><b>Remarks:</b></td>*@
+                        <td colspan="2"><b>GRAND TOTAL:</b></td>
+                        <td>@(Model.Estimate_Services_Mapping.Sum(s => s.FinalRatePerService) + (Model.Estimate_Services_Mapping.Sum(s => s.FinalRatePerService) * 9 / 100)*2 )</td>
+                    </tr>
+                    <tr>
+                        @*<td colspan="3" rowspan="5"><b>Remarks:</b></td>*@
+                        <td colspan="6"><b>Grand Total Estimate Value (In Words):</b></td>
+                    </tr>
+                </tbody>
+            </table>
+            @Html.Raw(Model.Footer)<br /><br />
+        </p><br />
+
+    </div>
+
+
+    </body>
+</html>

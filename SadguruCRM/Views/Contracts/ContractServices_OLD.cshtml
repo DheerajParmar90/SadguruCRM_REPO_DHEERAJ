@@ -1,0 +1,126 @@
+﻿@model SadguruCRM.ViewModels.ContractServicesViewModel
+@{
+    ViewBag.Title = "Contract Services";
+}
+
+
+<h2>Contract Services: </h2>
+<h5>Contract ID: @Model.ContractID</h5>
+<table class="table" id="tblContractServices">
+    <tr>
+        <th>
+            @Html.DisplayName("Service Group")
+        </th>
+        <th>
+            @Html.DisplayName("Service")
+        </th>
+        <th>
+            @Html.DisplayName("Rate")
+        </th>
+        <th>
+            @Html.DisplayName("GST")
+        </th>
+        <th>
+            @Html.DisplayName("CGST")
+        </th>
+        <th>
+            @Html.DisplayName("SGST")
+        </th>
+        <th>
+            @Html.DisplayName("IGST")
+        </th>
+        <th>
+            @Html.DisplayName("Qty")
+        </th>
+        <th>
+            @Html.DisplayName("Tax")
+        </th>
+        <th>
+            @Html.DisplayName("Final Rate")
+        </th>
+        <th>
+            @Html.DisplayName("Frequency Of Service")
+        </th>
+        <th>
+            @Html.DisplayName("Period Of Contract")
+        </th>
+        <th>
+            @Html.DisplayName("Service Start Date")
+        </th>
+        <th>
+            @Html.DisplayName("Contract Start Date")
+        </th>
+        <th>
+            @Html.DisplayName("Contract End Date")
+        </th>
+        <th>
+            @Html.DisplayName("Servicings")
+        </th>
+        @*<th></th>*@
+    </tr>
+
+    @foreach (var item in Model.contractServices)
+    {
+<tr>
+    <td>
+        @Html.HiddenFor(modelItem => item.Contract_Services_Mapping_ID)
+        @Html.DisplayFor(modelItem => item.ServiceGroup.ServiceGroup1)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Service.ServiceName)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Rate)
+    </td>
+    <td>
+        @Html.ValueFor(modelItem => item.GST)
+    </td>
+    <td>
+        @Html.ValueFor(modelItem => item.CGST)
+    </td>
+    <td>
+        @Html.ValueFor(modelItem => item.SGST)
+    </td>
+    <td>
+        @Html.ValueFor(modelItem => item.IGST)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Qty)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Tax)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.FinalRatePerService)
+    </td>
+    <td>
+        <span>@item.FrequencyOfService.FrequencyOfService1</span>
+    </td>
+    <td>
+        <span>@(item.PeriodsOfContract == null ? "" : item.PeriodsOfContract.PeriodsOfContract1)</span>
+    </td>
+    <td>
+        <span>@(item.ServiceStartDate == null ? "" : item.ServiceStartDate.Value.ToString("dd/MM/yyyy"))</span>
+    </td>
+    <td>
+        <span>@(item.POCStartDate == null ? "" : item.POCStartDate.Value.ToString("dd/MM/yyyy"))</span>
+    </td>
+    <td>
+        <span>@(item.POCEndDate == null ? "" : item.POCEndDate.Value.ToString("dd/MM/yyyy"))</span>
+    </td>
+    <td>
+        @Html.ActionLink("Check", "ContractServiceServicings", "Servicings", new { id = item.Contract_Services_Mapping_ID }, null)
+    </td>
+    @*<td>
+        <a class="Edit" href="javascript:;">Edit</a>
+        <a class="Update" href="javascript:;" style="display:none">Update</a>
+        <a class="Cancel" href="javascript:;" style="display:none">Cancel</a>
+        <a class="Delete" href="javascript:;" style="display:none">Delete</a>
+    </td>*@
+</tr>
+    }
+
+</table>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js"></script>
